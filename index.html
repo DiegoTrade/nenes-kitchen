@@ -5,1128 +5,1124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nene's Kitchen</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Nene's Kitchen">
-    <meta name="theme-color" content="#0f172a">
+    <meta name="theme-color" content="#FAF7F2">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coral: { 50: '#FEF3F0', 100: '#FDE8E2', 400: '#F09A7F', 500: '#E07A5F', 600: '#C96A52' },
+                        sage: { 50: '#F0F7F4', 100: '#E0EFE7', 400: '#9DC4AF', 500: '#81B29A', 600: '#6A9A82' },
+                        sand: { 50: '#FAF6F0', 100: '#F5EDE0', 400: '#E0B78A', 500: '#D4A373', 600: '#C49362' },
+                        cream: { 50: '#FFFDFB', 100: '#FAF7F2', 200: '#F5F0E8', 300: '#EBE4D9' },
+                        warm: { 
+                            600: '#6B5D52',
+                            700: '#4A4039',
+                            800: '#3D3229', 
+                            900: '#2C241E'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['DM Sans', 'system-ui', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 2px 20px rgba(60, 50, 40, 0.08)',
+                        'soft-lg': '0 4px 30px rgba(60, 50, 40, 0.12)',
+                        'glow-coral': '0 4px 20px rgba(224, 122, 95, 0.25)',
+                        'glow-sage': '0 4px 20px rgba(129, 178, 154, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        * { -webkit-tap-highlight-color: transparent; }
-        body { overscroll-behavior: none; }
+        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+        body { 
+            overscroll-behavior: none; 
+            font-family: 'DM Sans', system-ui, sans-serif;
+            background: #FAF7F2;
+        }
+        
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #E0D9CF; border-radius: 4px; }
+        
+        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+        .animate-fade-in { animation: fade-in 0.3s ease-out; }
+        
+        @keyframes slide-up { 
+            from { transform: translateY(100%); opacity: 0; } 
+            to { transform: translateY(0); opacity: 1; } 
+        }
+        .animate-slide-up { animation: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         
         @keyframes bounce-in {
-          0% { transform: scale(0.3); opacity: 0; }
-          50% { transform: scale(1.05); }
-          70% { transform: scale(0.9); }
-          100% { transform: scale(1); opacity: 1; }
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
         }
-        .animate-bounce-in { animation: bounce-in 0.5s ease-out; }
-        
-        @keyframes love-entrance {
-          0% { transform: scale(0.8) translateY(20px); opacity: 0; }
-          100% { transform: scale(1) translateY(0); opacity: 1; }
-        }
-        .animate-love-entrance { animation: love-entrance 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .animate-bounce-in { animation: bounce-in 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
         
         @keyframes float-up {
-          0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-50px) rotate(180deg); opacity: 0; }
         }
-        .animate-float-up { animation: float-up 5s ease-in-out infinite; }
+        .animate-float-up { animation: float-up 4s ease-out forwards; }
         
         @keyframes heartbeat {
-          0%, 100% { transform: scale(1); }
-          25% { transform: scale(1.15); }
-          50% { transform: scale(1); }
-          75% { transform: scale(1.1); }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
         }
-        .animate-heartbeat { animation: heartbeat 1.5s ease-in-out infinite; }
+        .animate-heartbeat { animation: heartbeat 1.2s ease-in-out infinite; }
         
-        @keyframes ping-slow {
-          0% { transform: scale(1); opacity: 0.5; }
-          100% { transform: scale(1.8); opacity: 0; }
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.8; }
         }
-        .animate-ping-slow { animation: ping-slow 2s ease-out infinite; }
+        .animate-pulse-soft { animation: pulse-soft 3s ease-in-out infinite; }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
         
-        @keyframes ping-slower {
-          0% { transform: scale(1); opacity: 0.3; }
-          100% { transform: scale(2.2); opacity: 0; }
+        .card {
+            background: white;
+            box-shadow: 0 2px 20px rgba(60, 50, 40, 0.08);
         }
-        .animate-ping-slower { animation: ping-slower 2.5s ease-out infinite; }
         
-        @keyframes pulse-slow {
-          0%, 100% { opacity: 0.4; }
-          50% { opacity: 0.6; }
-        }
-        .animate-pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
+        .press:active { transform: scale(0.97); }
         
-        @keyframes fade-in-up {
-          0% { transform: translateY(10px); opacity: 0; }
-          100% { transform: translateY(0); opacity: 1; }
+        .chip-selected {
+            background: linear-gradient(135deg, #E07A5F 0%, #D4A373 100%);
+            box-shadow: 0 4px 15px rgba(224, 122, 95, 0.3);
+            color: white;
         }
-        .animate-fade-in-up { animation: fade-in-up 0.6s ease-out 0.2s both; }
+        
+        .chip-unselected {
+            background: white;
+            border: 1.5px solid #EBE4D9;
+            color: #4A4039;
+        }
+        
+        .chip-unselected:hover {
+            border-color: #D4A373;
+            background: #FFFDFB;
+        }
     </style>
 </head>
 <body>
     <div id="root"></div>
     <script type="text/babel">
-        const { useState } = React;
+        const { useState, useEffect, useCallback } = React;
 
+        // ==================== DATA ====================
         const proteins = [
-          { id: 'chicken', name: 'Chicken', emoji: '🍗', protein: 25, unit: '100g' },
-          { id: 'beef', name: 'Beef', emoji: '🥩', protein: 25, unit: '100g' },
-          { id: 'eggs', name: 'Eggs', emoji: '🥚', protein: 6, unit: 'egg' },
-          { id: 'salmon', name: 'Salmon', emoji: '🐟', protein: 22, unit: '100g' },
-          { id: 'lamb', name: 'Lamb', emoji: '🍖', protein: 25, unit: '100g' },
-          { id: 'pork', name: 'Pork', emoji: '🐷', protein: 25, unit: '100g' },
-          { id: 'shrimp', name: 'Shrimp', emoji: '🦐', protein: 20, unit: '100g' },
-          { id: 'fish', name: 'White Fish', emoji: '🐠', protein: 20, unit: '100g' },
-          { id: 'ground', name: 'Ground Beef', emoji: '🍔', protein: 25, unit: '100g' },
+            { id: 'chicken', name: 'Chicken', emoji: '🍗', proteinPer100g: 25, shopping: 'Chicken breast/thighs (1.5kg)' },
+            { id: 'beef', name: 'Beef', emoji: '🥩', proteinPer100g: 26, shopping: 'Beef steak (1kg)' },
+            { id: 'ground', name: 'Ground Beef', emoji: '🍔', proteinPer100g: 26, shopping: 'Ground beef (1kg)' },
+            { id: 'eggs', name: 'Eggs', emoji: '🥚', proteinPer100g: 13, shopping: 'Eggs (2 dozen)' },
+            { id: 'salmon', name: 'Salmon', emoji: '🐟', proteinPer100g: 22, shopping: 'Salmon fillet (800g)' },
+            { id: 'fish', name: 'White Fish', emoji: '🐠', proteinPer100g: 20, shopping: 'White fish fillet (800g)' },
+            { id: 'shrimp', name: 'Shrimp', emoji: '🦐', proteinPer100g: 20, shopping: 'Shrimp (500g)' },
+            { id: 'lamb', name: 'Lamb', emoji: '🍖', proteinPer100g: 25, shopping: 'Lamb chops (1kg)' },
+            { id: 'pork', name: 'Pork', emoji: '🐷', proteinPer100g: 25, shopping: 'Pork chops/loin (1kg)' },
         ];
 
         const vegetables = [
-          { id: 'broccoli', name: 'Broccoli', emoji: '🥦', salad: false },
-          { id: 'spinach', name: 'Spinach', emoji: '🥬', warning: true, salad: true },
-          { id: 'peppers', name: 'Peppers', emoji: '🫑', salad: true },
-          { id: 'zucchini', name: 'Zucchini', emoji: '🥒', salad: false },
-          { id: 'mushrooms', name: 'Mushrooms', emoji: '🍄', salad: false },
-          { id: 'asparagus', name: 'Asparagus', emoji: '🌿', salad: false },
-          { id: 'avocado', name: 'Avocado', emoji: '🥑', salad: true },
-          { id: 'tomatoes', name: 'Tomatoes', emoji: '🍅', salad: true },
-          { id: 'onions', name: 'Onions', emoji: '🧅', salad: true },
-          { id: 'cucumber', name: 'Cucumber', emoji: '🥒', salad: true },
-          { id: 'lettuce', name: 'Lettuce', emoji: '🥗', salad: true },
-          { id: 'arugula', name: 'Arugula', emoji: '🌱', salad: true },
-          { id: 'kale', name: 'Kale', emoji: '🥬', salad: true },
-          { id: 'cabbage', name: 'Cabbage', emoji: '🥬', salad: true },
+            { id: 'broccoli', name: 'Broccoli', emoji: '🥦', salad: false, shopping: 'Broccoli (2 heads)' },
+            { id: 'spinach', name: 'Spinach', emoji: '🥬', salad: true, warning: 'Max 2-3x/week', shopping: 'Fresh spinach (200g)' },
+            { id: 'peppers', name: 'Peppers', emoji: '🫑', salad: true, shopping: 'Bell peppers (4-5)' },
+            { id: 'zucchini', name: 'Zucchini', emoji: '🥒', salad: false, shopping: 'Zucchini (4)' },
+            { id: 'mushrooms', name: 'Mushrooms', emoji: '🍄', salad: false, shopping: 'Mushrooms (400g)' },
+            { id: 'asparagus', name: 'Asparagus', emoji: '🌿', salad: false, shopping: 'Asparagus (2 bunches)' },
+            { id: 'avocado', name: 'Avocado', emoji: '🥑', salad: true, shopping: 'Avocados (6)' },
+            { id: 'tomatoes', name: 'Tomatoes', emoji: '🍅', salad: true, shopping: 'Tomatoes (6)' },
+            { id: 'onions', name: 'Onions', emoji: '🧅', salad: true, shopping: 'Onions (bag)' },
+            { id: 'cucumber', name: 'Cucumber', emoji: '🥒', salad: true, shopping: 'Cucumbers (3)' },
+            { id: 'lettuce', name: 'Lettuce', emoji: '🥗', salad: true, shopping: 'Lettuce (2 heads)' },
+            { id: 'arugula', name: 'Arugula', emoji: '🌱', salad: true, shopping: 'Arugula (150g)' },
+            { id: 'cabbage', name: 'Cabbage', emoji: '🥬', salad: true, shopping: 'Cabbage (1 head)' },
+            { id: 'cauliflower', name: 'Cauliflower', emoji: '🥬', salad: false, shopping: 'Cauliflower (1 head)' },
         ];
 
         const cheeses = [
-          { id: 'feta', name: 'Feta', emoji: '🧀' },
-          { id: 'parmesan', name: 'Parmesan', emoji: '🧀' },
-          { id: 'halloumi', name: 'Halloumi', emoji: '🧀' },
+            { id: 'feta', name: 'Feta', emoji: '🧀', shopping: 'Feta cheese (200g)' },
+            { id: 'parmesan', name: 'Parmesan', emoji: '🧀', shopping: 'Parmesan (150g)' },
+            { id: 'halloumi', name: 'Halloumi', emoji: '🧀', shopping: 'Halloumi (250g)' },
         ];
 
-        const cookingStyles = ['grilled', 'pan-seared', 'roasted', 'sautéed', 'baked', 'stir-fried'];
+        const flavorProfiles = {
+            any: { id: 'any', name: 'Any', emoji: '✨', seasonings: null, pantry: [], finisher: '' },
+            latin: { id: 'latin', name: 'Latin', emoji: '🌶️', seasonings: '1 tsp cumin, 1 tsp paprika, ½ tsp garlic powder, salt', pantry: ['cumin', 'paprika', 'garlic powder', 'cilantro', 'limes'], finisher: 'Fresh lime + cilantro' },
+            mediterranean: { id: 'mediterranean', name: 'Med', emoji: '🌿', seasonings: '1 tsp oregano, 2 cloves garlic, lemon zest, salt', pantry: ['oregano', 'garlic', 'lemons', 'olive oil', 'parsley'], finisher: 'Lemon juice + olive oil drizzle' },
+            asian: { id: 'asian', name: 'Asian', emoji: '🥢', seasonings: '1 tbsp ginger, 2 cloves garlic, 1 tsp sesame oil', pantry: ['ginger', 'garlic', 'sesame oil', 'coconut aminos', 'green onions'], finisher: 'Sesame oil + sesame seeds' },
+            spicy: { id: 'spicy', name: 'Spicy', emoji: '🔥', seasonings: '½ tsp cayenne, 1 tsp chili flakes, garlic, salt', pantry: ['chili flakes', 'cayenne', 'jalapeños', 'hot sauce'], finisher: 'Extra chili flakes' },
+            classic: { id: 'classic', name: 'Classic', emoji: '🧈', seasonings: '2 cloves garlic, 2 tbsp butter, salt, pepper, herbs', pantry: ['butter', 'garlic', 'rosemary', 'thyme', 'black pepper'], finisher: 'Butter baste + fresh herbs' }
+        };
+
+        const timeCategories = {
+            any: { id: 'any', name: 'Any', emoji: '⏱️', min: 0, max: 999 },
+            quick: { id: 'quick', name: 'Quick', emoji: '⚡', min: 0, max: 20 },
+            normal: { id: 'normal', name: 'Medium', emoji: '🍳', min: 20, max: 35 },
+            slow: { id: 'slow', name: 'Slow', emoji: '🥘', min: 35, max: 999 }
+        };
 
         const dressings = [
-          { name: 'Classic Olive Oil & Lemon', recipe: '3 tbsp olive oil + juice of 1 lemon + salt + pepper' },
-          { name: 'Creamy Tahini', recipe: '2 tbsp tahini + 1 tbsp lemon + 2 tbsp water + garlic + salt' },
-          { name: 'Greek Yogurt Ranch', recipe: '3 tbsp Greek yogurt 0% + herbs + garlic + splash of lemon' },
-          { name: 'Mustard Vinaigrette', recipe: '3 tbsp olive oil + 1 tbsp Dijon + 1 tbsp vinegar + salt' },
-          { name: 'Balsamic Glaze', recipe: '2 tbsp olive oil + 1 tbsp balsamic vinegar + pinch of salt' },
-          { name: 'Avocado Lime', recipe: '½ avocado + lime juice + cilantro + salt, blend with 2 tbsp water' },
-          { name: 'Simple Guasacaca', recipe: 'Avocado + cilantro + garlic + vinegar + olive oil, blend 🇻🇪' },
+            { name: 'Olive Oil & Lemon', recipe: '3 tbsp olive oil + juice of 1 lemon + salt', flavor: 'mediterranean' },
+            { name: 'Creamy Tahini', recipe: '2 tbsp tahini + lemon + water + garlic', flavor: 'mediterranean' },
+            { name: 'Greek Yogurt Ranch', recipe: '3 tbsp Greek yogurt 0% + herbs + garlic', flavor: 'classic' },
+            { name: 'Mustard Vinaigrette', recipe: '3 tbsp olive oil + 1 tbsp Dijon + vinegar', flavor: 'classic' },
+            { name: 'Avocado Lime', recipe: '½ avocado + lime juice + cilantro + salt', flavor: 'latin' },
+            { name: 'Guasacaca 🇻🇪', recipe: 'Avocado + cilantro + garlic + vinegar + oil', flavor: 'latin' },
+            { name: 'Ginger Sesame', recipe: '2 tbsp sesame oil + coconut aminos + ginger', flavor: 'asian' },
+            { name: 'Spicy Lime', recipe: '3 tbsp olive oil + lime juice + chili flakes', flavor: 'spicy' },
+        ];
+
+        const achievements = [
+            { id: 'first_meal', name: 'First Steps', emoji: '👶', desc: 'Logged first meal', threshold: 1, type: 'meals' },
+            { id: 'five_meals', name: 'Getting Started', emoji: '🌱', desc: 'Logged 5 meals', threshold: 5, type: 'meals' },
+            { id: 'ten_meals', name: 'On a Roll', emoji: '🔥', desc: 'Logged 10 meals', threshold: 10, type: 'meals' },
+            { id: 'twentyfive_meals', name: 'Protein Pro', emoji: '💪', desc: 'Logged 25 meals', threshold: 25, type: 'meals' },
+            { id: 'fifty_meals', name: 'Kitchen Queen', emoji: '👑', desc: 'Logged 50 meals', threshold: 50, type: 'meals' },
+            { id: 'first_fav', name: 'Picky Eater', emoji: '❤️', desc: 'Saved first favorite', threshold: 1, type: 'favorites' },
+            { id: 'week_streak', name: 'Week Warrior', emoji: '📅', desc: '7-day streak', threshold: 7, type: 'streak' },
         ];
 
         const loveMessages = [
-          "Nene, if I get abs, you get the credit. And also the abs. 😏",
-          "Cooking for a man on a diet? Straight to heaven. 👼",
-          "You're basically my dealer now. But for protein. 💪",
-          "Nene, te prometo que cuando esté flaco te cargo por toda la casa 🏋️",
-          "Plot twist: the real gains were the meals you made along the way",
-          "Less carbs, more Nene. That's the real diet. 😘",
-          "Si me queda el six pack, te lo dedico a ti 🎁",
-          "You're not just feeding me, you're engineering a masterpiece 👨‍🍳",
-          "My nutritionist could never. But Nene could. 💅",
-          "When I'm hot again, remember: you did this 🔥",
-          "Nene 1, Insulin Resistance 0 ⚔️",
-          "Esto es teamwork. Tú cocinas, yo sudo, we win. 🏆",
-          "You're the butter to my... wait, I can have butter? NICE 🧈",
-          "Aguantándome la dieta Y cocinando? Nene you're a saint 😇",
-          "Future Diego says thanks. Current Diego says... más pollo porfa 🍗",
-          "Not all heroes wear capes. Some just measure 300g of chicken. 🦸‍♀️",
-          "Nene, cuando baje los 20 kilos te llevo a donde quieras 🌴",
-          "This app runs on code. I run on your food. Facts. 📱🍽️",
-          "Low carb, high Nene. The winning formula. 🧪",
-          "Nene, si me dejas morir de hambre, no hay seguro de vida que valga 💀",
-          "Behind every fit man is a woman tired of hearing about macros 😅",
-          "I used to have a six pack. Then Nene's cooking happened. Now we're fixing it together 🍽️",
-          "You measure chicken with more precision than NASA measures rocket fuel 🚀",
-          "Relationship status: committed to Nene and 180g of protein 💍",
+            "Nene, if I get abs, you get the credit 😏",
+            "Cooking for a man on a diet? Straight to heaven 👼",
+            "You're basically my protein dealer now 💪",
+            "Te prometo que cuando esté flaco te cargo por toda la casa 🏋️",
+            "Less carbs, more Nene. That's the real diet 😘",
+            "Si me queda el six pack, te lo dedico a ti 🎁",
+            "My nutritionist could never. But Nene could 💅",
+            "When I'm hot again, remember: you did this 🔥",
+            "Nene 1, Insulin Resistance 0 ⚔️",
+            "Future Diego says thanks. Current Diego says más pollo 🍗",
+            "Not all heroes wear capes. Some measure 300g of chicken 🦸‍♀️",
+            "This app runs on code. I run on your food 📱",
+            "Low carb, high Nene. The winning formula 🧪",
+            "Behind every fit man is a woman tired of hearing about macros 😅",
+            "Te amo más que a los carbohidratos. Y eso es mucho 🍞❌",
         ];
 
-        const gradients = [
-          "from-amber-400 to-orange-500",
-          "from-red-400 to-rose-500",
-          "from-emerald-400 to-teal-500",
-          "from-violet-400 to-purple-500",
-          "from-pink-400 to-rose-500",
-          "from-cyan-400 to-blue-500",
-          "from-yellow-400 to-amber-500",
-          "from-green-400 to-emerald-500",
-          "from-indigo-400 to-violet-500",
-          "from-orange-400 to-red-500",
+        const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+        const dayNamesFull = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+        const mealRecipes = [
+            // ==================== CHICKEN (7 solo + combos) ====================
+            { id: 'chicken_plate', name: 'Pan-Seared Chicken', proteins: ['chicken'], requiresVeggies: true, time: 25, baseProtein: 95, servingSize: '400g chicken', flavors: ['any', 'classic', 'mediterranean', 'latin', 'spicy'],
+              steps: ['Pat chicken dry with paper towels', 'Season both sides generously', 'Heat pan medium-high with olive oil', 'Cook 6-7 min per side until golden', 'Rest 3 minutes before slicing'],
+              tips: ['Don\'t flip too early — let the crust form', '165°F internal temp is perfect'], doneness: 'Golden crust, juices run clear' },
+            { id: 'chicken_salad', name: 'Power Chicken Salad', proteins: ['chicken'], requiresVeggies: true, saladOnly: true, time: 20, baseProtein: 88, servingSize: '350g chicken', flavors: ['any', 'mediterranean', 'latin', 'asian'],
+              steps: ['Season and grill chicken until done', 'Rest 5 min, slice against grain', 'Build salad base with greens', 'Top with warm chicken slices', 'Drizzle dressing before serving'],
+              tips: ['Warm chicken on cold greens = perfect contrast'], suggestDressing: true },
+            { id: 'chicken_shawarma', name: 'Chicken Shawarma Bowl', proteins: ['chicken'], requiresVeggies: true, time: 25, baseProtein: 95, servingSize: '400g chicken thighs', flavors: ['mediterranean', 'spicy'],
+              steps: ['Marinate chicken in cumin, coriander, turmeric, paprika, garlic, lemon', 'Sear in hot pan until charred 6-7 min per side', 'Rest and slice thin', 'Serve over greens with tahini drizzle', 'Add pickled onions and cucumber'],
+              tips: ['Thighs are juicier than breast for shawarma', 'Marinate 30 min to overnight for best flavor'] },
+            { id: 'chicken_tikka', name: 'Chicken Tikka Masala', proteins: ['chicken'], requiresVeggies: true, time: 35, baseProtein: 95, servingSize: '400g chicken', flavors: ['spicy', 'asian'],
+              steps: ['Marinate chicken in yogurt, garam masala, turmeric', 'Grill or pan-sear until charred', 'Make sauce: sauté onion, garlic, ginger, tomato paste', 'Add cream and spices, simmer', 'Add chicken, cook 10 min'],
+              tips: ['Use full-fat cream or coconut cream', 'Serve with cauliflower rice'] },
+            { id: 'chicken_greek', name: 'Greek Lemon Chicken', proteins: ['chicken'], requiresVeggies: true, time: 30, baseProtein: 95, servingSize: '400g chicken', flavors: ['mediterranean'],
+              steps: ['Marinate chicken in lemon, oregano, garlic, olive oil', 'Roast at 425°F for 25 min', 'Baste with pan juices halfway', 'Serve with feta, olives, cucumber'],
+              tips: ['Score the chicken for deeper flavor', 'Inspired by Diet Doctor\'s Greek recipes'] },
+            { id: 'chicken_butter', name: 'Butter Chicken (Murgh Makhani)', proteins: ['chicken'], requiresVeggies: true, time: 40, baseProtein: 95, servingSize: '400g chicken', flavors: ['spicy', 'asian'],
+              steps: ['Marinate chicken in yogurt and spices 30 min', 'Pan-sear until golden', 'Make sauce with butter, tomatoes, cream, garam masala', 'Simmer chicken in sauce 15 min', 'Finish with butter and cream'],
+              tips: ['Gordon Ramsay\'s recipe — only 7g carbs', 'Use ghee for extra richness'] },
+            { id: 'pollo_guasacaca', name: 'Pollo con Guasacaca 🇻🇪', proteins: ['chicken'], requiresVeggies: true, time: 30, baseProtein: 95, servingSize: '400g chicken', flavors: ['latin'], isVenezuelan: true,
+              steps: ['Season chicken with cumin, garlic, paprika', 'Grill until charred and cooked', 'Make guasacaca: blend avocado, cilantro, vinegar, oil, garlic', 'Slice chicken, serve with sauce'],
+              tips: ['Make extra guasacaca — good on everything', 'Keeps 2 days in fridge'] },
+            { id: 'chicken_omelette', name: 'Loaded Chicken Omelette', proteins: ['chicken', 'eggs'], requiresVeggies: false, time: 15, baseProtein: 82, servingSize: '200g chicken + 4 eggs', flavors: ['any', 'classic', 'mediterranean', 'spicy'],
+              steps: ['Shred or dice cooked chicken', 'Beat 4 eggs with salt and pepper', 'Melt butter in non-stick over medium-low', 'Pour eggs, let set 30 seconds', 'Add fillings to one half, fold'],
+              tips: ['Medium-low heat = creamy eggs', 'Remove while still slightly wet'] },
+
+            // ==================== BEEF (6 solo + combos) ====================
+            { id: 'steak_plate', name: 'Perfect Steak', proteins: ['beef'], requiresVeggies: true, time: 20, baseProtein: 90, servingSize: '350g steak', flavors: ['any', 'classic', 'spicy', 'latin'],
+              steps: ['Bring steak to room temp (30 min)', 'Pat dry, season with salt', 'Smoking hot pan, add oil', 'Cook 3-4 min per side for medium', 'Rest 5 minutes, slice against grain'],
+              tips: ['Dry surface = better crust', 'Only flip once'], doneness: 'Dark brown crust, pink center' },
+            { id: 'beef_lebanese', name: 'Lebanese Beef Kebab', proteins: ['beef'], requiresVeggies: true, time: 25, baseProtein: 90, servingSize: '350g beef sirloin', flavors: ['mediterranean', 'spicy'],
+              steps: ['Cube beef into 1-inch pieces', 'Marinate in olive oil, lemon, garlic, seven spice', 'Thread onto skewers with onion, peppers', 'Grill 3-4 min per side', 'Serve with tahini and fresh herbs'],
+              tips: ['Seven spice = allspice, pepper, cinnamon, nutmeg, cloves, ginger, coriander', 'Don\'t overcook — medium is best'] },
+            { id: 'beef_stirfry', name: 'Ginger Beef Stir-Fry', proteins: ['beef'], requiresVeggies: true, time: 15, baseProtein: 90, servingSize: '350g flank steak', flavors: ['asian', 'spicy'],
+              steps: ['Slice beef very thin against grain', 'Marinate in coconut aminos, ginger, garlic', 'Hot wok with sesame oil', 'Sear beef 2 min, set aside', 'Stir-fry veggies, return beef, toss'],
+              tips: ['Freeze beef 20 min for easier slicing', 'High heat is essential for wok hei'] },
+            { id: 'beef_kofta', name: 'Middle Eastern Kofta', proteins: ['beef'], requiresVeggies: true, time: 25, baseProtein: 90, servingSize: '350g ground beef', flavors: ['mediterranean', 'spicy'],
+              steps: ['Mix beef with onion, parsley, cumin, coriander, cinnamon', 'Form into oval shapes around skewers', 'Grill or pan-sear until cooked', 'Serve with tahini and salad'],
+              tips: ['Use fattier beef (80/20) for juicy kofta', 'Don\'t overwork the meat'] },
+            { id: 'beef_chimichurri', name: 'Chimichurri Steak 🇻🇪', proteins: ['beef'], requiresVeggies: true, time: 25, baseProtein: 90, servingSize: '350g steak', flavors: ['latin'], isVenezuelan: true,
+              steps: ['Season steak with salt and pepper', 'Grill to desired doneness', 'Make chimichurri: parsley, oregano, garlic, vinegar, oil, chili', 'Rest steak, slice thin', 'Drizzle chimichurri generously'],
+              tips: ['Chimichurri is a Venezuelan/Argentine staple', 'Make extra — keeps 1 week in fridge'] },
+            { id: 'asado_negro', name: 'Asado Negro 🇻🇪', proteins: ['beef'], requiresVeggies: true, time: 90, baseProtein: 90, servingSize: '350g beef roast', flavors: ['latin'], isVenezuelan: true,
+              steps: ['Season beef with garlic, cumin, soy sauce', 'Caramelize sugar until dark (careful!)', 'Sear beef in caramelized sugar', 'Add onions, peppers, broth', 'Slow cook 2 hours until tender'],
+              tips: ['The dark color comes from caramelized sugar — keto-adapted with small amount', 'Classic Venezuelan Sunday dish'] },
+            { id: 'steak_eggs', name: 'Steak & Eggs', proteins: ['beef', 'eggs'], requiresVeggies: true, time: 25, baseProtein: 95, servingSize: '250g steak + 3 eggs', flavors: ['any', 'classic', 'spicy', 'latin'],
+              steps: ['Cook steak to desired doneness', 'While resting, cook eggs in same pan', 'Runny yolks are your sauce', 'Slice steak, plate with eggs'],
+              tips: ['The steak pan fond flavors the eggs'] },
+            { id: 'pabellon', name: 'Pabellón Sin Arroz 🇻🇪', proteins: ['beef', 'eggs'], requiresVeggies: true, time: 45, baseProtein: 92, servingSize: '300g carne mechada + 2 eggs', flavors: ['latin'], isVenezuelan: true,
+              steps: ['Simmer flank steak until shreddable (1.5hr)', 'Shred with two forks while warm', 'Sauté onion, peppers, garlic', 'Add beef, cumin, paprika, tomato', 'Fry eggs with crispy edges'],
+              tips: ['Make big batch — freezes perfectly', 'Eggs must have crispy edges 🇻🇪'] },
+
+            // ==================== GROUND BEEF (5 solo + combos) ====================
+            { id: 'lettuce_wraps', name: 'Asian Lettuce Wraps', proteins: ['ground'], requiresVeggies: true, time: 15, baseProtein: 88, servingSize: '350g ground beef', flavors: ['asian', 'spicy'],
+              steps: ['Brown ground beef over high heat', 'Add ginger, garlic, coconut aminos', 'Cook until caramelized', 'Spoon into butter lettuce cups', 'Top with green onions, sesame seeds'],
+              tips: ['Butter lettuce makes best cups', 'Inspired by PF Chang\'s — keto style'] },
+            { id: 'ground_kofta', name: 'Lebanese Kofta Plate', proteins: ['ground'], requiresVeggies: true, time: 20, baseProtein: 88, servingSize: '350g ground beef', flavors: ['mediterranean'],
+              steps: ['Mix beef with minced onion, parsley, allspice, cinnamon', 'Form into flat patties or logs', 'Grill or pan-fry until cooked', 'Serve with fattoush-style salad (no pita)', 'Drizzle with tahini'],
+              tips: ['The spices are key — don\'t skip the cinnamon', 'Great for meal prep'] },
+            { id: 'ground_taco_bowl', name: 'Taco Bowl', proteins: ['ground'], requiresVeggies: true, time: 15, baseProtein: 88, servingSize: '350g ground beef', flavors: ['latin', 'spicy'],
+              steps: ['Brown beef with cumin, chili powder, paprika', 'Add tomato paste, a splash of water', 'Simmer 5 min until thick', 'Serve over shredded lettuce', 'Top with guac, cheese, sour cream'],
+              tips: ['Skip the tortilla — all the flavor, no carbs', 'Add jalapeños for heat'] },
+            { id: 'ground_stuffed_peppers', name: 'Stuffed Bell Peppers', proteins: ['ground'], requiresVeggies: true, requiresSpecific: ['peppers'], time: 35, baseProtein: 88, servingSize: '350g ground beef', flavors: ['any', 'mediterranean', 'latin'],
+              steps: ['Cut tops off peppers, remove seeds', 'Brown beef with onions and garlic', 'Season and add diced tomatoes', 'Stuff peppers with mixture', 'Bake 25 min at 375°F, add cheese last 5 min'],
+              tips: ['Mediterranean version: add feta and oregano', 'Latin version: add cumin and cilantro'] },
+            { id: 'ground_zucchini_boats', name: 'Beef Zucchini Boats', proteins: ['ground'], requiresVeggies: true, requiresSpecific: ['zucchini'], time: 30, baseProtein: 88, servingSize: '350g ground beef', flavors: ['any', 'mediterranean', 'classic'],
+              steps: ['Halve zucchini, scoop out center', 'Brown beef with garlic and herbs', 'Add tomato sauce and seasonings', 'Fill zucchini boats with mixture', 'Top with cheese, bake 20 min at 400°F'],
+              tips: ['Salt zucchini first to remove moisture', 'Great low-carb lasagna alternative'] },
+            { id: 'ground_shakshuka', name: 'Meaty Shakshuka', proteins: ['ground', 'eggs'], requiresVeggies: true, time: 25, baseProtein: 85, servingSize: '250g beef + 3 eggs', flavors: ['mediterranean', 'spicy'],
+              steps: ['Brown ground beef with onions', 'Add tomatoes, peppers, cumin, paprika', 'Simmer 10 min', 'Make wells, crack in eggs', 'Cover and cook until eggs set'],
+              tips: ['Runny yolks are traditional', 'Middle Eastern breakfast — great any time'] },
+
+            // ==================== SALMON (6 solo + combos) ====================
+            { id: 'salmon_crispy', name: 'Crispy Skin Salmon', proteins: ['salmon'], requiresVeggies: true, time: 15, baseProtein: 77, servingSize: '350g salmon', flavors: ['any', 'classic', 'mediterranean', 'asian'],
+              steps: ['Pat salmon skin completely dry', 'Season flesh side only with salt', 'Hot pan, skin side DOWN first', 'Cook 5 min skin side, 2-3 min flesh', 'Remove when center slightly pink'],
+              tips: ['Spend 80% cooking time skin-side down', 'Press flat first 30 seconds'], doneness: 'Skin crackling, flesh flakes easily' },
+            { id: 'salmon_greek', name: 'Greek Salmon', proteins: ['salmon'], requiresVeggies: true, time: 25, baseProtein: 77, servingSize: '350g salmon', flavors: ['mediterranean'],
+              steps: ['Season salmon with oregano, lemon zest, garlic', 'Bake at 400°F for 15 min', 'Top with tomatoes, olives, capers, feta', 'Return to oven 5 min', 'Finish with olive oil drizzle'],
+              tips: ['Inspired by Diet Doctor\'s Greek salmon', 'The feta melts beautifully on top'] },
+            { id: 'salmon_teriyaki', name: 'Teriyaki Salmon (Keto)', proteins: ['salmon'], requiresVeggies: true, time: 20, baseProtein: 77, servingSize: '350g salmon', flavors: ['asian'],
+              steps: ['Make keto teriyaki: coconut aminos, ginger, garlic, erythritol', 'Marinate salmon 20 min', 'Pan-sear salmon, flesh side first', 'Add marinade to pan, reduce to glaze', 'Spoon glaze over salmon'],
+              tips: ['Inspired by Gordon Ramsay\'s teriyaki method', 'Coconut aminos = no sugar soy alternative'] },
+            { id: 'salmon_lemon_garlic', name: 'Creamy Lemon Garlic Salmon', proteins: ['salmon'], requiresVeggies: true, time: 25, baseProtein: 77, servingSize: '350g salmon', flavors: ['classic', 'mediterranean'],
+              steps: ['Season and sear salmon until golden', 'Remove and set aside', 'In same pan: cream, garlic, lemon juice, parsley', 'Simmer sauce 3 min until slightly thick', 'Return salmon, spoon sauce over'],
+              tips: ['Top keto salmon recipe — restaurant quality', 'Use heavy cream for best results'] },
+            { id: 'salmon_salad', name: 'Salmon Power Salad', proteins: ['salmon'], requiresVeggies: true, saladOnly: true, time: 20, baseProtein: 77, servingSize: '350g salmon', flavors: ['any', 'mediterranean', 'asian'],
+              steps: ['Season salmon with salt and pepper', 'Pan-sear or bake until just cooked', 'Let cool slightly, then flake into chunks', 'Build salad with greens and veggies', 'Top with salmon and dressing'],
+              tips: ['Slightly warm salmon on cold greens is perfect', 'Add avocado for healthy fats'], suggestDressing: true },
+            { id: 'salmon_avocado', name: 'Salmon Avocado Bowl', proteins: ['salmon'], requiresVeggies: true, time: 20, baseProtein: 77, servingSize: '350g salmon', flavors: ['asian', 'latin'],
+              steps: ['Season salmon with sesame and ginger', 'Pan-sear until medium', 'Flake salmon into bowl', 'Add sliced avocado, cucumber, pickled ginger', 'Drizzle with coconut aminos and sesame oil'],
+              tips: ['Like a poke bowl without the rice', 'Excellent omega-3 + healthy fat combo'] },
+            { id: 'salmon_eggs', name: 'Salmon & Eggs Plate', proteins: ['salmon', 'eggs'], requiresVeggies: true, time: 20, baseProtein: 90, servingSize: '250g salmon + 3 eggs', flavors: ['any', 'classic', 'mediterranean'],
+              steps: ['Cook salmon in pan until done', 'Set aside and keep warm', 'Scramble or fry eggs in same pan', 'Plate together with veggies'],
+              tips: ['The salmon fat flavors the eggs beautifully', 'Great for brunch'] },
+
+            // ==================== WHITE FISH (6 solo + combos) ====================
+            { id: 'fish_mediterranean', name: 'Mediterranean Baked Fish', proteins: ['fish'], requiresVeggies: true, time: 25, baseProtein: 70, servingSize: '350g white fish', flavors: ['any', 'mediterranean', 'classic'],
+              steps: ['Preheat oven to 400°F/200°C', 'Season fish with salt, pepper, oregano', 'Place on baking sheet with olive oil', 'Add tomatoes, olives, capers around fish', 'Bake 15-18 min until flaky'],
+              tips: ['White fish is very lean — don\'t overcook', 'Lemon juice at the end brightens everything'], doneness: 'Flesh is opaque and flakes easily' },
+            { id: 'fish_panfried', name: 'Pan-Fried White Fish', proteins: ['fish'], requiresVeggies: true, time: 15, baseProtein: 70, servingSize: '350g white fish', flavors: ['any', 'classic', 'mediterranean', 'latin'],
+              steps: ['Pat fish completely dry', 'Season with salt and pepper', 'Hot pan with butter and oil', 'Cook 3-4 min per side', 'Finish with lemon and herbs'],
+              tips: ['Don\'t move the fish — let it form a crust', 'Fish is done when it flakes with a fork'], doneness: 'Golden outside, opaque inside' },
+            { id: 'fish_parmesan', name: 'Parmesan Crusted Fish', proteins: ['fish'], requiresVeggies: true, time: 20, baseProtein: 70, servingSize: '350g white fish', flavors: ['classic', 'mediterranean'],
+              steps: ['Mix parmesan, almond flour, garlic, paprika', 'Pat fish dry, brush with mayo', 'Press parmesan mixture onto fish', 'Bake at 400°F for 15 min', 'Broil 2 min for golden crust'],
+              tips: ['Air fryer version: 8 min at 400°F', 'Mayo helps crust stick and stay moist'] },
+            { id: 'fish_coconut_curry', name: 'Thai Coconut Fish Curry', proteins: ['fish'], requiresVeggies: true, time: 25, baseProtein: 70, servingSize: '350g white fish', flavors: ['asian', 'spicy'],
+              steps: ['Sauté garlic, ginger, curry paste', 'Add coconut milk, fish sauce, lime', 'Simmer 5 min', 'Add fish chunks gently', 'Cook 8-10 min until fish flakes'],
+              tips: ['Use full-fat coconut milk', 'Don\'t stir too much — fish breaks easily'] },
+            { id: 'fish_tacos', name: 'Fish Taco Bowl', proteins: ['fish'], requiresVeggies: true, time: 20, baseProtein: 70, servingSize: '350g white fish', flavors: ['latin', 'spicy'],
+              steps: ['Season fish with cumin, paprika, garlic', 'Pan-fry until golden and cooked', 'Break into chunks', 'Serve over lettuce with avocado, tomato', 'Top with lime crema and cilantro'],
+              tips: ['This is taco filling without the tortilla!', 'Guasacaca or avocado lime dressing is perfect'], suggestDressing: true },
+            { id: 'fish_lebanese', name: 'Lebanese Samke Harra', proteins: ['fish'], requiresVeggies: true, time: 30, baseProtein: 70, servingSize: '350g white fish', flavors: ['mediterranean', 'spicy'],
+              steps: ['Season fish with salt, cumin, coriander', 'Pan-fry until golden', 'Make sauce: tahini, lemon, garlic, cilantro, chili', 'Top fish with caramelized onions', 'Drizzle spicy tahini sauce'],
+              tips: ['Classic Lebanese spicy fish', 'The tahini sauce is incredible'] },
+            { id: 'fish_eggs', name: 'Fish & Eggs Light Plate', proteins: ['fish', 'eggs'], requiresVeggies: true, time: 18, baseProtein: 82, servingSize: '250g fish + 3 eggs', flavors: ['any', 'classic', 'mediterranean'],
+              steps: ['Pan-fry fish until cooked', 'Set aside, keep warm', 'Fry or scramble eggs in same pan', 'Plate together with veggies and lemon'],
+              tips: ['Light but filling — great for lunch', 'Add avocado for healthy fats'] },
+
+            // ==================== SHRIMP (5 solo + combos) ====================
+            { id: 'shrimp_garlic', name: 'Garlic Butter Shrimp', proteins: ['shrimp'], requiresVeggies: true, time: 12, baseProtein: 60, servingSize: '300g shrimp', flavors: ['any', 'classic', 'spicy', 'latin'], lowProteinWarning: true,
+              steps: ['Pat shrimp dry, season with salt', 'Hot pan with butter and garlic', 'Add shrimp in single layer', 'Cook 2 min per side until pink', 'Finish with lemon juice and parsley'],
+              tips: ['⚠️ Only ~60g protein — add another protein', 'Remove the second they turn pink'], doneness: 'Pink, slightly curled' },
+            { id: 'shrimp_stirfry', name: 'Ginger Shrimp Stir-Fry', proteins: ['shrimp'], requiresVeggies: true, time: 15, baseProtein: 60, servingSize: '300g shrimp', flavors: ['asian', 'spicy'], lowProteinWarning: true,
+              steps: ['Pat shrimp dry', 'Hot wok with sesame oil', 'Add ginger, garlic, chili — 30 seconds', 'Add shrimp, cook 2 min per side', 'Toss with coconut aminos and veggies'],
+              tips: ['⚠️ Only ~60g protein — consider adding eggs', 'Everything cooks fast — prep ahead'] },
+            { id: 'shrimp_mediterranean', name: 'Greek Shrimp Saganaki', proteins: ['shrimp'], requiresVeggies: true, time: 20, baseProtein: 60, servingSize: '300g shrimp', flavors: ['mediterranean'], lowProteinWarning: true,
+              steps: ['Sauté garlic in olive oil', 'Add diced tomatoes, oregano, white wine', 'Simmer 10 min', 'Add shrimp, cook until pink', 'Top with crumbled feta'],
+              tips: ['⚠️ Low protein — add feta generously', 'Classic Greek taverna dish'] },
+            { id: 'shrimp_kungpao', name: 'Kung Pao Shrimp (Keto)', proteins: ['shrimp'], requiresVeggies: true, time: 15, baseProtein: 60, servingSize: '300g shrimp', flavors: ['asian', 'spicy'], lowProteinWarning: true,
+              steps: ['Mix sauce: coconut aminos, vinegar, erythritol, chili paste', 'Hot wok, sear shrimp quickly, set aside', 'Stir-fry dried chilies, Sichuan peppercorn, garlic', 'Add peppers, return shrimp', 'Toss with sauce and peanuts'],
+              tips: ['⚠️ Low protein — add extra shrimp or eggs', 'Authentic Sichuan flavor without sugar'] },
+            { id: 'shrimp_salad', name: 'Shrimp Power Salad', proteins: ['shrimp'], requiresVeggies: true, saladOnly: true, time: 15, baseProtein: 60, servingSize: '300g shrimp', flavors: ['any', 'mediterranean', 'latin', 'asian'], lowProteinWarning: true,
+              steps: ['Season and cook shrimp quickly', 'Let cool slightly', 'Build salad with greens and veggies', 'Top with warm or cold shrimp', 'Drizzle with dressing'],
+              tips: ['⚠️ Add cheese or eggs for more protein', 'Avocado makes this more filling'], suggestDressing: true },
+            { id: 'shrimp_eggs', name: 'Shrimp & Eggs Scramble', proteins: ['shrimp', 'eggs'], requiresVeggies: true, time: 15, baseProtein: 75, servingSize: '200g shrimp + 4 eggs', flavors: ['any', 'asian', 'classic'],
+              steps: ['Cook shrimp until just pink, set aside', 'Beat eggs with salt', 'Scramble eggs in butter over low heat', 'Fold in shrimp at the end', 'Top with herbs or green onions'],
+              tips: ['Chinese-style shrimp with eggs', 'The eggs add needed protein'] },
+
+            // ==================== LAMB (5 solo + combos) ====================
+            { id: 'lamb_chops', name: 'Herb-Crusted Lamb Chops', proteins: ['lamb'], requiresVeggies: true, time: 20, baseProtein: 88, servingSize: '350g lamb chops', flavors: ['any', 'classic', 'mediterranean', 'spicy'],
+              steps: ['Bring lamb to room temp', 'Season with salt, pepper, rosemary, thyme', 'High heat pan or grill', 'Sear 3-4 min per side', 'Rest 5 minutes'],
+              tips: ['Lamb loves high heat, quick cook', 'Medium-rare (130°F) is ideal'], doneness: 'Browned outside, pink inside' },
+            { id: 'lamb_shawarma', name: 'Lamb Shawarma Bowl', proteins: ['lamb'], requiresVeggies: true, time: 25, baseProtein: 88, servingSize: '350g lamb', flavors: ['mediterranean', 'spicy'],
+              steps: ['Slice lamb thin, marinate in cumin, coriander, turmeric, garlic', 'Pan-sear on high heat until caramelized', 'Serve over greens or cauliflower rice', 'Top with pickled turnips, tahini', 'Add fresh parsley and sumac'],
+              tips: ['Lebanese street food favorite', 'The spice mix makes it special'] },
+            { id: 'lamb_mediterranean', name: 'Mediterranean Lamb Plate', proteins: ['lamb'], requiresVeggies: true, time: 25, baseProtein: 88, servingSize: '350g lamb', flavors: ['mediterranean'],
+              steps: ['Season lamb with oregano, garlic, lemon zest', 'Sear in hot pan until browned', 'Rest and slice', 'Serve with cucumber, tomato, feta', 'Drizzle with olive oil and lemon'],
+              tips: ['This is like a deconstructed Greek dish', 'Tzatziki (Greek yogurt + cucumber) goes perfectly'] },
+            { id: 'lamb_kofta', name: 'Lamb Kofta Kebabs', proteins: ['lamb'], requiresVeggies: true, time: 25, baseProtein: 88, servingSize: '350g ground lamb', flavors: ['mediterranean', 'spicy'],
+              steps: ['Mix ground lamb with onion, parsley, cumin, coriander, cinnamon', 'Form into long ovals around skewers', 'Grill 4-5 min per side', 'Serve with tahini and salad', 'Garnish with fresh mint'],
+              tips: ['Classic Middle Eastern dish', 'Don\'t overwork the meat — keep it tender'] },
+            { id: 'lamb_spicy', name: 'Spicy Cumin Lamb', proteins: ['lamb'], requiresVeggies: true, time: 15, baseProtein: 88, servingSize: '350g lamb', flavors: ['spicy', 'asian'],
+              steps: ['Slice lamb into thin strips', 'Season with cumin, chili flakes, garlic, ginger', 'Hot wok, cook quickly 2-3 min', 'Add peppers and onions', 'Finish with sesame oil and cilantro'],
+              tips: ['Famous Chinese Xi\'an dish — keto friendly', 'Don\'t overcrowd the wok'] },
+            { id: 'lamb_eggs', name: 'Lamb & Eggs Mediterranean', proteins: ['lamb', 'eggs'], requiresVeggies: true, time: 25, baseProtein: 95, servingSize: '250g lamb + 3 eggs', flavors: ['mediterranean', 'spicy'],
+              steps: ['Sear lamb pieces until browned', 'Add tomatoes, onions, cumin, paprika', 'Make wells, crack in eggs', 'Cover and cook until eggs set', 'Top with feta and herbs'],
+              tips: ['Like shakshuka but with lamb', 'Great for weekend brunch'] },
+
+            // ==================== PORK (5 solo + combos) ====================
+            { id: 'pork_chops', name: 'Juicy Pork Chops', proteins: ['pork'], requiresVeggies: true, time: 25, baseProtein: 88, servingSize: '350g pork chops', flavors: ['any', 'classic', 'latin', 'spicy'],
+              steps: ['Optional: brine 30 min for extra juicy', 'Pat dry, season generously', 'Medium-high pan with butter + oil', 'Sear 4-5 min per side', 'Baste with butter last 2 min'],
+              tips: ['145°F is safe AND juicy', 'Bone-in = more forgiving'], doneness: 'Golden brown, slightly pink inside' },
+            { id: 'pork_tenderloin', name: 'Garlic Herb Pork Tenderloin', proteins: ['pork'], requiresVeggies: true, time: 30, baseProtein: 88, servingSize: '350g pork tenderloin', flavors: ['any', 'classic', 'mediterranean'],
+              steps: ['Rub with garlic, rosemary, thyme, olive oil', 'Sear all sides in hot pan', 'Finish in 400°F oven 15-18 min', 'Rest 5 minutes', 'Slice into medallions'],
+              tips: ['Tenderloin is very lean — don\'t overcook', '145°F internal temp is perfect'], doneness: 'Slightly pink in center' },
+            { id: 'pork_stirfry', name: 'Ginger Pork Stir-Fry', proteins: ['pork'], requiresVeggies: true, time: 15, baseProtein: 88, servingSize: '350g pork', flavors: ['asian', 'spicy'],
+              steps: ['Slice pork loin into thin strips', 'Marinate in coconut aminos, ginger, garlic', 'Hot wok with sesame oil', 'Cook pork 3-4 min', 'Add veggies, toss with sauce'],
+              tips: ['Slice against the grain for tenderness', 'Cook in batches if needed'] },
+            { id: 'pork_carnitas', name: 'Carnitas Bowl 🇻🇪', proteins: ['pork'], requiresVeggies: true, time: 60, baseProtein: 88, servingSize: '350g pork shoulder', flavors: ['latin', 'spicy'],
+              steps: ['Season pork with cumin, oregano, garlic, citrus', 'Slow cook until falling apart (can use pressure cooker)', 'Shred and crisp under broiler', 'Serve over lettuce with guac, salsa', 'Top with pickled onions'],
+              tips: ['Traditional Mexican — also popular in Venezuela', 'The crispy edges are the best part'] },
+            { id: 'pork_greek', name: 'Greek Pork Souvlaki', proteins: ['pork'], requiresVeggies: true, time: 25, baseProtein: 88, servingSize: '350g pork', flavors: ['mediterranean'],
+              steps: ['Cube pork, marinate in lemon, oregano, garlic, olive oil', 'Thread onto skewers', 'Grill 4-5 min per side', 'Serve with tzatziki and Greek salad', 'Top with fresh dill'],
+              tips: ['Classic Greek street food', 'Great for meal prep — marinate overnight'] },
+            { id: 'pork_eggs', name: 'Pork & Eggs Breakfast Plate', proteins: ['pork', 'eggs'], requiresVeggies: true, time: 20, baseProtein: 95, servingSize: '250g pork + 3 eggs', flavors: ['any', 'classic', 'latin'],
+              steps: ['Cook pork (chops or sliced tenderloin)', 'Set aside, keep warm', 'Fry eggs in same pan', 'Plate together with sautéed veggies'],
+              tips: ['Perfect high-protein breakfast', 'Add avocado for healthy fats'] },
+
+            // ==================== EGGS (3 solo — always combos recommended) ====================
+            { id: 'egg_scramble', name: 'Ultimate Egg Scramble', proteins: ['eggs'], requiresVeggies: false, time: 10, baseProtein: 36, servingSize: '6 eggs', flavors: ['any', 'classic', 'mediterranean', 'spicy'], lowProteinWarning: true,
+              steps: ['Beat 6 eggs with salt', 'Melt butter over LOW heat', 'Add eggs, stir slowly with spatula', 'Remove while still slightly wet'],
+              tips: ['⚠️ Only ~36g protein — add meat side', 'Gordon Ramsay method: low heat = creamy'], doneness: 'Soft, creamy curds' },
+            { id: 'egg_frittata', name: 'Loaded Veggie Frittata', proteins: ['eggs'], requiresVeggies: true, time: 25, baseProtein: 42, servingSize: '7 eggs', flavors: ['any', 'mediterranean', 'classic'], lowProteinWarning: true,
+              steps: ['Sauté veggies in oven-safe pan', 'Beat eggs with cheese, herbs, salt', 'Pour eggs over veggies', 'Cook on stovetop 5 min until edges set', 'Finish under broiler 3-4 min'],
+              tips: ['⚠️ Only ~42g protein — add meat or more cheese', 'Great for meal prep — lasts 4 days'] },
+            { id: 'egg_shakshuka', name: 'Classic Shakshuka', proteins: ['eggs'], requiresVeggies: true, time: 25, baseProtein: 36, servingSize: '6 eggs', flavors: ['mediterranean', 'spicy'], lowProteinWarning: true,
+              steps: ['Sauté onion, peppers, garlic', 'Add tomatoes, cumin, paprika, harissa', 'Simmer 10 min until thick', 'Make wells, crack in eggs', 'Cover until eggs set, whites firm, yolks runny'],
+              tips: ['⚠️ Add feta or meat for more protein', 'Middle Eastern comfort food'] },
         ];
 
-        function MealPlanner() {
-          const [activeTab, setActiveTab] = useState('planner');
-          const [selectedProteins, setSelectedProteins] = useState([]);
-          const [selectedVeggies, setSelectedVeggies] = useState([]);
-          const [selectedCheese, setSelectedCheese] = useState([]);
-          const [meals, setMeals] = useState([]);
-          const [showMeals, setShowMeals] = useState(false);
-          const [showLove, setShowLove] = useState(false);
-          const [loveMessage, setLoveMessage] = useState('');
-          const [selectedDressing, setSelectedDressing] = useState(null);
-          const [suggestions, setSuggestions] = useState([]);
+        const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+        const formatDate = (d) => new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const save = (k, v) => { try { localStorage.setItem('nk4_'+k, JSON.stringify(v)); } catch(e) {} };
+        const load = (k, d) => { try { const v = localStorage.getItem('nk4_'+k); return v ? JSON.parse(v) : d; } catch(e) { return d; } };
 
-          const toggleItem = (id, selected, setSelected) => {
-            if (selected.includes(id)) {
-              setSelected(selected.filter(i => i !== id));
-            } else {
-              setSelected([...selected, id]);
-            }
-            setShowMeals(false);
-            setShowLove(false);
-          };
-
-          const getRandomGradient = () => gradients[Math.floor(Math.random() * gradients.length)];
-          const getRandomStyle = () => cookingStyles[Math.floor(Math.random() * cookingStyles.length)];
-          const getRandomDressing = () => dressings[Math.floor(Math.random() * dressings.length)];
-
-          const generateSuggestions = () => {
-            const suggestions = [];
-            const hasEggs = selectedProteins.includes('eggs');
-            const hasChicken = selectedProteins.includes('chicken');
-            const hasBeef = selectedProteins.includes('beef');
-            const hasAvocado = selectedVeggies.includes('avocado');
-            const hasCheese = selectedCheese.length > 0;
-            const hasGreens = selectedVeggies.some(v => ['spinach', 'kale', 'arugula', 'lettuce'].includes(v));
-            const hasAnyVeggies = selectedVeggies.length > 0;
-            const totalProteinSources = selectedProteins.length;
-            const lowProteinOnly = selectedProteins.every(p => ['shrimp', 'eggs', 'fish'].includes(p));
-
-            if (!hasAnyVeggies) {
-              suggestions.push({
-                icon: "🥗",
-                text: "Add some veggies! They're unlimited and keep you full longer.",
-                action: "Try broccoli, peppers, or a fresh salad"
-              });
-            }
-
-            if (hasAnyVeggies && !hasGreens && selectedProteins.length > 0) {
-              suggestions.push({
-                icon: "🥬",
-                text: "A bed of greens would make this even better.",
-                action: "Arugula or kale adds nice texture"
-              });
-            }
-
-            if (!hasAvocado && selectedProteins.length > 0) {
-              suggestions.push({
-                icon: "🥑",
-                text: "Avocado adds healthy fats and makes it more satisfying.",
-                action: "Half an avocado is perfect"
-              });
-            }
-
-            if (!hasCheese && selectedProteins.length > 0) {
-              suggestions.push({
-                icon: "🧀",
-                text: "A little cheese on top would elevate this.",
-                action: "Feta crumbles or shaved parmesan"
-              });
-            }
-
-            if (hasBeef && !hasEggs) {
-              suggestions.push({
-                icon: "🍳",
-                text: "A fried egg on top takes steak to the next level.",
-                action: "Runny yolk = extra sauce"
-              });
-            }
-
-            if (hasChicken && !hasEggs && Math.random() > 0.5) {
-              suggestions.push({
-                icon: "🥚",
-                text: "Adding eggs boosts protein and adds variety.",
-                action: "Scrambled, fried, or in an omelette"
-              });
-            }
-
-            if (lowProteinOnly && totalProteinSources === 1) {
-              suggestions.push({
-                icon: "💪",
-                text: "This might be light on protein. Consider adding more.",
-                action: "Chicken or beef would complete this meal"
-              });
-            }
-
-            if (hasEggs && !hasChicken && !hasBeef && !selectedProteins.includes('salmon') && !selectedProteins.includes('lamb') && !selectedProteins.includes('pork')) {
-              suggestions.push({
-                icon: "🥩",
-                text: "Eggs alone won't hit 80-100g protein.",
-                action: "Add chicken, beef, or fish to reach the target"
-              });
-            }
-
-            return suggestions.sort(() => 0.5 - Math.random()).slice(0, 2);
-          };
-
-          const generateMeals = () => {
-            const generated = [];
-            const selectedVeggieObjects = selectedVeggies.map(v => vegetables.find(veg => veg.id === v));
-            const saladVeggies = selectedVeggieObjects.filter(v => v?.salad);
-            const cookingVeggies = selectedVeggieObjects.filter(v => !v?.salad || ['spinach', 'peppers', 'onions'].includes(v?.id));
-            const cheese = selectedCheese.length > 0 ? cheeses.find(c => c.id === selectedCheese[0])?.name : null;
-            const hasEggs = selectedProteins.includes('eggs');
-            const hasChicken = selectedProteins.includes('chicken');
-            const hasBeef = selectedProteins.includes('beef');
-            const hasGround = selectedProteins.includes('ground');
-            const hasSalmon = selectedProteins.includes('salmon');
-            const hasFish = selectedProteins.includes('fish');
-            const hasLamb = selectedProteins.includes('lamb');
-            const hasPork = selectedProteins.includes('pork');
-            const hasShrimp = selectedProteins.includes('shrimp');
-            
-            const veggieNames = selectedVeggieObjects.map(v => v?.name).filter(Boolean).join(', ') || 'seasonal vegetables';
-            const saladVeggieNames = saladVeggies.map(v => v?.name).filter(Boolean).join(', ');
-            const cookingVeggieNames = cookingVeggies.map(v => v?.name).filter(Boolean).join(', ') || 'vegetables';
-
-            if (hasEggs && hasChicken) {
-              generated.push({
-                name: "Loaded Chicken Omelette",
-                desc: `5-egg omelette stuffed with 200g shredded chicken${cookingVeggieNames ? ', ' + cookingVeggieNames : ''}${cheese ? ' and ' + cheese : ''}`,
-                protein: 80,
-                tip: "Beat eggs well, cook on medium-low in butter. Add fillings when almost set, fold in half.",
-                color: getRandomGradient(),
-                type: 'omelette'
-              });
-              
-              generated.push({
-                name: "Chicken & Eggs Power Plate",
-                desc: `350g ${getRandomStyle()} chicken breast + 3 eggs any style + ${cookingVeggieNames}${cheese ? ' + ' + cheese : ''}`,
-                protein: 100,
-                tip: "Season chicken with garlic, paprika, cumin. Cook eggs in the same pan after.",
-                color: getRandomGradient(),
-                type: 'plate'
-              });
-            }
-
-            if (hasEggs && hasBeef) {
-              generated.push({
-                name: "Steak & Eggs Classic",
-                desc: `250g ${getRandomStyle()} steak + 4 eggs (any style) + ${cookingVeggieNames}`,
-                protein: 87,
-                tip: "Let steak rest 5 min before cutting. Runny yolks = extra sauce.",
-                color: getRandomGradient(),
-                type: 'plate'
-              });
-              
-              generated.push({
-                name: "Pabellón Sin Arroz 🇻🇪",
-                desc: `300g carne mechada + 2 huevos fritos + ${cookingVeggieNames}. Sin arroz, sin tajadas—puro sabor.`,
-                protein: 87,
-                tip: "La carne mechada queda mejor si la desmechas fina. Huevo con bordes crujientes.",
-                color: "from-yellow-400 to-red-500",
-                type: 'venezuelan'
-              });
-            }
-
-            if (hasEggs && hasGround) {
-              if (selectedVeggies.includes('tomatoes') || selectedVeggies.includes('peppers') || selectedVeggies.includes('onions')) {
-                generated.push({
-                  name: "Meaty Shakshuka",
-                  desc: `5 eggs poached in spiced tomato sauce with 200g ground beef, peppers, onions${cheese === 'feta' ? ' + crumbled feta' : ''}`,
-                  protein: 80,
-                  tip: "Cook beef first, add tomatoes and spices, make wells for eggs, cover until whites set.",
-                  color: getRandomGradient(),
-                  type: 'shakshuka'
-                });
-              }
-              
-              generated.push({
-                name: "Breakfast Burger Bowl",
-                desc: `300g seasoned ground beef + 3 fried eggs + ${saladVeggieNames || 'lettuce, tomato'}${cheese ? ' + ' + cheese : ''} + mustard`,
-                protein: 93,
-                tip: "Crispy edges on the beef. Runny yolks. Stack it like a deconstructed burger.",
-                color: getRandomGradient(),
-                type: 'bowl'
-              });
-            }
-
-            if (hasEggs && hasSalmon) {
-              generated.push({
-                name: "Salmon Eggs Benedict (No Muffin)",
-                desc: `250g ${getRandomStyle()} salmon + 3 poached eggs + ${cookingVeggieNames}${selectedVeggies.includes('avocado') ? '' : ' + avocado if available'}`,
-                protein: 78,
-                tip: "Poach eggs in barely simmering water with splash of vinegar. 3 min for runny yolks.",
-                color: getRandomGradient(),
-                type: 'plate'
-              });
-            }
-
-            if (hasEggs && !hasChicken && !hasBeef && !hasGround && !hasSalmon) {
-              generated.push({
-                name: "Ultimate Egg Scramble",
-                desc: `6 eggs scrambled with ${cookingVeggieNames}${cheese ? ' + ' + cheese : ''} — needs a protein partner!`,
-                protein: 36,
-                tip: "⚠️ Only 36g protein. Add 200g chicken/beef on the side to hit target.",
-                color: "from-yellow-400 to-amber-500",
-                type: 'eggs-only',
-                warning: true
-              });
-            }
-
-            if (hasChicken && !hasEggs) {
-              const style = getRandomStyle();
-              generated.push({
-                name: `${style.charAt(0).toUpperCase() + style.slice(1)} Chicken Plate`,
-                desc: `400g ${style} chicken (thighs or breast) + ${cookingVeggieNames}${cheese ? ' + ' + cheese : ''}`,
-                protein: 100,
-                tip: "Thighs = juicier, breast = leaner. Both work. Season generously.",
-                color: getRandomGradient(),
-                type: 'plate'
-              });
-            }
-
-            if (hasChicken && saladVeggies.length >= 2) {
-              const dressing = getRandomDressing();
-              generated.push({
-                name: "Grilled Chicken Power Salad",
-                desc: `350g sliced grilled chicken over ${saladVeggieNames}${cheese ? ' + ' + cheese : ''}`,
-                protein: 88,
-                tip: `Dressing: ${dressing.name} — ${dressing.recipe}`,
-                color: getRandomGradient(),
-                type: 'salad',
-                dressing: dressing
-              });
-            }
-
-            if (hasBeef && !hasEggs) {
-              generated.push({
-                name: "Churrasco Night",
-                desc: `350g grilled flank steak + chimichurri + ${cookingVeggieNames}`,
-                protein: 88,
-                tip: "Chimichurri: parsley, garlic, olive oil, red wine vinegar, oregano. Blend rough.",
-                color: getRandomGradient(),
-                type: 'plate'
-              });
-            }
-
-            if (hasBeef && saladVeggies.length >= 2) {
-              const dressing = getRandomDressing();
-              generated.push({
-                name: "Thai Beef Salad Style",
-                desc: `300g sliced ${getRandomStyle()} steak over ${saladVeggieNames}${cheese ? ' + ' + cheese : ''}`,
-                protein: 75,
-                tip: `Dressing: ${dressing.name} — ${dressing.recipe}. Add chili flakes for heat.`,
-                color: getRandomGradient(),
-                type: 'salad',
-                dressing: dressing
-              });
-            }
-
-            if (hasGround && !hasEggs) {
-              generated.push({
-                name: "Beef Lettuce Wraps",
-                desc: `350g seasoned ground beef in lettuce cups + ${cookingVeggieNames}${cheese ? ' + ' + cheese : ''}`,
-                protein: 88,
-                tip: "Use butter lettuce or romaine hearts as cups. Top with sour cream if desired.",
-                color: getRandomGradient(),
-                type: 'wraps'
-              });
-
-              if (selectedVeggies.includes('zucchini')) {
-                generated.push({
-                  name: "Stuffed Zucchini Boats",
-                  desc: `4 zucchini halves stuffed with 350g seasoned ground beef${cheese ? ' + melted ' + cheese + ' on top' : ''}`,
-                  protein: 88,
-                  tip: "Hollow out zucchini, fill with beef mixture, bake at 200°C for 20 min.",
-                  color: getRandomGradient(),
-                  type: 'baked'
-                });
-              }
-            }
-
-            if (hasSalmon && !hasEggs) {
-              generated.push({
-                name: "Crispy Skin Salmon",
-                desc: `350g salmon fillet, skin-on + ${cookingVeggieNames}${selectedVeggies.includes('avocado') ? '' : ' + avocado recommended'}`,
-                protein: 77,
-                tip: "Start skin-side down in hot pan, press flat. Don't flip until skin is crispy (4-5 min).",
-                color: getRandomGradient(),
-                type: 'plate'
-              });
-            }
-
-            if (hasSalmon && saladVeggies.length >= 2) {
-              const dressing = getRandomDressing();
-              generated.push({
-                name: "Salmon Salad Bowl",
-                desc: `300g ${getRandomStyle()} salmon over ${saladVeggieNames}${cheese ? ' + ' + cheese : ''}`,
-                protein: 66,
-                tip: `Dressing: ${dressing.name} — ${dressing.recipe}`,
-                color: getRandomGradient(),
-                type: 'salad',
-                dressing: dressing
-              });
-            }
-
-            if (hasLamb) {
-              generated.push({
-                name: "Herb-Crusted Lamb Chops",
-                desc: `350g lamb chops with rosemary & garlic + ${cookingVeggieNames}${cheese === 'feta' ? ' + crumbled feta' : ''}`,
-                protein: 88,
-                tip: "High heat, 3-4 min per side for medium. Rest before serving. Mint sauce optional.",
-                color: getRandomGradient(),
-                type: 'plate'
-              });
-
-              if (hasEggs) {
-                generated.push({
-                  name: "Middle Eastern Lamb & Eggs",
-                  desc: `250g ground lamb + 3 eggs baked on top + ${cookingVeggieNames}${cheese === 'feta' ? ' + feta' : ''} + cumin, paprika`,
-                  protein: 80,
-                  tip: "Cook lamb with spices, make wells, crack eggs in, bake until whites set.",
-                  color: getRandomGradient(),
-                  type: 'baked'
-                });
-              }
-            }
-
-            if (hasPork) {
-              generated.push({
-                name: "Juicy Pork Chops",
-                desc: `350g thick-cut pork chops + ${cookingVeggieNames}${cheese ? ' + ' + cheese : ''}`,
-                protein: 88,
-                tip: "Brine in salted water 30 min for extra juicy. Sear both sides, finish in oven.",
-                color: getRandomGradient(),
-                type: 'plate'
-              });
-
-              if (hasEggs) {
-                generated.push({
-                  name: "Pork & Eggs Breakfast",
-                  desc: `300g pork loin medallions + 3 fried eggs + ${cookingVeggieNames}`,
-                  protein: 93,
-                  tip: "Slice pork into medallions, pound thin, quick sear. Eggs in same pan.",
-                  color: getRandomGradient(),
-                  type: 'plate'
-                });
-              }
-            }
-
-            if (hasShrimp) {
-              generated.push({
-                name: "Garlic Butter Shrimp",
-                desc: `300g shrimp + loads of garlic + butter + ${cookingVeggieNames}`,
-                protein: 60,
-                tip: "⚠️ Only 60g protein. Pair with another protein source to hit target.",
-                color: getRandomGradient(),
-                type: 'plate',
-                warning: true
-              });
-
-              if (hasChicken || hasBeef || hasFish) {
-                const partner = hasChicken ? 'chicken' : hasBeef ? 'beef' : 'fish';
-                generated.push({
-                  name: "Surf & Turf",
-                  desc: `200g shrimp + 200g ${partner} + ${cookingVeggieNames}`,
-                  protein: 90,
-                  tip: "Cook proteins separately for best results. Combine on plate.",
-                  color: getRandomGradient(),
-                  type: 'plate'
-                });
-              }
-            }
-
-            if (hasFish && !hasShrimp) {
-              generated.push({
-                name: "Mediterranean Baked Fish",
-                desc: `350g white fish (sea bass, branzino, cod) + ${cookingVeggieNames} + lemon, capers, olives`,
-                protein: 70,
-                tip: "Bake at 200°C for 12-15 min. Fish is done when it flakes easily.",
-                color: getRandomGradient(),
-                type: 'baked'
-              });
-
-              if (hasEggs) {
-                generated.push({
-                  name: "Fish & Eggs Plate",
-                  desc: `300g ${getRandomStyle()} white fish + 3 eggs + ${cookingVeggieNames}`,
-                  protein: 78,
-                  tip: "Light, clean protein combo. Season fish simply—salt, pepper, lemon.",
-                  color: getRandomGradient(),
-                  type: 'plate'
-                });
-              }
-            }
-
-            if (saladVeggies.length >= 3 && selectedProteins.length > 0) {
-              const mainProtein = selectedProteins[0];
-              const proteinName = proteins.find(p => p.id === mainProtein)?.name || mainProtein;
-              const dressing = getRandomDressing();
-              generated.push({
-                name: `Big ${proteinName} Salad`,
-                desc: `350g ${getRandomStyle()} ${proteinName.toLowerCase()} over a bed of ${saladVeggieNames}${cheese ? ' + ' + cheese : ''}`,
-                protein: 75,
-                tip: `Dressing: ${dressing.name} — ${dressing.recipe}`,
-                color: getRandomGradient(),
-                type: 'salad',
-                dressing: dressing
-              });
-            }
-
-            if (generated.length === 0 && selectedProteins.length > 0) {
-              const style = getRandomStyle();
-              generated.push({
-                name: "Simple Protein Plate",
-                desc: `350g ${style} ${selectedProteins.map(p => proteins.find(pr => pr.id === p)?.name).join(' or ')} + ${veggieNames}`,
-                protein: 85,
-                tip: "Keep it simple: good protein + vegetables + cook in butter or olive oil.",
-                color: getRandomGradient(),
-                type: 'plate'
-              });
-            }
-
-            const shuffled = generated.sort(() => 0.5 - Math.random());
-            const types = new Set();
-            const varied = shuffled.filter(meal => {
-              if (types.has(meal.type)) return false;
-              types.add(meal.type);
-              return true;
-            }).slice(0, 4);
-
-            if (varied.length < 4) {
-              const remaining = shuffled.filter(m => !varied.includes(m)).slice(0, 4 - varied.length);
-              varied.push(...remaining);
-            }
-
-            setMeals(varied);
-            setShowMeals(true);
-            setShowLove(false);
-            setSuggestions(generateSuggestions());
-
-            setSelectedDressing(getRandomDressing());
-
-            setTimeout(() => {
-              const randomMessage = loveMessages[Math.floor(Math.random() * loveMessages.length)];
-              setLoveMessage(randomMessage);
-              setShowLove(true);
-            }, 2500);
-          };
-
-          const reset = () => {
-            setSelectedProteins([]);
-            setSelectedVeggies([]);
-            setSelectedCheese([]);
-            setMeals([]);
-            setShowMeals(false);
-            setShowLove(false);
-            setSuggestions([]);
-          };
-
-          const closeLoveMessage = () => {
-            setShowLove(false);
-          };
-
-          return (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-              {/* Background */}
-              <div className="fixed inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl"></div>
-                <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
-                <div className="absolute top-1/2 left-1/2 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl"></div>
-              </div>
-
-              {/* Love Message Popup */}
-              {showLove && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={closeLoveMessage}>
-                  <div className="absolute inset-0 bg-black/70 backdrop-blur-md">
-                    <div className="absolute inset-0 overflow-hidden">
-                      {[...Array(12)].map((_, i) => (
-                        <div
-                          key={i}
-                          className="absolute text-2xl animate-float-up"
-                          style={{
-                            left: `${Math.random() * 100}%`,
-                            animationDelay: `${Math.random() * 3}s`,
-                            animationDuration: `${3 + Math.random() * 2}s`
-                          }}
-                        >
-                          {['💕', '💖', '❤️', '💗', '💝', '✨'][Math.floor(Math.random() * 6)]}
-                        </div>
-                      ))}
+        // ==================== COMPONENTS ====================
+        
+        function Timer({ minutes, label, onClose }) {
+            const [timeLeft, setTimeLeft] = useState(minutes * 60);
+            const [running, setRunning] = useState(true);
+            useEffect(() => {
+                if (!running || timeLeft <= 0) { if (timeLeft <= 0 && navigator.vibrate) navigator.vibrate([500, 200, 500]); return; }
+                const i = setInterval(() => setTimeLeft(t => t - 1), 1000);
+                return () => clearInterval(i);
+            }, [running, timeLeft]);
+            const progress = ((minutes * 60 - timeLeft) / (minutes * 60)) * 100;
+            return (
+                <div className="fixed bottom-24 left-4 right-4 card rounded-3xl p-5 shadow-soft-lg z-40 animate-slide-up border border-cream-300">
+                    <div className="flex items-center justify-between mb-3">
+                        <span className="text-warm-800 font-semibold">{label}</span>
+                        <button onClick={onClose} className="text-warm-600 hover:text-warm-800 text-xl">×</button>
                     </div>
-                  </div>
-                  
-                  <div 
-                    className="relative animate-love-entrance"
-                    onClick={e => e.stopPropagation()}
-                  >
-                    <div className="absolute -inset-4 bg-gradient-to-r from-pink-500 via-rose-500 to-red-500 rounded-[40px] blur-2xl opacity-40 animate-pulse-slow"></div>
-                    
-                    <div className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-[32px] p-8 max-w-sm w-full border border-pink-500/30 shadow-2xl">
-                      
-                      <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                        <div className="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-semibold px-4 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
-                          <span className="animate-pulse">💌</span>
-                          <span>From Diego, with love</span>
+                    <div className="flex items-center gap-4">
+                        <div className={`text-4xl font-bold font-mono ${timeLeft <= 60 ? 'text-coral-500' : 'text-warm-800'}`}>
+                            {Math.floor(timeLeft/60)}:{(timeLeft%60).toString().padStart(2,'0')}
                         </div>
-                      </div>
-                      
-                      <div className="flex justify-center mb-6 mt-2">
-                        <div className="relative">
-                          <div className="absolute inset-0 animate-ping-slow">
-                            <div className="w-20 h-20 rounded-full border-2 border-pink-400/30"></div>
-                          </div>
-                          <div className="absolute inset-0 animate-ping-slower">
-                            <div className="w-20 h-20 rounded-full border border-pink-400/20"></div>
-                          </div>
-                          <div className="relative w-20 h-20 bg-gradient-to-br from-pink-500 to-rose-600 rounded-full flex items-center justify-center shadow-lg shadow-pink-500/30">
-                            <span className="text-4xl animate-heartbeat">💕</span>
-                          </div>
+                        <div className="flex-1 h-2 bg-cream-200 rounded-full overflow-hidden">
+                            <div className="h-full bg-gradient-to-r from-coral-500 to-sand-500 transition-all duration-1000" style={{width:`${progress}%`}} />
                         </div>
-                      </div>
-                      
-                      <div className="text-center mb-6">
-                        <p className="text-white text-xl font-medium leading-relaxed animate-fade-in-up">
-                          {loveMessage}
-                        </p>
-                      </div>
-                      
-                      <div className="flex items-center justify-center gap-3 mb-6">
-                        <div className="h-px w-12 bg-gradient-to-r from-transparent to-pink-500/50"></div>
-                        <span className="text-pink-400 text-sm">para mi Nene</span>
-                        <div className="h-px w-12 bg-gradient-to-l from-transparent to-pink-500/50"></div>
-                      </div>
-                      
-                      <button 
-                        onClick={closeLoveMessage}
-                        className="w-full py-3.5 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 rounded-2xl text-white font-medium transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-pink-500/25 active:scale-[0.98]"
-                      >
-                        Ay Diego, qué intenso eres 😅
-                      </button>
-                      
-                      <div className="absolute top-4 right-4 text-pink-500/20 text-2xl">✨</div>
-                      <div className="absolute bottom-4 left-4 text-pink-500/20 text-2xl">✨</div>
+                        <button onClick={() => setRunning(!running)} className="w-12 h-12 rounded-2xl bg-cream-200 hover:bg-cream-300 flex items-center justify-center text-xl press">
+                            {running ? '⏸️' : '▶️'}
+                        </button>
                     </div>
-                  </div>
+                    {timeLeft <= 0 && <div className="mt-3 text-coral-500 font-semibold text-center animate-pulse">⏰ Done!</div>}
                 </div>
-              )}
-
-              <div className="relative max-w-md mx-auto px-4 py-8">
-                {/* Header */}
-                <div className="text-center mb-8">
-                                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl overflow-hidden shadow-lg shadow-orange-500/25 mb-4"><img src="apple-touch-icon.png" className="w-full h-full object-cover" alt="Nene's Kitchen" /></div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Nene's Kitchen</h1>
-                </div>
-
-                {/* Tabs */}
-                <div className="flex gap-2 p-1.5 bg-slate-800/50 backdrop-blur rounded-2xl mb-6">
-                  <button
-                    onClick={() => setActiveTab('planner')}
-                    className={`flex-1 py-3 px-4 rounded-xl font-medium transition-all ${
-                      activeTab === 'planner'
-                        ? 'bg-white text-slate-900 shadow-lg'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    ✨ Create Meal
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('rules')}
-                    className={`flex-1 py-3 px-4 rounded-xl font-medium transition-all ${
-                      activeTab === 'rules'
-                        ? 'bg-white text-slate-900 shadow-lg'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    📋 Quick Guide
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('dressings')}
-                    className={`flex-1 py-3 px-4 rounded-xl font-medium transition-all ${
-                      activeTab === 'dressings'
-                        ? 'bg-white text-slate-900 shadow-lg'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    🥗 Dressings
-                  </button>
-                </div>
-
-                {activeTab === 'planner' && (
-                  <>
-                    {/* Stats Bar - Horizontal Pill */}
-                    <div className="bg-slate-800/60 backdrop-blur rounded-full px-6 py-3 mb-6 border border-slate-700/50">
-                      <div className="flex items-center justify-center gap-3 text-sm">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-slate-400">Meals</span>
-                          <span className="text-white font-semibold">2/day</span>
-                        </div>
-                        <span className="text-slate-600">•</span>
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-slate-400">Protein</span>
-                          <span className="text-amber-400 font-semibold">80-100g</span>
-                        </div>
-                        <span className="text-slate-600">•</span>
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-slate-400">Cals</span>
-                          <span className="text-white font-semibold">~1,800</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Proteins */}
-                    <div className="bg-slate-800/30 backdrop-blur rounded-3xl p-5 mb-4 border border-slate-700/30">
-                      <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-400 to-rose-500 flex items-center justify-center text-lg">🥩</span>
-                        What protein do we have?
-                      </h2>
-                      <div className="grid grid-cols-3 gap-2">
-                        {proteins.map(p => (
-                          <button
-                            key={p.id}
-                            onClick={() => toggleItem(p.id, selectedProteins, setSelectedProteins)}
-                            className={`p-3 rounded-2xl text-center transition-all ${
-                              selectedProteins.includes(p.id)
-                                ? 'bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-lg shadow-orange-500/25 scale-105'
-                                : 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
-                            }`}
-                          >
-                            <span className="text-2xl block mb-1">{p.emoji}</span>
-                            <span className="text-xs font-medium">{p.name}</span>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Vegetables */}
-                    <div className="bg-slate-800/30 backdrop-blur rounded-3xl p-5 mb-4 border border-slate-700/30">
-                      <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-green-500 flex items-center justify-center text-lg">🥬</span>
-                        What veggies?
-                      </h2>
-                      <div className="grid grid-cols-4 gap-2">
-                        {vegetables.map(v => (
-                          <button
-                            key={v.id}
-                            onClick={() => toggleItem(v.id, selectedVeggies, setSelectedVeggies)}
-                            className={`p-2 rounded-2xl text-center transition-all relative ${
-                              selectedVeggies.includes(v.id)
-                                ? 'bg-gradient-to-br from-emerald-400 to-green-500 text-white shadow-lg shadow-green-500/25 scale-105'
-                                : 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
-                            }`}
-                          >
-                            <span className="text-xl block mb-0.5">{v.emoji}</span>
-                            <span className="text-[10px] font-medium">{v.name}</span>
-                            {v.warning && (
-                              <span className="absolute -top-1 -right-1 w-4 h-4 bg-amber-400 rounded-full text-[8px] flex items-center justify-center">⚠️</span>
-                            )}
-                          </button>
-                        ))}
-                      </div>
-                      {selectedVeggies.includes('spinach') && (
-                        <div className="mt-3 p-3 bg-amber-400/10 rounded-xl border border-amber-400/20">
-                          <p className="text-amber-400 text-xs">💡 Spinach: Max 2-3x per week. Rotate with arugula, kale, or lettuce!</p>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Cheese */}
-                    <div className="bg-slate-800/30 backdrop-blur rounded-3xl p-5 mb-6 border border-slate-700/30">
-                      <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-lg">🧀</span>
-                        Cheese? (Max 50g)
-                      </h2>
-                      <div className="grid grid-cols-3 gap-2">
-                        {cheeses.map(c => (
-                          <button
-                            key={c.id}
-                            onClick={() => toggleItem(c.id, selectedCheese, setSelectedCheese)}
-                            className={`p-3 rounded-2xl text-center transition-all ${
-                              selectedCheese.includes(c.id)
-                                ? 'bg-gradient-to-br from-yellow-400 to-amber-500 text-white shadow-lg shadow-amber-500/25 scale-105'
-                                : 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
-                            }`}
-                          >
-                            <span className="text-2xl block mb-1">{c.emoji}</span>
-                            <span className="text-xs font-medium">{c.name}</span>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Generate Button */}
-                    <button
-                      onClick={generateMeals}
-                      disabled={selectedProteins.length === 0}
-                      className={`w-full py-4 rounded-2xl font-semibold text-lg transition-all ${
-                        selectedProteins.length > 0
-                          ? 'bg-gradient-to-r from-violet-500 to-purple-600 text-white shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-[1.02]'
-                          : 'bg-slate-700 text-slate-500 cursor-not-allowed'
-                      }`}
-                    >
-                      ✨ What can I make?
-                    </button>
-
-                    {selectedProteins.length > 0 && (
-                      <button
-                        onClick={reset}
-                        className="w-full py-3 mt-3 rounded-2xl font-medium text-rose-400 border border-rose-500/30 hover:bg-rose-500/10 hover:border-rose-500/50 transition-all"
-                      >
-                        ↺ Start Over
-                      </button>
-                    )}
-
-                    {/* Meal Results */}
-                    {showMeals && meals.length > 0 && (
-                      <div className="mt-6 space-y-4">
-                        <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
-                          <span>👨‍🍳</span> Here's what you can make
-                        </h2>
-                        {meals.map((meal, i) => (
-                          <div key={i} className="bg-slate-800/50 backdrop-blur rounded-3xl overflow-hidden border border-slate-700/30">
-                            <div className={`h-2 bg-gradient-to-r ${meal.color}`}></div>
-                            <div className="p-5">
-                              <div className="flex items-start justify-between mb-2">
-                                <h3 className="text-lg font-bold text-white">{meal.name}</h3>
-                                {meal.type === 'salad' && <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full">Salad</span>}
-                                {meal.type === 'omelette' && <span className="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded-full">Omelette</span>}
-                                {meal.type === 'venezuelan' && <span className="text-xs bg-red-500/20 text-red-400 px-2 py-1 rounded-full">🇻🇪</span>}
-                              </div>
-                              <p className="text-slate-300 text-sm mb-3">{meal.desc}</p>
-                              <div className="flex items-center gap-2 flex-wrap">
-                                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${meal.warning ? 'bg-amber-500/20 text-amber-400' : `bg-gradient-to-r ${meal.color} text-white`}`}>
-                                  ~{meal.protein}g protein
-                                </span>
-                              </div>
-                              {meal.tip && (
-                                <div className="mt-3 p-3 bg-slate-700/30 rounded-xl">
-                                  <p className="text-slate-400 text-xs">💡 {meal.tip}</p>
-                                </div>
-                              )}
-                              {meal.dressing && (
-                                <div className="mt-2 p-3 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
-                                  <p className="text-emerald-400 text-xs">🥗 <strong>{meal.dressing.name}:</strong> {meal.dressing.recipe}</p>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        ))}
-
-                        {/* Regenerate hint */}
-                        <p className="text-center text-slate-500 text-xs mt-4">
-                          Tap "What can I make?" again for different ideas ↻
-                        </p>
-
-                        {/* Smart Suggestions */}
-                        {suggestions.length > 0 && (
-                          <div className="mt-6">
-                            <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2 mb-3">
-                              <span>✨</span> Chef's Suggestions
-                            </h3>
-                            <div className="space-y-2">
-                              {suggestions.map((suggestion, i) => (
-                                <div key={i} className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 backdrop-blur rounded-2xl p-4 border border-cyan-500/20">
-                                  <div className="flex gap-3">
-                                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-cyan-500/20">
-                                      <span className="text-lg">{suggestion.icon}</span>
-                                    </div>
-                                    <div>
-                                      <p className="text-slate-200 text-sm font-medium">{suggestion.text}</p>
-                                      <p className="text-cyan-400 text-xs mt-1">{suggestion.action}</p>
-                                    </div>
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </>
-                )}
-
-                {activeTab === 'rules' && (
-                  <div className="space-y-4">
-                    {/* Targets */}
-                    <div className="bg-slate-800/30 backdrop-blur rounded-3xl p-5 border border-slate-700/30">
-                      <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <span>🎯</span> Daily Targets
-                      </h2>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="bg-slate-700/30 rounded-2xl p-4">
-                          <div className="text-xs text-slate-500 mb-1">Meals</div>
-                          <div className="text-white font-semibold">2 per day</div>
-                          <div className="text-slate-400 text-xs">12pm & 6pm</div>
-                        </div>
-                        <div className="bg-slate-700/30 rounded-2xl p-4">
-                          <div className="text-xs text-slate-500 mb-1">Protein</div>
-                          <div className="text-white font-semibold">80-100g</div>
-                          <div className="text-slate-400 text-xs">per meal</div>
-                        </div>
-                        <div className="bg-slate-700/30 rounded-2xl p-4">
-                          <div className="text-xs text-slate-500 mb-1">Meat/Fish</div>
-                          <div className="text-white font-semibold">300-400g</div>
-                          <div className="text-slate-400 text-xs">per meal</div>
-                        </div>
-                        <div className="bg-slate-700/30 rounded-2xl p-4">
-                          <div className="text-xs text-slate-500 mb-1">Vegetables</div>
-                          <div className="text-emerald-400 font-semibold">Unlimited!</div>
-                          <div className="text-slate-400 text-xs">go crazy</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Cooking Fats */}
-                    <div className="bg-slate-800/30 backdrop-blur rounded-3xl p-5 border border-slate-700/30">
-                      <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <span>🍳</span> Cooking Fats
-                      </h2>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="bg-emerald-500/10 rounded-2xl p-4 border border-emerald-500/20">
-                          <div className="text-emerald-400 font-semibold text-sm mb-2">✓ Use These</div>
-                          <div className="text-slate-300 text-sm">Butter, Olive Oil, Avocado Oil, Ghee</div>
-                        </div>
-                        <div className="bg-red-500/10 rounded-2xl p-4 border border-red-500/20">
-                          <div className="text-red-400 font-semibold text-sm mb-2">✕ Never Use</div>
-                          <div className="text-slate-300 text-sm">Vegetable, Canola, Sunflower, Corn oil</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Cheese */}
-                    <div className="bg-slate-800/30 backdrop-blur rounded-3xl p-5 border border-slate-700/30">
-                      <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <span>🧀</span> Cheese Rules
-                      </h2>
-                      <p className="text-slate-300 text-sm mb-3">Only these three, max 50g per meal:</p>
-                      <div className="flex gap-2 flex-wrap">
-                        <span className="px-4 py-2 bg-amber-400/20 text-amber-300 rounded-full text-sm font-medium">Feta</span>
-                        <span className="px-4 py-2 bg-amber-400/20 text-amber-300 rounded-full text-sm font-medium">Parmesan</span>
-                        <span className="px-4 py-2 bg-amber-400/20 text-amber-300 rounded-full text-sm font-medium">Halloumi</span>
-                      </div>
-                    </div>
-
-                    {/* Quick Tips */}
-                    <div className="bg-gradient-to-br from-violet-500/20 to-purple-500/20 rounded-3xl p-5 border border-violet-500/20">
-                      <h2 className="text-sm font-semibold text-violet-300 uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <span>⚡</span> Quick Reminders
-                      </h2>
-                      <ul className="space-y-2 text-sm text-slate-300">
-                        <li className="flex gap-2"><span className="text-violet-400">•</span> Each plate = big protein + lots of veggies</li>
-                        <li className="flex gap-2"><span className="text-violet-400">•</span> Cook with butter or olive oil only</li>
-                        <li className="flex gap-2"><span className="text-violet-400">•</span> Season generously—all spices are fine</li>
-                        <li className="flex gap-2"><span className="text-violet-400">•</span> He may not feel hungry—he still needs to eat</li>
-                        <li className="flex gap-2"><span className="text-violet-400">•</span> Spinach max 2-3x per week</li>
-                      </ul>
-                    </div>
-
-                    {/* Never List */}
-                    <div className="bg-gradient-to-br from-red-500/20 to-rose-500/20 rounded-3xl p-5 border border-red-500/20">
-                      <h2 className="text-sm font-semibold text-red-300 uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <span>🚫</span> Never List
-                      </h2>
-                      <ul className="space-y-1 text-sm text-slate-300">
-                        <li className="flex gap-2"><span className="text-red-400">✕</span> Sugar, honey, syrups</li>
-                        <li className="flex gap-2"><span className="text-red-400">✕</span> Bread, pasta, rice (except post-gym)</li>
-                        <li className="flex gap-2"><span className="text-red-400">✕</span> Arepas (occasional only)</li>
-                        <li className="flex gap-2"><span className="text-red-400">✕</span> Fried foods</li>
-                        <li className="flex gap-2"><span className="text-red-400">✕</span> Vegetable/seed oils</li>
-                        <li className="flex gap-2"><span className="text-red-400">✕</span> Juice, soda, sweet drinks</li>
-                        <li className="flex gap-2"><span className="text-red-400">✕</span> Ketchup, BBQ sauce</li>
-                        <li className="flex gap-2"><span className="text-red-400">✕</span> Potatoes, yuca, tajadas</li>
-                      </ul>
-                    </div>
-
-                    {/* Why */}
-                    <div className="bg-slate-800/30 backdrop-blur rounded-3xl p-5 border border-slate-700/30">
-                      <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
-                        <span>💙</span> Why This Matters
-                      </h2>
-                      <p className="text-slate-400 text-sm leading-relaxed">
-                        Diego has insulin resistance and fatty liver. His body can't process carbs and sugar properly right now. 
-                        This way of eating will help him lose 20kg and reverse the damage. 
-                        <span className="text-white font-medium"> It's temporary—not forever.</span>
-                      </p>
-                      <p className="text-slate-400 text-sm leading-relaxed mt-3">
-                        His medication reduces appetite—he may not feel hungry but still needs the protein to protect his muscles.
-                      </p>
-                    </div>
-
-                    {/* Love Note */}
-                    <div className="bg-gradient-to-br from-pink-500/20 to-rose-500/20 rounded-3xl p-5 border border-pink-500/20 text-center">
-                      <span className="text-4xl">💕</span>
-                      <p className="text-pink-300 text-sm mt-3 font-medium">
-                        Nene, technically this is a diet app.<br/>
-                        But really it's a "Diego owes Nene forever" app.<br/>
-                        Payment plan: unlimited backrubs for you. 💆‍♀️
-                      </p>
-                      <p className="text-pink-400/60 text-xs mt-3">— Your high-maintenance husband</p>
-                    </div>
-                  </div>
-                )}
-
-                {activeTab === 'dressings' && (
-                  <div className="space-y-4">
-                    <div className="bg-slate-800/30 backdrop-blur rounded-3xl p-5 border border-slate-700/30">
-                      <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <span>🥗</span> Approved Dressings
-                      </h2>
-                      <p className="text-slate-400 text-sm mb-4">All homemade, no sugar, no bad oils. Takes 2 minutes!</p>
-                      
-                      <div className="space-y-3">
-                        {dressings.map((d, i) => (
-                          <div key={i} className="bg-slate-700/30 rounded-2xl p-4">
-                            <h3 className="text-white font-semibold text-sm mb-1">{d.name}</h3>
-                            <p className="text-slate-400 text-xs">{d.recipe}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="bg-gradient-to-br from-emerald-500/20 to-green-500/20 rounded-3xl p-5 border border-emerald-500/20">
-                      <h2 className="text-sm font-semibold text-emerald-300 uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <span>✓</span> Base Ingredients to Keep
-                      </h2>
-                      <ul className="space-y-2 text-sm text-slate-300">
-                        <li className="flex gap-2"><span className="text-emerald-400">•</span> Extra virgin olive oil</li>
-                        <li className="flex gap-2"><span className="text-emerald-400">•</span> Lemons & limes</li>
-                        <li className="flex gap-2"><span className="text-emerald-400">•</span> Dijon mustard</li>
-                        <li className="flex gap-2"><span className="text-emerald-400">•</span> Balsamic vinegar</li>
-                        <li className="flex gap-2"><span className="text-emerald-400">•</span> Tahini</li>
-                        <li className="flex gap-2"><span className="text-emerald-400">•</span> Greek yogurt 0%</li>
-                        <li className="flex gap-2"><span className="text-emerald-400">•</span> Fresh garlic</li>
-                        <li className="flex gap-2"><span className="text-emerald-400">•</span> Fresh herbs (cilantro, parsley)</li>
-                      </ul>
-                    </div>
-
-                    <div className="bg-gradient-to-br from-red-500/20 to-rose-500/20 rounded-3xl p-5 border border-red-500/20">
-                      <h2 className="text-sm font-semibold text-red-300 uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <span>✕</span> Never Buy These
-                      </h2>
-                      <ul className="space-y-1 text-sm text-slate-300">
-                        <li className="flex gap-2"><span className="text-red-400">✕</span> Ranch (store-bought) — sugar + bad oils</li>
-                        <li className="flex gap-2"><span className="text-red-400">✕</span> Caesar (store-bought) — soybean oil</li>
-                        <li className="flex gap-2"><span className="text-red-400">✕</span> Thousand Island — sugar</li>
-                        <li className="flex gap-2"><span className="text-red-400">✕</span> Honey mustard — sugar</li>
-                        <li className="flex gap-2"><span className="text-red-400">✕</span> Any "light" or "fat-free" — extra sugar</li>
-                        <li className="flex gap-2"><span className="text-red-400">✕</span> Any bottled dressing — check ingredients!</li>
-                      </ul>
-                      <p className="text-slate-400 text-xs mt-3 italic">If it has soybean oil, canola oil, or sugar in ingredients = no.</p>
-                    </div>
-                  </div>
-                )}
-
-                {/* Footer */}
-                <div className="text-center mt-8 text-slate-500 text-xs">
-                  Made with 💕 for Nene
-                </div>
-              </div>
-            </div>
-          );
+            );
         }
 
-        ReactDOM.render(<MealPlanner />, document.getElementById('root'));
+        function BadgePopup({ badge, onClose }) {
+            return (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-warm-900/30 backdrop-blur-sm" onClick={onClose}>
+                    <div className="bg-gradient-to-br from-coral-500 to-sand-500 rounded-[2rem] p-8 text-center animate-bounce-in max-w-xs shadow-glow-coral" onClick={e => e.stopPropagation()}>
+                        <div className="text-6xl mb-4">{badge.emoji}</div>
+                        <h3 className="text-2xl font-bold text-white mb-2">{badge.name}</h3>
+                        <p className="text-white/80 mb-6">{badge.desc}</p>
+                        <button onClick={onClose} className="px-6 py-3 bg-white/20 hover:bg-white/30 rounded-2xl text-white font-medium press">
+                            ¡Gracias! 🙌
+                        </button>
+                    </div>
+                </div>
+            );
+        }
+
+        function GuideModal({ onClose, initialTab = 'guide' }) {
+            const [tab, setTab] = useState(initialTab);
+            return (
+                <div className="fixed inset-0 z-50 flex items-end justify-center bg-warm-900/20 backdrop-blur-sm" onClick={onClose}>
+                    <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[85vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
+                        <div className="flex gap-2 px-5 pb-4">
+                            {[{id:'guide',label:'📋 Guide'},{id:'dressings',label:'🥗 Dressings'}].map(t => (
+                                <button key={t.id} onClick={() => setTab(t.id)} className={`flex-1 py-2.5 rounded-2xl font-medium text-sm transition-all press ${tab === t.id ? 'bg-coral-500 text-white shadow-glow-coral' : 'bg-cream-200 text-warm-700 hover:bg-cream-300'}`}>
+                                    {t.label}
+                                </button>
+                            ))}
+                        </div>
+                        <div className="px-5 pb-8 overflow-y-auto max-h-[70vh] space-y-4">
+                            {tab === 'guide' && (<>
+                                <div className="card rounded-2xl p-5">
+                                    <h3 className="text-sm font-semibold text-warm-600 uppercase tracking-wider mb-4">🎯 Daily Targets</h3>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div className="bg-cream-100 rounded-xl p-3"><div className="text-warm-600 text-xs">Meals</div><div className="text-warm-800 font-bold text-lg">2/day</div></div>
+                                        <div className="bg-cream-100 rounded-xl p-3"><div className="text-warm-600 text-xs">Protein</div><div className="text-coral-500 font-bold text-lg">80-100g</div></div>
+                                        <div className="bg-cream-100 rounded-xl p-3"><div className="text-warm-600 text-xs">Meat/Fish</div><div className="text-warm-800 font-bold text-lg">300-400g</div></div>
+                                        <div className="bg-cream-100 rounded-xl p-3"><div className="text-warm-600 text-xs">Veggies</div><div className="text-sage-500 font-bold text-lg">Unlimited!</div></div>
+                                    </div>
+                                </div>
+                                <div className="card rounded-2xl p-5">
+                                    <h3 className="text-sm font-semibold text-warm-600 uppercase tracking-wider mb-3">🍳 Cooking Fats</h3>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div className="bg-sage-50 border border-sage-100 rounded-xl p-3"><div className="text-sage-600 font-semibold text-xs mb-1">✓ Use</div><div className="text-warm-700 text-xs">Butter, Olive Oil, Avocado Oil, Ghee</div></div>
+                                        <div className="bg-coral-50 border border-coral-100 rounded-xl p-3"><div className="text-coral-600 font-semibold text-xs mb-1">✕ Never</div><div className="text-warm-700 text-xs">Vegetable, Canola, Sunflower oil</div></div>
+                                    </div>
+                                </div>
+                                <div className="card rounded-2xl p-5">
+                                    <h3 className="text-sm font-semibold text-warm-600 uppercase tracking-wider mb-3">🧀 Cheese (max 50g)</h3>
+                                    <div className="flex gap-2">{cheeses.map(c => <span key={c.id} className="px-3 py-1.5 bg-sand-100 text-sand-600 rounded-full text-sm font-medium">{c.name}</span>)}</div>
+                                </div>
+                                <div className="bg-coral-50 border border-coral-100 rounded-2xl p-5">
+                                    <h3 className="text-sm font-semibold text-coral-600 uppercase tracking-wider mb-3">🚫 Never List</h3>
+                                    <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-warm-700">
+                                        <div>✕ Sugar, honey</div><div>✕ Bread, pasta, rice</div>
+                                        <div>✕ Arepas (rare)</div><div>✕ Seed/veg oils</div>
+                                        <div>✕ Juice, soda</div><div>✕ Potatoes, yuca</div>
+                                    </div>
+                                </div>
+                                <div className="bg-gradient-to-br from-coral-50 to-sand-50 border border-coral-100 rounded-2xl p-5 text-center">
+                                    <span className="text-3xl">💕</span>
+                                    <p className="text-warm-700 text-sm mt-2">Diego owes Nene unlimited backrubs for this 💆‍♀️</p>
+                                </div>
+                            </>)}
+                            {tab === 'dressings' && (
+                                <div className="space-y-3">
+                                    <p className="text-warm-600 text-sm">All homemade, no sugar, no bad oils:</p>
+                                    {dressings.map((d,i) => (
+                                        <div key={i} className="card rounded-xl p-4">
+                                            <div className="flex items-center gap-2 mb-1">
+                                                <span className="text-warm-800 font-medium text-sm">{d.name}</span>
+                                                <span className="text-xs px-2 py-0.5 bg-cream-200 rounded-full text-warm-600">{flavorProfiles[d.flavor]?.emoji}</span>
+                                            </div>
+                                            <p className="text-warm-600 text-xs">{d.recipe}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function BadgesModal({ onClose, earned }) {
+            return (
+                <div className="fixed inset-0 z-50 flex items-end justify-center bg-warm-900/20 backdrop-blur-sm" onClick={onClose}>
+                    <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[85vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
+                        <div className="px-5 pb-2"><h2 className="text-xl font-bold text-warm-800">🏆 Achievements <span className="text-warm-600 font-normal text-base">({earned.length}/{achievements.length})</span></h2></div>
+                        <div className="px-5 pb-8 overflow-y-auto max-h-[70vh]">
+                            <div className="grid grid-cols-2 gap-3">
+                                {achievements.map(b => {
+                                    const e = earned.includes(b.id);
+                                    return <div key={b.id} className={`rounded-2xl p-4 text-center ${e ? 'bg-gradient-to-br from-coral-50 to-sand-50 border border-coral-200' : 'bg-cream-100 opacity-50'}`}>
+                                        <span className="text-3xl block mb-2">{e ? b.emoji : '🔒'}</span>
+                                        <h3 className={`font-semibold text-sm ${e ? 'text-warm-800' : 'text-warm-600'}`}>{b.name}</h3>
+                                        <p className="text-warm-600 text-xs mt-1">{b.desc}</p>
+                                    </div>;
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function RecipeModal({ meal, onClose, flavor }) {
+            const profile = flavorProfiles[flavor] || flavorProfiles.classic;
+            return (
+                <div className="fixed inset-0 z-50 flex items-end justify-center bg-warm-900/20 backdrop-blur-sm" onClick={onClose}>
+                    <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[90vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
+                        <div className="px-5 pb-8 overflow-y-auto max-h-[calc(90vh-50px)]">
+                            <div className="mb-5">
+                                <h2 className="text-2xl font-bold text-warm-800 mb-1">{meal.name}</h2>
+                                <div className="flex items-center gap-3 text-sm">
+                                    <span className="text-warm-600">⏱️ {meal.time} min</span>
+                                    <span className="text-coral-500 font-semibold">~{meal.baseProtein}g protein</span>
+                                    {meal.isVenezuelan && <span>🇻🇪</span>}
+                                </div>
+                            </div>
+                            {profile.seasonings && (
+                                <div className="bg-gradient-to-br from-coral-50 to-sand-50 rounded-2xl p-4 border border-coral-100 mb-5">
+                                    <h3 className="text-coral-600 font-semibold text-sm mb-2">{profile.emoji} {profile.name} Seasoning</h3>
+                                    <p className="text-warm-700 text-sm">{profile.seasonings}</p>
+                                    {profile.finisher && <p className="text-warm-600 text-xs mt-2">Finish: {profile.finisher}</p>}
+                                </div>
+                            )}
+                            {meal.steps && meal.steps.length > 0 && (
+                                <div className="mb-5">
+                                    <h3 className="text-warm-800 font-semibold mb-3">Steps</h3>
+                                    <div className="space-y-3">
+                                        {meal.steps.map((step, i) => (
+                                            <div key={i} className="flex gap-3">
+                                                <div className="w-7 h-7 rounded-full bg-coral-100 text-coral-600 flex items-center justify-center flex-shrink-0 text-sm font-semibold">{i + 1}</div>
+                                                <p className="text-warm-700 text-sm pt-1">{step}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                            {meal.tips && meal.tips.length > 0 && (
+                                <div className="bg-cream-100 rounded-2xl p-4 mb-5">
+                                    <h3 className="text-warm-800 font-semibold text-sm mb-2">💡 Tips</h3>
+                                    {meal.tips.map((tip, i) => <p key={i} className="text-warm-600 text-sm">• {tip}</p>)}
+                                </div>
+                            )}
+                            {meal.doneness && (
+                                <div className="bg-sage-50 border border-sage-100 rounded-2xl p-4">
+                                    <h3 className="text-sage-600 font-semibold text-sm mb-1">✓ Done when</h3>
+                                    <p className="text-warm-700 text-sm">{meal.doneness}</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // ==================== MAIN APP ====================
+        function App() {
+            const [tab, setTab] = useState('create');
+            const [selProteins, setSelProteins] = useState([]);
+            const [selVeggies, setSelVeggies] = useState([]);
+            const [selCheese, setSelCheese] = useState([]);
+            const [selFlavor, setSelFlavor] = useState('any');
+            const [selTime, setSelTime] = useState('any');
+            const [portions, setPortions] = useState(1);
+            const [meals, setMeals] = useState([]);
+            const [showMeals, setShowMeals] = useState(false);
+            const [suggestions, setSuggestions] = useState([]);
+
+            const [favorites, setFavorites] = useState(() => load('favs', []));
+            const [history, setHistory] = useState(() => load('hist', []));
+            const [shopping, setShopping] = useState(() => load('shop', []));
+            const [weekPlan, setWeekPlan] = useState(() => load('week', Array(7).fill(null).map(() => ({ lunch: null, dinner: null }))));
+            const [badges, setBadges] = useState(() => load('badges', []));
+            const [stats, setStats] = useState(() => load('stats', { total: 0, streak: 0, lastDate: null }));
+
+            const [showGuide, setShowGuide] = useState(false);
+            const [showBadges, setShowBadges] = useState(false);
+            const [showLove, setShowLove] = useState(false);
+            const [loveMsg, setLoveMsg] = useState('');
+            const [newBadge, setNewBadge] = useState(null);
+            const [timer, setTimer] = useState(null);
+            const [showRecipe, setShowRecipe] = useState(null);
+            const [copied, setCopied] = useState(false);
+
+            useEffect(() => { save('favs', favorites); }, [favorites]);
+            useEffect(() => { save('hist', history); }, [history]);
+            useEffect(() => { save('shop', shopping); }, [shopping]);
+            useEffect(() => { save('week', weekPlan); }, [weekPlan]);
+            useEffect(() => { save('badges', badges); }, [badges]);
+            useEffect(() => { save('stats', stats); }, [stats]);
+
+            const checkBadges = (s, f) => {
+                const cs = s || stats, cf = f || favorites;
+                achievements.forEach(b => {
+                    if (badges.includes(b.id)) return;
+                    let earned = false;
+                    if (b.type === 'favorites') earned = cf.length >= b.threshold;
+                    else if (b.type === 'streak') earned = cs.streak >= b.threshold;
+                    else earned = cs.total >= b.threshold;
+                    if (earned) { setBadges(p => [...p, b.id]); setNewBadge(b); }
+                });
+            };
+
+            const toggle = (id, sel, setSel) => { setSel(sel.includes(id) ? sel.filter(i => i !== id) : [...sel, id]); setShowMeals(false); };
+            const isFav = m => favorites.some(f => f.name === m.name);
+            const toggleFav = m => { const nf = isFav(m) ? favorites.filter(f => f.name !== m.name) : [...favorites, { ...m, savedAt: new Date().toISOString() }]; setFavorites(nf); checkBadges(null, nf); };
+
+            const addHistory = m => {
+                const today = new Date().toISOString().split('T')[0];
+                setHistory([{ ...m, cookedAt: new Date().toISOString() }, ...history].slice(0, 50));
+                const ns = { ...stats, total: stats.total + 1 };
+                if (stats.lastDate !== today) {
+                    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+                    ns.streak = stats.lastDate === yesterday ? stats.streak + 1 : 1;
+                    ns.lastDate = today;
+                }
+                setStats(ns);
+                checkBadges(ns, null);
+            };
+
+            const addShopping = m => {
+                const items = [];
+                m.proteins?.forEach(id => { const p = proteins.find(x => x.id === id); if (p && !shopping.some(s => s.name === p.shopping)) items.push({ name: p.shopping, cat: 'protein' }); });
+                m.veggies?.forEach(id => { const v = vegetables.find(x => x.id === id); if (v && !shopping.some(s => s.name === v.shopping)) items.push({ name: v.shopping, cat: 'veggie' }); });
+                m.cheese?.forEach(id => { const c = cheeses.find(x => x.id === id); if (c && !shopping.some(s => s.name === c.shopping)) items.push({ name: c.shopping, cat: 'dairy' }); });
+                if (items.length) setShopping([...shopping, ...items]);
+            };
+
+            const share = () => {
+                const text = `🛒 Shopping List:\n\n${shopping.map(i => '• ' + i.name).join('\n')}`;
+                if (navigator.share) navigator.share({ title: 'Shopping', text });
+                else { navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000); }
+            };
+
+            const genShopFromPlan = () => {
+                const all = new Map();
+                weekPlan.forEach(d => [d.lunch, d.dinner].forEach(m => {
+                    if (!m) return;
+                    m.proteins?.forEach(id => { const p = proteins.find(x => x.id === id); if (p) all.set(p.shopping, { name: p.shopping, cat: 'protein' }); });
+                    m.veggies?.forEach(id => { const v = vegetables.find(x => x.id === id); if (v) all.set(v.shopping, { name: v.shopping, cat: 'veggie' }); });
+                    m.cheese?.forEach(id => { const c = cheeses.find(x => x.id === id); if (c) all.set(c.shopping, { name: c.shopping, cat: 'dairy' }); });
+                }));
+                setShopping([...all.values()]);
+                setTab('shop');
+            };
+
+            const applyPortions = m => portions === 1 ? m : { ...m, displayProtein: Math.round(m.baseProtein * portions), displayServing: m.servingSize ? m.servingSize.replace(/(\d+)g/g, (_, n) => Math.round(parseInt(n) * portions) + 'g') : m.description };
+
+            const genMeals = () => {
+                const matching = [];
+                const proteinSet = new Set(selProteins);
+                const timeFilter = timeCategories[selTime];
+
+                mealRecipes.forEach(r => {
+                    if (!r.proteins.every(p => proteinSet.has(p))) return;
+                    if (r.requiresVeggies && selVeggies.length === 0) return;
+                    if (r.saladOnly && !selVeggies.some(v => vegetables.find(x => x.id === v)?.salad)) return;
+                    if (selTime !== 'any' && (r.time < timeFilter.min || r.time > timeFilter.max)) return;
+                    if (selFlavor !== 'any' && !r.flavors.includes(selFlavor) && !r.flavors.includes('any')) return;
+                    matching.push(r);
+                });
+
+                const results = matching.map(r => {
+                    const flavor = selFlavor !== 'any' ? selFlavor : getRandom(r.flavors.filter(f => f !== 'any')) || 'classic';
+                    const profile = flavorProfiles[flavor];
+                    const veggieNames = selVeggies.map(id => vegetables.find(v => v.id === id)?.name).filter(Boolean);
+                    const cheeseNames = selCheese.map(id => cheeses.find(c => c.id === id)?.name).filter(Boolean);
+                    let desc = r.servingSize;
+                    if (veggieNames.length) desc += ` with ${veggieNames.slice(0,3).join(', ')}`;
+                    if (cheeseNames.length) desc += ` + ${cheeseNames[0]}`;
+                    if (flavor !== 'any') desc += ` • ${profile.emoji} ${profile.name} style`;
+
+                    return { id: `${r.id}_${Date.now()}`, recipeId: r.id, name: r.name, description: desc, baseProtein: r.baseProtein, time: r.time, flavor, proteins: r.proteins, veggies: selVeggies, cheese: selCheese, isVenezuelan: r.isVenezuelan, lowProteinWarning: r.lowProteinWarning, steps: r.steps, tips: r.tips, doneness: r.doneness, suggestDressing: r.suggestDressing, servingSize: r.servingSize };
+                });
+
+                const shuffled = results.sort(() => 0.5 - Math.random());
+                const unique = []; const seen = new Set();
+                shuffled.forEach(m => { if (!seen.has(m.recipeId) && unique.length < 4) { seen.add(m.recipeId); unique.push(m); } });
+                setMeals(unique);
+                setShowMeals(true);
+
+                const suggs = [];
+                if (!selVeggies.length) suggs.push({ icon: '🥗', text: 'Add veggies — they\'re unlimited!' });
+                if (unique.some(m => m.lowProteinWarning)) suggs.push({ icon: '💪', text: 'Consider adding more protein' });
+                if (!selVeggies.includes('avocado') && selProteins.length) suggs.push({ icon: '🥑', text: 'Avocado adds healthy fats' });
+                setSuggestions(suggs.slice(0, 2));
+
+                setTimeout(() => { setLoveMsg(getRandom(loveMessages)); setShowLove(true); }, 2500);
+            };
+
+            const getDressing = flavor => dressings.filter(d => d.flavor === flavor || flavor === 'any')[0] || dressings[0];
+            const reset = () => { setSelProteins([]); setSelVeggies([]); setSelCheese([]); setSelFlavor('any'); setSelTime('any'); setPortions(1); setMeals([]); setShowMeals(false); };
+
+            const MealCard = ({ meal, actions = true }) => {
+                const dm = applyPortions(meal);
+                const dressing = meal.suggestDressing ? getDressing(meal.flavor) : null;
+                return (
+                    <div className="card rounded-[1.5rem] overflow-hidden border border-cream-200">
+                        <div className="h-1.5 bg-gradient-to-r from-coral-500 to-sand-500" />
+                        <div className="p-5">
+                            <div className="flex items-start justify-between mb-3">
+                                <h3 className="text-lg font-bold text-warm-800 leading-tight">{meal.name}</h3>
+                                <div className="flex items-center gap-2 ml-3">
+                                    {meal.isVenezuelan && <span className="text-xs bg-coral-100 text-coral-600 px-2.5 py-1 rounded-full font-medium">🇻🇪</span>}
+                                    {meal.flavor && meal.flavor !== 'any' && <span className="text-xs bg-cream-200 text-warm-600 px-2.5 py-1 rounded-full">{flavorProfiles[meal.flavor]?.emoji}</span>}
+                                    <button onClick={() => toggleFav(meal)} className="text-xl hover:scale-110 transition-transform press">{isFav(meal) ? '❤️' : '🤍'}</button>
+                                </div>
+                            </div>
+                            <p className="text-warm-600 text-sm mb-4 leading-relaxed">{dm.displayServing || meal.description}</p>
+                            <div className="flex items-center gap-2 flex-wrap mb-4">
+                                <span className={`px-3 py-1.5 rounded-full text-xs font-semibold ${meal.lowProteinWarning ? 'bg-sand-100 text-sand-600' : 'bg-coral-100 text-coral-600'}`}>
+                                    ~{dm.displayProtein || meal.baseProtein}g protein
+                                </span>
+                                <span className="px-3 py-1.5 rounded-full text-xs bg-cream-200 text-warm-600">⏱️ {meal.time} min</span>
+                                {meal.lowProteinWarning && <span className="text-sand-500 text-xs font-medium">⚠️ Low</span>}
+                            </div>
+                            <button onClick={() => setShowRecipe(meal)} className="w-full py-2.5 mb-4 bg-cream-100 hover:bg-cream-200 rounded-xl text-warm-700 text-sm font-medium transition-colors press">
+                                📖 View Recipe
+                            </button>
+                            {dressing && (
+                                <div className="p-3 bg-sage-50 border border-sage-100 rounded-xl mb-4">
+                                    <p className="text-sage-600 text-xs font-semibold">🥗 Try: {dressing.name}</p>
+                                    <p className="text-warm-600 text-xs">{dressing.recipe}</p>
+                                </div>
+                            )}
+                            {actions && (
+                                <div className="flex gap-2">
+                                    <button onClick={() => { addHistory(meal); addShopping(meal); }} className="flex-1 py-3 bg-gradient-to-r from-coral-500 to-coral-600 hover:from-coral-600 hover:to-coral-700 rounded-xl text-white text-sm font-semibold transition-all press shadow-glow-coral">
+                                        ✓ I made this
+                                    </button>
+                                    <button onClick={() => addShopping(meal)} className="py-3 px-4 bg-cream-200 hover:bg-cream-300 rounded-xl text-warm-700 text-sm transition-colors press">🛒</button>
+                                    <button onClick={() => setTimer({ min: meal.time, label: meal.name })} className="py-3 px-4 bg-cream-200 hover:bg-cream-300 rounded-xl text-warm-700 text-sm transition-colors press">⏱️</button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                );
+            };
+
+            return (
+                <div className="min-h-screen bg-cream-100 pb-28">
+                    {/* Background accents */}
+                    <div className="fixed inset-0 overflow-hidden pointer-events-none">
+                        <div className="absolute -top-40 -right-40 w-96 h-96 bg-coral-100 rounded-full blur-[100px] opacity-50" />
+                        <div className="absolute top-1/2 -left-40 w-80 h-80 bg-sage-100 rounded-full blur-[100px] opacity-50" />
+                        <div className="absolute bottom-20 right-0 w-72 h-72 bg-sand-100 rounded-full blur-[80px] opacity-40" />
+                    </div>
+
+                    {showGuide && <GuideModal onClose={() => setShowGuide(false)} />}
+                    {showBadges && <BadgesModal onClose={() => setShowBadges(false)} earned={badges} />}
+                    {newBadge && <BadgePopup badge={newBadge} onClose={() => setNewBadge(null)} />}
+                    {timer && <Timer minutes={timer.min} label={timer.label} onClose={() => setTimer(null)} />}
+                    {showRecipe && <RecipeModal meal={showRecipe} onClose={() => setShowRecipe(null)} flavor={showRecipe.flavor} />}
+
+                    {/* Love popup */}
+                    {showLove && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center p-6" onClick={() => setShowLove(false)}>
+                            <div className="absolute inset-0 bg-warm-900/20 backdrop-blur-md">
+                                {[...Array(12)].map((_, i) => <div key={i} className="absolute text-2xl animate-float-up" style={{ left: `${Math.random()*100}%`, animationDelay: `${Math.random()*2}s` }}>{['💕','💖','❤️','✨'][i % 4]}</div>)}
+                            </div>
+                            <div className="relative animate-bounce-in" onClick={e => e.stopPropagation()}>
+                                <div className="absolute -inset-6 bg-gradient-to-r from-coral-300 to-sand-300 rounded-[3rem] blur-2xl opacity-50 animate-pulse-soft" />
+                                <div className="relative bg-white rounded-[2rem] p-8 max-w-sm w-full border border-coral-100 shadow-soft-lg">
+                                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-coral-500 to-sand-500 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-glow-coral">💌 From Diego</div>
+                                    <div className="flex justify-center mb-6 mt-2">
+                                        <div className="w-20 h-20 bg-gradient-to-br from-coral-400 to-sand-400 rounded-full flex items-center justify-center shadow-glow-coral">
+                                            <span className="text-4xl animate-heartbeat">💕</span>
+                                        </div>
+                                    </div>
+                                    <p className="text-warm-800 text-xl font-medium text-center mb-6 leading-relaxed">{loveMsg}</p>
+                                    <button onClick={() => setShowLove(false)} className="w-full py-3.5 bg-gradient-to-r from-coral-500 to-sand-500 rounded-2xl text-white font-semibold press shadow-glow-coral">
+                                        Ay Diego 😅
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Main content */}
+                    <div className="relative max-w-lg mx-auto px-5 pt-6 pb-8">
+                        {/* Header */}
+                        <div className="flex items-center justify-between mb-6">
+                            <button onClick={() => setShowGuide(true)} className="w-12 h-12 rounded-2xl card border border-cream-200 flex items-center justify-center text-xl press hover:bg-cream-50">📋</button>
+                            <div className="text-center">
+                                <h1 className="text-2xl font-bold text-warm-800">Nene's Kitchen</h1>
+                                <p className="text-warm-600 text-sm">{stats.total} meals • {stats.streak} day streak 🔥</p>
+                            </div>
+                            <button onClick={() => setShowBadges(true)} className="w-12 h-12 rounded-2xl card border border-cream-200 flex items-center justify-center text-xl press hover:bg-cream-50 relative">
+                                🏆
+                                {badges.length > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 bg-coral-500 rounded-full text-[10px] text-white flex items-center justify-center font-bold">{badges.length}</span>}
+                            </button>
+                        </div>
+
+                        {/* CREATE TAB */}
+                        {tab === 'create' && (<>
+                            <div className="card rounded-2xl px-5 py-3 mb-5 border border-cream-200">
+                                <div className="flex items-center justify-center gap-4 text-sm">
+                                    <span className="text-warm-600">Target:</span>
+                                    <span className="text-coral-500 font-bold">80-100g protein</span>
+                                    <span className="text-cream-300">•</span>
+                                    <span className="text-warm-600">~1,800 cal</span>
+                                </div>
+                            </div>
+
+                            <div className="mb-4">
+                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3">What's the vibe?</h2>
+                                <div className="flex gap-2 flex-wrap">
+                                    {Object.values(flavorProfiles).map(f => (
+                                        <button key={f.id} onClick={() => { setSelFlavor(f.id); setShowMeals(false); }}
+                                            className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all press ${selFlavor === f.id ? 'chip-selected' : 'chip-unselected'}`}>
+                                            {f.emoji} {f.name}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="mb-4">
+                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3">How much time?</h2>
+                                <div className="flex gap-2">
+                                    {Object.values(timeCategories).map(t => (
+                                        <button key={t.id} onClick={() => { setSelTime(t.id); setShowMeals(false); }}
+                                            className={`flex-1 px-3 py-2.5 rounded-xl text-sm font-medium transition-all press ${selTime === t.id ? 'bg-sage-500 text-white shadow-glow-sage' : 'chip-unselected'}`}>
+                                            {t.emoji} {t.name}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="card rounded-2xl px-5 py-4 mb-5 border border-cream-200 flex items-center justify-between">
+                                <span className="text-warm-600 text-sm">Cooking for</span>
+                                <div className="flex gap-2">
+                                    {[1, 2].map(n => (
+                                        <button key={n} onClick={() => setPortions(n)}
+                                            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all press ${portions === n ? 'bg-sand-500 text-white' : 'bg-cream-200 text-warm-600'}`}>
+                                            {n} {n === 1 ? 'person' : 'people'}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="mb-5">
+                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <span className="w-6 h-6 rounded-lg bg-gradient-to-br from-coral-400 to-coral-500 flex items-center justify-center text-xs text-white">🥩</span>
+                                    What protein?
+                                </h2>
+                                <div className="grid grid-cols-3 gap-2">
+                                    {proteins.map(p => (
+                                        <button key={p.id} onClick={() => toggle(p.id, selProteins, setSelProteins)}
+                                            className={`p-3 rounded-2xl text-center transition-all press ${selProteins.includes(p.id) ? 'chip-selected scale-105' : 'chip-unselected'}`}>
+                                            <span className="text-2xl block mb-1">{p.emoji}</span>
+                                            <span className="text-xs font-medium">{p.name}</span>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="mb-5">
+                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <span className="w-6 h-6 rounded-lg bg-gradient-to-br from-sage-400 to-sage-500 flex items-center justify-center text-xs text-white">🥬</span>
+                                    What veggies?
+                                </h2>
+                                <div className="grid grid-cols-4 gap-2">
+                                    {vegetables.map(v => (
+                                        <button key={v.id} onClick={() => toggle(v.id, selVeggies, setSelVeggies)}
+                                            className={`p-2.5 rounded-xl text-center transition-all press relative ${selVeggies.includes(v.id) ? 'bg-sage-500 text-white scale-105 shadow-glow-sage' : 'chip-unselected'}`}>
+                                            <span className="text-xl block">{v.emoji}</span>
+                                            <span className="text-[10px] font-medium">{v.name}</span>
+                                            {v.warning && <span className="absolute -top-1 -right-1 w-4 h-4 bg-sand-500 rounded-full text-[8px] flex items-center justify-center text-white">⚠️</span>}
+                                        </button>
+                                    ))}
+                                </div>
+                                {selVeggies.includes('spinach') && <div className="mt-3 p-3 bg-sand-50 border border-sand-200 rounded-xl"><p className="text-sand-600 text-xs font-medium">⚠️ Spinach: Max 2-3x per week</p></div>}
+                            </div>
+
+                            <div className="mb-6">
+                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <span className="w-6 h-6 rounded-lg bg-gradient-to-br from-sand-400 to-sand-500 flex items-center justify-center text-xs text-white">🧀</span>
+                                    Cheese? <span className="font-normal text-warm-500">(max 50g)</span>
+                                </h2>
+                                <div className="grid grid-cols-3 gap-2">
+                                    {cheeses.map(c => (
+                                        <button key={c.id} onClick={() => toggle(c.id, selCheese, setSelCheese)}
+                                            className={`p-3 rounded-2xl text-center transition-all press ${selCheese.includes(c.id) ? 'bg-sand-500 text-white scale-105' : 'chip-unselected'}`}>
+                                            <span className="text-2xl block mb-1">{c.emoji}</span>
+                                            <span className="text-xs font-medium">{c.name}</span>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <button onClick={genMeals} disabled={!selProteins.length}
+                                className={`w-full py-4 rounded-2xl font-bold text-lg transition-all press ${selProteins.length ? 'bg-gradient-to-r from-coral-500 to-sand-500 text-white shadow-glow-coral hover:shadow-lg' : 'bg-cream-200 text-warm-500 cursor-not-allowed'}`}>
+                                ✨ What can I make?
+                            </button>
+                            {selProteins.length > 0 && <button onClick={reset} className="w-full py-3 mt-3 rounded-xl text-coral-500 border border-coral-200 hover:bg-coral-50 transition-all press text-sm font-medium">↺ Start Over</button>}
+
+                            {showMeals && meals.length > 0 && (
+                                <div className="mt-8 space-y-4">
+                                    <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider">👨‍🍳 Here's what you can make {portions > 1 && <span className="text-coral-500">(×{portions})</span>}</h2>
+                                    {meals.map(m => <MealCard key={m.id} meal={m} />)}
+                                    {suggestions.length > 0 && (
+                                        <div className="space-y-2 mt-4">
+                                            {suggestions.map((s, i) => (
+                                                <div key={i} className="flex items-center gap-3 p-3 bg-cream-50 rounded-xl border border-cream-200">
+                                                    <span className="text-xl">{s.icon}</span>
+                                                    <span className="text-warm-600 text-sm">{s.text}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                    <p className="text-center text-warm-500 text-xs mt-4">Tap again for different ideas ↻</p>
+                                </div>
+                            )}
+                            {showMeals && meals.length === 0 && (
+                                <div className="mt-8 card rounded-2xl p-8 text-center border border-cream-200">
+                                    <span className="text-4xl mb-4 block">🤔</span>
+                                    <p className="text-warm-600">No recipes match. Try different options!</p>
+                                </div>
+                            )}
+                        </>)}
+
+                        {/* PLAN TAB */}
+                        {tab === 'plan' && (
+                            <div className="space-y-6">
+                                <div>
+                                    <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3">📜 Recent Meals</h2>
+                                    {history.length === 0 ? (
+                                        <div className="card rounded-2xl p-6 text-center border border-cream-200">
+                                            <span className="text-3xl mb-2 block">🍳</span>
+                                            <p className="text-warm-600 text-sm">No meals logged yet</p>
+                                        </div>
+                                    ) : (
+                                        <div className="space-y-2">
+                                            {history.slice(0, 5).map((m, i) => (
+                                                <div key={i} className="card rounded-xl p-4 border border-cream-200 flex items-center justify-between">
+                                                    <div>
+                                                        <h3 className="text-warm-800 font-medium text-sm">{m.name}</h3>
+                                                        <p className="text-warm-500 text-xs">{formatDate(m.cookedAt)}</p>
+                                                    </div>
+                                                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-coral-100 text-coral-600">~{m.baseProtein}g</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                                <div>
+                                    <div className="flex items-center justify-between mb-3">
+                                        <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider">📅 Week Planner</h2>
+                                        <button onClick={genShopFromPlan} className="px-4 py-2 bg-gradient-to-r from-coral-500 to-sand-500 rounded-xl text-white text-xs font-semibold press shadow-glow-coral">🛒 Generate List</button>
+                                    </div>
+                                    <div className="space-y-2">
+                                        {dayNames.map((day, di) => (
+                                            <div key={day} className="card rounded-xl p-4 border border-cream-200">
+                                                <h3 className="text-warm-800 font-semibold text-sm mb-2">{dayNamesFull[di]}</h3>
+                                                <div className="space-y-2">
+                                                    {['lunch', 'dinner'].map(slot => (
+                                                        <div key={slot} className="flex items-center gap-3">
+                                                            <span className="text-warm-500 text-xs w-10">{slot === 'lunch' ? '12pm' : '5pm'}</span>
+                                                            {weekPlan[di][slot] ? (
+                                                                <div className="flex-1 flex items-center justify-between bg-cream-100 rounded-lg px-3 py-2">
+                                                                    <span className="text-warm-800 text-sm">{weekPlan[di][slot].name}</span>
+                                                                    <button onClick={() => { const np = [...weekPlan]; np[di] = { ...np[di], [slot]: null }; setWeekPlan(np); }} className="text-warm-500 hover:text-coral-500 text-sm">✕</button>
+                                                                </div>
+                                                            ) : (
+                                                                <select onChange={e => { const m = favorites.find(f => f.name === e.target.value); if (m) { const np = [...weekPlan]; np[di] = { ...np[di], [slot]: m }; setWeekPlan(np); } }}
+                                                                    className="flex-1 bg-cream-100 rounded-lg px-3 py-2 text-warm-500 text-sm border-0 outline-none" value="">
+                                                                    <option value="">+ Add from favorites</option>
+                                                                    {favorites.map((f, fi) => <option key={fi} value={f.name}>{f.name}</option>)}
+                                                                </select>
+                                                            )}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    {favorites.length === 0 && <div className="mt-3 p-4 bg-sand-50 border border-sand-200 rounded-xl"><p className="text-sand-600 text-xs text-center font-medium">💡 Save favorites first!</p></div>}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* SHOP TAB */}
+                        {tab === 'shop' && (
+                            <div className="space-y-4">
+                                <div className="flex items-center justify-between">
+                                    <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider">🛒 Shopping List ({shopping.length})</h2>
+                                    {shopping.length > 0 && (
+                                        <div className="flex gap-2">
+                                            <button onClick={share} className="px-3 py-1.5 bg-cream-200 hover:bg-cream-300 rounded-lg text-warm-600 text-xs press">📤 Share</button>
+                                            <button onClick={() => setShopping([])} className="px-3 py-1.5 bg-coral-100 hover:bg-coral-200 rounded-lg text-coral-600 text-xs press">Clear</button>
+                                        </div>
+                                    )}
+                                </div>
+                                {copied && <div className="bg-sage-100 rounded-xl p-3 text-sage-600 text-sm text-center font-medium">✓ Copied!</div>}
+                                {shopping.length === 0 ? (
+                                    <div className="card rounded-2xl p-8 text-center border border-cream-200">
+                                        <span className="text-4xl mb-3 block">🛒</span>
+                                        <p className="text-warm-600">List is empty</p>
+                                        <p className="text-warm-500 text-sm mt-1">Add from meals or generate from planner</p>
+                                    </div>
+                                ) : (
+                                    <div className="card rounded-2xl border border-cream-200 overflow-hidden">
+                                        {['protein', 'veggie', 'dairy'].map(cat => {
+                                            const items = shopping.filter(i => i.cat === cat);
+                                            if (!items.length) return null;
+                                            return (
+                                                <div key={cat}>
+                                                    <div className="px-4 py-2 bg-cream-100 text-warm-600 text-xs uppercase font-semibold">
+                                                        {cat === 'protein' ? '🥩 Proteins' : cat === 'veggie' ? '🥬 Veggies' : '🧀 Dairy'}
+                                                    </div>
+                                                    {items.map((item, i) => (
+                                                        <div key={i} className="flex items-center justify-between px-4 py-3 border-b border-cream-200 last:border-0 bg-white">
+                                                            <span className="text-warm-800 text-sm">{item.name}</span>
+                                                            <button onClick={() => setShopping(shopping.filter(x => x.name !== item.name))} className="text-warm-500 hover:text-coral-500 text-sm">✕</button>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {/* SAVED TAB */}
+                        {tab === 'saved' && (
+                            <div className="space-y-4">
+                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider">❤️ Favorites ({favorites.length})</h2>
+                                {favorites.length === 0 ? (
+                                    <div className="card rounded-2xl p-8 text-center border border-cream-200">
+                                        <span className="text-4xl mb-3 block">💔</span>
+                                        <p className="text-warm-600">No favorites yet</p>
+                                        <p className="text-warm-500 text-sm mt-1">Tap ❤️ on any meal</p>
+                                    </div>
+                                ) : (
+                                    <div className="space-y-4">{favorites.map(m => <MealCard key={m.name} meal={m} />)}</div>
+                                )}
+                            </div>
+                        )}
+
+                        <div className="text-center mt-10 text-warm-500 text-xs">Made with 💕 for Nene</div>
+                    </div>
+
+                    {/* BOTTOM NAV */}
+                    <div className="fixed bottom-0 left-0 right-0 glass border-t border-cream-200 px-4 py-3 z-30">
+                        <div className="max-w-lg mx-auto flex justify-around">
+                            {[
+                                { id: 'create', icon: '✨', label: 'Create' },
+                                { id: 'plan', icon: '📅', label: 'Plan' },
+                                { id: 'shop', icon: '🛒', label: 'Shop' },
+                                { id: 'saved', icon: '❤️', label: 'Saved' },
+                            ].map(t => (
+                                <button key={t.id} onClick={() => setTab(t.id)}
+                                    className={`flex flex-col items-center py-2 px-5 rounded-2xl transition-all press ${tab === t.id ? 'text-coral-500' : 'text-warm-500'}`}>
+                                    <span className={`text-2xl mb-1 transition-transform ${tab === t.id ? 'scale-110' : ''}`}>{t.icon}</span>
+                                    <span className="text-[10px] font-semibold">{t.label}</span>
+                                    {tab === t.id && <div className="w-1.5 h-1.5 rounded-full bg-coral-500 mt-1" />}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
     </script>
 </body>
 </html>
