@@ -1255,16 +1255,49 @@
             const [showWeeklySummary, setShowWeeklySummary] = useState(false);
             const [showCustomMeal, setShowCustomMeal] = useState(false);
             const [customMeal, setCustomMeal] = useState({
-                protein: null,
-                grams: '',
-                extras: [],
-                carbsEstimate: ''
+                eggs: 0,
+                proteins: { beef: '', chicken: '', salmon: '', fish: '', shrimp: '', lamb: '', pork: '', ground: '' },
+                veggies: { avocado: 0, broccoli: '', spinach: '', peppers: '', mushrooms: '', tomatoes: '', onions: '', cucumber: '', asparagus: '', zucchini: '' },
+                cheese: '',
+                usedOil: false,
+                usedButter: false,
+                carbsOverride: ''
             });
+
+            // Protein data for calculations (per 100g raw)
+            const proteinCalcData = {
+                eggs: { perUnit: 6, carbsPerUnit: 0 },
+                beef: { per100g: 26, carbs: 0 },
+                chicken: { per100g: 25, carbs: 0 },
+                salmon: { per100g: 22, carbs: 0 },
+                fish: { per100g: 20, carbs: 0 },
+                shrimp: { per100g: 20, carbs: 0 },
+                lamb: { per100g: 25, carbs: 0 },
+                pork: { per100g: 25, carbs: 0 },
+                ground: { per100g: 26, carbs: 0 },
+            };
+
+            // Veggie data (per 100g or per unit)
+            const veggieCalcData = {
+                avocado: { perUnit: 2, carbsPerUnit: 2, isUnit: true, protein: 1 },
+                broccoli: { per100g: 3, carbs: 4 },
+                spinach: { per100g: 3, carbs: 1 },
+                peppers: { per100g: 1, carbs: 4 },
+                mushrooms: { per100g: 3, carbs: 2 },
+                tomatoes: { per100g: 1, carbs: 3 },
+                onions: { per100g: 1, carbs: 8 },
+                cucumber: { per100g: 1, carbs: 2 },
+                asparagus: { per100g: 2, carbs: 2 },
+                zucchini: { per100g: 1, carbs: 2 },
+            };
+
+            const cheeseData = { per100g: 25, carbs: 1 };
 
             // Meal planner state
             const [mealPlan, setMealPlan] = useState(() => load('mealPlan', {}));
             const [showMealPicker, setShowMealPicker] = useState(null); // { day: 'mon', slot: 'lunch' }
             const [mealPickerSearch, setMealPickerSearch] = useState('');
+            const [showCustomMealForPlan, setShowCustomMealForPlan] = useState(false);
 
             // Days of the week
             const weekDays = [
@@ -1368,43 +1401,101 @@
                 { id: 'eggs', name: 'Eggs', emoji: '🥚', carbs: 0, proteinPer: 6 },
             ];
 
-            // Calculate protein from grams
+            // Calculate protein from custom meal
             const calcCustomProtein = () => {
-                if (!customMeal.protein || !customMeal.grams) return 0;
-                const proteinData = proteins.find(p => p.id === customMeal.protein);
-                const gramsNum = parseInt(customMeal.grams) || 0;
-                let totalProtein = Math.round((gramsNum * (proteinData?.proteinPer100g || 25)) / 100);
-                
-                // Add eggs protein if selected
-                if (customMeal.extras.includes('eggs')) {
-                    totalProtein += 6 * 2; // Assume 2 eggs = 12g
-                }
-                return totalProtein;
+                let total = 0;
+                // Eggs
+                total += customMeal.eggs * proteinCalcData.eggs.perUnit;
+                // Proteins
+                Object.entries(customMeal.proteins).forEach(([key, grams]) => {
+                    const g = parseInt(grams) || 0;
+                    if (g > 0 && proteinCalcData[key]) {
+                        total += Math.round((g * proteinCalcData[key].per100g) / 100);
+                    }
+                });
+                // Avocado
+                total += customMeal.veggies.avocado * (veggieCalcData.avocado.protein || 0);
+                // Cheese
+                const cheeseG = parseInt(customMeal.cheese) || 0;
+                total += Math.round((cheeseG * cheeseData.per100g) / 100);
+                return total;
             };
 
             const calcCustomCarbs = () => {
-                if (customMeal.carbsEstimate) return parseInt(customMeal.carbsEstimate) || 0;
-                let carbs = 0;
-                customMeal.extras.forEach(extraId => {
-                    const extra = customExtras.find(e => e.id === extraId);
-                    if (extra) carbs += extra.carbs;
+                if (customMeal.carbsOverride) return parseInt(customMeal.carbsOverride) || 0;
+                let total = 0;
+                // Veggies
+                Object.entries(customMeal.veggies).forEach(([key, value]) => {
+                    const data = veggieCalcData[key];
+                    if (data) {
+                        if (data.isUnit) {
+                            total += (parseInt(value) || 0) * data.carbsPerUnit;
+                        } else {
+                            const g = parseInt(value) || 0;
+                            total += Math.round((g * data.carbs) / 100);
+                        }
+                    }
                 });
-                return carbs;
+                // Cheese
+                const cheeseG = parseInt(customMeal.cheese) || 0;
+                total += Math.round((cheeseG * cheeseData.carbs) / 100);
+                return total;
+            };
+
+            const updateCustomProtein = (key, value) => {
+                setCustomMeal(prev => ({
+                    ...prev,
+                    proteins: { ...prev.proteins, [key]: value }
+                }));
+            };
+
+            const updateCustomVeggie = (key, value) => {
+                setCustomMeal(prev => ({
+                    ...prev,
+                    veggies: { ...prev.veggies, [key]: value }
+                }));
+            };
+
+            const buildCustomMealName = () => {
+                const parts = [];
+                if (customMeal.eggs > 0) parts.push(`${customMeal.eggs} egg${customMeal.eggs > 1 ? 's' : ''}`);
+                Object.entries(customMeal.proteins).forEach(([key, grams]) => {
+                    if (parseInt(grams) > 0) {
+                        const name = proteins.find(p => p.id === key)?.name || key;
+                        parts.push(`${name} ${grams}g`);
+                    }
+                });
+                const veggieList = [];
+                Object.entries(customMeal.veggies).forEach(([key, value]) => {
+                    if ((veggieCalcData[key]?.isUnit && parseInt(value) > 0) || (!veggieCalcData[key]?.isUnit && parseInt(value) > 0)) {
+                        veggieList.push(key);
+                    }
+                });
+                if (veggieList.length > 0) parts.push(`+ ${veggieList.slice(0, 2).join(', ')}${veggieList.length > 2 ? '...' : ''}`);
+                if (parseInt(customMeal.cheese) > 0) parts.push(`cheese ${customMeal.cheese}g`);
+                return parts.length > 0 ? parts.join(', ') : 'Custom meal';
+            };
+
+            const hasCustomMealContent = () => {
+                if (customMeal.eggs > 0) return true;
+                if (Object.values(customMeal.proteins).some(v => parseInt(v) > 0)) return true;
+                return false;
             };
 
             const logCustomMeal = () => {
-                if (!customMeal.protein || !customMeal.grams) return;
+                if (!hasCustomMealContent()) return;
                 
-                const proteinData = proteins.find(p => p.id === customMeal.protein);
-                const extrasText = customMeal.extras.length > 0 
-                    ? ' + ' + customMeal.extras.map(id => customExtras.find(e => e.id === id)?.name).join(', ')
-                    : '';
-                
+                const proteinIds = [];
+                Object.entries(customMeal.proteins).forEach(([key, grams]) => {
+                    if (parseInt(grams) > 0) proteinIds.push(key);
+                });
+                if (customMeal.eggs > 0) proteinIds.push('eggs');
+
                 const meal = {
-                    name: `${proteinData?.name} (${customMeal.grams}g)${extrasText}`,
+                    name: buildCustomMealName(),
                     baseProtein: calcCustomProtein(),
                     netCarbs: calcCustomCarbs(),
-                    proteins: [customMeal.protein],
+                    proteins: proteinIds,
                     isCustom: true,
                     cookedAt: new Date().toISOString()
                 };
@@ -1423,8 +1514,34 @@
                 checkBadges(ns, null);
                 
                 // Reset form
-                setCustomMeal({ protein: null, grams: '', extras: [], carbsEstimate: '' });
+                resetCustomMeal();
                 setShowCustomMeal(false);
+            };
+
+            const resetCustomMeal = () => {
+                setCustomMeal({
+                    eggs: 0,
+                    proteins: { beef: '', chicken: '', salmon: '', fish: '', shrimp: '', lamb: '', pork: '', ground: '' },
+                    veggies: { avocado: 0, broccoli: '', spinach: '', peppers: '', mushrooms: '', tomatoes: '', onions: '', cucumber: '', asparagus: '', zucchini: '' },
+                    cheese: '',
+                    usedOil: false,
+                    usedButter: false,
+                    carbsOverride: ''
+                });
+            };
+
+            // For meal planner - create custom meal object
+            const createCustomMealForPlan = () => {
+                if (!hasCustomMealContent()) return null;
+                return {
+                    id: `custom_${Date.now()}`,
+                    name: buildCustomMealName(),
+                    baseProtein: calcCustomProtein(),
+                    netCarbs: calcCustomCarbs(),
+                    proteins: Object.entries(customMeal.proteins).filter(([k, v]) => parseInt(v) > 0).map(([k]) => k),
+                    isCustom: true,
+                    ingredients: [] // Custom meals don't have recipe ingredients
+                };
             };
 
             const toggleCustomExtra = (id) => {
@@ -2189,7 +2306,7 @@
                                 )}
 
                                 {/* Meal Picker Modal */}
-                                {showMealPicker && (
+                                {showMealPicker && !showCustomMealForPlan && (
                                     <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={() => { setShowMealPicker(null); setMealPickerSearch(''); }}>
                                         <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg h-[85vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
                                             <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
@@ -2198,6 +2315,14 @@
                                                     Add {showMealPicker.slot} for {weekDays.find(d => d.id === showMealPicker.day)?.name}
                                                 </h2>
                                                 
+                                                {/* Custom Meal Button */}
+                                                <button 
+                                                    onClick={() => setShowCustomMealForPlan(true)}
+                                                    className="w-full mt-3 py-3 bg-gradient-to-r from-warm-700 to-warm-800 text-white rounded-xl font-medium press flex items-center justify-center gap-2"
+                                                >
+                                                    <span>📝</span> Add Custom Meal (not a recipe)
+                                                </button>
+
                                                 {/* Search */}
                                                 <input
                                                     type="text"
@@ -2226,7 +2351,8 @@
                                                 )}
                                             </div>
                                             
-                                            <div className="px-5 pb-8 overflow-y-auto" style={{ height: 'calc(85vh - 180px)' }}>
+                                            <div className="px-5 pb-8 overflow-y-auto" style={{ height: 'calc(85vh - 220px)' }}>
+                                                <p className="text-warm-500 text-xs mb-2">📖 All Recipes</p>
                                                 {/* Recipe List */}
                                                 <div className="space-y-2">
                                                     {filteredRecipesForPicker().map(recipe => (
@@ -2258,6 +2384,129 @@
                                                         <p className="text-warm-500">No recipes found</p>
                                                     </div>
                                                 )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Custom Meal for Plan Modal */}
+                                {showMealPicker && showCustomMealForPlan && (
+                                    <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={() => { setShowCustomMealForPlan(false); resetCustomMeal(); }}>
+                                        <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[92vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
+                                            <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
+                                            <div className="px-5 pb-8 overflow-y-auto max-h-[82vh]">
+                                                <div className="flex items-center gap-2 mb-1">
+                                                    <button onClick={() => setShowCustomMealForPlan(false)} className="text-warm-500 text-sm">← Back</button>
+                                                </div>
+                                                <h2 className="text-warm-800 font-bold text-xl mb-1">📝 Custom Meal</h2>
+                                                <p className="text-warm-500 text-sm mb-4">For {weekDays.find(d => d.id === showMealPicker.day)?.name} {showMealPicker.slot}</p>
+
+                                                {/* Live Total - Sticky */}
+                                                <div className="sticky top-0 z-10 bg-gradient-to-r from-coral-500 to-sand-500 rounded-xl p-3 mb-4 shadow-glow-coral">
+                                                    <div className="flex justify-between items-center text-white">
+                                                        <span className="font-semibold">Total:</span>
+                                                        <div className="flex gap-4">
+                                                            <span className="font-bold">~{calcCustomProtein()}g protein</span>
+                                                            <span>|</span>
+                                                            <span>{calcCustomCarbs()}g carbs</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Compact Protein Inputs */}
+                                                <div className="mb-4">
+                                                    <h3 className="text-warm-700 font-semibold text-sm mb-2">🥩 Proteins</h3>
+                                                    
+                                                    {/* Eggs */}
+                                                    <div className="flex items-center justify-between py-2 border-b border-cream-200">
+                                                        <span className="text-warm-700 text-sm">🥚 Eggs</span>
+                                                        <div className="flex items-center gap-2">
+                                                            <button onClick={() => setCustomMeal(prev => ({ ...prev, eggs: Math.max(0, prev.eggs - 1) }))} className="w-7 h-7 rounded-lg bg-cream-200 text-warm-600 font-bold text-sm press">−</button>
+                                                            <span className="w-6 text-center font-semibold text-warm-800">{customMeal.eggs}</span>
+                                                            <button onClick={() => setCustomMeal(prev => ({ ...prev, eggs: prev.eggs + 1 }))} className="w-7 h-7 rounded-lg bg-coral-500 text-white font-bold text-sm press">+</button>
+                                                            <span className="w-12 text-right text-coral-500 text-xs">{customMeal.eggs > 0 ? `${customMeal.eggs * 6}g` : ''}</span>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Main proteins */}
+                                                    {[
+                                                        { id: 'beef', name: 'Beef', emoji: '🥩' },
+                                                        { id: 'chicken', name: 'Chicken', emoji: '🍗' },
+                                                        { id: 'ground', name: 'Ground', emoji: '🍔' },
+                                                        { id: 'salmon', name: 'Salmon', emoji: '🐟' },
+                                                        { id: 'fish', name: 'Fish', emoji: '🐠' },
+                                                        { id: 'pork', name: 'Pork', emoji: '🐷' },
+                                                    ].map(p => (
+                                                        <div key={p.id} className="flex items-center justify-between py-1.5 border-b border-cream-100">
+                                                            <span className="text-warm-700 text-sm">{p.emoji} {p.name}</span>
+                                                            <div className="flex items-center gap-1">
+                                                                <input type="number" value={customMeal.proteins[p.id]} onChange={(e) => updateCustomProtein(p.id, e.target.value)} placeholder="0" className="w-16 px-2 py-1 rounded border border-cream-300 text-sm text-right" />
+                                                                <span className="text-warm-400 text-xs">g</span>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+
+                                                {/* Compact Veggies */}
+                                                <div className="mb-4">
+                                                    <h3 className="text-warm-700 font-semibold text-sm mb-2">🥬 Veggies (carbs)</h3>
+                                                    <div className="flex items-center justify-between py-2 border-b border-cream-200">
+                                                        <span className="text-warm-700 text-sm">🥑 Avocado</span>
+                                                        <div className="flex items-center gap-2">
+                                                            <button onClick={() => updateCustomVeggie('avocado', Math.max(0, (customMeal.veggies.avocado || 0) - 1))} className="w-7 h-7 rounded-lg bg-cream-200 text-warm-600 font-bold text-sm press">−</button>
+                                                            <span className="w-6 text-center font-semibold text-warm-800">{customMeal.veggies.avocado || 0}</span>
+                                                            <button onClick={() => updateCustomVeggie('avocado', (customMeal.veggies.avocado || 0) + 1)} className="w-7 h-7 rounded-lg bg-sage-500 text-white font-bold text-sm press">+</button>
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-2 gap-2 mt-2">
+                                                        {['broccoli', 'spinach', 'peppers', 'tomatoes', 'onions', 'zucchini'].map(v => (
+                                                            <div key={v} className="flex items-center justify-between">
+                                                                <span className="text-warm-600 text-xs capitalize">{v}</span>
+                                                                <div className="flex items-center gap-1">
+                                                                    <input type="number" value={customMeal.veggies[v]} onChange={(e) => updateCustomVeggie(v, e.target.value)} placeholder="0" className="w-12 px-1 py-0.5 rounded border border-cream-300 text-xs text-right" />
+                                                                    <span className="text-warm-400 text-xs">g</span>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+
+                                                {/* Cheese */}
+                                                <div className="flex items-center justify-between py-2 mb-4">
+                                                    <span className="text-warm-700 text-sm">🧀 Cheese</span>
+                                                    <div className="flex items-center gap-1">
+                                                        <input type="number" value={customMeal.cheese} onChange={(e) => setCustomMeal(prev => ({ ...prev, cheese: e.target.value }))} placeholder="0" className="w-16 px-2 py-1 rounded border border-cream-300 text-sm text-right" />
+                                                        <span className="text-warm-400 text-xs">g</span>
+                                                    </div>
+                                                </div>
+
+                                                {/* Preview */}
+                                                {hasCustomMealContent() && (
+                                                    <div className="bg-cream-100 rounded-xl p-3 mb-4">
+                                                        <p className="text-warm-600 text-xs">Will add:</p>
+                                                        <p className="text-warm-800 font-medium text-sm">{buildCustomMealName()}</p>
+                                                    </div>
+                                                )}
+
+                                                {/* Add Button */}
+                                                <button 
+                                                    onClick={() => {
+                                                        const meal = createCustomMealForPlan();
+                                                        if (meal) {
+                                                            addMealToPlan(meal);
+                                                            setShowCustomMealForPlan(false);
+                                                            resetCustomMeal();
+                                                        }
+                                                    }}
+                                                    disabled={!hasCustomMealContent()}
+                                                    className={`w-full py-4 rounded-xl font-bold text-lg press ${
+                                                        hasCustomMealContent()
+                                                            ? 'bg-coral-500 text-white shadow-glow-coral'
+                                                            : 'bg-cream-200 text-warm-400'
+                                                    }`}
+                                                >
+                                                    ✓ Add to Plan
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -2671,123 +2920,216 @@
 
                                 {/* Custom Meal Logger Modal */}
                                 {showCustomMeal && (
-                                    <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={() => setShowCustomMeal(false)}>
-                                        <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[90vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
+                                    <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={() => { setShowCustomMeal(false); resetCustomMeal(); }}>
+                                        <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[92vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
                                             <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
-                                            <div className="px-5 pb-8 overflow-y-auto max-h-[80vh]">
+                                            <div className="px-5 pb-8 overflow-y-auto max-h-[82vh]">
                                                 <h2 className="text-warm-800 font-bold text-xl mb-1">📝 Log Custom Meal</h2>
-                                                <p className="text-warm-500 text-sm mb-5">For meals not from a recipe</p>
+                                                <p className="text-warm-500 text-sm mb-4">Fill in what Diego ate</p>
 
-                                                {/* Protein Selection */}
-                                                <div className="mb-5">
-                                                    <label className="text-warm-600 text-sm font-medium mb-2 block">What protein?</label>
-                                                    <div className="grid grid-cols-3 gap-2">
-                                                        {proteins.map(p => (
-                                                            <button
-                                                                key={p.id}
-                                                                onClick={() => setCustomMeal(prev => ({ ...prev, protein: p.id }))}
-                                                                className={`p-3 rounded-xl text-center transition-all press ${
-                                                                    customMeal.protein === p.id 
-                                                                        ? 'bg-coral-500 text-white' 
-                                                                        : 'bg-white border border-cream-200 text-warm-700'
-                                                                }`}
-                                                            >
-                                                                <span className="text-xl block">{p.emoji}</span>
-                                                                <span className="text-xs">{p.name}</span>
-                                                            </button>
-                                                        ))}
+                                                {/* Live Total - Sticky */}
+                                                <div className="sticky top-0 z-10 bg-gradient-to-r from-coral-500 to-sand-500 rounded-xl p-3 mb-4 shadow-glow-coral">
+                                                    <div className="flex justify-between items-center text-white">
+                                                        <span className="font-semibold">Total:</span>
+                                                        <div className="flex gap-4">
+                                                            <span className="font-bold">~{calcCustomProtein()}g protein</span>
+                                                            <span>|</span>
+                                                            <span>{calcCustomCarbs()}g carbs</span>
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                {/* Grams Input */}
+                                                {/* PROTEINS SECTION */}
                                                 <div className="mb-5">
-                                                    <label className="text-warm-600 text-sm font-medium mb-2 block">
-                                                        Amount (raw grams)
-                                                        <span className="text-warm-400 font-normal ml-2">• cooked? add ~30%</span>
-                                                    </label>
-                                                    <div className="flex items-center gap-2">
-                                                        <input
-                                                            type="number"
-                                                            value={customMeal.grams}
-                                                            onChange={(e) => setCustomMeal(prev => ({ ...prev, grams: e.target.value }))}
-                                                            placeholder="e.g. 350"
-                                                            className="flex-1 px-4 py-3 rounded-xl border border-cream-300 bg-white text-warm-800 text-lg font-medium focus:outline-none focus:border-coral-400"
-                                                        />
-                                                        <span className="text-warm-600 font-medium">g</span>
+                                                    <h3 className="text-warm-700 font-semibold text-sm mb-3 flex items-center gap-2">
+                                                        <span className="w-6 h-6 rounded-lg bg-coral-500 text-white flex items-center justify-center text-xs">🥩</span>
+                                                        Proteins
+                                                        <span className="text-warm-400 font-normal text-xs">(raw grams, cooked +30%)</span>
+                                                    </h3>
+                                                    
+                                                    {/* Eggs - Units */}
+                                                    <div className="flex items-center justify-between py-3 border-b border-cream-200">
+                                                        <div className="flex items-center gap-3">
+                                                            <span className="text-xl">🥚</span>
+                                                            <span className="text-warm-700">Eggs</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-3">
+                                                            <button onClick={() => setCustomMeal(prev => ({ ...prev, eggs: Math.max(0, prev.eggs - 1) }))} className="w-8 h-8 rounded-lg bg-cream-200 text-warm-600 font-bold press">−</button>
+                                                            <span className="w-8 text-center font-semibold text-warm-800">{customMeal.eggs}</span>
+                                                            <button onClick={() => setCustomMeal(prev => ({ ...prev, eggs: prev.eggs + 1 }))} className="w-8 h-8 rounded-lg bg-coral-500 text-white font-bold press">+</button>
+                                                            <span className="w-16 text-right text-coral-500 font-medium text-sm">{customMeal.eggs > 0 ? `${customMeal.eggs * 6}g` : '-'}</span>
+                                                        </div>
                                                     </div>
-                                                    {customMeal.protein && customMeal.grams && (
-                                                        <p className="text-coral-500 text-sm mt-2 font-medium">
-                                                            ≈ {calcCustomProtein()}g protein
-                                                        </p>
-                                                    )}
+
+                                                    {/* Other Proteins - Grams */}
+                                                    {[
+                                                        { id: 'beef', name: 'Beef', emoji: '🥩' },
+                                                        { id: 'chicken', name: 'Chicken', emoji: '🍗' },
+                                                        { id: 'ground', name: 'Ground Beef', emoji: '🍔' },
+                                                        { id: 'salmon', name: 'Salmon', emoji: '🐟' },
+                                                        { id: 'fish', name: 'White Fish', emoji: '🐠' },
+                                                        { id: 'shrimp', name: 'Shrimp', emoji: '🦐' },
+                                                        { id: 'lamb', name: 'Lamb', emoji: '🍖' },
+                                                        { id: 'pork', name: 'Pork', emoji: '🐷' },
+                                                    ].map(protein => {
+                                                        const grams = parseInt(customMeal.proteins[protein.id]) || 0;
+                                                        const proteinG = grams > 0 ? Math.round((grams * proteinCalcData[protein.id].per100g) / 100) : 0;
+                                                        return (
+                                                            <div key={protein.id} className="flex items-center justify-between py-2 border-b border-cream-100">
+                                                                <div className="flex items-center gap-3">
+                                                                    <span className="text-lg">{protein.emoji}</span>
+                                                                    <span className="text-warm-700 text-sm">{protein.name}</span>
+                                                                </div>
+                                                                <div className="flex items-center gap-2">
+                                                                    <input
+                                                                        type="number"
+                                                                        value={customMeal.proteins[protein.id]}
+                                                                        onChange={(e) => updateCustomProtein(protein.id, e.target.value)}
+                                                                        placeholder="0"
+                                                                        className="w-20 px-2 py-1.5 rounded-lg border border-cream-300 bg-white text-warm-800 text-sm text-right focus:outline-none focus:border-coral-400"
+                                                                    />
+                                                                    <span className="text-warm-500 text-xs w-4">g</span>
+                                                                    <span className="w-14 text-right text-coral-500 font-medium text-sm">{proteinG > 0 ? `${proteinG}g` : '-'}</span>
+                                                                </div>
+                                                            </div>
+                                                        );
+                                                    })}
                                                 </div>
 
-                                                {/* Extras */}
+                                                {/* VEGGIES SECTION */}
                                                 <div className="mb-5">
-                                                    <label className="text-warm-600 text-sm font-medium mb-2 block">Extras (optional)</label>
-                                                    <div className="flex gap-2 flex-wrap">
-                                                        {customExtras.map(extra => (
-                                                            <button
-                                                                key={extra.id}
-                                                                onClick={() => toggleCustomExtra(extra.id)}
-                                                                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all press ${
-                                                                    customMeal.extras.includes(extra.id)
-                                                                        ? 'bg-sage-500 text-white'
-                                                                        : 'bg-white border border-cream-200 text-warm-700'
-                                                                }`}
-                                                            >
-                                                                {extra.emoji} {extra.name}
-                                                            </button>
-                                                        ))}
+                                                    <h3 className="text-warm-700 font-semibold text-sm mb-3 flex items-center gap-2">
+                                                        <span className="w-6 h-6 rounded-lg bg-sage-500 text-white flex items-center justify-center text-xs">🥬</span>
+                                                        Veggies
+                                                        <span className="text-warm-400 font-normal text-xs">(for carb counting)</span>
+                                                    </h3>
+
+                                                    {/* Avocado - Units */}
+                                                    <div className="flex items-center justify-between py-3 border-b border-cream-200">
+                                                        <div className="flex items-center gap-3">
+                                                            <span className="text-xl">🥑</span>
+                                                            <span className="text-warm-700">Avocado</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-3">
+                                                            <button onClick={() => updateCustomVeggie('avocado', Math.max(0, (customMeal.veggies.avocado || 0) - 1))} className="w-8 h-8 rounded-lg bg-cream-200 text-warm-600 font-bold press">−</button>
+                                                            <span className="w-8 text-center font-semibold text-warm-800">{customMeal.veggies.avocado || 0}</span>
+                                                            <button onClick={() => updateCustomVeggie('avocado', (customMeal.veggies.avocado || 0) + 1)} className="w-8 h-8 rounded-lg bg-sage-500 text-white font-bold press">+</button>
+                                                            <span className="w-14 text-right text-sage-600 font-medium text-sm">{customMeal.veggies.avocado > 0 ? `${customMeal.veggies.avocado * 2}g carb` : '-'}</span>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Other Veggies - Grams */}
+                                                    {[
+                                                        { id: 'broccoli', name: 'Broccoli', emoji: '🥦', carbsPer100: 4 },
+                                                        { id: 'spinach', name: 'Spinach', emoji: '🥬', carbsPer100: 1 },
+                                                        { id: 'peppers', name: 'Peppers', emoji: '🫑', carbsPer100: 4 },
+                                                        { id: 'mushrooms', name: 'Mushrooms', emoji: '🍄', carbsPer100: 2 },
+                                                        { id: 'zucchini', name: 'Zucchini', emoji: '🥒', carbsPer100: 2 },
+                                                        { id: 'tomatoes', name: 'Tomatoes', emoji: '🍅', carbsPer100: 3 },
+                                                        { id: 'onions', name: 'Onions', emoji: '🧅', carbsPer100: 8 },
+                                                        { id: 'asparagus', name: 'Asparagus', emoji: '🌿', carbsPer100: 2 },
+                                                        { id: 'cucumber', name: 'Cucumber', emoji: '🥒', carbsPer100: 2 },
+                                                    ].map(veg => {
+                                                        const grams = parseInt(customMeal.veggies[veg.id]) || 0;
+                                                        const carbs = grams > 0 ? Math.round((grams * veg.carbsPer100) / 100) : 0;
+                                                        return (
+                                                            <div key={veg.id} className="flex items-center justify-between py-2 border-b border-cream-100">
+                                                                <div className="flex items-center gap-3">
+                                                                    <span className="text-lg">{veg.emoji}</span>
+                                                                    <span className="text-warm-700 text-sm">{veg.name}</span>
+                                                                    <span className="text-warm-400 text-xs">({veg.carbsPer100}g/100g)</span>
+                                                                </div>
+                                                                <div className="flex items-center gap-2">
+                                                                    <input
+                                                                        type="number"
+                                                                        value={customMeal.veggies[veg.id]}
+                                                                        onChange={(e) => updateCustomVeggie(veg.id, e.target.value)}
+                                                                        placeholder="0"
+                                                                        className="w-16 px-2 py-1.5 rounded-lg border border-cream-300 bg-white text-warm-800 text-sm text-right focus:outline-none focus:border-sage-400"
+                                                                    />
+                                                                    <span className="text-warm-500 text-xs w-4">g</span>
+                                                                    <span className="w-14 text-right text-sage-600 font-medium text-sm">{carbs > 0 ? `${carbs}g` : '-'}</span>
+                                                                </div>
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>
+
+                                                {/* EXTRAS SECTION */}
+                                                <div className="mb-5">
+                                                    <h3 className="text-warm-700 font-semibold text-sm mb-3 flex items-center gap-2">
+                                                        <span className="w-6 h-6 rounded-lg bg-sand-500 text-white flex items-center justify-center text-xs">🧀</span>
+                                                        Extras
+                                                    </h3>
+
+                                                    {/* Cheese - Grams */}
+                                                    <div className="flex items-center justify-between py-2 border-b border-cream-100">
+                                                        <div className="flex items-center gap-3">
+                                                            <span className="text-lg">🧀</span>
+                                                            <span className="text-warm-700 text-sm">Cheese</span>
+                                                            <span className="text-warm-400 text-xs">(max 50g)</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-2">
+                                                            <input
+                                                                type="number"
+                                                                value={customMeal.cheese}
+                                                                onChange={(e) => setCustomMeal(prev => ({ ...prev, cheese: e.target.value }))}
+                                                                placeholder="0"
+                                                                className="w-16 px-2 py-1.5 rounded-lg border border-cream-300 bg-white text-warm-800 text-sm text-right focus:outline-none focus:border-sand-400"
+                                                            />
+                                                            <span className="text-warm-500 text-xs w-4">g</span>
+                                                            <span className="w-14 text-right text-sand-600 font-medium text-sm">{parseInt(customMeal.cheese) > 0 ? `+${Math.round((parseInt(customMeal.cheese) * 25) / 100)}g` : '-'}</span>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Cooking fats - Checkboxes */}
+                                                    <div className="flex gap-3 mt-3">
+                                                        <button 
+                                                            onClick={() => setCustomMeal(prev => ({ ...prev, usedOil: !prev.usedOil }))}
+                                                            className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium press ${customMeal.usedOil ? 'bg-sage-500 text-white' : 'bg-cream-100 text-warm-600 border border-cream-200'}`}
+                                                        >
+                                                            🫒 Olive Oil {customMeal.usedOil && '✓'}
+                                                        </button>
+                                                        <button 
+                                                            onClick={() => setCustomMeal(prev => ({ ...prev, usedButter: !prev.usedButter }))}
+                                                            className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium press ${customMeal.usedButter ? 'bg-sage-500 text-white' : 'bg-cream-100 text-warm-600 border border-cream-200'}`}
+                                                        >
+                                                            🧈 Butter {customMeal.usedButter && '✓'}
+                                                        </button>
                                                     </div>
                                                 </div>
 
                                                 {/* Carbs Override */}
-                                                <div className="mb-6">
-                                                    <label className="text-warm-600 text-sm font-medium mb-2 block">
-                                                        Carbs estimate
-                                                        <span className="text-warm-400 font-normal ml-2">• auto: {calcCustomCarbs()}g</span>
-                                                    </label>
-                                                    <div className="flex items-center gap-2">
-                                                        <input
-                                                            type="number"
-                                                            value={customMeal.carbsEstimate}
-                                                            onChange={(e) => setCustomMeal(prev => ({ ...prev, carbsEstimate: e.target.value }))}
-                                                            placeholder={calcCustomCarbs().toString()}
-                                                            className="w-24 px-4 py-3 rounded-xl border border-cream-300 bg-white text-warm-800 text-lg font-medium focus:outline-none focus:border-coral-400"
-                                                        />
-                                                        <span className="text-warm-600 font-medium">g</span>
+                                                <div className="mb-5 p-3 bg-cream-100 rounded-xl">
+                                                    <div className="flex items-center justify-between">
+                                                        <span className="text-warm-600 text-sm">Override carbs?</span>
+                                                        <div className="flex items-center gap-2">
+                                                            <input
+                                                                type="number"
+                                                                value={customMeal.carbsOverride}
+                                                                onChange={(e) => setCustomMeal(prev => ({ ...prev, carbsOverride: e.target.value }))}
+                                                                placeholder={calcCustomCarbs().toString()}
+                                                                className="w-16 px-2 py-1.5 rounded-lg border border-cream-300 bg-white text-warm-800 text-sm text-right focus:outline-none"
+                                                            />
+                                                            <span className="text-warm-500 text-xs">g</span>
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                {/* Summary */}
-                                                {customMeal.protein && customMeal.grams && (
-                                                    <div className="bg-gradient-to-br from-coral-50 to-sand-50 border border-coral-100 rounded-2xl p-4 mb-5">
-                                                        <div className="flex justify-between items-center">
-                                                            <div>
-                                                                <p className="text-warm-800 font-semibold">
-                                                                    {proteins.find(p => p.id === customMeal.protein)?.name} ({customMeal.grams}g)
-                                                                    {customMeal.extras.length > 0 && (
-                                                                        <span className="font-normal text-warm-600">
-                                                                            {' + ' + customMeal.extras.map(id => customExtras.find(e => e.id === id)?.name).join(', ')}
-                                                                        </span>
-                                                                    )}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="flex gap-4 mt-2">
-                                                            <span className="text-coral-500 font-bold">~{calcCustomProtein()}g protein</span>
-                                                            <span className="text-sage-500 font-medium">{calcCustomCarbs()}g carbs</span>
-                                                        </div>
+                                                {/* Summary Preview */}
+                                                {hasCustomMealContent() && (
+                                                    <div className="bg-cream-100 rounded-xl p-4 mb-5">
+                                                        <p className="text-warm-600 text-xs mb-1">Will log as:</p>
+                                                        <p className="text-warm-800 font-medium">{buildCustomMealName()}</p>
                                                     </div>
                                                 )}
 
                                                 {/* Log Button */}
                                                 <button 
                                                     onClick={logCustomMeal}
-                                                    disabled={!customMeal.protein || !customMeal.grams}
+                                                    disabled={!hasCustomMealContent()}
                                                     className={`w-full py-4 rounded-xl font-bold text-lg press ${
-                                                        customMeal.protein && customMeal.grams
+                                                        hasCustomMealContent()
                                                             ? 'bg-coral-500 text-white shadow-glow-coral'
                                                             : 'bg-cream-200 text-warm-400'
                                                     }`}
