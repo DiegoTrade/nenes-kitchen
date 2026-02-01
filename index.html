@@ -1902,7 +1902,7 @@
                     return;
                 }
                 setShopping([...shopping, {
-                    id: Date.now(),
+                    id: Date.now() + Math.random(),
                     name: essential.addText,
                     cat: essential.cat,
                     checked: false
@@ -1912,7 +1912,7 @@
             const addProteinCut = (cut) => {
                 if (shopping.some(s => s.name === cut)) return;
                 setShopping([...shopping, {
-                    id: Date.now(),
+                    id: Date.now() + Math.random(),
                     name: cut,
                     cat: 'protein',
                     checked: false
@@ -1922,7 +1922,7 @@
             const addVeggieItem = (item) => {
                 if (shopping.some(s => s.name === item)) return;
                 setShopping([...shopping, {
-                    id: Date.now(),
+                    id: Date.now() + Math.random(),
                     name: item,
                     cat: 'produce',
                     checked: false
@@ -2011,7 +2011,7 @@
             const addManualItem = () => {
                 if (!newItem.trim()) return;
                 const item = {
-                    id: Date.now(),
+                    id: Date.now() + Math.random(),
                     name: newItem.trim(),
                     cat: categorizeItem(newItem),
                     checked: false
@@ -2023,7 +2023,7 @@
             const addQuickItem = (item) => {
                 if (shopping.some(s => s.name === item.name)) return;
                 setShopping([...shopping, { 
-                    id: Date.now(), 
+                    id: Date.now() + Math.random(), 
                     name: item.name, 
                     cat: item.cat, 
                     checked: false 
