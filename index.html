@@ -1165,10 +1165,10 @@
 
             // Kitchen Essentials - what your protocol needs stocked
             const kitchenEssentials = [
-                { id: 'protein', name: 'Protein source', emoji: '🥩', description: 'Chicken, beef, fish, etc.', addText: 'Pick protein this week', cat: 'protein', hasPicker: true },
+                { id: 'protein', name: 'Protein source', emoji: '🥩', description: 'Chicken, beef, fish, etc.', addText: 'Pick protein this week', cat: 'protein', hasPicker: 'protein' },
                 { id: 'eggs', name: 'Eggs', emoji: '🥚', description: 'Always need these', addText: 'Eggs (2 dozen)', cat: 'protein' },
                 { id: 'avocado', name: 'Avocados', emoji: '🥑', description: 'Healthy fats', addText: 'Avocados (6)', cat: 'produce' },
-                { id: 'greens', name: 'Greens & Veggies', emoji: '🥬', description: 'Unlimited on protocol', addText: 'Fresh vegetables', cat: 'produce' },
+                { id: 'greens', name: 'Greens & Veggies', emoji: '🥬', description: 'Unlimited on protocol', addText: 'Fresh vegetables', cat: 'produce', hasPicker: 'veggies' },
                 { id: 'oliveoil', name: 'Olive Oil', emoji: '🫒', description: 'Cooking & dressing', addText: 'Olive oil', cat: 'pantry' },
                 { id: 'butter', name: 'Butter', emoji: '🧈', description: 'Cooking fat', addText: 'Butter', cat: 'dairy' },
                 { id: 'lemons', name: 'Lemons/Limes', emoji: '🍋', description: 'For flavor', addText: 'Lemons (6)', cat: 'produce' },
@@ -1207,7 +1207,36 @@
                 },
             ];
 
+            // Veggie options for the picker
+            const veggieOptions = [
+                {
+                    name: 'Leafy Greens', emoji: '🥬',
+                    items: ['Spinach (200g)', 'Arugula (150g)', 'Mixed greens (200g)', 'Romaine lettuce (2)', 'Butter lettuce (2)', 'Kale (bunch)']
+                },
+                {
+                    name: 'Cruciferous', emoji: '🥦',
+                    items: ['Broccoli (2 heads)', 'Cauliflower (1 head)', 'Cabbage (1 head)', 'Brussels sprouts (500g)']
+                },
+                {
+                    name: 'Cooking Veggies', emoji: '🍳',
+                    items: ['Zucchini (4)', 'Bell peppers (4)', 'Mushrooms (400g)', 'Asparagus (2 bunches)', 'Eggplant (2)', 'Green beans (400g)']
+                },
+                {
+                    name: 'Salad Veggies', emoji: '🥗',
+                    items: ['Cucumber (3)', 'Cherry tomatoes (500g)', 'Tomatoes (6)', 'Radishes (bunch)', 'Celery (bunch)']
+                },
+                {
+                    name: 'Aromatics', emoji: '🧅',
+                    items: ['Onions (bag)', 'Red onion (3)', 'Garlic (2 heads)', 'Ginger (piece)', 'Fresh cilantro', 'Fresh parsley', 'Fresh basil']
+                },
+                {
+                    name: 'Other', emoji: '🌶️',
+                    items: ['Jalapeños (6)', 'Chayote (2)', 'Bok choy (3)', 'Fennel (2)']
+                },
+            ];
+
             const [showProteinPicker, setShowProteinPicker] = useState(false);
+            const [showVeggiePicker, setShowVeggiePicker] = useState(false);
 
             // Check if essential is covered in shopping list
             const isEssentialInList = (essential) => {
@@ -1227,8 +1256,12 @@
 
             const addEssential = (essential) => {
                 if (isEssentialInList(essential)) return;
-                if (essential.hasPicker) {
+                if (essential.hasPicker === 'protein') {
                     setShowProteinPicker(true);
+                    return;
+                }
+                if (essential.hasPicker === 'veggies') {
+                    setShowVeggiePicker(true);
                     return;
                 }
                 setShopping([...shopping, {
@@ -1245,6 +1278,16 @@
                     id: Date.now(),
                     name: cut,
                     cat: 'protein',
+                    checked: false
+                }]);
+            };
+
+            const addVeggieItem = (item) => {
+                if (shopping.some(s => s.name === item)) return;
+                setShopping([...shopping, {
+                    id: Date.now(),
+                    name: item,
+                    cat: 'produce',
                     checked: false
                 }]);
             };
@@ -1929,6 +1972,52 @@
                                                 </div>
                                                 
                                                 <button onClick={() => setShowProteinPicker(false)} className="w-full py-3 mt-5 bg-warm-800 text-white rounded-xl font-medium press">Done</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Veggie Picker Modal */}
+                                {showVeggiePicker && (
+                                    <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={() => setShowVeggiePicker(false)}>
+                                        <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[85vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
+                                            <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
+                                            <div className="px-5 pb-8 overflow-y-auto max-h-[75vh]">
+                                                <h3 className="text-warm-800 font-bold text-lg mb-1">🥬 Pick Your Veggies</h3>
+                                                <p className="text-warm-500 text-sm mb-4">Unlimited on your protocol — go wild! 🥳</p>
+                                                
+                                                <div className="space-y-4">
+                                                    {veggieOptions.map((category, i) => (
+                                                        <div key={i} className="card rounded-2xl border border-cream-200 overflow-hidden">
+                                                            <div className="px-4 py-2.5 bg-sage-50 border-b border-cream-200 flex items-center gap-2">
+                                                                <span className="text-xl">{category.emoji}</span>
+                                                                <span className="text-warm-800 font-semibold text-sm">{category.name}</span>
+                                                            </div>
+                                                            <div className="p-2 flex flex-wrap gap-2">
+                                                                {category.items.map((item, j) => {
+                                                                    const inList = shopping.some(s => s.name === item);
+                                                                    return (
+                                                                        <button
+                                                                            key={j}
+                                                                            onClick={() => addVeggieItem(item)}
+                                                                            disabled={inList}
+                                                                            className={`px-3 py-2 rounded-xl text-sm transition-all press ${
+                                                                                inList 
+                                                                                    ? 'bg-sage-100 text-sage-600' 
+                                                                                    : 'bg-white border border-cream-200 text-warm-700 hover:border-sage-300 hover:bg-sage-50'
+                                                                            }`}
+                                                                        >
+                                                                            {inList && <span className="mr-1">✓</span>}
+                                                                            {item}
+                                                                        </button>
+                                                                    );
+                                                                })}
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                                
+                                                <button onClick={() => setShowVeggiePicker(false)} className="w-full py-3 mt-5 bg-warm-800 text-white rounded-xl font-medium press">Done</button>
                                             </div>
                                         </div>
                                     </div>
