@@ -11,7 +11,7 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -53,7 +53,7 @@
             background: #FAF7F2;
         }
         
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: auto; }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #E0D9CF; border-radius: 4px; }
@@ -62,17 +62,16 @@
         .animate-fade-in { animation: fade-in 0.3s ease-out; }
         
         @keyframes slide-up { 
-            from { transform: translateY(100%); opacity: 0; } 
+            from { transform: translateY(20px); opacity: 0; } 
             to { transform: translateY(0); opacity: 1; } 
         }
-        .animate-slide-up { animation: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .animate-slide-up { animation: slide-up 0.2s ease-out; }
         
         @keyframes bounce-in {
-            0% { transform: scale(0.8); opacity: 0; }
-            50% { transform: scale(1.05); }
+            0% { transform: scale(0.9); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
-        .animate-bounce-in { animation: bounce-in 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .animate-bounce-in { animation: bounce-in 0.25s ease-out; }
         
         @keyframes float-up {
             0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
@@ -95,9 +94,11 @@
         .animate-pulse-soft { animation: pulse-soft 3s ease-in-out infinite; }
 
         .glass {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(250, 247, 242, 0.95);
+        }
+        
+        .modal-overlay {
+            background: rgba(44, 36, 30, 0.4);
         }
         
         .card {
@@ -128,7 +129,7 @@
 <body>
     <div id="root"></div>
     <script type="text/babel">
-        const { useState, useEffect, useCallback } = React;
+        const { useState, useEffect, useCallback, useMemo, useRef } = React;
 
         // ==================== DATA ====================
         const proteins = [
@@ -471,7 +472,7 @@
         function GuideModal({ onClose, initialTab = 'guide' }) {
             const [tab, setTab] = useState(initialTab);
             return (
-                <div className="fixed inset-0 z-50 flex items-end justify-center bg-warm-900/20 backdrop-blur-sm" onClick={onClose}>
+                <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={onClose}>
                     <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[85vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
                         <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
                         <div className="flex gap-2 px-5 pb-4">
@@ -538,7 +539,7 @@
 
         function BadgesModal({ onClose, earned }) {
             return (
-                <div className="fixed inset-0 z-50 flex items-end justify-center bg-warm-900/20 backdrop-blur-sm" onClick={onClose}>
+                <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={onClose}>
                     <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[85vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
                         <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
                         <div className="px-5 pb-2"><h2 className="text-xl font-bold text-warm-800">🏆 Achievements <span className="text-warm-600 font-normal text-base">({earned.length}/{achievements.length})</span></h2></div>
@@ -562,7 +563,7 @@
         function RecipeModal({ meal, onClose, flavor }) {
             const profile = flavorProfiles[flavor] || flavorProfiles.classic;
             return (
-                <div className="fixed inset-0 z-50 flex items-end justify-center bg-warm-900/20 backdrop-blur-sm" onClick={onClose}>
+                <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={onClose}>
                     <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[90vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
                         <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
                         <div className="px-5 pb-8 overflow-y-auto max-h-[calc(90vh-50px)]">
@@ -641,12 +642,20 @@
             const [showRecipe, setShowRecipe] = useState(null);
             const [copied, setCopied] = useState(false);
 
-            useEffect(() => { save('favs', favorites); }, [favorites]);
-            useEffect(() => { save('hist', history); }, [history]);
-            useEffect(() => { save('shop', shopping); }, [shopping]);
-            useEffect(() => { save('week', weekPlan); }, [weekPlan]);
-            useEffect(() => { save('badges', badges); }, [badges]);
-            useEffect(() => { save('stats', stats); }, [stats]);
+            // Debounced save - batches all localStorage writes
+            const saveTimeoutRef = useRef(null);
+            useEffect(() => {
+                if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+                saveTimeoutRef.current = setTimeout(() => {
+                    save('favs', favorites);
+                    save('hist', history);
+                    save('shop', shopping);
+                    save('week', weekPlan);
+                    save('badges', badges);
+                    save('stats', stats);
+                }, 300);
+                return () => { if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current); };
+            }, [favorites, history, shopping, weekPlan, badges, stats]);
 
             const checkBadges = (s, f) => {
                 const cs = s || stats, cf = f || favorites;
@@ -798,11 +807,11 @@
 
             return (
                 <div className="min-h-screen bg-cream-100 pb-28">
-                    {/* Background accents */}
+                    {/* Background accents - simplified for performance */}
                     <div className="fixed inset-0 overflow-hidden pointer-events-none">
-                        <div className="absolute -top-40 -right-40 w-96 h-96 bg-coral-100 rounded-full blur-[100px] opacity-50" />
-                        <div className="absolute top-1/2 -left-40 w-80 h-80 bg-sage-100 rounded-full blur-[100px] opacity-50" />
-                        <div className="absolute bottom-20 right-0 w-72 h-72 bg-sand-100 rounded-full blur-[80px] opacity-40" />
+                        <div className="absolute -top-40 -right-40 w-96 h-96 bg-coral-50 rounded-full opacity-60" />
+                        <div className="absolute top-1/2 -left-40 w-80 h-80 bg-sage-50 rounded-full opacity-60" />
+                        <div className="absolute bottom-20 right-0 w-72 h-72 bg-sand-50 rounded-full opacity-50" />
                     </div>
 
                     {showGuide && <GuideModal onClose={() => setShowGuide(false)} />}
