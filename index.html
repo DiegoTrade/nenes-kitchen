@@ -1127,9 +1127,11 @@
             const [tab, setTab] = useState('create');
             const [selProteins, setSelProteins] = useState([]);
             const [selVeggies, setSelVeggies] = useState([]);
+            const [selCheese, setSelCheese] = useState([]);
             const [selFlavor, setSelFlavor] = useState('any');
             const [selTime, setSelTime] = useState('any');
             const [selCategory, setSelCategory] = useState('any');
+            const [showCategoryFilter, setShowCategoryFilter] = useState(false);
             const [portions, setPortions] = useState(1);
             const [meals, setMeals] = useState([]);
             const [showMeals, setShowMeals] = useState(false);
@@ -1204,6 +1206,8 @@
                 else { navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000); }
             };
 
+            const applyPortions = m => portions === 1 ? m : { ...m, displayProtein: Math.round(m.baseProtein * portions), displayServing: m.servingSize ? m.servingSize.replace(/(\d+)g/g, (_, n) => Math.round(parseInt(n) * portions) + 'g') : m.description };
+
             const handleSurpriseMe = () => {
                 if (selProteins.length === 0) { alert('Select at least one protein first!'); return; }
                 const recipe = getSurpriseRecipe(selProteins, history);
@@ -1241,6 +1245,7 @@
             const getDressing = flavor => dressings.find(d => d.flavor === flavor) || dressings[0];
 
             const MealCard = ({ meal, actions = true }) => {
+                const dm = applyPortions(meal);
                 const dressing = meal.suggestDressing ? getDressing(meal.flavor) : null;
                 return (
                     <div className="card rounded-[1.5rem] overflow-hidden border border-cream-200 mb-4">
@@ -1253,9 +1258,9 @@
                                     <button onClick={() => toggleFav(meal)} className="text-xl press">{isFav(meal) ? '❤️' : '🤍'}</button>
                                 </div>
                             </div>
-                            <p className="text-warm-600 text-sm mb-3">{meal.servingSize}</p>
+                            <p className="text-warm-600 text-sm mb-3">{dm.displayServing || meal.servingSize}</p>
                             <div className="flex gap-2 flex-wrap mb-4">
-                                <span className={`px-3 py-1.5 rounded-full text-xs font-semibold ${meal.lowProteinWarning ? 'bg-sand-100 text-sand-600' : 'bg-coral-100 text-coral-600'}`}>~{meal.baseProtein}g protein</span>
+                                <span className={`px-3 py-1.5 rounded-full text-xs font-semibold ${meal.lowProteinWarning ? 'bg-sand-100 text-sand-600' : 'bg-coral-100 text-coral-600'}`}>~{dm.displayProtein || meal.baseProtein}g protein</span>
                                 <span className="px-3 py-1.5 rounded-full text-xs bg-cream-200 text-warm-600">⏱️ {meal.time} min</span>
                                 {meal.netCarbs !== undefined && <span className="px-3 py-1.5 rounded-full text-xs bg-sage-100 text-sage-600">{meal.netCarbs}g carbs</span>}
                             </div>
@@ -1308,64 +1313,150 @@
                     )}
 
                     <div className="relative max-w-lg mx-auto px-5 pt-6 pb-8">
-                        <div className="flex items-center justify-between mb-6">
+                        {/* Header */}
+                        <div className="flex items-center justify-between mb-5">
                             <button onClick={() => setShowGuide(true)} className="w-12 h-12 rounded-2xl card border border-cream-200 flex items-center justify-center text-xl press">📋</button>
                             <div className="text-center">
                                 <h1 className="text-2xl font-bold text-warm-800">Nene's Kitchen</h1>
-                                <p className="text-warm-600 text-sm">{stats.total} meals • {stats.streak}🔥</p>
+                                <p className="text-warm-600 text-sm">{stats.total} meals • {stats.streak} day streak 🔥</p>
                             </div>
                             <button onClick={() => setShowBadges(true)} className="w-12 h-12 rounded-2xl card border border-cream-200 flex items-center justify-center text-xl press relative">🏆{badges.length > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 bg-coral-500 rounded-full text-[10px] text-white flex items-center justify-center">{badges.length}</span>}</button>
                         </div>
 
                         {tab === 'create' && (<>
-                            <button onClick={handleSurpriseMe} className="w-full mb-5 py-4 bg-gradient-to-r from-coral-500 to-sand-500 rounded-2xl text-white font-bold text-lg shadow-glow-coral press">🎲 Surprise Me!</button>
-
-                            <div className="mb-4">
-                                <h2 className="text-warm-600 text-xs font-semibold uppercase mb-3">Meal Type</h2>
-                                <div className="flex gap-2 flex-wrap">
-                                    {Object.values(mealCategories).map(c => (
-                                        <button key={c.id} onClick={() => setSelCategory(c.id)} className={`px-3 py-2 rounded-xl text-sm font-medium press ${selCategory === c.id ? 'chip-selected' : 'chip-unselected'}`}>{c.emoji} {c.name}</button>
-                                    ))}
+                            {/* Hero Stats Card - RESTORED */}
+                            <div className="card rounded-2xl px-5 py-3 mb-5 border border-cream-200">
+                                <div className="flex items-center justify-center gap-4 text-sm">
+                                    <span className="text-warm-600">Target:</span>
+                                    <span className="text-coral-500 font-bold">80-100g protein</span>
+                                    <span className="text-cream-300">•</span>
+                                    <span className="text-warm-600">~1,800 cal</span>
                                 </div>
                             </div>
 
+                            {/* Flavor - What's the vibe */}
                             <div className="mb-4">
-                                <h2 className="text-warm-600 text-xs font-semibold uppercase mb-3">Flavor</h2>
+                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3">What's the vibe?</h2>
                                 <div className="flex gap-2 flex-wrap">
                                     {Object.values(flavorProfiles).map(f => (
-                                        <button key={f.id} onClick={() => setSelFlavor(f.id)} className={`px-4 py-2.5 rounded-xl text-sm font-medium press ${selFlavor === f.id ? 'chip-selected' : 'chip-unselected'}`}>{f.emoji} {f.name}</button>
+                                        <button key={f.id} onClick={() => { setSelFlavor(f.id); setShowMeals(false); }}
+                                            className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all press ${selFlavor === f.id ? 'chip-selected' : 'chip-unselected'}`}>
+                                            {f.emoji} {f.name}
+                                        </button>
                                     ))}
                                 </div>
                             </div>
 
+                            {/* Time */}
                             <div className="mb-4">
-                                <h2 className="text-warm-600 text-xs font-semibold uppercase mb-3">Time</h2>
+                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3">How much time?</h2>
                                 <div className="flex gap-2">
                                     {Object.values(timeCategories).map(t => (
-                                        <button key={t.id} onClick={() => setSelTime(t.id)} className={`flex-1 px-3 py-2.5 rounded-xl text-sm font-medium press ${selTime === t.id ? 'bg-sage-500 text-white' : 'chip-unselected'}`}>{t.emoji} {t.name}</button>
+                                        <button key={t.id} onClick={() => { setSelTime(t.id); setShowMeals(false); }}
+                                            className={`flex-1 px-3 py-2.5 rounded-xl text-sm font-medium transition-all press ${selTime === t.id ? 'bg-sage-500 text-white shadow-glow-sage' : 'chip-unselected'}`}>
+                                            {t.emoji} {t.name}
+                                        </button>
                                     ))}
                                 </div>
                             </div>
 
+                            {/* Meal Type - Collapsible */}
+                            <div className="mb-4">
+                                <button onClick={() => setShowCategoryFilter(!showCategoryFilter)} className="flex items-center justify-between w-full text-left mb-3">
+                                    <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider">
+                                        Meal type {selCategory !== 'any' && <span className="text-coral-500 normal-case">({mealCategories[selCategory]?.name})</span>}
+                                    </h2>
+                                    <span className="text-warm-400 text-xs">{showCategoryFilter ? '▲' : '▼'}</span>
+                                </button>
+                                {showCategoryFilter && (
+                                    <div className="flex gap-2 flex-wrap animate-fade-in">
+                                        {Object.values(mealCategories).map(c => (
+                                            <button key={c.id} onClick={() => { setSelCategory(c.id); setShowMeals(false); }}
+                                                className={`px-3 py-2 rounded-xl text-sm font-medium press ${selCategory === c.id ? 'chip-selected' : 'chip-unselected'}`}>
+                                                {c.emoji} {c.name}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Portions */}
+                            <div className="card rounded-2xl px-5 py-4 mb-5 border border-cream-200 flex items-center justify-between">
+                                <span className="text-warm-600 text-sm">Cooking for</span>
+                                <div className="flex gap-2">
+                                    {[1, 2].map(n => (
+                                        <button key={n} onClick={() => setPortions(n)}
+                                            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all press ${portions === n ? 'bg-sand-500 text-white' : 'bg-cream-200 text-warm-600'}`}>
+                                            {n} {n === 1 ? 'person' : 'people'}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Protein */}
                             <div className="mb-5">
-                                <h2 className="text-warm-600 text-xs font-semibold uppercase mb-3">🥩 Protein</h2>
-                                <div className="flex flex-wrap gap-2">
+                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <span className="w-6 h-6 rounded-lg bg-gradient-to-br from-coral-400 to-coral-500 flex items-center justify-center text-xs text-white">🥩</span>
+                                    What protein?
+                                </h2>
+                                <div className="grid grid-cols-3 gap-2">
                                     {proteins.map(p => (
-                                        <button key={p.id} onClick={() => toggle(p.id, selProteins, setSelProteins)} className={`px-4 py-2.5 rounded-xl text-sm font-medium press ${selProteins.includes(p.id) ? 'chip-selected' : 'chip-unselected'}`}>{p.emoji} {p.name}</button>
+                                        <button key={p.id} onClick={() => toggle(p.id, selProteins, setSelProteins)}
+                                            className={`p-3 rounded-2xl text-center transition-all press ${selProteins.includes(p.id) ? 'chip-selected scale-105' : 'chip-unselected'}`}>
+                                            <span className="text-2xl block mb-1">{p.emoji}</span>
+                                            <span className="text-xs font-medium">{p.name}</span>
+                                        </button>
                                     ))}
                                 </div>
                             </div>
 
+                            {/* Veggies */}
                             <div className="mb-5">
-                                <h2 className="text-warm-600 text-xs font-semibold uppercase mb-3">🥬 Veggies</h2>
-                                <div className="flex flex-wrap gap-2">
+                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <span className="w-6 h-6 rounded-lg bg-gradient-to-br from-sage-400 to-sage-500 flex items-center justify-center text-xs text-white">🥬</span>
+                                    What veggies?
+                                </h2>
+                                <div className="grid grid-cols-4 gap-2">
                                     {vegetables.map(v => (
-                                        <button key={v.id} onClick={() => toggle(v.id, selVeggies, setSelVeggies)} className={`px-3 py-2 rounded-xl text-sm font-medium press ${selVeggies.includes(v.id) ? 'bg-sage-500 text-white' : 'chip-unselected'}`}>{v.emoji} {v.name}</button>
+                                        <button key={v.id} onClick={() => toggle(v.id, selVeggies, setSelVeggies)}
+                                            className={`p-2.5 rounded-xl text-center transition-all press relative ${selVeggies.includes(v.id) ? 'bg-sage-500 text-white scale-105 shadow-glow-sage' : 'chip-unselected'}`}>
+                                            <span className="text-xl block">{v.emoji}</span>
+                                            <span className="text-[10px] font-medium">{v.name}</span>
+                                            {v.warning && <span className="absolute -top-1 -right-1 w-4 h-4 bg-sand-500 rounded-full text-[8px] flex items-center justify-center text-white">!</span>}
+                                        </button>
+                                    ))}
+                                </div>
+                                {selVeggies.includes('spinach') && <div className="mt-3 p-3 bg-sand-50 border border-sand-200 rounded-xl"><p className="text-sand-600 text-xs font-medium">⚠️ Spinach: Max 2-3x per week</p></div>}
+                            </div>
+
+                            {/* Cheese */}
+                            <div className="mb-6">
+                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <span className="w-6 h-6 rounded-lg bg-gradient-to-br from-sand-400 to-sand-500 flex items-center justify-center text-xs text-white">🧀</span>
+                                    Cheese? <span className="font-normal text-warm-500">(max 50g)</span>
+                                </h2>
+                                <div className="grid grid-cols-3 gap-2">
+                                    {cheeses.map(c => (
+                                        <button key={c.id} onClick={() => toggle(c.id, selCheese, setSelCheese)}
+                                            className={`p-3 rounded-2xl text-center transition-all press ${selCheese.includes(c.id) ? 'bg-sand-500 text-white scale-105' : 'chip-unselected'}`}>
+                                            <span className="text-2xl block mb-1">{c.emoji}</span>
+                                            <span className="text-xs font-medium">{c.name}</span>
+                                        </button>
                                     ))}
                                 </div>
                             </div>
 
-                            <button onClick={genMeals} disabled={selProteins.length === 0} className={`w-full py-4 rounded-2xl font-bold text-lg mb-6 press ${selProteins.length > 0 ? 'bg-warm-800 text-white' : 'bg-cream-200 text-warm-500'}`}>Show Recipes</button>
+                            {/* Action buttons - Show Recipes + Surprise Me side by side */}
+                            <div className="flex gap-3 mb-6">
+                                <button onClick={genMeals} disabled={!selProteins.length}
+                                    className={`flex-1 py-4 rounded-2xl font-bold text-base press ${selProteins.length > 0 ? 'bg-warm-800 text-white' : 'bg-cream-200 text-warm-500'}`}>
+                                    Show Recipes
+                                </button>
+                                <button onClick={handleSurpriseMe} disabled={!selProteins.length}
+                                    className={`py-4 px-5 rounded-2xl font-bold text-base press ${selProteins.length > 0 ? 'bg-gradient-to-r from-coral-500 to-sand-500 text-white shadow-glow-coral' : 'bg-cream-200 text-warm-500'}`}>
+                                    🎲
+                                </button>
+                            </div>
 
                             {showMeals && meals.length > 0 && (
                                 <div className="animate-fade-in">
@@ -1396,7 +1487,7 @@
                                         {shopping.map((item, i) => (
                                             <div key={i} className="flex items-center justify-between px-4 py-3 border-b border-cream-100 last:border-0">
                                                 <span className="text-warm-700 text-sm">{item.name}</span>
-                                                <button onClick={() => setShopping(shopping.filter((_, idx) => idx !== i))} className="text-warm-400 hover:text-coral-500">✕</button>
+                                                <button onClick={() => setShopping(shopping.filter((_, idx) => idx !== i))} className="text-warm-400 hover:text-coral-500 text-lg">×</button>
                                             </div>
                                         ))}
                                     </div>
@@ -1443,6 +1534,7 @@
                         <div className="text-center mt-10 text-warm-500 text-xs">Made with 💕 for Nene • V5 with {mealRecipes.length} recipes</div>
                     </div>
 
+                    {/* Bottom Nav */}
                     <div className="fixed bottom-0 left-0 right-0 bg-cream-100/95 border-t border-cream-200 px-4 py-3 z-30">
                         <div className="max-w-lg mx-auto flex justify-around">
                             {[{ id: 'create', icon: '✨', label: 'Create' }, { id: 'shop', icon: '🛒', label: 'Shop' }, { id: 'saved', icon: '❤️', label: 'Saved' }, { id: 'history', icon: '📜', label: 'History' }].map(t => (
