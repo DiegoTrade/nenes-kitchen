@@ -1237,6 +1237,8 @@
 
             const [showProteinPicker, setShowProteinPicker] = useState(false);
             const [showVeggiePicker, setShowVeggiePicker] = useState(false);
+            const [showRecipeBook, setShowRecipeBook] = useState(false);
+            const [recipeBookFilter, setRecipeBookFilter] = useState('any');
 
             // Check if essential is covered in shopping list
             const isEssentialInList = (essential) => {
@@ -1536,6 +1538,91 @@
                     {timer && <Timer minutes={timer.min} label={timer.label} onClose={() => setTimer(null)} />}
                     {showRecipe && <RecipeModal meal={showRecipe} onClose={() => setShowRecipe(null)} flavor={showRecipe.flavor} />}
 
+                    {/* Recipe Book Modal */}
+                    {showRecipeBook && (
+                        <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={() => setShowRecipeBook(false)}>
+                            <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg h-[90vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
+                                <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
+                                <div className="px-5 pb-4">
+                                    <h2 className="text-warm-800 font-bold text-xl mb-1">📖 Recipe Book</h2>
+                                    <p className="text-warm-500 text-sm mb-4">{mealRecipes.length} recipes to explore</p>
+                                    
+                                    {/* Category Filter */}
+                                    <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1">
+                                        {Object.values(mealCategories).map(c => (
+                                            <button 
+                                                key={c.id} 
+                                                onClick={() => setRecipeBookFilter(c.id)}
+                                                className={`px-3 py-1.5 rounded-lg text-sm font-medium whitespace-nowrap press transition-all ${
+                                                    recipeBookFilter === c.id ? 'bg-coral-500 text-white' : 'bg-cream-200 text-warm-600'
+                                                }`}
+                                            >
+                                                {c.emoji} {c.name}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                                
+                                <div className="px-5 pb-8 overflow-y-auto" style={{ height: 'calc(90vh - 160px)' }}>
+                                    {/* Group recipes by protein */}
+                                    {proteins.map(protein => {
+                                        const proteinRecipes = mealRecipes.filter(r => 
+                                            r.proteins.includes(protein.id) &&
+                                            (recipeBookFilter === 'any' || r.category === recipeBookFilter)
+                                        );
+                                        if (proteinRecipes.length === 0) return null;
+                                        
+                                        return (
+                                            <div key={protein.id} className="mb-5">
+                                                <div className="flex items-center gap-2 mb-2 sticky top-0 bg-cream-50 py-2">
+                                                    <span className="text-xl">{protein.emoji}</span>
+                                                    <h3 className="text-warm-800 font-semibold">{protein.name}</h3>
+                                                    <span className="text-warm-400 text-sm">({proteinRecipes.length})</span>
+                                                </div>
+                                                <div className="space-y-2">
+                                                    {proteinRecipes.map(recipe => (
+                                                        <button
+                                                            key={recipe.id}
+                                                            onClick={() => {
+                                                                const meal = { ...recipe, flavor: recipe.flavors.find(f => f !== 'any') || 'classic' };
+                                                                setShowRecipe(meal);
+                                                            }}
+                                                            className="w-full text-left card rounded-xl p-3 border border-cream-200 press hover:border-coral-200 transition-colors"
+                                                        >
+                                                            <div className="flex items-start justify-between">
+                                                                <div className="flex-1">
+                                                                    <div className="flex items-center gap-2 flex-wrap">
+                                                                        <span className="text-warm-800 font-medium text-sm">{recipe.name}</span>
+                                                                        {recipe.isVenezuelan && <span className="text-xs">🇻🇪</span>}
+                                                                    </div>
+                                                                    <div className="flex items-center gap-2 mt-1 flex-wrap">
+                                                                        <span className="text-coral-500 text-xs font-medium">~{recipe.baseProtein}g</span>
+                                                                        <span className="text-warm-400 text-xs">⏱️ {recipe.time}min</span>
+                                                                        {recipe.netCarbs !== undefined && <span className="text-sage-500 text-xs">{recipe.netCarbs}g carbs</span>}
+                                                                        <span className="text-warm-400 text-xs">{mealCategories[recipe.category]?.emoji}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <span className="text-warm-300 ml-2">→</span>
+                                                            </div>
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                    
+                                    {/* Show message if no recipes match filter */}
+                                    {mealRecipes.filter(r => recipeBookFilter === 'any' || r.category === recipeBookFilter).length === 0 && (
+                                        <div className="text-center py-8">
+                                            <span className="text-4xl mb-3 block">🔍</span>
+                                            <p className="text-warm-600">No recipes in this category</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     {showLove && (
                         <div className="fixed inset-0 z-50 flex items-center justify-center p-6" onClick={() => setShowLove(false)}>
                             <div className="absolute inset-0 bg-warm-900/20 backdrop-blur-md">
@@ -1570,7 +1657,7 @@
 
                         {tab === 'create' && (<>
                             {/* Hero Stats Card - RESTORED */}
-                            <div className="card rounded-2xl px-5 py-3 mb-5 border border-cream-200">
+                            <div className="card rounded-2xl px-5 py-3 mb-4 border border-cream-200">
                                 <div className="flex items-center justify-center gap-4 text-sm">
                                     <span className="text-warm-600">Target:</span>
                                     <span className="text-coral-500 font-bold">80-100g protein</span>
@@ -1578,6 +1665,21 @@
                                     <span className="text-warm-600">~1,800 cal</span>
                                 </div>
                             </div>
+
+                            {/* Browse All Recipes Button */}
+                            <button 
+                                onClick={() => setShowRecipeBook(true)}
+                                className="w-full mb-5 py-3 px-4 card rounded-2xl border border-cream-200 flex items-center justify-between press hover:border-coral-300 transition-colors"
+                            >
+                                <div className="flex items-center gap-3">
+                                    <span className="text-2xl">📖</span>
+                                    <div className="text-left">
+                                        <p className="text-warm-800 font-semibold text-sm">Browse All Recipes</p>
+                                        <p className="text-warm-500 text-xs">{mealRecipes.length} recipes for inspiration</p>
+                                    </div>
+                                </div>
+                                <span className="text-warm-400">→</span>
+                            </button>
 
                             {/* Meal Type - Now prominent */}
                             <div className="mb-4">
