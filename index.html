@@ -1041,12 +1041,41 @@
 
         function GuideModal({ onClose }) {
             const [tab, setTab] = useState('guide');
+            
+            // Diego's actual supplement protocol - split by timing
+            const supplements = [
+                { category: '☀️ MORNING — With First Meal (12pm)', items: [
+                    { name: 'Omega-3 Fish Oil', dose: '2-3 softgels', timing: 'With food', purpose: 'Triglycerides, inflammation, liver', emoji: '🐟' },
+                    { name: 'Vitamin D3 + K2', dose: '1 softgel (5000 IU)', timing: 'With fatty food', purpose: 'Level 43→50+, bone health', emoji: '☀️' },
+                    { name: 'Berberine (Thorne)', dose: '2 capsules', timing: 'Before meal', purpose: 'Blood sugar, insulin sensitivity', emoji: '💊' },
+                    { name: 'Curcumin Phytosome', dose: '2 capsules', timing: 'With food', purpose: 'Inflammation (hs-CRP 2.54)', emoji: '🌿' },
+                    { name: 'ResveraCel', dose: '2 capsules', timing: 'With food', purpose: 'NAD+ support, cellular health', emoji: '⚡' },
+                    { name: 'B Complex', dose: '1 capsule', timing: 'With food', purpose: 'Energy metabolism', emoji: '💪' },
+                    { name: 'B12 Methylcobalamin', dose: '1000mcg sublingual', timing: 'Under tongue', purpose: 'Level 420→545+ (was low)', emoji: '🔴' },
+                    { name: 'CoQ10 Ubiquinol', dose: '1 capsule', timing: 'With fat', purpose: 'Mitochondria, energy, heart', emoji: '❤️' },
+                    { name: 'Zinc Picolinate', dose: '15mg', timing: 'With food', purpose: 'Testosterone, immune', emoji: '🛡️' },
+                    { name: 'Vitamin C', dose: '1 capsule', timing: 'With food', purpose: 'Antioxidant, immune', emoji: '🍊' },
+                    { name: 'Saw Palmetto/Pumpkin', dose: '2 pills', timing: 'With food', purpose: 'DHT blocker, prostate, hair', emoji: '🎃' },
+                    { name: 'NAC', dose: '600mg', timing: 'With food', purpose: 'Glutathione, liver protection', emoji: '🫁' },
+                ]},
+                { category: '🌤️ AFTERNOON — Before Second Meal (5-6pm)', items: [
+                    { name: 'Berberine (Thorne)', dose: '2 capsules', timing: 'Before meal', purpose: 'Second dose for blood sugar', emoji: '💊' },
+                ]},
+                { category: '🌆 EVENING — With Dinner', items: [
+                    { name: 'Copper Bisglycinate', dose: '2mg', timing: 'Away from zinc', purpose: 'Balances zinc (taken separately)', emoji: '🟤' },
+                ]},
+                { category: '🌙 BEDTIME — 30-45 Min Before Sleep', items: [
+                    { name: 'Magnesium Glycinate', dose: '2-3 capsules', timing: '30-45 min before bed', purpose: 'Sleep, insulin sensitivity', emoji: '😴' },
+                    { name: 'L-Lysine', dose: '1 capsule', timing: 'Before bed', purpose: 'Collagen, immune support', emoji: '💤' },
+                ]},
+            ];
+
             return (
                 <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={onClose}>
                     <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[85vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
                         <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
                         <div className="flex gap-2 px-5 pb-4">
-                            {[{id:'guide',label:'📋 Guide'},{id:'dressings',label:'🥗 Dressings'}].map(t => (
+                            {[{id:'guide',label:'📋 Guide'},{id:'supps',label:'💊 Supps'},{id:'dressings',label:'🥗 Dressings'}].map(t => (
                                 <button key={t.id} onClick={() => setTab(t.id)} className={`flex-1 py-2.5 rounded-2xl font-medium text-sm transition-all press ${tab === t.id ? 'bg-coral-500 text-white shadow-glow-coral' : 'bg-cream-200 text-warm-700'}`}>
                                     {t.label}
                                 </button>
@@ -1092,6 +1121,43 @@
                                     <p className="text-warm-700 text-sm mt-2">Diego owes Nene unlimited backrubs for this 💆‍♀️</p>
                                 </div>
                             </>)}
+                            {tab === 'supps' && (
+                                <div className="space-y-4">
+                                    <div className="bg-gradient-to-r from-coral-500 to-sand-500 rounded-2xl p-4 text-white">
+                                        <h3 className="font-bold mb-1">💊 Diego's Supplement Protocol</h3>
+                                        <p className="text-white/80 text-sm">Organized by time — for insulin resistance & fatty liver</p>
+                                    </div>
+                                    {supplements.map((cat, i) => (
+                                        <div key={i} className="card rounded-2xl border border-cream-200 overflow-hidden">
+                                            <div className="px-4 py-2.5 bg-cream-100 border-b border-cream-200">
+                                                <span className="text-warm-800 font-semibold text-sm">{cat.category}</span>
+                                            </div>
+                                            <div className="divide-y divide-cream-100">
+                                                {cat.items.map((supp, j) => (
+                                                    <div key={j} className="px-4 py-3">
+                                                        <div className="flex items-start justify-between">
+                                                            <div className="flex items-start gap-2">
+                                                                <span className="text-lg">{supp.emoji}</span>
+                                                                <div>
+                                                                    <p className="text-warm-800 font-medium text-sm">{supp.name}</p>
+                                                                    <p className="text-coral-500 text-xs font-semibold">{supp.dose}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="mt-1.5 ml-7">
+                                                            <p className="text-warm-500 text-xs">⏰ {supp.timing}</p>
+                                                            <p className="text-sage-600 text-xs">✓ {supp.purpose}</p>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))}
+                                    <div className="bg-cream-100 rounded-xl p-4 text-center">
+                                        <p className="text-warm-600 text-xs">💡 Always consult your doctor before changing supplements</p>
+                                    </div>
+                                </div>
+                            )}
                             {tab === 'dressings' && (
                                 <div className="space-y-3">
                                     <p className="text-warm-600 text-sm">All homemade, no sugar, no bad oils:</p>
@@ -1255,6 +1321,7 @@
             const [showWeeklySummary, setShowWeeklySummary] = useState(false);
             const [showCustomMeal, setShowCustomMeal] = useState(false);
             const [customMeal, setCustomMeal] = useState({
+                name: '',
                 eggs: 0,
                 proteins: { beef: '', chicken: '', salmon: '', fish: '', shrimp: '', lamb: '', pork: '', ground: '' },
                 veggies: { avocado: 0, broccoli: '', spinach: '', peppers: '', mushrooms: '', tomatoes: '', onions: '', cucumber: '', asparagus: '', zucchini: '' },
@@ -1457,6 +1524,11 @@
             };
 
             const buildCustomMealName = () => {
+                // Use custom name if provided
+                if (customMeal.name && customMeal.name.trim()) {
+                    return customMeal.name.trim();
+                }
+                // Otherwise build from ingredients
                 const parts = [];
                 if (customMeal.eggs > 0) parts.push(`${customMeal.eggs} egg${customMeal.eggs > 1 ? 's' : ''}`);
                 Object.entries(customMeal.proteins).forEach(([key, grams]) => {
@@ -1520,6 +1592,7 @@
 
             const resetCustomMeal = () => {
                 setCustomMeal({
+                    name: '',
                     eggs: 0,
                     proteins: { beef: '', chicken: '', salmon: '', fish: '', shrimp: '', lamb: '', pork: '', ground: '' },
                     veggies: { avocado: 0, broccoli: '', spinach: '', peppers: '', mushrooms: '', tomatoes: '', onions: '', cucumber: '', asparagus: '', zucchini: '' },
@@ -1586,44 +1659,176 @@
             };
 
             const generateShoppingListFromPlan = () => {
-                const ingredientMap = {};
+                // Ingredients that are "check stock" not "buy"
+                const checkStockItems = [
+                    'salt', 'pepper', 'black pepper', 'white pepper', 'olive oil', 'butter', 
+                    'garlic powder', 'onion powder', 'paprika', 'cumin', 'coriander', 'turmeric',
+                    'oregano', 'thyme', 'rosemary', 'bay leaf', 'chili flakes', 'cayenne',
+                    'garam masala', 'curry powder', 'italian seasoning', 'soy sauce', 'fish sauce',
+                    'coconut aminos', 'sesame oil', 'vinegar', 'mustard', 'mayonnaise'
+                ];
                 
+                // Protein normalization - combine similar items
+                const proteinKeywords = {
+                    chicken: ['chicken breast', 'chicken thigh', 'chicken', 'pollo'],
+                    beef: ['beef', 'steak', 'ribeye', 'sirloin', 'striploin', 'flank'],
+                    ground: ['ground beef', 'ground meat', 'carne molida'],
+                    salmon: ['salmon'],
+                    fish: ['fish', 'cod', 'tilapia', 'sea bass', 'halibut', 'white fish'],
+                    shrimp: ['shrimp', 'prawn', 'camarones'],
+                    lamb: ['lamb'],
+                    pork: ['pork', 'cerdo'],
+                    eggs: ['egg']
+                };
+
+                const buyItems = {};
+                const checkItems = {};
+                const proteinTotals = {};
+
                 Object.values(mealPlan).forEach(meal => {
                     if (meal.ingredients) {
                         meal.ingredients.forEach(ing => {
-                            const key = ing.item.toLowerCase();
-                            if (ingredientMap[key]) {
-                                ingredientMap[key].count += 1;
-                                ingredientMap[key].amounts.push(ing.amount);
+                            const itemLower = ing.item.toLowerCase();
+                            
+                            // Check if it's a "check stock" item
+                            const isCheckStock = checkStockItems.some(cs => itemLower.includes(cs));
+                            
+                            // Check if it's a protein to combine
+                            let proteinType = null;
+                            for (const [type, keywords] of Object.entries(proteinKeywords)) {
+                                if (keywords.some(kw => itemLower.includes(kw))) {
+                                    proteinType = type;
+                                    break;
+                                }
+                            }
+
+                            if (proteinType) {
+                                // Extract grams from amount
+                                const gramsMatch = ing.amount.match(/(\d+)\s*g/i);
+                                const grams = gramsMatch ? parseInt(gramsMatch[1]) : 0;
+                                
+                                if (!proteinTotals[proteinType]) {
+                                    proteinTotals[proteinType] = { grams: 0, count: 0 };
+                                }
+                                proteinTotals[proteinType].grams += grams;
+                                proteinTotals[proteinType].count += 1;
+                            } else if (isCheckStock) {
+                                // Add to check stock (just track that we need it)
+                                const key = ing.item.split(',')[0].split('(')[0].trim();
+                                checkItems[key.toLowerCase()] = { name: key, cat: categorizeItem(ing.item) };
                             } else {
-                                ingredientMap[key] = {
-                                    item: ing.item,
-                                    count: 1,
-                                    amounts: [ing.amount],
-                                    cat: categorizeItem(ing.item)
-                                };
+                                // Regular buy item - combine amounts
+                                const key = ing.item.toLowerCase().split(',')[0].split('(')[0].trim();
+                                if (buyItems[key]) {
+                                    buyItems[key].count += 1;
+                                    buyItems[key].amounts.push(ing.amount);
+                                } else {
+                                    buyItems[key] = {
+                                        name: ing.item.split(',')[0].split('(')[0].trim(),
+                                        count: 1,
+                                        amounts: [ing.amount],
+                                        cat: categorizeItem(ing.item)
+                                    };
+                                }
                             }
                         });
                     }
                 });
 
-                // Convert to shopping list items
-                const newItems = Object.values(ingredientMap).map(ing => {
-                    const amountText = ing.count > 1 
-                        ? `${ing.amounts[0]} × ${ing.count} meals`
-                        : ing.amounts[0];
-                    return {
+                // Build final shopping list
+                const newItems = [];
+                
+                // Add proteins with totals
+                const proteinEmojis = { chicken: '🍗', beef: '🥩', ground: '🍔', salmon: '🐟', fish: '🐠', shrimp: '🦐', lamb: '🍖', pork: '🐷', eggs: '🥚' };
+                const proteinNames = { chicken: 'Chicken', beef: 'Beef', ground: 'Ground Beef', salmon: 'Salmon', fish: 'White Fish', shrimp: 'Shrimp', lamb: 'Lamb', pork: 'Pork', eggs: 'Eggs' };
+                
+                Object.entries(proteinTotals).forEach(([type, data]) => {
+                    let amount;
+                    if (type === 'eggs') {
+                        amount = `${data.count} meals`;
+                    } else if (data.grams > 0) {
+                        const kg = data.grams >= 1000 ? `${(data.grams / 1000).toFixed(1)}kg` : `${data.grams}g`;
+                        amount = `~${kg} total`;
+                    } else {
+                        amount = `${data.count} meals`;
+                    }
+                    newItems.push({
                         id: Date.now() + Math.random(),
-                        name: `${ing.item} (${amountText})`,
-                        cat: ing.cat,
-                        checked: false
-                    };
-                }).filter(item => !shopping.some(s => s.name.toLowerCase().includes(item.name.toLowerCase().split(' (')[0])));
+                        name: `${proteinEmojis[type]} ${proteinNames[type]} (${amount})`,
+                        cat: 'protein',
+                        checked: false,
+                        isSmart: true
+                    });
+                });
 
-                if (newItems.length > 0) {
-                    setShopping([...shopping, ...newItems]);
+                // Add regular buy items
+                Object.values(buyItems).forEach(item => {
+                    // Skip items already in shopping list
+                    if (shopping.some(s => s.name.toLowerCase().includes(item.name.toLowerCase()))) return;
+                    
+                    let displayAmount;
+                    if (item.count === 1) {
+                        displayAmount = item.amounts[0];
+                    } else {
+                        // Try to sum amounts
+                        const totalGrams = item.amounts.reduce((sum, amt) => {
+                            const match = amt.match(/(\d+)\s*g/i);
+                            return sum + (match ? parseInt(match[1]) : 0);
+                        }, 0);
+                        const totalMl = item.amounts.reduce((sum, amt) => {
+                            const match = amt.match(/(\d+)\s*ml/i);
+                            return sum + (match ? parseInt(match[1]) : 0);
+                        }, 0);
+                        
+                        if (totalGrams > 0) {
+                            displayAmount = totalGrams >= 1000 ? `${(totalGrams / 1000).toFixed(1)}kg` : `${totalGrams}g`;
+                        } else if (totalMl > 0) {
+                            displayAmount = totalMl >= 1000 ? `${(totalMl / 1000).toFixed(1)}L` : `${totalMl}ml`;
+                        } else {
+                            displayAmount = `${item.count}× needed`;
+                        }
+                    }
+                    
+                    newItems.push({
+                        id: Date.now() + Math.random(),
+                        name: `${item.name} (${displayAmount})`,
+                        cat: item.cat,
+                        checked: false
+                    });
+                });
+
+                // Add check stock items as a separate category
+                const checkStockList = Object.values(checkItems);
+                if (checkStockList.length > 0) {
+                    newItems.push({
+                        id: Date.now() + Math.random(),
+                        name: '── CHECK YOU HAVE ──',
+                        cat: 'pantry',
+                        checked: false,
+                        isHeader: true
+                    });
+                    checkStockList.forEach(item => {
+                        newItems.push({
+                            id: Date.now() + Math.random(),
+                            name: `✓ ${item.name}`,
+                            cat: 'pantry',
+                            checked: false,
+                            isCheckStock: true
+                        });
+                    });
                 }
-                return newItems.length;
+
+                // Filter out items already in list
+                const filteredItems = newItems.filter(item => 
+                    item.isHeader || 
+                    item.isCheckStock ||
+                    !shopping.some(s => s.name.toLowerCase().includes(item.name.toLowerCase().split('(')[0].trim()))
+                );
+
+                if (filteredItems.length > 0) {
+                    setShopping([...shopping, ...filteredItems]);
+                }
+                return filteredItems.length;
             };
 
             const clearMealPlan = () => {
@@ -2399,7 +2604,16 @@
                                                     <button onClick={() => setShowCustomMealForPlan(false)} className="text-warm-500 text-sm">← Back</button>
                                                 </div>
                                                 <h2 className="text-warm-800 font-bold text-xl mb-1">📝 Custom Meal</h2>
-                                                <p className="text-warm-500 text-sm mb-4">For {weekDays.find(d => d.id === showMealPicker.day)?.name} {showMealPicker.slot}</p>
+                                                <p className="text-warm-500 text-sm mb-3">For {weekDays.find(d => d.id === showMealPicker.day)?.name} {showMealPicker.slot}</p>
+
+                                                {/* Optional meal name */}
+                                                <input
+                                                    type="text"
+                                                    value={customMeal.name}
+                                                    onChange={(e) => setCustomMeal(prev => ({ ...prev, name: e.target.value }))}
+                                                    placeholder="Name this meal (optional)"
+                                                    className="w-full mb-4 px-4 py-2.5 rounded-xl border border-cream-300 bg-white text-warm-800 text-sm focus:outline-none focus:border-coral-400"
+                                                />
 
                                                 {/* Live Total - Sticky */}
                                                 <div className="sticky top-0 z-10 bg-gradient-to-r from-coral-500 to-sand-500 rounded-xl p-3 mb-4 shadow-glow-coral">
@@ -2421,10 +2635,10 @@
                                                     <div className="flex items-center justify-between py-2 border-b border-cream-200">
                                                         <span className="text-warm-700 text-sm">🥚 Eggs</span>
                                                         <div className="flex items-center gap-2">
-                                                            <button onClick={() => setCustomMeal(prev => ({ ...prev, eggs: Math.max(0, prev.eggs - 1) }))} className="w-7 h-7 rounded-lg bg-cream-200 text-warm-600 font-bold text-sm press">−</button>
+                                                            <button onClick={() => setCustomMeal(prev => ({ ...prev, eggs: Math.max(0, prev.eggs - 0.5) }))} className="w-7 h-7 rounded-lg bg-cream-200 text-warm-600 font-bold text-sm press">−</button>
                                                             <span className="w-6 text-center font-semibold text-warm-800">{customMeal.eggs}</span>
-                                                            <button onClick={() => setCustomMeal(prev => ({ ...prev, eggs: prev.eggs + 1 }))} className="w-7 h-7 rounded-lg bg-coral-500 text-white font-bold text-sm press">+</button>
-                                                            <span className="w-12 text-right text-coral-500 text-xs">{customMeal.eggs > 0 ? `${customMeal.eggs * 6}g` : ''}</span>
+                                                            <button onClick={() => setCustomMeal(prev => ({ ...prev, eggs: prev.eggs + 0.5 }))} className="w-7 h-7 rounded-lg bg-coral-500 text-white font-bold text-sm press">+</button>
+                                                            <span className="w-12 text-right text-coral-500 text-xs">{customMeal.eggs > 0 ? `${Math.round(customMeal.eggs * 6)}g` : ''}</span>
                                                         </div>
                                                     </div>
 
@@ -2453,9 +2667,9 @@
                                                     <div className="flex items-center justify-between py-2 border-b border-cream-200">
                                                         <span className="text-warm-700 text-sm">🥑 Avocado</span>
                                                         <div className="flex items-center gap-2">
-                                                            <button onClick={() => updateCustomVeggie('avocado', Math.max(0, (customMeal.veggies.avocado || 0) - 1))} className="w-7 h-7 rounded-lg bg-cream-200 text-warm-600 font-bold text-sm press">−</button>
+                                                            <button onClick={() => updateCustomVeggie('avocado', Math.max(0, (customMeal.veggies.avocado || 0) - 0.5))} className="w-7 h-7 rounded-lg bg-cream-200 text-warm-600 font-bold text-sm press">−</button>
                                                             <span className="w-6 text-center font-semibold text-warm-800">{customMeal.veggies.avocado || 0}</span>
-                                                            <button onClick={() => updateCustomVeggie('avocado', (customMeal.veggies.avocado || 0) + 1)} className="w-7 h-7 rounded-lg bg-sage-500 text-white font-bold text-sm press">+</button>
+                                                            <button onClick={() => updateCustomVeggie('avocado', (customMeal.veggies.avocado || 0) + 0.5)} className="w-7 h-7 rounded-lg bg-sage-500 text-white font-bold text-sm press">+</button>
                                                         </div>
                                                     </div>
                                                     <div className="grid grid-cols-2 gap-2 mt-2">
@@ -2927,6 +3141,18 @@
                                                 <h2 className="text-warm-800 font-bold text-xl mb-1">📝 Log Custom Meal</h2>
                                                 <p className="text-warm-500 text-sm mb-4">Fill in what Diego ate</p>
 
+                                                {/* Optional meal name */}
+                                                <div className="mb-4">
+                                                    <input
+                                                        type="text"
+                                                        value={customMeal.name}
+                                                        onChange={(e) => setCustomMeal(prev => ({ ...prev, name: e.target.value }))}
+                                                        placeholder="Name this meal (optional)"
+                                                        className="w-full px-4 py-3 rounded-xl border border-cream-300 bg-white text-warm-800 text-sm focus:outline-none focus:border-coral-400"
+                                                    />
+                                                    <p className="text-warm-400 text-xs mt-1">e.g., "Nene's Special Breakfast" or leave blank</p>
+                                                </div>
+
                                                 {/* Live Total - Sticky */}
                                                 <div className="sticky top-0 z-10 bg-gradient-to-r from-coral-500 to-sand-500 rounded-xl p-3 mb-4 shadow-glow-coral">
                                                     <div className="flex justify-between items-center text-white">
@@ -2947,17 +3173,17 @@
                                                         <span className="text-warm-400 font-normal text-xs">(raw grams, cooked +30%)</span>
                                                     </h3>
                                                     
-                                                    {/* Eggs - Units */}
+                                                    {/* Eggs - Units with halves */}
                                                     <div className="flex items-center justify-between py-3 border-b border-cream-200">
                                                         <div className="flex items-center gap-3">
                                                             <span className="text-xl">🥚</span>
                                                             <span className="text-warm-700">Eggs</span>
                                                         </div>
                                                         <div className="flex items-center gap-3">
-                                                            <button onClick={() => setCustomMeal(prev => ({ ...prev, eggs: Math.max(0, prev.eggs - 1) }))} className="w-8 h-8 rounded-lg bg-cream-200 text-warm-600 font-bold press">−</button>
+                                                            <button onClick={() => setCustomMeal(prev => ({ ...prev, eggs: Math.max(0, prev.eggs - 0.5) }))} className="w-8 h-8 rounded-lg bg-cream-200 text-warm-600 font-bold press">−</button>
                                                             <span className="w-8 text-center font-semibold text-warm-800">{customMeal.eggs}</span>
-                                                            <button onClick={() => setCustomMeal(prev => ({ ...prev, eggs: prev.eggs + 1 }))} className="w-8 h-8 rounded-lg bg-coral-500 text-white font-bold press">+</button>
-                                                            <span className="w-16 text-right text-coral-500 font-medium text-sm">{customMeal.eggs > 0 ? `${customMeal.eggs * 6}g` : '-'}</span>
+                                                            <button onClick={() => setCustomMeal(prev => ({ ...prev, eggs: prev.eggs + 0.5 }))} className="w-8 h-8 rounded-lg bg-coral-500 text-white font-bold press">+</button>
+                                                            <span className="w-16 text-right text-coral-500 font-medium text-sm">{customMeal.eggs > 0 ? `${Math.round(customMeal.eggs * 6)}g` : '-'}</span>
                                                         </div>
                                                     </div>
 
@@ -3004,17 +3230,17 @@
                                                         <span className="text-warm-400 font-normal text-xs">(for carb counting)</span>
                                                     </h3>
 
-                                                    {/* Avocado - Units */}
+                                                    {/* Avocado - Units with halves */}
                                                     <div className="flex items-center justify-between py-3 border-b border-cream-200">
                                                         <div className="flex items-center gap-3">
                                                             <span className="text-xl">🥑</span>
                                                             <span className="text-warm-700">Avocado</span>
                                                         </div>
                                                         <div className="flex items-center gap-3">
-                                                            <button onClick={() => updateCustomVeggie('avocado', Math.max(0, (customMeal.veggies.avocado || 0) - 1))} className="w-8 h-8 rounded-lg bg-cream-200 text-warm-600 font-bold press">−</button>
+                                                            <button onClick={() => updateCustomVeggie('avocado', Math.max(0, (customMeal.veggies.avocado || 0) - 0.5))} className="w-8 h-8 rounded-lg bg-cream-200 text-warm-600 font-bold press">−</button>
                                                             <span className="w-8 text-center font-semibold text-warm-800">{customMeal.veggies.avocado || 0}</span>
-                                                            <button onClick={() => updateCustomVeggie('avocado', (customMeal.veggies.avocado || 0) + 1)} className="w-8 h-8 rounded-lg bg-sage-500 text-white font-bold press">+</button>
-                                                            <span className="w-14 text-right text-sage-600 font-medium text-sm">{customMeal.veggies.avocado > 0 ? `${customMeal.veggies.avocado * 2}g carb` : '-'}</span>
+                                                            <button onClick={() => updateCustomVeggie('avocado', (customMeal.veggies.avocado || 0) + 0.5)} className="w-8 h-8 rounded-lg bg-sage-500 text-white font-bold press">+</button>
+                                                            <span className="w-14 text-right text-sage-600 font-medium text-sm">{customMeal.veggies.avocado > 0 ? `${Math.round(customMeal.veggies.avocado * 2)}g carb` : '-'}</span>
                                                         </div>
                                                     </div>
 
