@@ -1261,6 +1261,22 @@
                 carbsEstimate: ''
             });
 
+            // Meal planner state
+            const [mealPlan, setMealPlan] = useState(() => load('mealPlan', {}));
+            const [showMealPicker, setShowMealPicker] = useState(null); // { day: 'mon', slot: 'lunch' }
+            const [mealPickerSearch, setMealPickerSearch] = useState('');
+
+            // Days of the week
+            const weekDays = [
+                { id: 'mon', name: 'Monday', short: 'Mon' },
+                { id: 'tue', name: 'Tuesday', short: 'Tue' },
+                { id: 'wed', name: 'Wednesday', short: 'Wed' },
+                { id: 'thu', name: 'Thursday', short: 'Thu' },
+                { id: 'fri', name: 'Friday', short: 'Fri' },
+                { id: 'sat', name: 'Saturday', short: 'Sat' },
+                { id: 'sun', name: 'Sunday', short: 'Sun' },
+            ];
+
             // Calculate weekly summary from history
             const getWeeklySummary = () => {
                 const now = new Date();
@@ -1420,6 +1436,95 @@
                 }));
             };
 
+            // Meal planner functions
+            const addMealToPlan = (recipe) => {
+                if (!showMealPicker) return;
+                const { day, slot } = showMealPicker;
+                const key = `${day}_${slot}`;
+                setMealPlan(prev => ({ ...prev, [key]: recipe }));
+                setShowMealPicker(null);
+                setMealPickerSearch('');
+            };
+
+            const removeMealFromPlan = (day, slot) => {
+                const key = `${day}_${slot}`;
+                setMealPlan(prev => {
+                    const newPlan = { ...prev };
+                    delete newPlan[key];
+                    return newPlan;
+                });
+            };
+
+            const getMealForSlot = (day, slot) => {
+                return mealPlan[`${day}_${slot}`] || null;
+            };
+
+            const getPlanStats = () => {
+                const meals = Object.values(mealPlan);
+                return {
+                    count: meals.length,
+                    totalProtein: meals.reduce((sum, m) => sum + (m.baseProtein || 0), 0),
+                    totalCarbs: meals.reduce((sum, m) => sum + (m.netCarbs || 0), 0),
+                };
+            };
+
+            const generateShoppingListFromPlan = () => {
+                const ingredientMap = {};
+                
+                Object.values(mealPlan).forEach(meal => {
+                    if (meal.ingredients) {
+                        meal.ingredients.forEach(ing => {
+                            const key = ing.item.toLowerCase();
+                            if (ingredientMap[key]) {
+                                ingredientMap[key].count += 1;
+                                ingredientMap[key].amounts.push(ing.amount);
+                            } else {
+                                ingredientMap[key] = {
+                                    item: ing.item,
+                                    count: 1,
+                                    amounts: [ing.amount],
+                                    cat: categorizeItem(ing.item)
+                                };
+                            }
+                        });
+                    }
+                });
+
+                // Convert to shopping list items
+                const newItems = Object.values(ingredientMap).map(ing => {
+                    const amountText = ing.count > 1 
+                        ? `${ing.amounts[0]} × ${ing.count} meals`
+                        : ing.amounts[0];
+                    return {
+                        id: Date.now() + Math.random(),
+                        name: `${ing.item} (${amountText})`,
+                        cat: ing.cat,
+                        checked: false
+                    };
+                }).filter(item => !shopping.some(s => s.name.toLowerCase().includes(item.name.toLowerCase().split(' (')[0])));
+
+                if (newItems.length > 0) {
+                    setShopping([...shopping, ...newItems]);
+                }
+                return newItems.length;
+            };
+
+            const clearMealPlan = () => {
+                setMealPlan({});
+            };
+
+            const filteredRecipesForPicker = () => {
+                const search = mealPickerSearch.toLowerCase();
+                let recipes = mealRecipes;
+                if (search) {
+                    recipes = recipes.filter(r => 
+                        r.name.toLowerCase().includes(search) ||
+                        r.proteins.some(p => p.includes(search))
+                    );
+                }
+                return recipes;
+            };
+
             // Check if essential is covered in shopping list
             const isEssentialInList = (essential) => {
                 const searchTerms = {
@@ -1503,8 +1608,9 @@
                 saveTimeoutRef.current = setTimeout(() => {
                     save('favs', favorites); save('hist', history); save('shop', shopping);
                     save('badges', badges); save('stats', stats); save('staples', staples);
+                    save('mealPlan', mealPlan);
                 }, 300);
-            }, [favorites, history, shopping, badges, stats, staples]);
+            }, [favorites, history, shopping, badges, stats, staples, mealPlan]);
 
             const checkBadges = (s, f) => {
                 const cs = s || stats, cf = f || favorites;
@@ -1982,6 +2088,182 @@
                                 </div>
                             )}
                         </>)}
+
+                        {/* PLAN TAB */}
+                        {tab === 'plan' && (
+                            <div className="animate-fade-in">
+                                <div className="flex justify-between items-center mb-4">
+                                    <div>
+                                        <h2 className="text-warm-800 font-bold text-lg">🗓️ Weekly Plan</h2>
+                                        <p className="text-warm-500 text-xs">Plan meals, auto-generate shopping list</p>
+                                    </div>
+                                    {Object.keys(mealPlan).length > 0 && (
+                                        <button onClick={clearMealPlan} className="text-warm-400 text-xs underline">Clear all</button>
+                                    )}
+                                </div>
+
+                                {/* Week Stats */}
+                                {Object.keys(mealPlan).length > 0 && (() => {
+                                    const stats = getPlanStats();
+                                    return (
+                                        <div className="card rounded-2xl p-4 mb-5 border border-cream-200">
+                                            <div className="flex justify-between items-center">
+                                                <div className="flex gap-4">
+                                                    <div>
+                                                        <p className="text-warm-500 text-xs">Meals</p>
+                                                        <p className="text-warm-800 font-bold">{stats.count}</p>
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-warm-500 text-xs">Protein</p>
+                                                        <p className="text-coral-500 font-bold">{stats.totalProtein}g</p>
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-warm-500 text-xs">Carbs</p>
+                                                        <p className="text-sage-500 font-bold">{stats.totalCarbs}g</p>
+                                                    </div>
+                                                </div>
+                                                <button 
+                                                    onClick={() => {
+                                                        const added = generateShoppingListFromPlan();
+                                                        alert(`Added ${added} items to shopping list!`);
+                                                        if (added > 0) setTab('shop');
+                                                    }}
+                                                    className="px-4 py-2 bg-gradient-to-r from-coral-500 to-sand-500 text-white rounded-xl text-sm font-semibold press shadow-glow-coral"
+                                                >
+                                                    🛒 Generate List
+                                                </button>
+                                            </div>
+                                        </div>
+                                    );
+                                })()}
+
+                                {/* Week Grid */}
+                                <div className="space-y-3">
+                                    {weekDays.map(day => (
+                                        <div key={day.id} className="card rounded-2xl border border-cream-200 overflow-hidden">
+                                            <div className="px-4 py-2 bg-cream-100 border-b border-cream-200">
+                                                <span className="text-warm-800 font-semibold text-sm">{day.name}</span>
+                                            </div>
+                                            <div className="divide-y divide-cream-100">
+                                                {['lunch', 'dinner'].map(slot => {
+                                                    const meal = getMealForSlot(day.id, slot);
+                                                    return (
+                                                        <div key={slot} className="px-4 py-3 flex items-center justify-between">
+                                                            <div className="flex items-center gap-3">
+                                                                <span className="text-warm-400 text-xs uppercase w-12">{slot}</span>
+                                                                {meal ? (
+                                                                    <div>
+                                                                        <p className="text-warm-800 text-sm font-medium">{meal.name}</p>
+                                                                        <p className="text-coral-500 text-xs">~{meal.baseProtein}g protein</p>
+                                                                    </div>
+                                                                ) : (
+                                                                    <span className="text-warm-400 text-sm">No meal planned</span>
+                                                                )}
+                                                            </div>
+                                                            {meal ? (
+                                                                <button 
+                                                                    onClick={() => removeMealFromPlan(day.id, slot)}
+                                                                    className="text-warm-400 hover:text-coral-500 text-lg press"
+                                                                >×</button>
+                                                            ) : (
+                                                                <button 
+                                                                    onClick={() => setShowMealPicker({ day: day.id, slot })}
+                                                                    className="px-3 py-1.5 bg-coral-500 text-white rounded-lg text-xs font-medium press"
+                                                                >+ Add</button>
+                                                            )}
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* Empty State */}
+                                {Object.keys(mealPlan).length === 0 && (
+                                    <div className="text-center py-8 mt-4">
+                                        <span className="text-4xl mb-3 block">📝</span>
+                                        <p className="text-warm-600 mb-1">No meals planned yet</p>
+                                        <p className="text-warm-500 text-sm">Tap "+ Add" to plan your week</p>
+                                    </div>
+                                )}
+
+                                {/* Meal Picker Modal */}
+                                {showMealPicker && (
+                                    <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={() => { setShowMealPicker(null); setMealPickerSearch(''); }}>
+                                        <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg h-[85vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
+                                            <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
+                                            <div className="px-5 pb-4">
+                                                <h2 className="text-warm-800 font-bold text-lg mb-1">
+                                                    Add {showMealPicker.slot} for {weekDays.find(d => d.id === showMealPicker.day)?.name}
+                                                </h2>
+                                                
+                                                {/* Search */}
+                                                <input
+                                                    type="text"
+                                                    value={mealPickerSearch}
+                                                    onChange={(e) => setMealPickerSearch(e.target.value)}
+                                                    placeholder="Search recipes..."
+                                                    className="w-full mt-3 px-4 py-3 rounded-xl border border-cream-300 bg-white text-warm-800 text-sm focus:outline-none focus:border-coral-400"
+                                                />
+
+                                                {/* Quick access to favorites */}
+                                                {favorites.length > 0 && !mealPickerSearch && (
+                                                    <div className="mt-4">
+                                                        <p className="text-warm-500 text-xs mb-2">❤️ Favorites</p>
+                                                        <div className="flex gap-2 overflow-x-auto pb-2">
+                                                            {favorites.slice(0, 5).map((meal, i) => (
+                                                                <button
+                                                                    key={i}
+                                                                    onClick={() => addMealToPlan(meal)}
+                                                                    className="flex-shrink-0 px-3 py-2 bg-coral-50 border border-coral-200 rounded-xl text-sm text-warm-700 press"
+                                                                >
+                                                                    {meal.name.length > 20 ? meal.name.slice(0, 20) + '...' : meal.name}
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                            
+                                            <div className="px-5 pb-8 overflow-y-auto" style={{ height: 'calc(85vh - 180px)' }}>
+                                                {/* Recipe List */}
+                                                <div className="space-y-2">
+                                                    {filteredRecipesForPicker().map(recipe => (
+                                                        <button
+                                                            key={recipe.id}
+                                                            onClick={() => addMealToPlan(recipe)}
+                                                            className="w-full text-left card rounded-xl p-3 border border-cream-200 press hover:border-coral-200 transition-colors"
+                                                        >
+                                                            <div className="flex justify-between items-center">
+                                                                <div>
+                                                                    <div className="flex items-center gap-2">
+                                                                        <span className="text-warm-800 font-medium text-sm">{recipe.name}</span>
+                                                                        {recipe.isVenezuelan && <span className="text-xs">🇻🇪</span>}
+                                                                    </div>
+                                                                    <div className="flex items-center gap-2 mt-1">
+                                                                        <span className="text-coral-500 text-xs">~{recipe.baseProtein}g</span>
+                                                                        <span className="text-warm-400 text-xs">⏱️{recipe.time}min</span>
+                                                                        {recipe.netCarbs !== undefined && <span className="text-sage-500 text-xs">{recipe.netCarbs}g carbs</span>}
+                                                                    </div>
+                                                                </div>
+                                                                <span className="text-coral-500 text-xl">+</span>
+                                                            </div>
+                                                        </button>
+                                                    ))}
+                                                </div>
+
+                                                {filteredRecipesForPicker().length === 0 && (
+                                                    <div className="text-center py-8">
+                                                        <p className="text-warm-500">No recipes found</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
 
                         {tab === 'shop' && (
                             <div className="animate-fade-in">
@@ -2640,12 +2922,12 @@
                     </div>
 
                     {/* Bottom Nav */}
-                    <div className="fixed bottom-0 left-0 right-0 bg-cream-100/95 border-t border-cream-200 px-4 py-3 z-30">
+                    <div className="fixed bottom-0 left-0 right-0 bg-cream-100/95 border-t border-cream-200 px-2 py-2 z-30">
                         <div className="max-w-lg mx-auto flex justify-around">
-                            {[{ id: 'create', icon: '✨', label: 'Create' }, { id: 'shop', icon: '🛒', label: 'Shop' }, { id: 'saved', icon: '❤️', label: 'Saved' }, { id: 'history', icon: '📜', label: 'History' }].map(t => (
-                                <button key={t.id} onClick={() => setTab(t.id)} className={`flex flex-col items-center py-2 px-5 rounded-2xl press ${tab === t.id ? 'text-coral-500' : 'text-warm-500'}`}>
-                                    <span className={`text-2xl mb-1 ${tab === t.id ? 'scale-110' : ''}`}>{t.icon}</span>
-                                    <span className="text-[10px] font-semibold">{t.label}</span>
+                            {[{ id: 'create', icon: '✨', label: 'Create' }, { id: 'plan', icon: '🗓️', label: 'Plan' }, { id: 'shop', icon: '🛒', label: 'Shop' }, { id: 'saved', icon: '❤️', label: 'Saved' }, { id: 'history', icon: '📜', label: 'History' }].map(t => (
+                                <button key={t.id} onClick={() => setTab(t.id)} className={`flex flex-col items-center py-2 px-3 rounded-2xl press ${tab === t.id ? 'text-coral-500' : 'text-warm-500'}`}>
+                                    <span className={`text-xl mb-0.5 ${tab === t.id ? 'scale-110' : ''}`}>{t.icon}</span>
+                                    <span className="text-[9px] font-semibold">{t.label}</span>
                                 </button>
                             ))}
                         </div>
