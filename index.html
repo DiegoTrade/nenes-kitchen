@@ -1062,6 +1062,7 @@
                                         <div className="bg-cream-100 rounded-xl p-3"><div className="text-warm-600 text-xs">Meat/Fish</div><div className="text-warm-800 font-bold text-lg">300-400g</div></div>
                                         <div className="bg-cream-100 rounded-xl p-3"><div className="text-warm-600 text-xs">Veggies</div><div className="text-sage-500 font-bold text-lg">Unlimited!</div></div>
                                     </div>
+                                    <p className="text-warm-500 text-xs mt-3 text-center">📝 All weights are RAW. Meat loses ~25% when cooked but keeps the same protein.</p>
                                 </div>
                                 <div className="card rounded-2xl p-5">
                                     <h3 className="text-sm font-semibold text-warm-600 uppercase tracking-wider mb-3">🍳 Cooking Fats</h3>
@@ -1251,6 +1252,90 @@
             const [showVeggiePicker, setShowVeggiePicker] = useState(false);
             const [showRecipeBook, setShowRecipeBook] = useState(false);
             const [recipeBookFilter, setRecipeBookFilter] = useState('any');
+            const [showWeeklySummary, setShowWeeklySummary] = useState(false);
+
+            // Calculate weekly summary from history
+            const getWeeklySummary = () => {
+                const now = new Date();
+                const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                const weekMeals = history.filter(m => new Date(m.cookedAt) >= weekAgo);
+                
+                const totalProtein = weekMeals.reduce((sum, m) => sum + (m.baseProtein || 0), 0);
+                const totalCarbs = weekMeals.reduce((sum, m) => sum + (m.netCarbs || 0), 0);
+                const avgProtein = weekMeals.length > 0 ? Math.round(totalProtein / weekMeals.length) : 0;
+                const avgCarbs = weekMeals.length > 0 ? Math.round(totalCarbs / weekMeals.length) : 0;
+                
+                // Count proteins used
+                const proteinCounts = {};
+                weekMeals.forEach(m => {
+                    if (m.proteins) {
+                        m.proteins.forEach(p => {
+                            proteinCounts[p] = (proteinCounts[p] || 0) + 1;
+                        });
+                    }
+                });
+                const topProteins = Object.entries(proteinCounts)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 3)
+                    .map(([id, count]) => ({ 
+                        ...proteins.find(p => p.id === id), 
+                        count 
+                    }));
+                
+                // Count recipes
+                const recipeCounts = {};
+                weekMeals.forEach(m => {
+                    recipeCounts[m.name] = (recipeCounts[m.name] || 0) + 1;
+                });
+                const topRecipes = Object.entries(recipeCounts)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 3)
+                    .map(([name, count]) => ({ name, count }));
+                
+                // Count cuisines/flavors
+                const flavorCounts = {};
+                weekMeals.forEach(m => {
+                    if (m.flavor && m.flavor !== 'any') {
+                        flavorCounts[m.flavor] = (flavorCounts[m.flavor] || 0) + 1;
+                    }
+                });
+                const topFlavors = Object.entries(flavorCounts)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 3)
+                    .map(([id, count]) => ({ 
+                        ...flavorProfiles[id], 
+                        count 
+                    }));
+
+                // Daily breakdown
+                const dailyProtein = {};
+                weekMeals.forEach(m => {
+                    const day = new Date(m.cookedAt).toLocaleDateString('en-US', { weekday: 'short' });
+                    dailyProtein[day] = (dailyProtein[day] || 0) + (m.baseProtein || 0);
+                });
+
+                // Target comparison (14 meals per week, 180-200g protein per day)
+                const targetMeals = 14;
+                const targetProteinWeek = 1330; // ~190g x 7 days
+                const proteinProgress = Math.min(100, Math.round((totalProtein / targetProteinWeek) * 100));
+                const mealsProgress = Math.round((weekMeals.length / targetMeals) * 100);
+
+                return {
+                    totalProtein,
+                    totalCarbs,
+                    avgProtein,
+                    avgCarbs,
+                    mealCount: weekMeals.length,
+                    topProteins,
+                    topRecipes,
+                    topFlavors,
+                    dailyProtein,
+                    proteinProgress,
+                    mealsProgress,
+                    targetMeals,
+                    targetProteinWeek
+                };
+            };
 
             // Check if essential is covered in shopping list
             const isEssentialInList = (essential) => {
@@ -2166,22 +2251,160 @@
 
                         {tab === 'history' && (
                             <div>
-                                <h2 className="text-warm-800 font-bold text-lg mb-4">📜 History ({history.length})</h2>
+                                <div className="flex justify-between items-center mb-4">
+                                    <h2 className="text-warm-800 font-bold text-lg">📜 History ({history.length})</h2>
+                                    {history.length > 0 && (
+                                        <button 
+                                            onClick={() => setShowWeeklySummary(true)}
+                                            className="px-4 py-2 bg-gradient-to-r from-coral-500 to-sand-500 text-white rounded-xl text-sm font-medium press shadow-glow-coral"
+                                        >
+                                            📊 This Week
+                                        </button>
+                                    )}
+                                </div>
                                 {history.length === 0 ? (
                                     <div className="card rounded-2xl p-8 text-center border border-cream-200">
                                         <span className="text-4xl mb-3 block">📜</span>
                                         <p className="text-warm-600">No meals logged yet</p>
+                                        <p className="text-warm-500 text-sm mt-1">Tap "I made this" on recipes to track</p>
                                     </div>
                                 ) : (
-                                    history.slice(0, 20).map((m, i) => (
-                                        <div key={i} className="card rounded-xl p-4 mb-3 border border-cream-200">
-                                            <div className="flex justify-between">
-                                                <span className="text-warm-800 font-medium">{m.name}</span>
-                                                <span className="text-warm-500 text-sm">{formatDate(m.cookedAt)}</span>
+                                    <div>
+                                        {history.slice(0, 20).map((m, i) => (
+                                            <div key={i} className="card rounded-xl p-4 mb-3 border border-cream-200">
+                                                <div className="flex justify-between items-start">
+                                                    <div>
+                                                        <span className="text-warm-800 font-medium">{m.name}</span>
+                                                        <div className="flex gap-2 mt-1">
+                                                            <span className="text-coral-500 text-xs">~{m.baseProtein}g protein</span>
+                                                            {m.netCarbs !== undefined && <span className="text-sage-500 text-xs">{m.netCarbs}g carbs</span>}
+                                                        </div>
+                                                    </div>
+                                                    <span className="text-warm-500 text-xs">{formatDate(m.cookedAt)}</span>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {/* Weekly Summary Modal */}
+                                {showWeeklySummary && (() => {
+                                    const summary = getWeeklySummary();
+                                    return (
+                                        <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={() => setShowWeeklySummary(false)}>
+                                            <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[90vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
+                                                <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
+                                                <div className="px-5 pb-8 overflow-y-auto max-h-[80vh]">
+                                                    <h2 className="text-warm-800 font-bold text-xl mb-1">📊 Weekly Summary</h2>
+                                                    <p className="text-warm-500 text-sm mb-5">Last 7 days of Diego's meals</p>
+
+                                                    {summary.mealCount === 0 ? (
+                                                        <div className="text-center py-8">
+                                                            <span className="text-4xl mb-3 block">📭</span>
+                                                            <p className="text-warm-600">No meals logged this week</p>
+                                                            <p className="text-warm-500 text-sm mt-1">Start tracking to see your progress!</p>
+                                                        </div>
+                                                    ) : (<>
+                                                        {/* Main Stats */}
+                                                        <div className="grid grid-cols-2 gap-3 mb-5">
+                                                            <div className="card rounded-2xl p-4 border border-cream-200 text-center">
+                                                                <p className="text-warm-500 text-xs mb-1">Total Protein</p>
+                                                                <p className="text-coral-500 font-bold text-2xl">{summary.totalProtein}g</p>
+                                                                <div className="w-full bg-cream-200 rounded-full h-1.5 mt-2">
+                                                                    <div className="bg-coral-500 h-1.5 rounded-full" style={{ width: `${summary.proteinProgress}%` }} />
+                                                                </div>
+                                                                <p className="text-warm-400 text-xs mt-1">{summary.proteinProgress}% of weekly goal</p>
+                                                            </div>
+                                                            <div className="card rounded-2xl p-4 border border-cream-200 text-center">
+                                                                <p className="text-warm-500 text-xs mb-1">Total Carbs</p>
+                                                                <p className="text-sage-500 font-bold text-2xl">{summary.totalCarbs}g</p>
+                                                                <p className="text-warm-400 text-xs mt-3">~{summary.avgCarbs}g per meal</p>
+                                                                <p className="text-sage-500 text-xs mt-1">Keeping it low! ✓</p>
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Meals & Averages */}
+                                                        <div className="card rounded-2xl p-4 border border-cream-200 mb-5">
+                                                            <div className="flex justify-between items-center mb-3">
+                                                                <span className="text-warm-600 text-sm">Meals Logged</span>
+                                                                <span className="text-warm-800 font-bold">{summary.mealCount} of {summary.targetMeals}</span>
+                                                            </div>
+                                                            <div className="w-full bg-cream-200 rounded-full h-2">
+                                                                <div className="bg-warm-600 h-2 rounded-full" style={{ width: `${summary.mealsProgress}%` }} />
+                                                            </div>
+                                                            <div className="flex justify-between mt-3 text-sm">
+                                                                <div>
+                                                                    <span className="text-warm-500">Avg protein/meal:</span>
+                                                                    <span className={`ml-2 font-bold ${summary.avgProtein >= 80 ? 'text-sage-500' : 'text-sand-500'}`}>{summary.avgProtein}g</span>
+                                                                </div>
+                                                                <span className="text-warm-400">{summary.avgProtein >= 80 ? '✓ On target!' : '↑ Aim for 80-100g'}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Top Proteins */}
+                                                        {summary.topProteins.length > 0 && (
+                                                            <div className="card rounded-2xl p-4 border border-cream-200 mb-5">
+                                                                <h3 className="text-warm-600 text-sm font-semibold mb-3">🥩 Top Proteins</h3>
+                                                                <div className="flex gap-2 flex-wrap">
+                                                                    {summary.topProteins.map((p, i) => (
+                                                                        <div key={i} className="flex items-center gap-2 bg-cream-100 rounded-xl px-3 py-2">
+                                                                            <span className="text-lg">{p?.emoji}</span>
+                                                                            <span className="text-warm-700 text-sm">{p?.name}</span>
+                                                                            <span className="text-coral-500 text-xs font-bold">×{p?.count}</span>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        )}
+
+                                                        {/* Top Recipes */}
+                                                        {summary.topRecipes.length > 0 && (
+                                                            <div className="card rounded-2xl p-4 border border-cream-200 mb-5">
+                                                                <h3 className="text-warm-600 text-sm font-semibold mb-3">⭐ Most Made</h3>
+                                                                <div className="space-y-2">
+                                                                    {summary.topRecipes.map((r, i) => (
+                                                                        <div key={i} className="flex justify-between items-center">
+                                                                            <span className="text-warm-700 text-sm">{r.name}</span>
+                                                                            <span className="text-coral-500 text-xs font-bold">×{r.count}</span>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        )}
+
+                                                        {/* Cuisine Variety */}
+                                                        {summary.topFlavors.length > 0 && (
+                                                            <div className="card rounded-2xl p-4 border border-cream-200 mb-5">
+                                                                <h3 className="text-warm-600 text-sm font-semibold mb-3">🌍 Cuisine Variety</h3>
+                                                                <div className="flex gap-2 flex-wrap">
+                                                                    {summary.topFlavors.map((f, i) => (
+                                                                        <div key={i} className="flex items-center gap-2 bg-cream-100 rounded-xl px-3 py-2">
+                                                                            <span>{f?.emoji}</span>
+                                                                            <span className="text-warm-700 text-sm">{f?.name}</span>
+                                                                            <span className="text-warm-500 text-xs">×{f?.count}</span>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        )}
+
+                                                        {/* Encouragement */}
+                                                        <div className="bg-gradient-to-br from-coral-50 to-sand-50 border border-coral-100 rounded-2xl p-5 text-center">
+                                                            <span className="text-3xl">💪</span>
+                                                            <p className="text-warm-700 text-sm mt-2">
+                                                                {summary.avgProtein >= 80 
+                                                                    ? "Amazing week! Diego is crushing his protein goals! 🎉" 
+                                                                    : "Good progress! Let's aim for 80-100g protein per meal 💪"}
+                                                            </p>
+                                                        </div>
+                                                    </>)}
+
+                                                    <button onClick={() => setShowWeeklySummary(false)} className="w-full py-3 mt-5 bg-warm-800 text-white rounded-xl font-medium press">Done</button>
+                                                </div>
                                             </div>
                                         </div>
-                                    ))
-                                )}
+                                    );
+                                })()}
                             </div>
                         )}
 
