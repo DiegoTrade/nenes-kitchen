@@ -1909,6 +1909,43 @@
                 }]);
             };
 
+            // Toggle essential - add if not in list, remove if in list
+            const toggleEssential = (essential) => {
+                const searchTerms = {
+                    protein: /chicken|beef|steak|salmon|fish|shrimp|lamb|pork|ground/i,
+                    eggs: /egg/i,
+                    avocado: /avocado/i,
+                    greens: /spinach|lettuce|broccoli|asparagus|zucchini|pepper|cabbage|arugula|vegetable|greens/i,
+                    oliveoil: /olive oil/i,
+                    butter: /butter/i,
+                    lemons: /lemon|lime/i,
+                    garlic: /garlic|onion/i,
+                };
+                const regex = searchTerms[essential.id];
+                const inList = regex ? shopping.some(item => regex.test(item.name)) : false;
+                
+                if (inList) {
+                    // Remove matching items
+                    setShopping(shopping.filter(item => !regex.test(item.name)));
+                } else {
+                    // Add - use picker if available, otherwise add directly
+                    if (essential.hasPicker === 'protein') {
+                        setShowProteinPicker(true);
+                        return;
+                    }
+                    if (essential.hasPicker === 'veggies') {
+                        setShowVeggiePicker(true);
+                        return;
+                    }
+                    setShopping([...shopping, {
+                        id: Date.now() + Math.random(),
+                        name: essential.addText,
+                        cat: essential.cat,
+                        checked: false
+                    }]);
+                }
+            };
+
             const addProteinCut = (cut) => {
                 if (shopping.some(s => s.name === cut)) return;
                 setShopping([...shopping, {
@@ -2888,8 +2925,7 @@
                                             return (
                                                 <button
                                                     key={essential.id}
-                                                    onClick={() => addEssential(essential)}
-                                                    disabled={inList}
+                                                    onClick={() => toggleEssential(essential)}
                                                     className={`flex items-center gap-3 px-3 py-3 text-left transition-all press ${
                                                         inList ? 'bg-sage-50' : 'bg-white hover:bg-cream-50'
                                                     }`}
