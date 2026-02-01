@@ -1163,6 +1163,46 @@
                 { name: 'Greek yogurt', cat: 'dairy', emoji: '🥛' },
             ];
 
+            // Kitchen Essentials - what your protocol needs stocked
+            const kitchenEssentials = [
+                { id: 'protein', name: 'Protein source', emoji: '🥩', description: 'Chicken, beef, fish, etc.', addText: 'Pick protein this week', cat: 'protein' },
+                { id: 'eggs', name: 'Eggs', emoji: '🥚', description: 'Always need these', addText: 'Eggs (2 dozen)', cat: 'protein' },
+                { id: 'avocado', name: 'Avocados', emoji: '🥑', description: 'Healthy fats', addText: 'Avocados (6)', cat: 'produce' },
+                { id: 'greens', name: 'Greens & Veggies', emoji: '🥬', description: 'Unlimited on protocol', addText: 'Fresh vegetables', cat: 'produce' },
+                { id: 'oliveoil', name: 'Olive Oil', emoji: '🫒', description: 'Cooking & dressing', addText: 'Olive oil', cat: 'pantry' },
+                { id: 'butter', name: 'Butter', emoji: '🧈', description: 'Cooking fat', addText: 'Butter', cat: 'dairy' },
+                { id: 'lemons', name: 'Lemons/Limes', emoji: '🍋', description: 'For flavor', addText: 'Lemons (6)', cat: 'produce' },
+                { id: 'garlic', name: 'Garlic & Onions', emoji: '🧄', description: 'Aromatics', addText: 'Garlic + Onions', cat: 'produce' },
+            ];
+
+            // Check if essential is covered in shopping list
+            const isEssentialInList = (essential) => {
+                const searchTerms = {
+                    protein: /chicken|beef|steak|salmon|fish|shrimp|lamb|pork|ground/i,
+                    eggs: /egg/i,
+                    avocado: /avocado/i,
+                    greens: /spinach|lettuce|broccoli|asparagus|zucchini|pepper|cabbage|arugula|vegetable|greens/i,
+                    oliveoil: /olive oil/i,
+                    butter: /butter/i,
+                    lemons: /lemon|lime/i,
+                    garlic: /garlic|onion/i,
+                };
+                const regex = searchTerms[essential.id];
+                return regex ? shopping.some(item => regex.test(item.name)) : false;
+            };
+
+            const addEssential = (essential) => {
+                if (isEssentialInList(essential)) return;
+                setShopping([...shopping, {
+                    id: Date.now(),
+                    name: essential.addText,
+                    cat: essential.cat,
+                    checked: false
+                }]);
+            };
+
+            const essentialsCount = kitchenEssentials.filter(e => isEssentialInList(e)).length;
+
             // Auto-categorize items
             const categorizeItem = (name) => {
                 const lower = name.toLowerCase();
@@ -1572,6 +1612,58 @@
                                 </div>
 
                                 {copied && <div className="bg-sage-100 rounded-xl p-3 text-sage-600 text-sm text-center mb-4 animate-fade-in">✓ Copied to clipboard!</div>}
+
+                                {/* Kitchen Essentials */}
+                                <div className="card rounded-2xl border border-cream-200 overflow-hidden mb-5">
+                                    <div className="px-4 py-3 bg-gradient-to-r from-coral-50 to-sand-50 border-b border-cream-200">
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                <h3 className="text-warm-800 font-semibold text-sm">🏠 Kitchen Essentials</h3>
+                                                <p className="text-warm-500 text-xs">Your protocol needs these stocked</p>
+                                            </div>
+                                            <div className="text-right">
+                                                <span className={`text-sm font-bold ${essentialsCount === kitchenEssentials.length ? 'text-sage-500' : 'text-coral-500'}`}>
+                                                    {essentialsCount}/{kitchenEssentials.length}
+                                                </span>
+                                                <p className="text-warm-400 text-xs">in list</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-px bg-cream-200">
+                                        {kitchenEssentials.map((essential) => {
+                                            const inList = isEssentialInList(essential);
+                                            return (
+                                                <button
+                                                    key={essential.id}
+                                                    onClick={() => addEssential(essential)}
+                                                    disabled={inList}
+                                                    className={`flex items-center gap-3 px-3 py-3 text-left transition-all press ${
+                                                        inList ? 'bg-sage-50' : 'bg-white hover:bg-cream-50'
+                                                    }`}
+                                                >
+                                                    <span className={`w-8 h-8 rounded-full flex items-center justify-center text-lg ${
+                                                        inList ? 'bg-sage-100' : 'bg-cream-100'
+                                                    }`}>
+                                                        {inList ? '✓' : essential.emoji}
+                                                    </span>
+                                                    <div className="flex-1 min-w-0">
+                                                        <p className={`text-sm font-medium truncate ${inList ? 'text-sage-600' : 'text-warm-700'}`}>
+                                                            {essential.name}
+                                                        </p>
+                                                        <p className="text-warm-400 text-xs truncate">{essential.description}</p>
+                                                    </div>
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                    {essentialsCount < kitchenEssentials.length && (
+                                        <div className="px-4 py-2 bg-coral-50 border-t border-coral-100">
+                                            <p className="text-coral-600 text-xs text-center">
+                                                ☝️ Tap items above to add to your list
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
 
                                 {/* Manual Add Input */}
                                 <div className="flex gap-2 mb-4">
