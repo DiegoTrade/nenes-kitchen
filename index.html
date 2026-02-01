@@ -1362,9 +1362,12 @@
 
             // Meal planner state
             const [mealPlan, setMealPlan] = useState(() => load('mealPlan', {}));
+            const [savedPlans, setSavedPlans] = useState(() => load('savedPlans', []));
             const [showMealPicker, setShowMealPicker] = useState(null); // { day: 'mon', slot: 'lunch' }
             const [mealPickerSearch, setMealPickerSearch] = useState('');
             const [showCustomMealForPlan, setShowCustomMealForPlan] = useState(false);
+            const [showSavedPlans, setShowSavedPlans] = useState(false);
+            const [savePlanName, setSavePlanName] = useState('');
 
             // Days of the week
             const weekDays = [
@@ -1835,6 +1838,31 @@
                 setMealPlan({});
             };
 
+            // Save current plan with a name
+            const saveCurrentPlan = (name) => {
+                if (!name.trim() || Object.keys(mealPlan).length === 0) return false;
+                const newPlan = {
+                    id: Date.now(),
+                    name: name.trim(),
+                    plan: { ...mealPlan },
+                    savedAt: new Date().toISOString(),
+                    mealCount: Object.keys(mealPlan).length
+                };
+                setSavedPlans([newPlan, ...savedPlans].slice(0, 10)); // Keep max 10 plans
+                return true;
+            };
+
+            // Load a saved plan
+            const loadSavedPlan = (savedPlan) => {
+                setMealPlan({ ...savedPlan.plan });
+                setShowSavedPlans(false);
+            };
+
+            // Delete a saved plan
+            const deleteSavedPlan = (planId) => {
+                setSavedPlans(savedPlans.filter(p => p.id !== planId));
+            };
+
             const filteredRecipesForPicker = () => {
                 const search = mealPickerSearch.toLowerCase();
                 let recipes = mealRecipes;
@@ -1930,9 +1958,9 @@
                 saveTimeoutRef.current = setTimeout(() => {
                     save('favs', favorites); save('hist', history); save('shop', shopping);
                     save('badges', badges); save('stats', stats); save('staples', staples);
-                    save('mealPlan', mealPlan);
+                    save('mealPlan', mealPlan); save('savedPlans', savedPlans);
                 }, 300);
-            }, [favorites, history, shopping, badges, stats, staples, mealPlan]);
+            }, [favorites, history, shopping, badges, stats, staples, mealPlan, savedPlans]);
 
             const checkBadges = (s, f) => {
                 const cs = s || stats, cf = f || favorites;
@@ -2419,9 +2447,45 @@
                                         <h2 className="text-warm-800 font-bold text-lg">🗓️ Weekly Plan</h2>
                                         <p className="text-warm-500 text-xs">Plan meals, auto-generate shopping list</p>
                                     </div>
-                                    {Object.keys(mealPlan).length > 0 && (
-                                        <button onClick={clearMealPlan} className="text-warm-400 text-xs underline">Clear all</button>
-                                    )}
+                                    <div className="flex gap-2">
+                                        <button 
+                                            onClick={() => setShowSavedPlans(true)} 
+                                            className="px-3 py-1.5 bg-cream-200 text-warm-700 rounded-lg text-xs font-medium press"
+                                        >
+                                            📂 {savedPlans.length > 0 ? `(${savedPlans.length})` : ''}
+                                        </button>
+                                        {Object.keys(mealPlan).length > 0 && (
+                                            <button onClick={clearMealPlan} className="text-warm-400 text-xs underline">Clear</button>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Save Plan Input - show when plan has meals */}
+                                {Object.keys(mealPlan).length > 0 && (
+                                    <div className="card rounded-2xl p-3 mb-4 border border-cream-200">
+                                        <div className="flex gap-2">
+                                            <input
+                                                type="text"
+                                                value={savePlanName}
+                                                onChange={(e) => setSavePlanName(e.target.value)}
+                                                placeholder="Name this plan (e.g., Week 1, Meal Prep)"
+                                                className="flex-1 px-3 py-2 bg-cream-100 rounded-xl text-sm text-warm-800 placeholder:text-warm-400 focus:outline-none focus:ring-2 focus:ring-coral-300"
+                                            />
+                                            <button
+                                                onClick={() => {
+                                                    if (saveCurrentPlan(savePlanName)) {
+                                                        setSavePlanName('');
+                                                        alert('Plan saved! ✓');
+                                                    }
+                                                }}
+                                                disabled={!savePlanName.trim()}
+                                                className={`px-4 py-2 rounded-xl text-sm font-medium press ${savePlanName.trim() ? 'bg-sage-500 text-white' : 'bg-cream-200 text-warm-400'}`}
+                                            >
+                                                💾 Save
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
                                 </div>
 
                                 {/* Week Stats */}
@@ -2720,6 +2784,68 @@
                                                     }`}
                                                 >
                                                     ✓ Add to Plan
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Saved Plans Modal */}
+                                {showSavedPlans && (
+                                    <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={() => setShowSavedPlans(false)}>
+                                        <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[80vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
+                                            <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
+                                            <div className="px-5 pb-8 overflow-y-auto max-h-[70vh]">
+                                                <h3 className="text-warm-800 font-bold text-lg mb-1">📂 Saved Plans</h3>
+                                                <p className="text-warm-500 text-sm mb-4">Tap to load a saved weekly plan</p>
+                                                
+                                                {savedPlans.length === 0 ? (
+                                                    <div className="text-center py-10">
+                                                        <span className="text-4xl mb-3 block">📋</span>
+                                                        <p className="text-warm-600 mb-1">No saved plans yet</p>
+                                                        <p className="text-warm-500 text-sm">Create a meal plan and save it with a name</p>
+                                                    </div>
+                                                ) : (
+                                                    <div className="space-y-3">
+                                                        {savedPlans.map(plan => (
+                                                            <div key={plan.id} className="card rounded-2xl border border-cream-200 overflow-hidden">
+                                                                <button
+                                                                    onClick={() => loadSavedPlan(plan)}
+                                                                    className="w-full px-4 py-3 text-left hover:bg-cream-50 press"
+                                                                >
+                                                                    <div className="flex items-center justify-between">
+                                                                        <div>
+                                                                            <p className="text-warm-800 font-semibold">{plan.name}</p>
+                                                                            <p className="text-warm-500 text-xs">
+                                                                                {plan.mealCount} meals • Saved {new Date(plan.savedAt).toLocaleDateString()}
+                                                                            </p>
+                                                                        </div>
+                                                                        <span className="text-coral-500 text-sm">Load →</span>
+                                                                    </div>
+                                                                </button>
+                                                                <div className="px-4 py-2 bg-cream-50 border-t border-cream-200 flex justify-end">
+                                                                    <button
+                                                                        onClick={(e) => {
+                                                                            e.stopPropagation();
+                                                                            if (confirm(`Delete "${plan.name}"?`)) {
+                                                                                deleteSavedPlan(plan.id);
+                                                                            }
+                                                                        }}
+                                                                        className="text-warm-400 hover:text-coral-500 text-xs"
+                                                                    >
+                                                                        🗑️ Delete
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                                
+                                                <button 
+                                                    onClick={() => setShowSavedPlans(false)} 
+                                                    className="w-full mt-4 py-3 bg-warm-800 text-white rounded-xl font-medium press"
+                                                >
+                                                    Close
                                                 </button>
                                             </div>
                                         </div>
