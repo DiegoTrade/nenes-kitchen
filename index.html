@@ -25,21 +25,14 @@
                         sage: { 50: '#F0F7F4', 100: '#E0EFE7', 400: '#9DC4AF', 500: '#81B29A', 600: '#6A9A82' },
                         sand: { 50: '#FAF6F0', 100: '#F5EDE0', 400: '#E0B78A', 500: '#D4A373', 600: '#C49362' },
                         cream: { 50: '#FFFDFB', 100: '#FAF7F2', 200: '#F5F0E8', 300: '#EBE4D9' },
-                        warm: { 
-                            600: '#6B5D52',
-                            700: '#4A4039',
-                            800: '#3D3229', 
-                            900: '#2C241E'
-                        }
+                        warm: { 600: '#6B5D52', 700: '#4A4039', 800: '#3D3229', 900: '#2C241E' }
                     },
-                    fontFamily: {
-                        sans: ['DM Sans', 'system-ui', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['DM Sans', 'system-ui', 'sans-serif'] },
                     boxShadow: {
-                        'soft': '0 2px 20px rgba(60, 50, 40, 0.08)',
-                        'soft-lg': '0 4px 30px rgba(60, 50, 40, 0.12)',
-                        'glow-coral': '0 4px 20px rgba(224, 122, 95, 0.25)',
-                        'glow-sage': '0 4px 20px rgba(129, 178, 154, 0.25)',
+                        'soft': '0 2px 15px rgba(60, 50, 40, 0.06)',
+                        'soft-lg': '0 4px 20px rgba(60, 50, 40, 0.1)',
+                        'glow-coral': '0 4px 15px rgba(224, 122, 95, 0.2)',
+                        'glow-sage': '0 4px 15px rgba(129, 178, 154, 0.2)',
                     }
                 }
             }
@@ -47,83 +40,28 @@
     </script>
     <style>
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
-        body { 
-            overscroll-behavior: none; 
-            font-family: 'DM Sans', system-ui, sans-serif;
-            background: #FAF7F2;
-        }
-        
-        html { scroll-behavior: auto; }
+        body { overscroll-behavior: none; font-family: 'DM Sans', system-ui, sans-serif; background: #FAF7F2; }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #E0D9CF; border-radius: 4px; }
-        
         @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-        .animate-fade-in { animation: fade-in 0.3s ease-out; }
-        
-        @keyframes slide-up { 
-            from { transform: translateY(20px); opacity: 0; } 
-            to { transform: translateY(0); opacity: 1; } 
-        }
+        .animate-fade-in { animation: fade-in 0.2s ease-out; }
+        @keyframes slide-up { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .animate-slide-up { animation: slide-up 0.2s ease-out; }
-        
-        @keyframes bounce-in {
-            0% { transform: scale(0.9); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        @keyframes bounce-in { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         .animate-bounce-in { animation: bounce-in 0.25s ease-out; }
-        
-        @keyframes float-up {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-50px) rotate(180deg); opacity: 0; }
-        }
+        @keyframes float-up { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 0.8; } 100% { transform: translateY(-50px) rotate(180deg); opacity: 0; } }
         .animate-float-up { animation: float-up 4s ease-out forwards; }
-        
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
         .animate-heartbeat { animation: heartbeat 1.2s ease-in-out infinite; }
-        
-        @keyframes pulse-soft {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 0.8; }
-        }
+        @keyframes pulse-soft { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.8; } }
         .animate-pulse-soft { animation: pulse-soft 3s ease-in-out infinite; }
-
-        .glass {
-            background: rgba(250, 247, 242, 0.95);
-        }
-        
-        .modal-overlay {
-            background: rgba(44, 36, 30, 0.4);
-        }
-        
-        .card {
-            background: white;
-            box-shadow: 0 2px 20px rgba(60, 50, 40, 0.08);
-        }
-        
+        .card { background: white; box-shadow: 0 2px 15px rgba(60, 50, 40, 0.06); }
         .press:active { transform: scale(0.97); }
-        
-        .chip-selected {
-            background: linear-gradient(135deg, #E07A5F 0%, #D4A373 100%);
-            box-shadow: 0 4px 15px rgba(224, 122, 95, 0.3);
-            color: white;
-        }
-        
-        .chip-unselected {
-            background: white;
-            border: 1.5px solid #EBE4D9;
-            color: #4A4039;
-        }
-        
-        .chip-unselected:hover {
-            border-color: #D4A373;
-            background: #FFFDFB;
-        }
+        .modal-overlay { background: rgba(44, 36, 30, 0.4); }
+        .chip-selected { background: linear-gradient(135deg, #E07A5F 0%, #D4A373 100%); box-shadow: 0 3px 10px rgba(224, 122, 95, 0.25); color: white; }
+        .chip-unselected { background: white; border: 1.5px solid #EBE4D9; color: #4A4039; }
+        .chip-unselected:hover { border-color: #D4A373; }
     </style>
 </head>
 <body>
@@ -131,7 +69,7 @@
     <script type="text/babel">
         const { useState, useEffect, useCallback, useMemo, useRef } = React;
 
-        // ==================== DATA ====================
+        // ==================== BASE DATA ====================
         const proteins = [
             { id: 'chicken', name: 'Chicken', emoji: '🍗', proteinPer100g: 25, shopping: 'Chicken breast/thighs (1.5kg)' },
             { id: 'beef', name: 'Beef', emoji: '🥩', proteinPer100g: 26, shopping: 'Beef steak (1kg)' },
@@ -168,26 +106,34 @@
         ];
 
         const flavorProfiles = {
-            any: { id: 'any', name: 'Any', emoji: '✨', seasonings: null, pantry: [], finisher: '' },
-            latin: { id: 'latin', name: 'Latin', emoji: '🌶️', seasonings: '1 tsp cumin, 1 tsp paprika, ½ tsp garlic powder, salt', pantry: ['cumin', 'paprika', 'garlic powder', 'cilantro', 'limes'], finisher: 'Fresh lime + cilantro' },
-            mediterranean: { id: 'mediterranean', name: 'Med', emoji: '🌿', seasonings: '1 tsp oregano, 2 cloves garlic, lemon zest, salt', pantry: ['oregano', 'garlic', 'lemons', 'olive oil', 'parsley'], finisher: 'Lemon juice + olive oil drizzle' },
-            asian: { id: 'asian', name: 'Asian', emoji: '🥢', seasonings: '1 tbsp ginger, 2 cloves garlic, 1 tsp sesame oil', pantry: ['ginger', 'garlic', 'sesame oil', 'coconut aminos', 'green onions'], finisher: 'Sesame oil + sesame seeds' },
-            spicy: { id: 'spicy', name: 'Spicy', emoji: '🔥', seasonings: '½ tsp cayenne, 1 tsp chili flakes, garlic, salt', pantry: ['chili flakes', 'cayenne', 'jalapeños', 'hot sauce'], finisher: 'Extra chili flakes' },
-            classic: { id: 'classic', name: 'Classic', emoji: '🧈', seasonings: '2 cloves garlic, 2 tbsp butter, salt, pepper, herbs', pantry: ['butter', 'garlic', 'rosemary', 'thyme', 'black pepper'], finisher: 'Butter baste + fresh herbs' }
+            any: { id: 'any', name: 'Any', emoji: '✨' },
+            latin: { id: 'latin', name: 'Latin', emoji: '🌶️', seasonings: '1 tsp cumin, 1 tsp paprika, ½ tsp garlic powder, salt', finisher: 'Fresh lime + cilantro' },
+            mediterranean: { id: 'mediterranean', name: 'Med', emoji: '🌿', seasonings: '1 tsp oregano, 2 cloves garlic, lemon zest, salt', finisher: 'Lemon juice + olive oil drizzle' },
+            asian: { id: 'asian', name: 'Asian', emoji: '🥢', seasonings: '1 tbsp ginger, 2 cloves garlic, 1 tsp sesame oil', finisher: 'Sesame oil + sesame seeds' },
+            spicy: { id: 'spicy', name: 'Spicy', emoji: '🔥', seasonings: '½ tsp cayenne, 1 tsp chili flakes, garlic, salt', finisher: 'Extra chili flakes' },
+            classic: { id: 'classic', name: 'Classic', emoji: '🧈', seasonings: '2 cloves garlic, 2 tbsp butter, salt, pepper, herbs', finisher: 'Butter baste + fresh herbs' }
         };
 
         const timeCategories = {
             any: { id: 'any', name: 'Any', emoji: '⏱️', min: 0, max: 999 },
             quick: { id: 'quick', name: 'Quick', emoji: '⚡', min: 0, max: 20 },
             normal: { id: 'normal', name: 'Medium', emoji: '🍳', min: 20, max: 35 },
-            slow: { id: 'slow', name: 'Slow', emoji: '🥘', min: 35, max: 999 }
+            slow: { id: 'slow', name: 'Worth It', emoji: '🥘', min: 35, max: 999 }
+        };
+
+        const mealCategories = {
+            any: { id: 'any', name: 'All', emoji: '🍽️' },
+            breakfast: { id: 'breakfast', name: 'Breakfast', emoji: '🌅' },
+            main: { id: 'main', name: 'Main', emoji: '🍖' },
+            soup: { id: 'soup', name: 'Soup', emoji: '🍲' },
+            cold: { id: 'cold', name: 'Cold', emoji: '🥶' },
+            snack: { id: 'snack', name: 'Snack', emoji: '🥜' },
         };
 
         const dressings = [
             { name: 'Olive Oil & Lemon', recipe: '3 tbsp olive oil + juice of 1 lemon + salt', flavor: 'mediterranean' },
             { name: 'Creamy Tahini', recipe: '2 tbsp tahini + lemon + water + garlic', flavor: 'mediterranean' },
             { name: 'Greek Yogurt Ranch', recipe: '3 tbsp Greek yogurt 0% + herbs + garlic', flavor: 'classic' },
-            { name: 'Mustard Vinaigrette', recipe: '3 tbsp olive oil + 1 tbsp Dijon + vinegar', flavor: 'classic' },
             { name: 'Avocado Lime', recipe: '½ avocado + lime juice + cilantro + salt', flavor: 'latin' },
             { name: 'Guasacaca 🇻🇪', recipe: 'Avocado + cilantro + garlic + vinegar + oil', flavor: 'latin' },
             { name: 'Ginger Sesame', recipe: '2 tbsp sesame oil + coconut aminos + ginger', flavor: 'asian' },
@@ -223,203 +169,756 @@
         ];
 
         const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-        const dayNamesFull = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-        const mealRecipes = [
-            // ==================== CHICKEN (7 solo + combos) ====================
-            { id: 'chicken_plate', name: 'Pan-Seared Chicken', proteins: ['chicken'], requiresVeggies: true, time: 25, baseProtein: 95, servingSize: '400g chicken', flavors: ['any', 'classic', 'mediterranean', 'latin', 'spicy'],
+        // ==================== RECIPES: CHICKEN ====================
+        const chickenRecipes = [
+            { id: 'chicken_plate', name: 'Pan-Seared Chicken', proteins: ['chicken'], category: 'main', requiresVeggies: true, time: 25, baseProtein: 95, servingSize: '400g chicken', flavors: ['any', 'classic', 'mediterranean', 'latin', 'spicy'], netCarbs: 0,
+              ingredients: [
+                { item: 'Chicken breast or thighs', amount: '400g' },
+                { item: 'Olive oil', amount: '2 tbsp' },
+                { item: 'Salt', amount: '1 tsp' },
+                { item: 'Black pepper', amount: '½ tsp' },
+                { item: 'Garlic powder', amount: '½ tsp' },
+              ],
               steps: ['Pat chicken dry with paper towels', 'Season both sides generously', 'Heat pan medium-high with olive oil', 'Cook 6-7 min per side until golden', 'Rest 3 minutes before slicing'],
-              tips: ['Don\'t flip too early — let the crust form', '165°F internal temp is perfect'], doneness: 'Golden crust, juices run clear' },
-            { id: 'chicken_salad', name: 'Power Chicken Salad', proteins: ['chicken'], requiresVeggies: true, saladOnly: true, time: 20, baseProtein: 88, servingSize: '350g chicken', flavors: ['any', 'mediterranean', 'latin', 'asian'],
-              steps: ['Season and grill chicken until done', 'Rest 5 min, slice against grain', 'Build salad base with greens', 'Top with warm chicken slices', 'Drizzle dressing before serving'],
+              tips: ['Don\'t flip too early — let crust form', '165°F internal temp'], doneness: 'Golden crust, juices run clear' },
+            
+            { id: 'chicken_salad', name: 'Power Chicken Salad', proteins: ['chicken'], category: 'cold', requiresVeggies: true, saladOnly: true, time: 20, baseProtein: 88, servingSize: '350g chicken', flavors: ['any', 'mediterranean', 'latin', 'asian'], netCarbs: 4,
+              ingredients: [
+                { item: 'Chicken breast', amount: '350g' },
+                { item: 'Mixed greens', amount: '100g' },
+                { item: 'Cherry tomatoes', amount: '80g' },
+                { item: 'Cucumber', amount: '100g' },
+                { item: 'Olive oil', amount: '2 tbsp' },
+                { item: 'Lemon juice', amount: '1 tbsp' },
+              ],
+              steps: ['Season and grill chicken until done', 'Rest 5 min, slice against grain', 'Build salad base with greens', 'Top with warm chicken slices', 'Drizzle dressing'],
               tips: ['Warm chicken on cold greens = perfect contrast'], suggestDressing: true },
-            { id: 'chicken_shawarma', name: 'Chicken Shawarma Bowl', proteins: ['chicken'], requiresVeggies: true, time: 25, baseProtein: 95, servingSize: '400g chicken thighs', flavors: ['mediterranean', 'spicy'],
-              steps: ['Marinate chicken in cumin, coriander, turmeric, paprika, garlic, lemon', 'Sear in hot pan until charred 6-7 min per side', 'Rest and slice thin', 'Serve over greens with tahini drizzle', 'Add pickled onions and cucumber'],
-              tips: ['Thighs are juicier than breast for shawarma', 'Marinate 30 min to overnight for best flavor'] },
-            { id: 'chicken_tikka', name: 'Chicken Tikka Masala', proteins: ['chicken'], requiresVeggies: true, time: 35, baseProtein: 95, servingSize: '400g chicken', flavors: ['spicy', 'asian'],
+            
+            { id: 'chicken_shawarma', name: 'Chicken Shawarma Bowl', proteins: ['chicken'], category: 'main', requiresVeggies: true, time: 25, baseProtein: 95, servingSize: '400g chicken thighs', flavors: ['mediterranean', 'spicy'], netCarbs: 5,
+              ingredients: [
+                { item: 'Chicken thighs', amount: '400g' },
+                { item: 'Cumin', amount: '1 tsp' },
+                { item: 'Coriander', amount: '1 tsp' },
+                { item: 'Turmeric', amount: '½ tsp' },
+                { item: 'Paprika', amount: '1 tsp' },
+                { item: 'Garlic, minced', amount: '3 cloves' },
+                { item: 'Lemon juice', amount: '2 tbsp' },
+                { item: 'Olive oil', amount: '2 tbsp' },
+                { item: 'Tahini', amount: '2 tbsp' },
+              ],
+              steps: ['Marinate chicken in spices, garlic, lemon', 'Sear until charred 6-7 min per side', 'Rest and slice thin', 'Serve over greens with tahini', 'Add pickled onions and cucumber'],
+              tips: ['Thighs are juicier than breast', 'Marinate 30 min to overnight'] },
+            
+            { id: 'chicken_tikka', name: 'Chicken Tikka Masala', proteins: ['chicken'], category: 'main', requiresVeggies: true, time: 35, baseProtein: 95, servingSize: '400g chicken', flavors: ['spicy', 'asian'], netCarbs: 8,
+              ingredients: [
+                { item: 'Chicken breast, cubed', amount: '400g' },
+                { item: 'Greek yogurt', amount: '100g' },
+                { item: 'Garam masala', amount: '2 tsp' },
+                { item: 'Turmeric', amount: '1 tsp' },
+                { item: 'Heavy cream', amount: '200ml' },
+                { item: 'Tomato paste', amount: '2 tbsp' },
+                { item: 'Ginger, minced', amount: '1 tbsp' },
+                { item: 'Garlic, minced', amount: '3 cloves' },
+                { item: 'Butter', amount: '2 tbsp' },
+              ],
               steps: ['Marinate chicken in yogurt, garam masala, turmeric', 'Grill or pan-sear until charred', 'Make sauce: sauté onion, garlic, ginger, tomato paste', 'Add cream and spices, simmer', 'Add chicken, cook 10 min'],
               tips: ['Use full-fat cream or coconut cream', 'Serve with cauliflower rice'] },
-            { id: 'chicken_greek', name: 'Greek Lemon Chicken', proteins: ['chicken'], requiresVeggies: true, time: 30, baseProtein: 95, servingSize: '400g chicken', flavors: ['mediterranean'],
+            
+            { id: 'chicken_greek', name: 'Greek Lemon Chicken', proteins: ['chicken'], category: 'main', requiresVeggies: true, time: 30, baseProtein: 95, servingSize: '400g chicken', flavors: ['mediterranean'], netCarbs: 3,
+              ingredients: [
+                { item: 'Chicken thighs or breast', amount: '400g' },
+                { item: 'Lemon juice', amount: '3 tbsp' },
+                { item: 'Lemon zest', amount: '1 lemon' },
+                { item: 'Dried oregano', amount: '1 tbsp' },
+                { item: 'Garlic, minced', amount: '4 cloves' },
+                { item: 'Olive oil', amount: '3 tbsp' },
+                { item: 'Feta cheese', amount: '50g' },
+                { item: 'Kalamata olives', amount: '30g' },
+              ],
               steps: ['Marinate chicken in lemon, oregano, garlic, olive oil', 'Roast at 425°F for 25 min', 'Baste with pan juices halfway', 'Serve with feta, olives, cucumber'],
-              tips: ['Score the chicken for deeper flavor', 'Inspired by Diet Doctor\'s Greek recipes'] },
-            { id: 'chicken_butter', name: 'Butter Chicken (Murgh Makhani)', proteins: ['chicken'], requiresVeggies: true, time: 40, baseProtein: 95, servingSize: '400g chicken', flavors: ['spicy', 'asian'],
-              steps: ['Marinate chicken in yogurt and spices 30 min', 'Pan-sear until golden', 'Make sauce with butter, tomatoes, cream, garam masala', 'Simmer chicken in sauce 15 min', 'Finish with butter and cream'],
-              tips: ['Gordon Ramsay\'s recipe — only 7g carbs', 'Use ghee for extra richness'] },
-            { id: 'pollo_guasacaca', name: 'Pollo con Guasacaca 🇻🇪', proteins: ['chicken'], requiresVeggies: true, time: 30, baseProtein: 95, servingSize: '400g chicken', flavors: ['latin'], isVenezuelan: true,
-              steps: ['Season chicken with cumin, garlic, paprika', 'Grill until charred and cooked', 'Make guasacaca: blend avocado, cilantro, vinegar, oil, garlic', 'Slice chicken, serve with sauce'],
+              tips: ['Score chicken for deeper flavor', 'Diet Doctor inspired'] },
+            
+            { id: 'chicken_butter', name: 'Butter Chicken', proteins: ['chicken'], category: 'main', requiresVeggies: true, time: 40, baseProtein: 95, servingSize: '400g chicken', flavors: ['spicy', 'asian'], netCarbs: 7,
+              ingredients: [
+                { item: 'Chicken thighs, cubed', amount: '400g' },
+                { item: 'Greek yogurt', amount: '100g' },
+                { item: 'Butter', amount: '4 tbsp' },
+                { item: 'Heavy cream', amount: '200ml' },
+                { item: 'Tomato puree', amount: '200g' },
+                { item: 'Garam masala', amount: '2 tsp' },
+                { item: 'Kashmiri chili', amount: '1 tsp' },
+                { item: 'Ginger-garlic paste', amount: '2 tbsp' },
+              ],
+              steps: ['Marinate chicken in yogurt and spices 30 min', 'Pan-sear until golden', 'Make sauce with butter, tomatoes, cream', 'Simmer chicken in sauce 15 min', 'Finish with butter and cream'],
+              tips: ['Gordon Ramsay recipe — only 7g carbs', 'Use ghee for extra richness'] },
+            
+            { id: 'pollo_guasacaca', name: 'Pollo con Guasacaca 🇻🇪', proteins: ['chicken'], category: 'main', requiresVeggies: true, time: 30, baseProtein: 95, servingSize: '400g chicken', flavors: ['latin'], isVenezuelan: true, netCarbs: 4,
+              ingredients: [
+                { item: 'Chicken breast or thighs', amount: '400g' },
+                { item: 'Cumin', amount: '1 tsp' },
+                { item: 'Paprika', amount: '1 tsp' },
+                { item: 'Garlic powder', amount: '1 tsp' },
+                { item: 'Avocado', amount: '1 large' },
+                { item: 'Fresh cilantro', amount: '1 cup' },
+                { item: 'White vinegar', amount: '2 tbsp' },
+                { item: 'Olive oil', amount: '3 tbsp' },
+                { item: 'Garlic cloves', amount: '2' },
+              ],
+              steps: ['Season chicken with cumin, garlic, paprika', 'Grill until charred and cooked', 'Blend guasacaca: avocado, cilantro, vinegar, oil, garlic', 'Slice chicken, serve with sauce'],
               tips: ['Make extra guasacaca — good on everything', 'Keeps 2 days in fridge'] },
-            { id: 'chicken_omelette', name: 'Loaded Chicken Omelette', proteins: ['chicken', 'eggs'], requiresVeggies: false, time: 15, baseProtein: 82, servingSize: '200g chicken + 4 eggs', flavors: ['any', 'classic', 'mediterranean', 'spicy'],
+            
+            { id: 'chicken_omelette', name: 'Loaded Chicken Omelette', proteins: ['chicken', 'eggs'], category: 'breakfast', requiresVeggies: false, time: 15, baseProtein: 82, servingSize: '200g chicken + 4 eggs', flavors: ['any', 'classic', 'mediterranean', 'spicy'], netCarbs: 1,
+              ingredients: [
+                { item: 'Cooked chicken, shredded', amount: '200g' },
+                { item: 'Eggs', amount: '4' },
+                { item: 'Butter', amount: '2 tbsp' },
+                { item: 'Salt', amount: '½ tsp' },
+                { item: 'Black pepper', amount: '¼ tsp' },
+                { item: 'Cheese (optional)', amount: '30g' },
+              ],
               steps: ['Shred or dice cooked chicken', 'Beat 4 eggs with salt and pepper', 'Melt butter in non-stick over medium-low', 'Pour eggs, let set 30 seconds', 'Add fillings to one half, fold'],
               tips: ['Medium-low heat = creamy eggs', 'Remove while still slightly wet'] },
-
-            // ==================== BEEF (6 solo + combos) ====================
-            { id: 'steak_plate', name: 'Perfect Steak', proteins: ['beef'], requiresVeggies: true, time: 20, baseProtein: 90, servingSize: '350g steak', flavors: ['any', 'classic', 'spicy', 'latin'],
-              steps: ['Bring steak to room temp (30 min)', 'Pat dry, season with salt', 'Smoking hot pan, add oil', 'Cook 3-4 min per side for medium', 'Rest 5 minutes, slice against grain'],
-              tips: ['Dry surface = better crust', 'Only flip once'], doneness: 'Dark brown crust, pink center' },
-            { id: 'beef_lebanese', name: 'Lebanese Beef Kebab', proteins: ['beef'], requiresVeggies: true, time: 25, baseProtein: 90, servingSize: '350g beef sirloin', flavors: ['mediterranean', 'spicy'],
-              steps: ['Cube beef into 1-inch pieces', 'Marinate in olive oil, lemon, garlic, seven spice', 'Thread onto skewers with onion, peppers', 'Grill 3-4 min per side', 'Serve with tahini and fresh herbs'],
-              tips: ['Seven spice = allspice, pepper, cinnamon, nutmeg, cloves, ginger, coriander', 'Don\'t overcook — medium is best'] },
-            { id: 'beef_stirfry', name: 'Ginger Beef Stir-Fry', proteins: ['beef'], requiresVeggies: true, time: 15, baseProtein: 90, servingSize: '350g flank steak', flavors: ['asian', 'spicy'],
-              steps: ['Slice beef very thin against grain', 'Marinate in coconut aminos, ginger, garlic', 'Hot wok with sesame oil', 'Sear beef 2 min, set aside', 'Stir-fry veggies, return beef, toss'],
-              tips: ['Freeze beef 20 min for easier slicing', 'High heat is essential for wok hei'] },
-            { id: 'beef_kofta', name: 'Middle Eastern Kofta', proteins: ['beef'], requiresVeggies: true, time: 25, baseProtein: 90, servingSize: '350g ground beef', flavors: ['mediterranean', 'spicy'],
-              steps: ['Mix beef with onion, parsley, cumin, coriander, cinnamon', 'Form into oval shapes around skewers', 'Grill or pan-sear until cooked', 'Serve with tahini and salad'],
-              tips: ['Use fattier beef (80/20) for juicy kofta', 'Don\'t overwork the meat'] },
-            { id: 'beef_chimichurri', name: 'Chimichurri Steak 🇻🇪', proteins: ['beef'], requiresVeggies: true, time: 25, baseProtein: 90, servingSize: '350g steak', flavors: ['latin'], isVenezuelan: true,
-              steps: ['Season steak with salt and pepper', 'Grill to desired doneness', 'Make chimichurri: parsley, oregano, garlic, vinegar, oil, chili', 'Rest steak, slice thin', 'Drizzle chimichurri generously'],
-              tips: ['Chimichurri is a Venezuelan/Argentine staple', 'Make extra — keeps 1 week in fridge'] },
-            { id: 'asado_negro', name: 'Asado Negro 🇻🇪', proteins: ['beef'], requiresVeggies: true, time: 90, baseProtein: 90, servingSize: '350g beef roast', flavors: ['latin'], isVenezuelan: true,
-              steps: ['Season beef with garlic, cumin, soy sauce', 'Caramelize sugar until dark (careful!)', 'Sear beef in caramelized sugar', 'Add onions, peppers, broth', 'Slow cook 2 hours until tender'],
-              tips: ['The dark color comes from caramelized sugar — keto-adapted with small amount', 'Classic Venezuelan Sunday dish'] },
-            { id: 'steak_eggs', name: 'Steak & Eggs', proteins: ['beef', 'eggs'], requiresVeggies: true, time: 25, baseProtein: 95, servingSize: '250g steak + 3 eggs', flavors: ['any', 'classic', 'spicy', 'latin'],
-              steps: ['Cook steak to desired doneness', 'While resting, cook eggs in same pan', 'Runny yolks are your sauce', 'Slice steak, plate with eggs'],
-              tips: ['The steak pan fond flavors the eggs'] },
-            { id: 'pabellon', name: 'Pabellón Sin Arroz 🇻🇪', proteins: ['beef', 'eggs'], requiresVeggies: true, time: 45, baseProtein: 92, servingSize: '300g carne mechada + 2 eggs', flavors: ['latin'], isVenezuelan: true,
-              steps: ['Simmer flank steak until shreddable (1.5hr)', 'Shred with two forks while warm', 'Sauté onion, peppers, garlic', 'Add beef, cumin, paprika, tomato', 'Fry eggs with crispy edges'],
-              tips: ['Make big batch — freezes perfectly', 'Eggs must have crispy edges 🇻🇪'] },
-
-            // ==================== GROUND BEEF (5 solo + combos) ====================
-            { id: 'lettuce_wraps', name: 'Asian Lettuce Wraps', proteins: ['ground'], requiresVeggies: true, time: 15, baseProtein: 88, servingSize: '350g ground beef', flavors: ['asian', 'spicy'],
-              steps: ['Brown ground beef over high heat', 'Add ginger, garlic, coconut aminos', 'Cook until caramelized', 'Spoon into butter lettuce cups', 'Top with green onions, sesame seeds'],
-              tips: ['Butter lettuce makes best cups', 'Inspired by PF Chang\'s — keto style'] },
-            { id: 'ground_kofta', name: 'Lebanese Kofta Plate', proteins: ['ground'], requiresVeggies: true, time: 20, baseProtein: 88, servingSize: '350g ground beef', flavors: ['mediterranean'],
-              steps: ['Mix beef with minced onion, parsley, allspice, cinnamon', 'Form into flat patties or logs', 'Grill or pan-fry until cooked', 'Serve with fattoush-style salad (no pita)', 'Drizzle with tahini'],
-              tips: ['The spices are key — don\'t skip the cinnamon', 'Great for meal prep'] },
-            { id: 'ground_taco_bowl', name: 'Taco Bowl', proteins: ['ground'], requiresVeggies: true, time: 15, baseProtein: 88, servingSize: '350g ground beef', flavors: ['latin', 'spicy'],
-              steps: ['Brown beef with cumin, chili powder, paprika', 'Add tomato paste, a splash of water', 'Simmer 5 min until thick', 'Serve over shredded lettuce', 'Top with guac, cheese, sour cream'],
-              tips: ['Skip the tortilla — all the flavor, no carbs', 'Add jalapeños for heat'] },
-            { id: 'ground_stuffed_peppers', name: 'Stuffed Bell Peppers', proteins: ['ground'], requiresVeggies: true, requiresSpecific: ['peppers'], time: 35, baseProtein: 88, servingSize: '350g ground beef', flavors: ['any', 'mediterranean', 'latin'],
-              steps: ['Cut tops off peppers, remove seeds', 'Brown beef with onions and garlic', 'Season and add diced tomatoes', 'Stuff peppers with mixture', 'Bake 25 min at 375°F, add cheese last 5 min'],
-              tips: ['Mediterranean version: add feta and oregano', 'Latin version: add cumin and cilantro'] },
-            { id: 'ground_zucchini_boats', name: 'Beef Zucchini Boats', proteins: ['ground'], requiresVeggies: true, requiresSpecific: ['zucchini'], time: 30, baseProtein: 88, servingSize: '350g ground beef', flavors: ['any', 'mediterranean', 'classic'],
-              steps: ['Halve zucchini, scoop out center', 'Brown beef with garlic and herbs', 'Add tomato sauce and seasonings', 'Fill zucchini boats with mixture', 'Top with cheese, bake 20 min at 400°F'],
-              tips: ['Salt zucchini first to remove moisture', 'Great low-carb lasagna alternative'] },
-            { id: 'ground_shakshuka', name: 'Meaty Shakshuka', proteins: ['ground', 'eggs'], requiresVeggies: true, time: 25, baseProtein: 85, servingSize: '250g beef + 3 eggs', flavors: ['mediterranean', 'spicy'],
-              steps: ['Brown ground beef with onions', 'Add tomatoes, peppers, cumin, paprika', 'Simmer 10 min', 'Make wells, crack in eggs', 'Cover and cook until eggs set'],
-              tips: ['Runny yolks are traditional', 'Middle Eastern breakfast — great any time'] },
-
-            // ==================== SALMON (6 solo + combos) ====================
-            { id: 'salmon_crispy', name: 'Crispy Skin Salmon', proteins: ['salmon'], requiresVeggies: true, time: 15, baseProtein: 77, servingSize: '350g salmon', flavors: ['any', 'classic', 'mediterranean', 'asian'],
-              steps: ['Pat salmon skin completely dry', 'Season flesh side only with salt', 'Hot pan, skin side DOWN first', 'Cook 5 min skin side, 2-3 min flesh', 'Remove when center slightly pink'],
-              tips: ['Spend 80% cooking time skin-side down', 'Press flat first 30 seconds'], doneness: 'Skin crackling, flesh flakes easily' },
-            { id: 'salmon_greek', name: 'Greek Salmon', proteins: ['salmon'], requiresVeggies: true, time: 25, baseProtein: 77, servingSize: '350g salmon', flavors: ['mediterranean'],
-              steps: ['Season salmon with oregano, lemon zest, garlic', 'Bake at 400°F for 15 min', 'Top with tomatoes, olives, capers, feta', 'Return to oven 5 min', 'Finish with olive oil drizzle'],
-              tips: ['Inspired by Diet Doctor\'s Greek salmon', 'The feta melts beautifully on top'] },
-            { id: 'salmon_teriyaki', name: 'Teriyaki Salmon (Keto)', proteins: ['salmon'], requiresVeggies: true, time: 20, baseProtein: 77, servingSize: '350g salmon', flavors: ['asian'],
-              steps: ['Make keto teriyaki: coconut aminos, ginger, garlic, erythritol', 'Marinate salmon 20 min', 'Pan-sear salmon, flesh side first', 'Add marinade to pan, reduce to glaze', 'Spoon glaze over salmon'],
-              tips: ['Inspired by Gordon Ramsay\'s teriyaki method', 'Coconut aminos = no sugar soy alternative'] },
-            { id: 'salmon_lemon_garlic', name: 'Creamy Lemon Garlic Salmon', proteins: ['salmon'], requiresVeggies: true, time: 25, baseProtein: 77, servingSize: '350g salmon', flavors: ['classic', 'mediterranean'],
-              steps: ['Season and sear salmon until golden', 'Remove and set aside', 'In same pan: cream, garlic, lemon juice, parsley', 'Simmer sauce 3 min until slightly thick', 'Return salmon, spoon sauce over'],
-              tips: ['Top keto salmon recipe — restaurant quality', 'Use heavy cream for best results'] },
-            { id: 'salmon_salad', name: 'Salmon Power Salad', proteins: ['salmon'], requiresVeggies: true, saladOnly: true, time: 20, baseProtein: 77, servingSize: '350g salmon', flavors: ['any', 'mediterranean', 'asian'],
-              steps: ['Season salmon with salt and pepper', 'Pan-sear or bake until just cooked', 'Let cool slightly, then flake into chunks', 'Build salad with greens and veggies', 'Top with salmon and dressing'],
-              tips: ['Slightly warm salmon on cold greens is perfect', 'Add avocado for healthy fats'], suggestDressing: true },
-            { id: 'salmon_avocado', name: 'Salmon Avocado Bowl', proteins: ['salmon'], requiresVeggies: true, time: 20, baseProtein: 77, servingSize: '350g salmon', flavors: ['asian', 'latin'],
-              steps: ['Season salmon with sesame and ginger', 'Pan-sear until medium', 'Flake salmon into bowl', 'Add sliced avocado, cucumber, pickled ginger', 'Drizzle with coconut aminos and sesame oil'],
-              tips: ['Like a poke bowl without the rice', 'Excellent omega-3 + healthy fat combo'] },
-            { id: 'salmon_eggs', name: 'Salmon & Eggs Plate', proteins: ['salmon', 'eggs'], requiresVeggies: true, time: 20, baseProtein: 90, servingSize: '250g salmon + 3 eggs', flavors: ['any', 'classic', 'mediterranean'],
-              steps: ['Cook salmon in pan until done', 'Set aside and keep warm', 'Scramble or fry eggs in same pan', 'Plate together with veggies'],
-              tips: ['The salmon fat flavors the eggs beautifully', 'Great for brunch'] },
-
-            // ==================== WHITE FISH (6 solo + combos) ====================
-            { id: 'fish_mediterranean', name: 'Mediterranean Baked Fish', proteins: ['fish'], requiresVeggies: true, time: 25, baseProtein: 70, servingSize: '350g white fish', flavors: ['any', 'mediterranean', 'classic'],
-              steps: ['Preheat oven to 400°F/200°C', 'Season fish with salt, pepper, oregano', 'Place on baking sheet with olive oil', 'Add tomatoes, olives, capers around fish', 'Bake 15-18 min until flaky'],
-              tips: ['White fish is very lean — don\'t overcook', 'Lemon juice at the end brightens everything'], doneness: 'Flesh is opaque and flakes easily' },
-            { id: 'fish_panfried', name: 'Pan-Fried White Fish', proteins: ['fish'], requiresVeggies: true, time: 15, baseProtein: 70, servingSize: '350g white fish', flavors: ['any', 'classic', 'mediterranean', 'latin'],
-              steps: ['Pat fish completely dry', 'Season with salt and pepper', 'Hot pan with butter and oil', 'Cook 3-4 min per side', 'Finish with lemon and herbs'],
-              tips: ['Don\'t move the fish — let it form a crust', 'Fish is done when it flakes with a fork'], doneness: 'Golden outside, opaque inside' },
-            { id: 'fish_parmesan', name: 'Parmesan Crusted Fish', proteins: ['fish'], requiresVeggies: true, time: 20, baseProtein: 70, servingSize: '350g white fish', flavors: ['classic', 'mediterranean'],
-              steps: ['Mix parmesan, almond flour, garlic, paprika', 'Pat fish dry, brush with mayo', 'Press parmesan mixture onto fish', 'Bake at 400°F for 15 min', 'Broil 2 min for golden crust'],
-              tips: ['Air fryer version: 8 min at 400°F', 'Mayo helps crust stick and stay moist'] },
-            { id: 'fish_coconut_curry', name: 'Thai Coconut Fish Curry', proteins: ['fish'], requiresVeggies: true, time: 25, baseProtein: 70, servingSize: '350g white fish', flavors: ['asian', 'spicy'],
-              steps: ['Sauté garlic, ginger, curry paste', 'Add coconut milk, fish sauce, lime', 'Simmer 5 min', 'Add fish chunks gently', 'Cook 8-10 min until fish flakes'],
-              tips: ['Use full-fat coconut milk', 'Don\'t stir too much — fish breaks easily'] },
-            { id: 'fish_tacos', name: 'Fish Taco Bowl', proteins: ['fish'], requiresVeggies: true, time: 20, baseProtein: 70, servingSize: '350g white fish', flavors: ['latin', 'spicy'],
-              steps: ['Season fish with cumin, paprika, garlic', 'Pan-fry until golden and cooked', 'Break into chunks', 'Serve over lettuce with avocado, tomato', 'Top with lime crema and cilantro'],
-              tips: ['This is taco filling without the tortilla!', 'Guasacaca or avocado lime dressing is perfect'], suggestDressing: true },
-            { id: 'fish_lebanese', name: 'Lebanese Samke Harra', proteins: ['fish'], requiresVeggies: true, time: 30, baseProtein: 70, servingSize: '350g white fish', flavors: ['mediterranean', 'spicy'],
-              steps: ['Season fish with salt, cumin, coriander', 'Pan-fry until golden', 'Make sauce: tahini, lemon, garlic, cilantro, chili', 'Top fish with caramelized onions', 'Drizzle spicy tahini sauce'],
-              tips: ['Classic Lebanese spicy fish', 'The tahini sauce is incredible'] },
-            { id: 'fish_eggs', name: 'Fish & Eggs Light Plate', proteins: ['fish', 'eggs'], requiresVeggies: true, time: 18, baseProtein: 82, servingSize: '250g fish + 3 eggs', flavors: ['any', 'classic', 'mediterranean'],
-              steps: ['Pan-fry fish until cooked', 'Set aside, keep warm', 'Fry or scramble eggs in same pan', 'Plate together with veggies and lemon'],
-              tips: ['Light but filling — great for lunch', 'Add avocado for healthy fats'] },
-
-            // ==================== SHRIMP (5 solo + combos) ====================
-            { id: 'shrimp_garlic', name: 'Garlic Butter Shrimp', proteins: ['shrimp'], requiresVeggies: true, time: 12, baseProtein: 60, servingSize: '300g shrimp', flavors: ['any', 'classic', 'spicy', 'latin'], lowProteinWarning: true,
-              steps: ['Pat shrimp dry, season with salt', 'Hot pan with butter and garlic', 'Add shrimp in single layer', 'Cook 2 min per side until pink', 'Finish with lemon juice and parsley'],
-              tips: ['⚠️ Only ~60g protein — add another protein', 'Remove the second they turn pink'], doneness: 'Pink, slightly curled' },
-            { id: 'shrimp_stirfry', name: 'Ginger Shrimp Stir-Fry', proteins: ['shrimp'], requiresVeggies: true, time: 15, baseProtein: 60, servingSize: '300g shrimp', flavors: ['asian', 'spicy'], lowProteinWarning: true,
-              steps: ['Pat shrimp dry', 'Hot wok with sesame oil', 'Add ginger, garlic, chili — 30 seconds', 'Add shrimp, cook 2 min per side', 'Toss with coconut aminos and veggies'],
-              tips: ['⚠️ Only ~60g protein — consider adding eggs', 'Everything cooks fast — prep ahead'] },
-            { id: 'shrimp_mediterranean', name: 'Greek Shrimp Saganaki', proteins: ['shrimp'], requiresVeggies: true, time: 20, baseProtein: 60, servingSize: '300g shrimp', flavors: ['mediterranean'], lowProteinWarning: true,
-              steps: ['Sauté garlic in olive oil', 'Add diced tomatoes, oregano, white wine', 'Simmer 10 min', 'Add shrimp, cook until pink', 'Top with crumbled feta'],
-              tips: ['⚠️ Low protein — add feta generously', 'Classic Greek taverna dish'] },
-            { id: 'shrimp_kungpao', name: 'Kung Pao Shrimp (Keto)', proteins: ['shrimp'], requiresVeggies: true, time: 15, baseProtein: 60, servingSize: '300g shrimp', flavors: ['asian', 'spicy'], lowProteinWarning: true,
-              steps: ['Mix sauce: coconut aminos, vinegar, erythritol, chili paste', 'Hot wok, sear shrimp quickly, set aside', 'Stir-fry dried chilies, Sichuan peppercorn, garlic', 'Add peppers, return shrimp', 'Toss with sauce and peanuts'],
-              tips: ['⚠️ Low protein — add extra shrimp or eggs', 'Authentic Sichuan flavor without sugar'] },
-            { id: 'shrimp_salad', name: 'Shrimp Power Salad', proteins: ['shrimp'], requiresVeggies: true, saladOnly: true, time: 15, baseProtein: 60, servingSize: '300g shrimp', flavors: ['any', 'mediterranean', 'latin', 'asian'], lowProteinWarning: true,
-              steps: ['Season and cook shrimp quickly', 'Let cool slightly', 'Build salad with greens and veggies', 'Top with warm or cold shrimp', 'Drizzle with dressing'],
-              tips: ['⚠️ Add cheese or eggs for more protein', 'Avocado makes this more filling'], suggestDressing: true },
-            { id: 'shrimp_eggs', name: 'Shrimp & Eggs Scramble', proteins: ['shrimp', 'eggs'], requiresVeggies: true, time: 15, baseProtein: 75, servingSize: '200g shrimp + 4 eggs', flavors: ['any', 'asian', 'classic'],
-              steps: ['Cook shrimp until just pink, set aside', 'Beat eggs with salt', 'Scramble eggs in butter over low heat', 'Fold in shrimp at the end', 'Top with herbs or green onions'],
-              tips: ['Chinese-style shrimp with eggs', 'The eggs add needed protein'] },
-
-            // ==================== LAMB (5 solo + combos) ====================
-            { id: 'lamb_chops', name: 'Herb-Crusted Lamb Chops', proteins: ['lamb'], requiresVeggies: true, time: 20, baseProtein: 88, servingSize: '350g lamb chops', flavors: ['any', 'classic', 'mediterranean', 'spicy'],
-              steps: ['Bring lamb to room temp', 'Season with salt, pepper, rosemary, thyme', 'High heat pan or grill', 'Sear 3-4 min per side', 'Rest 5 minutes'],
-              tips: ['Lamb loves high heat, quick cook', 'Medium-rare (130°F) is ideal'], doneness: 'Browned outside, pink inside' },
-            { id: 'lamb_shawarma', name: 'Lamb Shawarma Bowl', proteins: ['lamb'], requiresVeggies: true, time: 25, baseProtein: 88, servingSize: '350g lamb', flavors: ['mediterranean', 'spicy'],
-              steps: ['Slice lamb thin, marinate in cumin, coriander, turmeric, garlic', 'Pan-sear on high heat until caramelized', 'Serve over greens or cauliflower rice', 'Top with pickled turnips, tahini', 'Add fresh parsley and sumac'],
-              tips: ['Lebanese street food favorite', 'The spice mix makes it special'] },
-            { id: 'lamb_mediterranean', name: 'Mediterranean Lamb Plate', proteins: ['lamb'], requiresVeggies: true, time: 25, baseProtein: 88, servingSize: '350g lamb', flavors: ['mediterranean'],
-              steps: ['Season lamb with oregano, garlic, lemon zest', 'Sear in hot pan until browned', 'Rest and slice', 'Serve with cucumber, tomato, feta', 'Drizzle with olive oil and lemon'],
-              tips: ['This is like a deconstructed Greek dish', 'Tzatziki (Greek yogurt + cucumber) goes perfectly'] },
-            { id: 'lamb_kofta', name: 'Lamb Kofta Kebabs', proteins: ['lamb'], requiresVeggies: true, time: 25, baseProtein: 88, servingSize: '350g ground lamb', flavors: ['mediterranean', 'spicy'],
-              steps: ['Mix ground lamb with onion, parsley, cumin, coriander, cinnamon', 'Form into long ovals around skewers', 'Grill 4-5 min per side', 'Serve with tahini and salad', 'Garnish with fresh mint'],
-              tips: ['Classic Middle Eastern dish', 'Don\'t overwork the meat — keep it tender'] },
-            { id: 'lamb_spicy', name: 'Spicy Cumin Lamb', proteins: ['lamb'], requiresVeggies: true, time: 15, baseProtein: 88, servingSize: '350g lamb', flavors: ['spicy', 'asian'],
-              steps: ['Slice lamb into thin strips', 'Season with cumin, chili flakes, garlic, ginger', 'Hot wok, cook quickly 2-3 min', 'Add peppers and onions', 'Finish with sesame oil and cilantro'],
-              tips: ['Famous Chinese Xi\'an dish — keto friendly', 'Don\'t overcrowd the wok'] },
-            { id: 'lamb_eggs', name: 'Lamb & Eggs Mediterranean', proteins: ['lamb', 'eggs'], requiresVeggies: true, time: 25, baseProtein: 95, servingSize: '250g lamb + 3 eggs', flavors: ['mediterranean', 'spicy'],
-              steps: ['Sear lamb pieces until browned', 'Add tomatoes, onions, cumin, paprika', 'Make wells, crack in eggs', 'Cover and cook until eggs set', 'Top with feta and herbs'],
-              tips: ['Like shakshuka but with lamb', 'Great for weekend brunch'] },
-
-            // ==================== PORK (5 solo + combos) ====================
-            { id: 'pork_chops', name: 'Juicy Pork Chops', proteins: ['pork'], requiresVeggies: true, time: 25, baseProtein: 88, servingSize: '350g pork chops', flavors: ['any', 'classic', 'latin', 'spicy'],
-              steps: ['Optional: brine 30 min for extra juicy', 'Pat dry, season generously', 'Medium-high pan with butter + oil', 'Sear 4-5 min per side', 'Baste with butter last 2 min'],
-              tips: ['145°F is safe AND juicy', 'Bone-in = more forgiving'], doneness: 'Golden brown, slightly pink inside' },
-            { id: 'pork_tenderloin', name: 'Garlic Herb Pork Tenderloin', proteins: ['pork'], requiresVeggies: true, time: 30, baseProtein: 88, servingSize: '350g pork tenderloin', flavors: ['any', 'classic', 'mediterranean'],
-              steps: ['Rub with garlic, rosemary, thyme, olive oil', 'Sear all sides in hot pan', 'Finish in 400°F oven 15-18 min', 'Rest 5 minutes', 'Slice into medallions'],
-              tips: ['Tenderloin is very lean — don\'t overcook', '145°F internal temp is perfect'], doneness: 'Slightly pink in center' },
-            { id: 'pork_stirfry', name: 'Ginger Pork Stir-Fry', proteins: ['pork'], requiresVeggies: true, time: 15, baseProtein: 88, servingSize: '350g pork', flavors: ['asian', 'spicy'],
-              steps: ['Slice pork loin into thin strips', 'Marinate in coconut aminos, ginger, garlic', 'Hot wok with sesame oil', 'Cook pork 3-4 min', 'Add veggies, toss with sauce'],
-              tips: ['Slice against the grain for tenderness', 'Cook in batches if needed'] },
-            { id: 'pork_carnitas', name: 'Carnitas Bowl 🇻🇪', proteins: ['pork'], requiresVeggies: true, time: 60, baseProtein: 88, servingSize: '350g pork shoulder', flavors: ['latin', 'spicy'],
-              steps: ['Season pork with cumin, oregano, garlic, citrus', 'Slow cook until falling apart (can use pressure cooker)', 'Shred and crisp under broiler', 'Serve over lettuce with guac, salsa', 'Top with pickled onions'],
-              tips: ['Traditional Mexican — also popular in Venezuela', 'The crispy edges are the best part'] },
-            { id: 'pork_greek', name: 'Greek Pork Souvlaki', proteins: ['pork'], requiresVeggies: true, time: 25, baseProtein: 88, servingSize: '350g pork', flavors: ['mediterranean'],
-              steps: ['Cube pork, marinate in lemon, oregano, garlic, olive oil', 'Thread onto skewers', 'Grill 4-5 min per side', 'Serve with tzatziki and Greek salad', 'Top with fresh dill'],
-              tips: ['Classic Greek street food', 'Great for meal prep — marinate overnight'] },
-            { id: 'pork_eggs', name: 'Pork & Eggs Breakfast Plate', proteins: ['pork', 'eggs'], requiresVeggies: true, time: 20, baseProtein: 95, servingSize: '250g pork + 3 eggs', flavors: ['any', 'classic', 'latin'],
-              steps: ['Cook pork (chops or sliced tenderloin)', 'Set aside, keep warm', 'Fry eggs in same pan', 'Plate together with sautéed veggies'],
-              tips: ['Perfect high-protein breakfast', 'Add avocado for healthy fats'] },
-
-            // ==================== EGGS (3 solo — always combos recommended) ====================
-            { id: 'egg_scramble', name: 'Ultimate Egg Scramble', proteins: ['eggs'], requiresVeggies: false, time: 10, baseProtein: 36, servingSize: '6 eggs', flavors: ['any', 'classic', 'mediterranean', 'spicy'], lowProteinWarning: true,
-              steps: ['Beat 6 eggs with salt', 'Melt butter over LOW heat', 'Add eggs, stir slowly with spatula', 'Remove while still slightly wet'],
-              tips: ['⚠️ Only ~36g protein — add meat side', 'Gordon Ramsay method: low heat = creamy'], doneness: 'Soft, creamy curds' },
-            { id: 'egg_frittata', name: 'Loaded Veggie Frittata', proteins: ['eggs'], requiresVeggies: true, time: 25, baseProtein: 42, servingSize: '7 eggs', flavors: ['any', 'mediterranean', 'classic'], lowProteinWarning: true,
-              steps: ['Sauté veggies in oven-safe pan', 'Beat eggs with cheese, herbs, salt', 'Pour eggs over veggies', 'Cook on stovetop 5 min until edges set', 'Finish under broiler 3-4 min'],
-              tips: ['⚠️ Only ~42g protein — add meat or more cheese', 'Great for meal prep — lasts 4 days'] },
-            { id: 'egg_shakshuka', name: 'Classic Shakshuka', proteins: ['eggs'], requiresVeggies: true, time: 25, baseProtein: 36, servingSize: '6 eggs', flavors: ['mediterranean', 'spicy'], lowProteinWarning: true,
-              steps: ['Sauté onion, peppers, garlic', 'Add tomatoes, cumin, paprika, harissa', 'Simmer 10 min until thick', 'Make wells, crack in eggs', 'Cover until eggs set, whites firm, yolks runny'],
-              tips: ['⚠️ Add feta or meat for more protein', 'Middle Eastern comfort food'] },
         ];
 
+        // ==================== RECIPES: BEEF ====================
+        const beefRecipes = [
+            { id: 'steak_plate', name: 'Perfect Steak', proteins: ['beef'], category: 'main', requiresVeggies: true, time: 20, baseProtein: 90, servingSize: '350g steak', flavors: ['any', 'classic', 'spicy', 'latin'], netCarbs: 0,
+              ingredients: [
+                { item: 'Ribeye or striploin steak', amount: '350g' },
+                { item: 'Coarse salt', amount: '1 tsp' },
+                { item: 'Black pepper', amount: '½ tsp' },
+                { item: 'Olive oil', amount: '2 tbsp' },
+                { item: 'Butter', amount: '2 tbsp' },
+                { item: 'Garlic cloves', amount: '2' },
+                { item: 'Fresh thyme', amount: '2 sprigs' },
+              ],
+              steps: ['Bring steak to room temp (30 min)', 'Pat dry, season with salt', 'Smoking hot pan, add oil', 'Cook 3-4 min per side for medium', 'Rest 5 minutes, slice against grain'],
+              tips: ['Dry surface = better crust', 'Only flip once'], doneness: 'Dark brown crust, pink center' },
+            
+            { id: 'beef_lebanese', name: 'Lebanese Beef Kebab', proteins: ['beef'], category: 'main', requiresVeggies: true, time: 25, baseProtein: 90, servingSize: '350g beef', flavors: ['mediterranean', 'spicy'], netCarbs: 4,
+              ingredients: [
+                { item: 'Beef sirloin, cubed', amount: '350g' },
+                { item: 'Olive oil', amount: '3 tbsp' },
+                { item: 'Lemon juice', amount: '2 tbsp' },
+                { item: 'Garlic, minced', amount: '3 cloves' },
+                { item: 'Seven spice (baharat)', amount: '1 tsp' },
+                { item: 'Onion, chunked', amount: '1 medium' },
+                { item: 'Bell pepper', amount: '1' },
+                { item: 'Tahini', amount: '2 tbsp' },
+              ],
+              steps: ['Cube beef into 1-inch pieces', 'Marinate in olive oil, lemon, garlic, seven spice', 'Thread onto skewers with onion, peppers', 'Grill 3-4 min per side', 'Serve with tahini'],
+              tips: ['Seven spice = allspice, pepper, cinnamon, nutmeg, cloves, ginger, coriander'] },
+            
+            { id: 'beef_stirfry', name: 'Ginger Beef Stir-Fry', proteins: ['beef'], category: 'main', requiresVeggies: true, time: 15, baseProtein: 90, servingSize: '350g flank steak', flavors: ['asian', 'spicy'], netCarbs: 5,
+              ingredients: [
+                { item: 'Flank steak, thinly sliced', amount: '350g' },
+                { item: 'Coconut aminos', amount: '3 tbsp' },
+                { item: 'Fresh ginger, minced', amount: '2 tbsp' },
+                { item: 'Garlic, minced', amount: '3 cloves' },
+                { item: 'Sesame oil', amount: '2 tbsp' },
+                { item: 'Mixed stir-fry veggies', amount: '200g' },
+                { item: 'Green onions', amount: '3 stalks' },
+              ],
+              steps: ['Slice beef very thin against grain', 'Marinate in coconut aminos, ginger, garlic', 'Hot wok with sesame oil', 'Sear beef 2 min, set aside', 'Stir-fry veggies, return beef, toss'],
+              tips: ['Freeze beef 20 min for easier slicing', 'High heat essential for wok hei'] },
+            
+            { id: 'beef_kofta', name: 'Middle Eastern Kofta', proteins: ['beef'], category: 'main', requiresVeggies: true, time: 25, baseProtein: 90, servingSize: '350g ground beef', flavors: ['mediterranean', 'spicy'], netCarbs: 3,
+              ingredients: [
+                { item: 'Ground beef (80/20)', amount: '350g' },
+                { item: 'Onion, finely minced', amount: '¼ cup' },
+                { item: 'Fresh parsley', amount: '¼ cup' },
+                { item: 'Cumin', amount: '1 tsp' },
+                { item: 'Coriander', amount: '1 tsp' },
+                { item: 'Cinnamon', amount: '¼ tsp' },
+                { item: 'Salt', amount: '1 tsp' },
+                { item: 'Tahini', amount: '2 tbsp' },
+              ],
+              steps: ['Mix beef with onion, parsley, spices', 'Form into oval shapes', 'Grill or pan-sear until cooked', 'Serve with tahini and salad'],
+              tips: ['Use 80/20 beef for juicy kofta', 'Don\'t overwork the meat'] },
+            
+            { id: 'beef_chimichurri', name: 'Chimichurri Steak 🇻🇪', proteins: ['beef'], category: 'main', requiresVeggies: true, time: 25, baseProtein: 90, servingSize: '350g steak', flavors: ['latin'], isVenezuelan: true, netCarbs: 2,
+              ingredients: [
+                { item: 'Flank or skirt steak', amount: '350g' },
+                { item: 'Fresh parsley', amount: '1 cup' },
+                { item: 'Fresh oregano', amount: '2 tbsp' },
+                { item: 'Garlic cloves', amount: '4' },
+                { item: 'Red wine vinegar', amount: '3 tbsp' },
+                { item: 'Olive oil', amount: '½ cup' },
+                { item: 'Red pepper flakes', amount: '1 tsp' },
+              ],
+              steps: ['Season steak with salt and pepper', 'Grill to desired doneness', 'Blend chimichurri: parsley, oregano, garlic, vinegar, oil', 'Rest steak, slice thin', 'Drizzle chimichurri generously'],
+              tips: ['Venezuelan/Argentine staple', 'Extra keeps 1 week in fridge'] },
+            
+            { id: 'asado_negro', name: 'Asado Negro 🇻🇪', proteins: ['beef'], category: 'main', requiresVeggies: true, time: 90, baseProtein: 90, servingSize: '350g beef roast', flavors: ['latin'], isVenezuelan: true, netCarbs: 6,
+              ingredients: [
+                { item: 'Beef roast (eye round)', amount: '350g' },
+                { item: 'Garlic, minced', amount: '6 cloves' },
+                { item: 'Cumin', amount: '1 tsp' },
+                { item: 'Coconut aminos', amount: '2 tbsp' },
+                { item: 'Erythritol', amount: '2 tbsp' },
+                { item: 'Onion, sliced', amount: '1 large' },
+                { item: 'Bell pepper', amount: '1' },
+                { item: 'Beef broth', amount: '1 cup' },
+              ],
+              steps: ['Season beef with garlic, cumin', 'Caramelize erythritol until dark', 'Sear beef in caramel', 'Add onions, peppers, broth', 'Slow cook 2 hours until tender'],
+              tips: ['Keto-adapted with erythritol', 'Classic Venezuelan Sunday dish'] },
+            
+            { id: 'steak_eggs', name: 'Steak & Eggs', proteins: ['beef', 'eggs'], category: 'breakfast', requiresVeggies: true, time: 25, baseProtein: 95, servingSize: '250g steak + 3 eggs', flavors: ['any', 'classic', 'spicy', 'latin'], netCarbs: 1,
+              ingredients: [
+                { item: 'Sirloin or ribeye', amount: '250g' },
+                { item: 'Eggs', amount: '3' },
+                { item: 'Butter', amount: '2 tbsp' },
+                { item: 'Salt', amount: '1 tsp' },
+                { item: 'Black pepper', amount: '½ tsp' },
+              ],
+              steps: ['Cook steak to desired doneness', 'While resting, cook eggs in same pan', 'Runny yolks are your sauce', 'Slice steak, plate with eggs'],
+              tips: ['The steak pan fond flavors the eggs'] },
+            
+            { id: 'pabellon', name: 'Pabellón Sin Arroz 🇻🇪', proteins: ['beef', 'eggs'], category: 'main', requiresVeggies: true, time: 45, baseProtein: 92, servingSize: '300g carne mechada + 2 eggs', flavors: ['latin'], isVenezuelan: true, netCarbs: 6,
+              ingredients: [
+                { item: 'Flank steak', amount: '300g' },
+                { item: 'Eggs', amount: '2' },
+                { item: 'Onion, diced', amount: '1 medium' },
+                { item: 'Bell pepper', amount: '1' },
+                { item: 'Garlic, minced', amount: '4 cloves' },
+                { item: 'Cumin', amount: '1 tsp' },
+                { item: 'Paprika', amount: '1 tsp' },
+                { item: 'Tomato sauce', amount: '¼ cup' },
+              ],
+              steps: ['Simmer flank steak until shreddable (1.5hr)', 'Shred with two forks while warm', 'Sauté onion, peppers, garlic', 'Add beef, cumin, paprika, tomato', 'Fry eggs with crispy edges'],
+              tips: ['Make big batch — freezes perfectly', 'Eggs must have crispy edges 🇻🇪'] },
+        ];
+
+        // ==================== RECIPES: GROUND BEEF ====================
+        const groundBeefRecipes = [
+            { id: 'lettuce_wraps', name: 'Asian Lettuce Wraps', proteins: ['ground'], category: 'main', requiresVeggies: true, time: 15, baseProtein: 88, servingSize: '350g ground beef', flavors: ['asian', 'spicy'], netCarbs: 4,
+              ingredients: [
+                { item: 'Ground beef', amount: '350g' },
+                { item: 'Fresh ginger, minced', amount: '1 tbsp' },
+                { item: 'Garlic, minced', amount: '3 cloves' },
+                { item: 'Coconut aminos', amount: '3 tbsp' },
+                { item: 'Sesame oil', amount: '1 tbsp' },
+                { item: 'Butter lettuce', amount: '1 head' },
+                { item: 'Green onions', amount: '3 stalks' },
+                { item: 'Sesame seeds', amount: '1 tbsp' },
+              ],
+              steps: ['Brown ground beef over high heat', 'Add ginger, garlic, coconut aminos', 'Cook until caramelized', 'Spoon into butter lettuce cups', 'Top with green onions, sesame seeds'],
+              tips: ['Butter lettuce makes best cups', 'PF Chang\'s inspired — keto style'] },
+            
+            { id: 'ground_kofta', name: 'Lebanese Kofta Plate', proteins: ['ground'], category: 'main', requiresVeggies: true, time: 20, baseProtein: 88, servingSize: '350g ground beef', flavors: ['mediterranean'], netCarbs: 3,
+              ingredients: [
+                { item: 'Ground beef', amount: '350g' },
+                { item: 'Onion, finely minced', amount: '¼ cup' },
+                { item: 'Fresh parsley', amount: '¼ cup' },
+                { item: 'Allspice', amount: '1 tsp' },
+                { item: 'Cinnamon', amount: '¼ tsp' },
+                { item: 'Salt', amount: '1 tsp' },
+                { item: 'Tahini', amount: '3 tbsp' },
+              ],
+              steps: ['Mix beef with onion, parsley, spices', 'Form into flat patties or logs', 'Grill or pan-fry until cooked', 'Serve with fattoush-style salad', 'Drizzle with tahini'],
+              tips: ['Don\'t skip the cinnamon', 'Great for meal prep'] },
+            
+            { id: 'ground_taco_bowl', name: 'Taco Bowl', proteins: ['ground'], category: 'main', requiresVeggies: true, time: 15, baseProtein: 88, servingSize: '350g ground beef', flavors: ['latin', 'spicy'], netCarbs: 5,
+              ingredients: [
+                { item: 'Ground beef', amount: '350g' },
+                { item: 'Cumin', amount: '1 tsp' },
+                { item: 'Chili powder', amount: '1 tsp' },
+                { item: 'Paprika', amount: '½ tsp' },
+                { item: 'Tomato paste', amount: '1 tbsp' },
+                { item: 'Shredded lettuce', amount: '2 cups' },
+                { item: 'Avocado', amount: '½' },
+                { item: 'Sour cream', amount: '2 tbsp' },
+                { item: 'Cheddar cheese', amount: '30g' },
+              ],
+              steps: ['Brown beef with cumin, chili, paprika', 'Add tomato paste, splash of water', 'Simmer 5 min until thick', 'Serve over shredded lettuce', 'Top with guac, cheese, sour cream'],
+              tips: ['All the flavor, no tortilla', 'Add jalapeños for heat'] },
+            
+            { id: 'ground_stuffed_peppers', name: 'Stuffed Bell Peppers', proteins: ['ground'], category: 'main', requiresVeggies: true, requiresSpecific: ['peppers'], time: 35, baseProtein: 88, servingSize: '350g ground beef', flavors: ['any', 'mediterranean', 'latin'], netCarbs: 8,
+              ingredients: [
+                { item: 'Ground beef', amount: '350g' },
+                { item: 'Bell peppers', amount: '2 large' },
+                { item: 'Onion, diced', amount: '½ cup' },
+                { item: 'Garlic, minced', amount: '2 cloves' },
+                { item: 'Diced tomatoes', amount: '½ cup' },
+                { item: 'Cheese', amount: '50g' },
+                { item: 'Italian herbs', amount: '1 tsp' },
+              ],
+              steps: ['Cut tops off peppers, remove seeds', 'Brown beef with onions and garlic', 'Season and add diced tomatoes', 'Stuff peppers with mixture', 'Bake 25 min at 375°F, cheese last 5 min'],
+              tips: ['Med version: feta + oregano', 'Latin version: cumin + cilantro'] },
+            
+            { id: 'ground_zucchini_boats', name: 'Beef Zucchini Boats', proteins: ['ground'], category: 'main', requiresVeggies: true, requiresSpecific: ['zucchini'], time: 30, baseProtein: 88, servingSize: '350g ground beef', flavors: ['any', 'mediterranean', 'classic'], netCarbs: 6,
+              ingredients: [
+                { item: 'Ground beef', amount: '350g' },
+                { item: 'Large zucchini', amount: '2' },
+                { item: 'Garlic, minced', amount: '3 cloves' },
+                { item: 'Tomato sauce', amount: '½ cup' },
+                { item: 'Italian herbs', amount: '1 tsp' },
+                { item: 'Mozzarella', amount: '50g' },
+                { item: 'Parmesan', amount: '2 tbsp' },
+              ],
+              steps: ['Halve zucchini, scoop out center', 'Brown beef with garlic and herbs', 'Add tomato sauce and seasonings', 'Fill zucchini boats', 'Top with cheese, bake 20 min at 400°F'],
+              tips: ['Salt zucchini first to remove moisture', 'Low-carb lasagna alternative'] },
+            
+            { id: 'ground_shakshuka', name: 'Meaty Shakshuka', proteins: ['ground', 'eggs'], category: 'breakfast', requiresVeggies: true, time: 25, baseProtein: 85, servingSize: '250g beef + 3 eggs', flavors: ['mediterranean', 'spicy'], netCarbs: 7,
+              ingredients: [
+                { item: 'Ground beef', amount: '250g' },
+                { item: 'Eggs', amount: '3' },
+                { item: 'Onion, diced', amount: '1 medium' },
+                { item: 'Crushed tomatoes', amount: '1 cup' },
+                { item: 'Bell pepper', amount: '1' },
+                { item: 'Cumin', amount: '1 tsp' },
+                { item: 'Paprika', amount: '1 tsp' },
+                { item: 'Feta cheese', amount: '30g' },
+              ],
+              steps: ['Brown ground beef with onions', 'Add tomatoes, peppers, spices', 'Simmer 10 min', 'Make wells, crack in eggs', 'Cover until eggs set'],
+              tips: ['Runny yolks are traditional', 'Middle Eastern comfort food'] },
+        ];
+
+        // ==================== RECIPES: SALMON ====================
+        const salmonRecipes = [
+            { id: 'salmon_crispy', name: 'Crispy Skin Salmon', proteins: ['salmon'], category: 'main', requiresVeggies: true, time: 15, baseProtein: 77, servingSize: '350g salmon', flavors: ['any', 'classic', 'mediterranean', 'asian'], netCarbs: 0,
+              ingredients: [
+                { item: 'Salmon fillet, skin-on', amount: '350g' },
+                { item: 'Salt', amount: '1 tsp' },
+                { item: 'Olive oil', amount: '2 tbsp' },
+                { item: 'Lemon wedges', amount: '2' },
+                { item: 'Fresh dill or parsley', amount: '2 tbsp' },
+              ],
+              steps: ['Pat salmon skin completely dry', 'Season flesh side only with salt', 'Hot pan, skin side DOWN first', 'Cook 5 min skin side, 2-3 min flesh', 'Remove when center slightly pink'],
+              tips: ['80% cooking time skin-side down', 'Press flat first 30 seconds'], doneness: 'Skin crackling, flesh flakes' },
+            
+            { id: 'salmon_greek', name: 'Greek Salmon', proteins: ['salmon'], category: 'main', requiresVeggies: true, time: 25, baseProtein: 77, servingSize: '350g salmon', flavors: ['mediterranean'], netCarbs: 4,
+              ingredients: [
+                { item: 'Salmon fillet', amount: '350g' },
+                { item: 'Dried oregano', amount: '1 tsp' },
+                { item: 'Lemon zest', amount: '1 lemon' },
+                { item: 'Garlic, minced', amount: '2 cloves' },
+                { item: 'Cherry tomatoes', amount: '100g' },
+                { item: 'Kalamata olives', amount: '30g' },
+                { item: 'Capers', amount: '1 tbsp' },
+                { item: 'Feta cheese', amount: '50g' },
+              ],
+              steps: ['Season salmon with oregano, lemon zest, garlic', 'Bake at 400°F for 15 min', 'Top with tomatoes, olives, capers, feta', 'Return to oven 5 min', 'Finish with olive oil drizzle'],
+              tips: ['Diet Doctor inspired', 'Feta melts beautifully on top'] },
+            
+            { id: 'salmon_teriyaki', name: 'Teriyaki Salmon (Keto)', proteins: ['salmon'], category: 'main', requiresVeggies: true, time: 20, baseProtein: 77, servingSize: '350g salmon', flavors: ['asian'], netCarbs: 3,
+              ingredients: [
+                { item: 'Salmon fillet', amount: '350g' },
+                { item: 'Coconut aminos', amount: '3 tbsp' },
+                { item: 'Fresh ginger, minced', amount: '1 tbsp' },
+                { item: 'Garlic, minced', amount: '2 cloves' },
+                { item: 'Erythritol', amount: '1 tbsp' },
+                { item: 'Sesame oil', amount: '1 tsp' },
+                { item: 'Sesame seeds', amount: '1 tbsp' },
+              ],
+              steps: ['Make keto teriyaki: coconut aminos, ginger, garlic, erythritol', 'Marinate salmon 20 min', 'Pan-sear salmon, flesh side first', 'Add marinade, reduce to glaze', 'Spoon glaze over salmon'],
+              tips: ['Gordon Ramsay method', 'Coconut aminos = no-sugar soy'] },
+            
+            { id: 'salmon_lemon_garlic', name: 'Creamy Lemon Garlic Salmon', proteins: ['salmon'], category: 'main', requiresVeggies: true, time: 25, baseProtein: 77, servingSize: '350g salmon', flavors: ['classic', 'mediterranean'], netCarbs: 3,
+              ingredients: [
+                { item: 'Salmon fillet', amount: '350g' },
+                { item: 'Heavy cream', amount: '150ml' },
+                { item: 'Garlic, minced', amount: '4 cloves' },
+                { item: 'Lemon juice', amount: '2 tbsp' },
+                { item: 'Butter', amount: '2 tbsp' },
+                { item: 'Fresh parsley', amount: '2 tbsp' },
+                { item: 'Parmesan', amount: '2 tbsp' },
+              ],
+              steps: ['Season and sear salmon until golden', 'Remove and set aside', 'In same pan: cream, garlic, lemon, parsley', 'Simmer sauce 3 min', 'Return salmon, spoon sauce over'],
+              tips: ['Restaurant quality', 'Use heavy cream'] },
+            
+            { id: 'salmon_salad', name: 'Salmon Power Salad', proteins: ['salmon'], category: 'cold', requiresVeggies: true, saladOnly: true, time: 20, baseProtein: 77, servingSize: '350g salmon', flavors: ['any', 'mediterranean', 'asian'], netCarbs: 5,
+              ingredients: [
+                { item: 'Salmon fillet', amount: '350g' },
+                { item: 'Mixed greens', amount: '100g' },
+                { item: 'Cucumber', amount: '100g' },
+                { item: 'Cherry tomatoes', amount: '80g' },
+                { item: 'Avocado', amount: '½' },
+                { item: 'Olive oil', amount: '2 tbsp' },
+                { item: 'Lemon juice', amount: '1 tbsp' },
+              ],
+              steps: ['Season salmon with salt and pepper', 'Pan-sear or bake until just cooked', 'Let cool slightly, flake into chunks', 'Build salad with greens', 'Top with salmon and dressing'],
+              tips: ['Warm salmon on cold greens is perfect'], suggestDressing: true },
+            
+            { id: 'salmon_avocado', name: 'Salmon Avocado Bowl', proteins: ['salmon'], category: 'cold', requiresVeggies: true, time: 20, baseProtein: 77, servingSize: '350g salmon', flavors: ['asian', 'latin'], netCarbs: 6,
+              ingredients: [
+                { item: 'Salmon fillet', amount: '350g' },
+                { item: 'Avocado', amount: '1' },
+                { item: 'Cucumber', amount: '100g' },
+                { item: 'Pickled ginger', amount: '2 tbsp' },
+                { item: 'Sesame seeds', amount: '1 tbsp' },
+                { item: 'Coconut aminos', amount: '2 tbsp' },
+                { item: 'Sesame oil', amount: '1 tsp' },
+                { item: 'Green onions', amount: '2 stalks' },
+              ],
+              steps: ['Season salmon with sesame and ginger', 'Pan-sear until medium', 'Flake salmon into bowl', 'Add avocado, cucumber, pickled ginger', 'Drizzle with aminos and sesame oil'],
+              tips: ['Poke bowl without rice', 'Excellent omega-3 + healthy fats'] },
+            
+            { id: 'salmon_eggs', name: 'Salmon & Eggs Plate', proteins: ['salmon', 'eggs'], category: 'breakfast', requiresVeggies: true, time: 20, baseProtein: 90, servingSize: '250g salmon + 3 eggs', flavors: ['any', 'classic', 'mediterranean'], netCarbs: 1,
+              ingredients: [
+                { item: 'Salmon fillet', amount: '250g' },
+                { item: 'Eggs', amount: '3' },
+                { item: 'Butter', amount: '2 tbsp' },
+                { item: 'Fresh dill', amount: '1 tbsp' },
+                { item: 'Capers (optional)', amount: '1 tsp' },
+              ],
+              steps: ['Cook salmon in pan until done', 'Set aside and keep warm', 'Scramble or fry eggs in same pan', 'Plate together with veggies'],
+              tips: ['Salmon fat flavors the eggs', 'Great for brunch'] },
+        ];
+
+        // ==================== RECIPES: WHITE FISH ====================
+        const whiteFishRecipes = [
+            { id: 'fish_mediterranean', name: 'Mediterranean Baked Fish', proteins: ['fish'], category: 'main', requiresVeggies: true, time: 25, baseProtein: 70, servingSize: '350g white fish', flavors: ['any', 'mediterranean', 'classic'], netCarbs: 4,
+              ingredients: [
+                { item: 'White fish fillet (cod, bass)', amount: '350g' },
+                { item: 'Cherry tomatoes', amount: '100g' },
+                { item: 'Kalamata olives', amount: '30g' },
+                { item: 'Capers', amount: '1 tbsp' },
+                { item: 'Olive oil', amount: '3 tbsp' },
+                { item: 'Dried oregano', amount: '1 tsp' },
+                { item: 'Lemon', amount: '1' },
+              ],
+              steps: ['Preheat oven to 400°F', 'Season fish with salt, pepper, oregano', 'Place on baking sheet with olive oil', 'Add tomatoes, olives, capers around fish', 'Bake 15-18 min until flaky'],
+              tips: ['Don\'t overcook white fish', 'Lemon juice at end brightens everything'], doneness: 'Opaque, flakes easily' },
+            
+            { id: 'fish_panfried', name: 'Pan-Fried White Fish', proteins: ['fish'], category: 'main', requiresVeggies: true, time: 15, baseProtein: 70, servingSize: '350g white fish', flavors: ['any', 'classic', 'mediterranean', 'latin'], netCarbs: 0,
+              ingredients: [
+                { item: 'White fish fillet', amount: '350g' },
+                { item: 'Butter', amount: '2 tbsp' },
+                { item: 'Olive oil', amount: '1 tbsp' },
+                { item: 'Salt', amount: '1 tsp' },
+                { item: 'Lemon', amount: '1' },
+                { item: 'Fresh parsley', amount: '2 tbsp' },
+              ],
+              steps: ['Pat fish completely dry', 'Season with salt and pepper', 'Hot pan with butter and oil', 'Cook 3-4 min per side', 'Finish with lemon and herbs'],
+              tips: ['Don\'t move it — let crust form', 'Done when flakes with fork'], doneness: 'Golden outside, opaque inside' },
+            
+            { id: 'fish_parmesan', name: 'Parmesan Crusted Fish', proteins: ['fish'], category: 'main', requiresVeggies: true, time: 20, baseProtein: 70, servingSize: '350g white fish', flavors: ['classic', 'mediterranean'], netCarbs: 2,
+              ingredients: [
+                { item: 'White fish fillet', amount: '350g' },
+                { item: 'Parmesan, grated', amount: '50g' },
+                { item: 'Almond flour', amount: '2 tbsp' },
+                { item: 'Garlic powder', amount: '½ tsp' },
+                { item: 'Paprika', amount: '½ tsp' },
+                { item: 'Mayonnaise', amount: '2 tbsp' },
+                { item: 'Lemon', amount: '1' },
+              ],
+              steps: ['Mix parmesan, almond flour, garlic, paprika', 'Pat fish dry, brush with mayo', 'Press parmesan mixture onto fish', 'Bake at 400°F for 15 min', 'Broil 2 min for golden crust'],
+              tips: ['Air fryer: 8 min at 400°F', 'Mayo helps crust stick'] },
+            
+            { id: 'fish_coconut_curry', name: 'Thai Coconut Fish Curry', proteins: ['fish'], category: 'soup', requiresVeggies: true, time: 25, baseProtein: 70, servingSize: '350g white fish', flavors: ['asian', 'spicy'], netCarbs: 6,
+              ingredients: [
+                { item: 'White fish, cubed', amount: '350g' },
+                { item: 'Coconut milk (full-fat)', amount: '400ml' },
+                { item: 'Thai red curry paste', amount: '2 tbsp' },
+                { item: 'Fish sauce', amount: '1 tbsp' },
+                { item: 'Lime juice', amount: '2 tbsp' },
+                { item: 'Garlic, minced', amount: '3 cloves' },
+                { item: 'Ginger, minced', amount: '1 tbsp' },
+                { item: 'Thai basil', amount: '¼ cup' },
+              ],
+              steps: ['Sauté garlic, ginger, curry paste', 'Add coconut milk, fish sauce, lime', 'Simmer 5 min', 'Add fish chunks gently', 'Cook 8-10 min until fish flakes'],
+              tips: ['Use full-fat coconut milk', 'Don\'t stir much — fish breaks'] },
+            
+            { id: 'fish_tacos', name: 'Fish Taco Bowl', proteins: ['fish'], category: 'main', requiresVeggies: true, time: 20, baseProtein: 70, servingSize: '350g white fish', flavors: ['latin', 'spicy'], netCarbs: 5,
+              ingredients: [
+                { item: 'White fish fillet', amount: '350g' },
+                { item: 'Cumin', amount: '1 tsp' },
+                { item: 'Paprika', amount: '1 tsp' },
+                { item: 'Garlic powder', amount: '½ tsp' },
+                { item: 'Shredded lettuce', amount: '2 cups' },
+                { item: 'Avocado', amount: '1' },
+                { item: 'Sour cream', amount: '2 tbsp' },
+                { item: 'Lime', amount: '1' },
+                { item: 'Fresh cilantro', amount: '2 tbsp' },
+              ],
+              steps: ['Season fish with cumin, paprika, garlic', 'Pan-fry until golden and cooked', 'Break into chunks', 'Serve over lettuce with avocado', 'Top with lime crema and cilantro'],
+              tips: ['Taco filling without tortilla', 'Guasacaca dressing is perfect'], suggestDressing: true },
+            
+            { id: 'fish_lebanese', name: 'Lebanese Samke Harra', proteins: ['fish'], category: 'main', requiresVeggies: true, time: 30, baseProtein: 70, servingSize: '350g white fish', flavors: ['mediterranean', 'spicy'], netCarbs: 5,
+              ingredients: [
+                { item: 'White fish fillet', amount: '350g' },
+                { item: 'Tahini', amount: '3 tbsp' },
+                { item: 'Lemon juice', amount: '3 tbsp' },
+                { item: 'Garlic, minced', amount: '4 cloves' },
+                { item: 'Fresh cilantro', amount: '¼ cup' },
+                { item: 'Cayenne pepper', amount: '½ tsp' },
+                { item: 'Cumin', amount: '1 tsp' },
+                { item: 'Onion, caramelized', amount: '1 large' },
+                { item: 'Pine nuts', amount: '2 tbsp' },
+              ],
+              steps: ['Season fish with salt, cumin', 'Pan-fry until golden', 'Make sauce: tahini, lemon, garlic, cilantro, chili', 'Top fish with caramelized onions', 'Drizzle spicy tahini sauce'],
+              tips: ['Classic Lebanese spicy fish', 'The tahini sauce is incredible'] },
+            
+            { id: 'fish_eggs', name: 'Fish & Eggs Plate', proteins: ['fish', 'eggs'], category: 'breakfast', requiresVeggies: true, time: 18, baseProtein: 82, servingSize: '250g fish + 3 eggs', flavors: ['any', 'classic', 'mediterranean'], netCarbs: 1,
+              ingredients: [
+                { item: 'White fish fillet', amount: '250g' },
+                { item: 'Eggs', amount: '3' },
+                { item: 'Butter', amount: '2 tbsp' },
+                { item: 'Lemon', amount: '1' },
+                { item: 'Fresh herbs', amount: '2 tbsp' },
+              ],
+              steps: ['Pan-fry fish until cooked', 'Set aside, keep warm', 'Fry or scramble eggs in same pan', 'Plate together with veggies and lemon'],
+              tips: ['Light but filling — great for lunch', 'Add avocado for healthy fats'] },
+        ];
+        // ==================== RECIPES: SHRIMP ====================
+        const shrimpRecipes = [
+            { id: 'shrimp_garlic', name: 'Garlic Butter Shrimp', proteins: ['shrimp'], category: 'main', requiresVeggies: true, time: 12, baseProtein: 60, servingSize: '300g shrimp', flavors: ['any', 'classic', 'spicy', 'latin'], lowProteinWarning: true, netCarbs: 2,
+              ingredients: [{ item: 'Shrimp, peeled', amount: '300g' }, { item: 'Butter', amount: '3 tbsp' }, { item: 'Garlic, minced', amount: '5 cloves' }, { item: 'Lemon juice', amount: '2 tbsp' }, { item: 'Fresh parsley', amount: '2 tbsp' }],
+              steps: ['Pat shrimp dry, season with salt', 'Hot pan with butter and garlic', 'Add shrimp in single layer', 'Cook 2 min per side until pink', 'Finish with lemon and parsley'],
+              tips: ['⚠️ Only ~60g protein — add another protein', 'Remove when they turn pink'], doneness: 'Pink, slightly curled' },
+            { id: 'shrimp_stirfry', name: 'Ginger Shrimp Stir-Fry', proteins: ['shrimp'], category: 'main', requiresVeggies: true, time: 15, baseProtein: 60, servingSize: '300g shrimp', flavors: ['asian', 'spicy'], lowProteinWarning: true, netCarbs: 5,
+              ingredients: [{ item: 'Shrimp, peeled', amount: '300g' }, { item: 'Fresh ginger', amount: '2 tbsp' }, { item: 'Garlic', amount: '3 cloves' }, { item: 'Sesame oil', amount: '2 tbsp' }, { item: 'Coconut aminos', amount: '2 tbsp' }, { item: 'Mixed vegetables', amount: '200g' }],
+              steps: ['Pat shrimp dry', 'Hot wok with sesame oil', 'Add ginger, garlic, chili — 30 sec', 'Add shrimp, cook 2 min per side', 'Toss with aminos and veggies'],
+              tips: ['⚠️ Low protein — consider adding eggs', 'Everything cooks fast — prep ahead'] },
+            { id: 'shrimp_saganaki', name: 'Greek Shrimp Saganaki', proteins: ['shrimp'], category: 'main', requiresVeggies: true, time: 20, baseProtein: 60, servingSize: '300g shrimp', flavors: ['mediterranean'], lowProteinWarning: true, netCarbs: 6,
+              ingredients: [{ item: 'Shrimp, peeled', amount: '300g' }, { item: 'Diced tomatoes', amount: '200g' }, { item: 'Feta cheese', amount: '80g' }, { item: 'Garlic', amount: '3 cloves' }, { item: 'Dried oregano', amount: '1 tsp' }, { item: 'Olive oil', amount: '2 tbsp' }],
+              steps: ['Sauté garlic in olive oil', 'Add tomatoes, oregano', 'Simmer 10 min', 'Add shrimp, cook until pink', 'Top with crumbled feta'],
+              tips: ['⚠️ Low protein — add feta generously', 'Classic Greek taverna dish'] },
+            { id: 'shrimp_kungpao', name: 'Kung Pao Shrimp (Keto)', proteins: ['shrimp'], category: 'main', requiresVeggies: true, time: 15, baseProtein: 60, servingSize: '300g shrimp', flavors: ['asian', 'spicy'], lowProteinWarning: true, netCarbs: 6,
+              ingredients: [{ item: 'Shrimp, peeled', amount: '300g' }, { item: 'Coconut aminos', amount: '3 tbsp' }, { item: 'Rice vinegar', amount: '1 tbsp' }, { item: 'Dried red chilies', amount: '6-8' }, { item: 'Peanuts', amount: '30g' }, { item: 'Bell pepper', amount: '1' }],
+              steps: ['Mix sauce: aminos, vinegar', 'Hot wok, sear shrimp, set aside', 'Stir-fry chilies, garlic', 'Add peppers, return shrimp', 'Toss with sauce and peanuts'],
+              tips: ['⚠️ Low protein — add extra shrimp/eggs', 'Authentic Sichuan flavor'] },
+            { id: 'shrimp_salad', name: 'Shrimp Power Salad', proteins: ['shrimp'], category: 'cold', requiresVeggies: true, saladOnly: true, time: 15, baseProtein: 60, servingSize: '300g shrimp', flavors: ['any', 'mediterranean', 'latin', 'asian'], lowProteinWarning: true, netCarbs: 5,
+              ingredients: [{ item: 'Shrimp, peeled', amount: '300g' }, { item: 'Mixed greens', amount: '100g' }, { item: 'Avocado', amount: '½' }, { item: 'Cherry tomatoes', amount: '80g' }, { item: 'Olive oil', amount: '2 tbsp' }],
+              steps: ['Season and cook shrimp quickly', 'Let cool slightly', 'Build salad with greens', 'Top with shrimp', 'Drizzle with dressing'],
+              tips: ['⚠️ Add cheese/eggs for more protein'], suggestDressing: true },
+            { id: 'shrimp_eggs', name: 'Shrimp & Eggs Scramble', proteins: ['shrimp', 'eggs'], category: 'breakfast', requiresVeggies: true, time: 15, baseProtein: 75, servingSize: '200g shrimp + 4 eggs', flavors: ['any', 'asian', 'classic'], netCarbs: 2,
+              ingredients: [{ item: 'Shrimp, peeled', amount: '200g' }, { item: 'Eggs', amount: '4' }, { item: 'Butter', amount: '2 tbsp' }, { item: 'Green onions', amount: '2 stalks' }, { item: 'Sesame oil', amount: '1 tsp' }],
+              steps: ['Cook shrimp until pink, set aside', 'Beat eggs with salt', 'Scramble eggs in butter over low', 'Fold in shrimp at the end', 'Top with green onions'],
+              tips: ['Chinese-style shrimp with eggs', 'Eggs add needed protein'] },
+        ];
+
+        // ==================== RECIPES: LAMB ====================
+        const lambRecipes = [
+            { id: 'lamb_chops', name: 'Herb-Crusted Lamb Chops', proteins: ['lamb'], category: 'main', requiresVeggies: true, time: 20, baseProtein: 88, servingSize: '350g lamb chops', flavors: ['any', 'classic', 'mediterranean', 'spicy'], netCarbs: 0,
+              ingredients: [{ item: 'Lamb chops', amount: '350g' }, { item: 'Fresh rosemary', amount: '2 tbsp' }, { item: 'Fresh thyme', amount: '1 tbsp' }, { item: 'Garlic', amount: '3 cloves' }, { item: 'Olive oil', amount: '2 tbsp' }],
+              steps: ['Bring lamb to room temp', 'Season with herbs, salt, pepper', 'High heat pan or grill', 'Sear 3-4 min per side', 'Rest 5 minutes'],
+              tips: ['Lamb loves high heat, quick cook', 'Medium-rare (130°F) is ideal'], doneness: 'Browned outside, pink inside' },
+            { id: 'lamb_shawarma', name: 'Lamb Shawarma Bowl', proteins: ['lamb'], category: 'main', requiresVeggies: true, time: 25, baseProtein: 88, servingSize: '350g lamb', flavors: ['mediterranean', 'spicy'], netCarbs: 4,
+              ingredients: [{ item: 'Lamb leg, sliced', amount: '350g' }, { item: 'Cumin', amount: '1 tsp' }, { item: 'Coriander', amount: '1 tsp' }, { item: 'Turmeric', amount: '½ tsp' }, { item: 'Garlic', amount: '4 cloves' }, { item: 'Tahini', amount: '3 tbsp' }],
+              steps: ['Marinate lamb in spices', 'Pan-sear on high until caramelized', 'Serve over greens', 'Top with pickled turnips, tahini', 'Add parsley and sumac'],
+              tips: ['Lebanese street food favorite', 'The spice mix is special'] },
+            { id: 'lamb_mediterranean', name: 'Mediterranean Lamb Plate', proteins: ['lamb'], category: 'main', requiresVeggies: true, time: 25, baseProtein: 88, servingSize: '350g lamb', flavors: ['mediterranean'], netCarbs: 4,
+              ingredients: [{ item: 'Lamb chops or leg', amount: '350g' }, { item: 'Dried oregano', amount: '1 tbsp' }, { item: 'Lemon zest', amount: '1 lemon' }, { item: 'Feta cheese', amount: '50g' }, { item: 'Cucumber', amount: '100g' }, { item: 'Olive oil', amount: '3 tbsp' }],
+              steps: ['Season lamb with oregano, garlic, lemon', 'Sear until browned', 'Rest and slice', 'Serve with cucumber, tomato, feta', 'Drizzle with olive oil'],
+              tips: ['Deconstructed Greek dish', 'Tzatziki goes perfectly'] },
+            { id: 'lamb_kofta', name: 'Lamb Kofta Kebabs', proteins: ['lamb'], category: 'main', requiresVeggies: true, time: 25, baseProtein: 88, servingSize: '350g ground lamb', flavors: ['mediterranean', 'spicy'], netCarbs: 3,
+              ingredients: [{ item: 'Ground lamb', amount: '350g' }, { item: 'Onion, minced', amount: '¼ cup' }, { item: 'Fresh parsley', amount: '¼ cup' }, { item: 'Cumin', amount: '1 tsp' }, { item: 'Cinnamon', amount: '¼ tsp' }, { item: 'Tahini', amount: '3 tbsp' }],
+              steps: ['Mix lamb with onion, herbs, spices', 'Form into ovals around skewers', 'Grill 4-5 min per side', 'Serve with tahini and salad', 'Garnish with fresh mint'],
+              tips: ['Classic Middle Eastern dish', 'Don\'t overwork the meat'] },
+            { id: 'lamb_spicy', name: 'Spicy Cumin Lamb', proteins: ['lamb'], category: 'main', requiresVeggies: true, time: 15, baseProtein: 88, servingSize: '350g lamb', flavors: ['spicy', 'asian'], netCarbs: 3,
+              ingredients: [{ item: 'Lamb leg, sliced', amount: '350g' }, { item: 'Cumin seeds', amount: '2 tbsp' }, { item: 'Chili flakes', amount: '1 tbsp' }, { item: 'Garlic', amount: '4 cloves' }, { item: 'Ginger', amount: '1 tbsp' }, { item: 'Sesame oil', amount: '2 tbsp' }],
+              steps: ['Slice lamb thin', 'Season with cumin, chili, garlic, ginger', 'Hot wok, cook quickly 2-3 min', 'Add peppers and onions', 'Finish with sesame oil and cilantro'],
+              tips: ['Famous Xi\'an Chinese dish', 'Don\'t overcrowd the wok'] },
+            { id: 'lamb_eggs', name: 'Lamb & Eggs Mediterranean', proteins: ['lamb', 'eggs'], category: 'breakfast', requiresVeggies: true, time: 25, baseProtein: 95, servingSize: '250g lamb + 3 eggs', flavors: ['mediterranean', 'spicy'], netCarbs: 6,
+              ingredients: [{ item: 'Lamb, diced', amount: '250g' }, { item: 'Eggs', amount: '3' }, { item: 'Diced tomatoes', amount: '200g' }, { item: 'Cumin', amount: '1 tsp' }, { item: 'Paprika', amount: '1 tsp' }, { item: 'Feta cheese', amount: '50g' }],
+              steps: ['Sear lamb until browned', 'Add tomatoes, onions, spices', 'Make wells, crack in eggs', 'Cover until eggs set', 'Top with feta and herbs'],
+              tips: ['Shakshuka with lamb', 'Great for weekend brunch'] },
+        ];
+
+        // ==================== RECIPES: PORK ====================
+        const porkRecipes = [
+            { id: 'pork_chops', name: 'Juicy Pork Chops', proteins: ['pork'], category: 'main', requiresVeggies: true, time: 25, baseProtein: 88, servingSize: '350g pork chops', flavors: ['any', 'classic', 'latin', 'spicy'], netCarbs: 0,
+              ingredients: [{ item: 'Pork chops (bone-in)', amount: '350g' }, { item: 'Salt', amount: '1 tsp' }, { item: 'Garlic powder', amount: '½ tsp' }, { item: 'Butter', amount: '3 tbsp' }, { item: 'Fresh thyme', amount: '3 sprigs' }],
+              steps: ['Pat dry, season generously', 'Medium-high pan with butter', 'Sear 4-5 min per side', 'Baste with butter last 2 min', 'Rest 3 minutes'],
+              tips: ['145°F is safe AND juicy', 'Bone-in = more forgiving'], doneness: 'Golden, slightly pink inside' },
+            { id: 'pork_tenderloin', name: 'Garlic Herb Pork Tenderloin', proteins: ['pork'], category: 'main', requiresVeggies: true, time: 30, baseProtein: 88, servingSize: '350g tenderloin', flavors: ['any', 'classic', 'mediterranean'], netCarbs: 1,
+              ingredients: [{ item: 'Pork tenderloin', amount: '350g' }, { item: 'Garlic', amount: '5 cloves' }, { item: 'Fresh rosemary', amount: '2 tbsp' }, { item: 'Fresh thyme', amount: '1 tbsp' }, { item: 'Olive oil', amount: '3 tbsp' }, { item: 'Dijon mustard', amount: '1 tbsp' }],
+              steps: ['Rub with garlic, herbs, olive oil', 'Sear all sides in hot pan', 'Finish in 400°F oven 15-18 min', 'Rest 5 minutes', 'Slice into medallions'],
+              tips: ['Tenderloin is lean — don\'t overcook', '145°F internal temp'], doneness: 'Slightly pink in center' },
+            { id: 'pork_stirfry', name: 'Ginger Pork Stir-Fry', proteins: ['pork'], category: 'main', requiresVeggies: true, time: 15, baseProtein: 88, servingSize: '350g pork', flavors: ['asian', 'spicy'], netCarbs: 5,
+              ingredients: [{ item: 'Pork loin, sliced', amount: '350g' }, { item: 'Coconut aminos', amount: '3 tbsp' }, { item: 'Ginger', amount: '2 tbsp' }, { item: 'Garlic', amount: '3 cloves' }, { item: 'Sesame oil', amount: '2 tbsp' }, { item: 'Mixed vegetables', amount: '200g' }],
+              steps: ['Slice pork thin', 'Marinate in aminos, ginger, garlic', 'Hot wok with sesame oil', 'Cook pork 3-4 min', 'Add veggies, toss with sauce'],
+              tips: ['Slice against the grain', 'Cook in batches if needed'] },
+            { id: 'pork_carnitas', name: 'Carnitas Bowl 🇻🇪', proteins: ['pork'], category: 'main', requiresVeggies: true, time: 60, baseProtein: 88, servingSize: '350g pork shoulder', flavors: ['latin', 'spicy'], isVenezuelan: true, netCarbs: 5,
+              ingredients: [{ item: 'Pork shoulder', amount: '350g' }, { item: 'Cumin', amount: '1 tsp' }, { item: 'Oregano', amount: '1 tsp' }, { item: 'Garlic', amount: '5 cloves' }, { item: 'Orange juice', amount: '2 tbsp' }, { item: 'Guacamole', amount: '100g' }],
+              steps: ['Season pork with spices, citrus', 'Slow cook until falling apart', 'Shred and crisp under broiler', 'Serve over lettuce with guac', 'Top with pickled onions'],
+              tips: ['Mexican/Venezuelan favorite', 'The crispy edges are the best'] },
+            { id: 'pork_souvlaki', name: 'Greek Pork Souvlaki', proteins: ['pork'], category: 'main', requiresVeggies: true, time: 25, baseProtein: 88, servingSize: '350g pork', flavors: ['mediterranean'], netCarbs: 3,
+              ingredients: [{ item: 'Pork loin, cubed', amount: '350g' }, { item: 'Lemon juice', amount: '3 tbsp' }, { item: 'Dried oregano', amount: '1 tbsp' }, { item: 'Garlic', amount: '4 cloves' }, { item: 'Olive oil', amount: '3 tbsp' }, { item: 'Greek yogurt (tzatziki)', amount: '100g' }],
+              steps: ['Marinate pork in lemon, oregano, garlic', 'Thread onto skewers', 'Grill 4-5 min per side', 'Serve with tzatziki and Greek salad', 'Top with fresh dill'],
+              tips: ['Classic Greek street food', 'Marinate overnight for best flavor'] },
+            { id: 'pork_eggs', name: 'Pork & Eggs Breakfast', proteins: ['pork', 'eggs'], category: 'breakfast', requiresVeggies: true, time: 20, baseProtein: 95, servingSize: '250g pork + 3 eggs', flavors: ['any', 'classic', 'latin'], netCarbs: 2,
+              ingredients: [{ item: 'Pork chop or tenderloin', amount: '250g' }, { item: 'Eggs', amount: '3' }, { item: 'Butter', amount: '2 tbsp' }, { item: 'Avocado', amount: '½' }],
+              steps: ['Cook pork to desired doneness', 'Set aside, keep warm', 'Fry eggs in same pan', 'Plate together with sautéed veggies'],
+              tips: ['Perfect high-protein breakfast', 'Add avocado for healthy fats'] },
+        ];
+
+        // ==================== RECIPES: EGGS ====================
+        const eggRecipes = [
+            { id: 'egg_scramble', name: 'Ultimate Egg Scramble', proteins: ['eggs'], category: 'breakfast', requiresVeggies: false, time: 10, baseProtein: 36, servingSize: '6 eggs', flavors: ['any', 'classic', 'mediterranean', 'spicy'], lowProteinWarning: true, netCarbs: 1,
+              ingredients: [{ item: 'Eggs', amount: '6' }, { item: 'Butter', amount: '2 tbsp' }, { item: 'Salt', amount: '½ tsp' }, { item: 'Fresh herbs (optional)', amount: '1 tbsp' }],
+              steps: ['Beat 6 eggs with salt', 'Melt butter over LOW heat', 'Add eggs, stir slowly with spatula', 'Remove while still slightly wet'],
+              tips: ['⚠️ Only ~36g protein — add meat side', 'Gordon Ramsay method: low heat = creamy'], doneness: 'Soft, creamy curds' },
+            { id: 'egg_frittata', name: 'Loaded Veggie Frittata', proteins: ['eggs'], category: 'breakfast', requiresVeggies: true, time: 25, baseProtein: 42, servingSize: '7 eggs', flavors: ['any', 'mediterranean', 'classic'], lowProteinWarning: true, netCarbs: 4,
+              ingredients: [{ item: 'Eggs', amount: '7' }, { item: 'Mixed vegetables', amount: '150g' }, { item: 'Cheese', amount: '50g' }, { item: 'Olive oil', amount: '2 tbsp' }, { item: 'Fresh herbs', amount: '2 tbsp' }],
+              steps: ['Sauté veggies in oven-safe pan', 'Beat eggs with cheese, herbs', 'Pour eggs over veggies', 'Cook on stovetop 5 min until edges set', 'Finish under broiler 3-4 min'],
+              tips: ['⚠️ Only ~42g protein — add meat or cheese', 'Great for meal prep — lasts 4 days'] },
+            { id: 'egg_shakshuka', name: 'Classic Shakshuka', proteins: ['eggs'], category: 'breakfast', requiresVeggies: true, time: 25, baseProtein: 36, servingSize: '6 eggs', flavors: ['mediterranean', 'spicy'], lowProteinWarning: true, netCarbs: 8,
+              ingredients: [{ item: 'Eggs', amount: '6' }, { item: 'Crushed tomatoes', amount: '400g' }, { item: 'Onion', amount: '1' }, { item: 'Bell pepper', amount: '1' }, { item: 'Cumin', amount: '1 tsp' }, { item: 'Paprika', amount: '1 tsp' }, { item: 'Feta', amount: '50g' }],
+              steps: ['Sauté onion, peppers, garlic', 'Add tomatoes, cumin, paprika', 'Simmer 10 min until thick', 'Make wells, crack in eggs', 'Cover until eggs set'],
+              tips: ['⚠️ Add feta or meat for more protein', 'Middle Eastern comfort food'] },
+        ];
+        // ==================== NEW: BREAKFAST RECIPES ====================
+        const breakfastRecipes = [
+            { id: 'bfast_egg_muffins', name: 'Egg Muffins (Meal Prep)', proteins: ['eggs'], category: 'breakfast', requiresVeggies: true, time: 30, baseProtein: 42, servingSize: '6 muffins (7 eggs)', flavors: ['any', 'classic', 'mediterranean'], lowProteinWarning: true, netCarbs: 3,
+              ingredients: [{ item: 'Eggs', amount: '7' }, { item: 'Diced bell peppers', amount: '½ cup' }, { item: 'Spinach, chopped', amount: '1 cup' }, { item: 'Cheese', amount: '50g' }, { item: 'Cooked bacon/sausage (optional)', amount: '100g' }],
+              steps: ['Preheat oven to 350°F', 'Grease muffin tin well', 'Whisk eggs with salt, pepper', 'Divide veggies and cheese into cups', 'Pour egg mixture, bake 20-25 min'],
+              tips: ['⚠️ Add meat for more protein', 'Keeps 5 days in fridge, freezes great'] },
+            { id: 'bfast_power_bowl', name: 'Keto Breakfast Bowl', proteins: ['eggs'], category: 'breakfast', requiresVeggies: true, time: 15, baseProtein: 40, servingSize: '4 eggs + veggies', flavors: ['any', 'latin', 'mediterranean'], lowProteinWarning: true, netCarbs: 6,
+              ingredients: [{ item: 'Eggs', amount: '4' }, { item: 'Avocado', amount: '1' }, { item: 'Cherry tomatoes', amount: '80g' }, { item: 'Sautéed spinach', amount: '1 cup' }, { item: 'Feta or cheese', amount: '30g' }, { item: 'Olive oil', amount: '2 tbsp' }],
+              steps: ['Fry or poach eggs to preference', 'Sauté spinach with garlic', 'Slice avocado and tomatoes', 'Assemble bowl with all components', 'Drizzle with olive oil, season'],
+              tips: ['⚠️ Add bacon/sausage for more protein', 'Perfect Dubai heat breakfast — light but filling'] },
+            { id: 'bfast_cloud_eggs', name: 'Cloud Eggs', proteins: ['eggs'], category: 'breakfast', requiresVeggies: false, time: 15, baseProtein: 24, servingSize: '4 eggs', flavors: ['classic'], lowProteinWarning: true, netCarbs: 1,
+              ingredients: [{ item: 'Eggs', amount: '4' }, { item: 'Salt', amount: '¼ tsp' }, { item: 'Parmesan', amount: '2 tbsp' }, { item: 'Fresh chives', amount: '1 tbsp' }],
+              steps: ['Separate egg whites and yolks', 'Whip whites to stiff peaks with salt', 'Fold in parmesan', 'Form nests on baking sheet', 'Add yolk to center, bake 8 min at 450°F'],
+              tips: ['⚠️ Very low protein — serve with meat', 'Impressive presentation for brunch'] },
+            { id: 'bfast_bacon_cheese_cups', name: 'Bacon & Cheese Egg Cups', proteins: ['eggs', 'pork'], category: 'breakfast', requiresVeggies: false, time: 25, baseProtein: 70, servingSize: '4 eggs + bacon', flavors: ['classic', 'spicy'], netCarbs: 1,
+              ingredients: [{ item: 'Eggs', amount: '4' }, { item: 'Bacon strips', amount: '8' }, { item: 'Cheddar cheese', amount: '50g' }, { item: 'Green onions', amount: '2' }, { item: 'Salt & pepper', amount: 'to taste' }],
+              steps: ['Line muffin cups with bacon strips', 'Par-bake bacon 10 min at 375°F', 'Crack egg into each cup', 'Top with cheese', 'Bake 12-15 min until set'],
+              tips: ['The bacon becomes the cup!', 'Great grab-and-go breakfast'] },
+        ];
+
+        // ==================== NEW: SOUP RECIPES ====================
+        const soupRecipes = [
+            { id: 'soup_sancocho', name: 'Sancocho Criollo 🇻🇪', proteins: ['chicken'], category: 'soup', requiresVeggies: true, time: 60, baseProtein: 85, servingSize: '400g chicken + broth', flavors: ['latin'], isVenezuelan: true, netCarbs: 8,
+              ingredients: [{ item: 'Chicken thighs (bone-in)', amount: '400g' }, { item: 'Beef broth', amount: '4 cups' }, { item: 'Zucchini (replaces yuca)', amount: '200g' }, { item: 'Chayote', amount: '1' }, { item: 'Corn on cob (small piece)', amount: '1' }, { item: 'Cilantro', amount: '½ cup' }, { item: 'Garlic', amount: '4 cloves' }, { item: 'Cumin', amount: '1 tsp' }],
+              steps: ['Brown chicken pieces in pot', 'Add broth, garlic, cumin, bring to boil', 'Simmer 30 min', 'Add zucchini, chayote, corn', 'Cook 20 min more, add cilantro'],
+              tips: ['Traditional Venezuelan soup — adapted for your protocol', 'Small corn piece is fine — skip if you want fewer carbs'] },
+            { id: 'soup_tom_yum', name: 'Tom Yum Shrimp Soup', proteins: ['shrimp'], category: 'soup', requiresVeggies: true, time: 25, baseProtein: 60, servingSize: '300g shrimp', flavors: ['asian', 'spicy'], lowProteinWarning: true, netCarbs: 5,
+              ingredients: [{ item: 'Shrimp', amount: '300g' }, { item: 'Chicken broth', amount: '4 cups' }, { item: 'Lemongrass', amount: '2 stalks' }, { item: 'Galangal or ginger', amount: '2 tbsp' }, { item: 'Lime juice', amount: '3 tbsp' }, { item: 'Fish sauce', amount: '2 tbsp' }, { item: 'Thai chilies', amount: '3-4' }, { item: 'Mushrooms', amount: '100g' }],
+              steps: ['Simmer broth with lemongrass, galangal', 'Add mushrooms, cook 5 min', 'Add shrimp, cook until pink', 'Season with fish sauce, lime, chilies', 'Serve with fresh cilantro'],
+              tips: ['⚠️ Add eggs for more protein', 'Classic Thai soup — naturally low carb'] },
+            { id: 'soup_bone_broth', name: 'Healing Bone Broth Bowl', proteins: ['beef'], category: 'soup', requiresVeggies: true, time: 20, baseProtein: 75, servingSize: '250g beef + broth', flavors: ['asian', 'classic'], netCarbs: 3,
+              ingredients: [{ item: 'Beef sirloin, sliced thin', amount: '250g' }, { item: 'Bone broth', amount: '3 cups' }, { item: 'Ginger', amount: '2 tbsp' }, { item: 'Garlic', amount: '3 cloves' }, { item: 'Bok choy', amount: '2 cups' }, { item: 'Green onions', amount: '3' }, { item: 'Sesame oil', amount: '1 tsp' }],
+              steps: ['Heat bone broth with ginger, garlic', 'Add bok choy, simmer 5 min', 'Add thin beef slices', 'Cook 2-3 min (beef cooks in hot broth)', 'Top with green onions, sesame oil'],
+              tips: ['Pho-inspired bowl', 'The hot broth cooks the beef perfectly'] },
+            { id: 'soup_egg_drop', name: 'Egg Drop Soup', proteins: ['eggs'], category: 'soup', requiresVeggies: false, time: 15, baseProtein: 30, servingSize: '4 eggs', flavors: ['asian'], lowProteinWarning: true, netCarbs: 2,
+              ingredients: [{ item: 'Eggs', amount: '4' }, { item: 'Chicken broth', amount: '4 cups' }, { item: 'Ginger', amount: '1 tbsp' }, { item: 'Sesame oil', amount: '1 tsp' }, { item: 'Green onions', amount: '2' }, { item: 'White pepper', amount: '¼ tsp' }],
+              steps: ['Bring broth to simmer with ginger', 'Beat eggs in bowl', 'Slowly drizzle eggs into simmering broth', 'Stir gently to create ribbons', 'Season with sesame oil, pepper, onions'],
+              tips: ['⚠️ Very low protein — add chicken or tofu', 'Classic Chinese comfort soup'] },
+            { id: 'soup_creamy_chicken', name: 'Creamy Chicken Soup', proteins: ['chicken'], category: 'soup', requiresVeggies: true, time: 35, baseProtein: 88, servingSize: '350g chicken', flavors: ['classic'], netCarbs: 6,
+              ingredients: [{ item: 'Chicken breast', amount: '350g' }, { item: 'Chicken broth', amount: '3 cups' }, { item: 'Heavy cream', amount: '1 cup' }, { item: 'Celery', amount: '2 stalks' }, { item: 'Onion', amount: '1' }, { item: 'Garlic', amount: '3 cloves' }, { item: 'Fresh thyme', amount: '2 sprigs' }, { item: 'Butter', amount: '2 tbsp' }],
+              steps: ['Poach chicken in broth 15 min', 'Remove, shred chicken', 'Sauté celery, onion, garlic in butter', 'Add broth and cream, simmer 10 min', 'Return chicken, season and serve'],
+              tips: ['Comfort food that fits your protocol', 'Great when under the weather'] },
+        ];
+
+        // ==================== NEW: COLD MEAL RECIPES ====================
+        const coldRecipes = [
+            { id: 'cold_ceviche', name: 'Shrimp Ceviche 🇻🇪', proteins: ['shrimp'], category: 'cold', requiresVeggies: true, time: 30, baseProtein: 60, servingSize: '300g shrimp', flavors: ['latin'], isVenezuelan: true, lowProteinWarning: true, netCarbs: 6,
+              ingredients: [{ item: 'Shrimp, cooked', amount: '300g' }, { item: 'Lime juice', amount: '½ cup' }, { item: 'Red onion, diced', amount: '½ cup' }, { item: 'Tomato, diced', amount: '1' }, { item: 'Cilantro', amount: '¼ cup' }, { item: 'Avocado', amount: '1' }, { item: 'Jalapeño', amount: '1' }, { item: 'Salt', amount: '1 tsp' }],
+              steps: ['Dice cooked shrimp', 'Mix with lime juice, let sit 15 min', 'Add onion, tomato, cilantro, jalapeño', 'Season with salt', 'Serve with avocado slices'],
+              tips: ['⚠️ Add more shrimp for more protein', 'Perfect for Dubai heat — refreshing!'] },
+            { id: 'cold_tuna_plate', name: 'Mediterranean Tuna Plate', proteins: ['fish'], category: 'cold', requiresVeggies: true, time: 10, baseProtein: 70, servingSize: '2 cans tuna', flavors: ['mediterranean'], netCarbs: 4,
+              ingredients: [{ item: 'Tuna in olive oil', amount: '2 cans (280g)' }, { item: 'Cherry tomatoes', amount: '100g' }, { item: 'Cucumber', amount: '100g' }, { item: 'Kalamata olives', amount: '30g' }, { item: 'Feta cheese', amount: '50g' }, { item: 'Olive oil', amount: '2 tbsp' }, { item: 'Lemon', amount: '1' }],
+              steps: ['Drain tuna, place on plate', 'Arrange tomatoes, cucumber, olives around', 'Crumble feta on top', 'Drizzle with olive oil', 'Squeeze lemon over everything'],
+              tips: ['Zero cooking required', 'Keep tuna cans at work for easy lunch'] },
+            { id: 'cold_chicken_salad', name: 'Avocado Chicken Salad', proteins: ['chicken'], category: 'cold', requiresVeggies: true, time: 15, baseProtein: 85, servingSize: '350g chicken', flavors: ['classic', 'latin'], netCarbs: 4,
+              ingredients: [{ item: 'Cooked chicken, shredded', amount: '350g' }, { item: 'Avocado', amount: '1' }, { item: 'Greek yogurt', amount: '3 tbsp' }, { item: 'Celery, diced', amount: '2 stalks' }, { item: 'Lime juice', amount: '2 tbsp' }, { item: 'Salt & pepper', amount: 'to taste' }],
+              steps: ['Shred or dice cooked chicken', 'Mash avocado with lime juice', 'Mix chicken, avocado, yogurt, celery', 'Season with salt and pepper', 'Serve in lettuce cups or alone'],
+              tips: ['No mayo needed — avocado makes it creamy', 'Great meal prep option'] },
+            { id: 'cold_beef_rolls', name: 'Roast Beef Roll-Ups', proteins: ['beef'], category: 'cold', requiresVeggies: true, time: 10, baseProtein: 80, servingSize: '300g roast beef', flavors: ['classic'], netCarbs: 2,
+              ingredients: [{ item: 'Deli roast beef', amount: '300g' }, { item: 'Cream cheese', amount: '100g' }, { item: 'Arugula', amount: '1 cup' }, { item: 'Pickles', amount: '4' }, { item: 'Dijon mustard', amount: '1 tbsp' }],
+              steps: ['Lay roast beef slices flat', 'Spread cream cheese and mustard', 'Add arugula and pickle slice', 'Roll up tightly', 'Slice in half or eat whole'],
+              tips: ['Perfect no-cook lunch', 'Pack for work — no heating needed'] },
+            { id: 'cold_caprese', name: 'Caprese with Prosciutto', proteins: ['pork'], category: 'cold', requiresVeggies: true, time: 10, baseProtein: 45, servingSize: '100g prosciutto', flavors: ['mediterranean'], lowProteinWarning: true, netCarbs: 4,
+              ingredients: [{ item: 'Prosciutto', amount: '100g' }, { item: 'Fresh mozzarella', amount: '150g' }, { item: 'Tomatoes', amount: '2 large' }, { item: 'Fresh basil', amount: '10 leaves' }, { item: 'Olive oil', amount: '3 tbsp' }, { item: 'Balsamic vinegar', amount: '1 tbsp' }],
+              steps: ['Slice tomatoes and mozzarella', 'Arrange alternating on plate', 'Drape prosciutto over top', 'Tuck basil leaves between', 'Drizzle with oil and balsamic'],
+              tips: ['⚠️ Low protein — add more prosciutto', 'Classic Italian — no cooking needed'] },
+        ];
+
+        // ==================== NEW: SNACK RECIPES ====================
+        const snackRecipes = [
+            { id: 'snack_deviled_eggs', name: 'Deviled Eggs', proteins: ['eggs'], category: 'snack', requiresVeggies: false, time: 20, baseProtein: 36, servingSize: '6 eggs', flavors: ['classic', 'spicy'], lowProteinWarning: true, netCarbs: 1,
+              ingredients: [{ item: 'Hard-boiled eggs', amount: '6' }, { item: 'Mayonnaise', amount: '3 tbsp' }, { item: 'Dijon mustard', amount: '1 tsp' }, { item: 'Paprika', amount: '½ tsp' }, { item: 'Salt', amount: '¼ tsp' }],
+              steps: ['Halve eggs, remove yolks', 'Mash yolks with mayo, mustard, salt', 'Pipe or spoon filling back into whites', 'Sprinkle with paprika', 'Chill before serving'],
+              tips: ['⚠️ Low protein — eat as side/snack only', 'Classic party appetizer'] },
+            { id: 'snack_meat_cheese', name: 'Meat & Cheese Roll-Ups', proteins: ['pork'], category: 'snack', requiresVeggies: false, time: 5, baseProtein: 50, servingSize: '150g meat + cheese', flavors: ['classic'], netCarbs: 1,
+              ingredients: [{ item: 'Deli ham or salami', amount: '150g' }, { item: 'Cheese slices', amount: '100g' }, { item: 'Cream cheese (optional)', amount: '2 tbsp' }],
+              steps: ['Lay meat slice flat', 'Add cheese slice on top', 'Spread cream cheese if using', 'Roll up tightly', 'Eat as is or slice into pinwheels'],
+              tips: ['Simplest keto snack ever', 'Keep components in fridge for anytime'] },
+            { id: 'snack_cucumber_bites', name: 'Cucumber Cream Cheese Bites', proteins: ['fish'], category: 'snack', requiresVeggies: true, time: 10, baseProtein: 30, servingSize: '100g smoked salmon', flavors: ['classic', 'mediterranean'], lowProteinWarning: true, netCarbs: 3,
+              ingredients: [{ item: 'Cucumber', amount: '1 large' }, { item: 'Cream cheese', amount: '100g' }, { item: 'Smoked salmon', amount: '100g' }, { item: 'Fresh dill', amount: '2 tbsp' }, { item: 'Capers', amount: '1 tbsp' }],
+              steps: ['Slice cucumber into thick rounds', 'Spread cream cheese on each', 'Top with smoked salmon piece', 'Garnish with dill and caper'],
+              tips: ['⚠️ Low protein — eat as appetizer', 'Elegant and easy'] },
+            { id: 'snack_fat_bombs', name: 'Chocolate Fat Bombs', proteins: ['eggs'], category: 'snack', requiresVeggies: false, time: 15, baseProtein: 5, servingSize: '4 pieces', flavors: ['classic'], lowProteinWarning: true, netCarbs: 2,
+              ingredients: [{ item: 'Coconut oil', amount: '½ cup' }, { item: 'Cocoa powder', amount: '3 tbsp' }, { item: 'Almond butter', amount: '2 tbsp' }, { item: 'Erythritol', amount: '2 tbsp' }, { item: 'Vanilla extract', amount: '1 tsp' }],
+              steps: ['Melt coconut oil gently', 'Whisk in cocoa, almond butter, sweetener', 'Add vanilla', 'Pour into silicone molds', 'Freeze 1 hour until solid'],
+              tips: ['⚠️ This is for energy, NOT protein', 'Good for satisfying sweet cravings'] },
+        ];
+
+        // Combine all recipes
+        const mealRecipes = [
+            ...chickenRecipes,
+            ...beefRecipes,
+            ...groundBeefRecipes,
+            ...salmonRecipes,
+            ...whiteFishRecipes,
+            ...shrimpRecipes,
+            ...lambRecipes,
+            ...porkRecipes,
+            ...eggRecipes,
+            ...breakfastRecipes,
+            ...soupRecipes,
+            ...coldRecipes,
+            ...snackRecipes,
+        ];
+
+        // ==================== UTILITIES ====================
         const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
         const formatDate = (d) => new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-        const save = (k, v) => { try { localStorage.setItem('nk4_'+k, JSON.stringify(v)); } catch(e) {} };
-        const load = (k, d) => { try { const v = localStorage.getItem('nk4_'+k); return v ? JSON.parse(v) : d; } catch(e) { return d; } };
+        const save = (k, v) => { try { localStorage.setItem('nk5_'+k, JSON.stringify(v)); } catch(e) {} };
+        const load = (k, d) => { try { const v = localStorage.getItem('nk5_'+k); return v ? JSON.parse(v) : d; } catch(e) { return d; } };
+
+        // ==================== SMART FEATURES ====================
+        
+        // Surprise Me - picks a random recipe based on available proteins
+        const getSurpriseRecipe = (availableProteins, history) => {
+            if (availableProteins.length === 0) return null;
+            const matching = mealRecipes.filter(r => 
+                r.proteins.some(p => availableProteins.includes(p)) && 
+                r.category !== 'snack'
+            );
+            if (matching.length === 0) return null;
+            
+            // Prefer recipes not made recently
+            const recentIds = history.slice(0, 10).map(h => h.recipeId);
+            const notRecent = matching.filter(r => !recentIds.includes(r.id));
+            const pool = notRecent.length > 0 ? notRecent : matching;
+            
+            return getRandom(pool);
+        };
+
+        // Haven't Made in a While - finds recipes not cooked in 2+ weeks
+        const getNeglectedRecipes = (history, limit = 5) => {
+            const twoWeeksAgo = Date.now() - (14 * 24 * 60 * 60 * 1000);
+            const recentIds = history
+                .filter(h => new Date(h.cookedAt).getTime() > twoWeeksAgo)
+                .map(h => h.recipeId);
+            
+            return mealRecipes
+                .filter(r => !recentIds.includes(r.id) && r.category !== 'snack')
+                .slice(0, limit);
+        };
+
+        // Cuisine Variety Check
+        const getCuisineBalance = (history) => {
+            const last7 = history.slice(0, 14);
+            const counts = { latin: 0, mediterranean: 0, asian: 0, spicy: 0, classic: 0 };
+            last7.forEach(h => {
+                if (h.flavor && counts[h.flavor] !== undefined) {
+                    counts[h.flavor]++;
+                }
+            });
+            const max = Math.max(...Object.values(counts));
+            const dominant = Object.entries(counts).find(([k, v]) => v === max)?.[0];
+            const suggestions = Object.entries(counts)
+                .filter(([k, v]) => v < max - 2)
+                .map(([k]) => k);
+            return { counts, dominant, suggestions };
+        };
 
         // ==================== COMPONENTS ====================
         
@@ -449,35 +948,106 @@
                             {running ? '⏸️' : '▶️'}
                         </button>
                     </div>
-                    {timeLeft <= 0 && <div className="mt-3 text-coral-500 font-semibold text-center animate-pulse">⏰ Done!</div>}
+                    {timeLeft <= 0 && <div className="mt-3 text-coral-500 font-semibold text-center">⏰ Done!</div>}
                 </div>
             );
         }
 
         function BadgePopup({ badge, onClose }) {
             return (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-warm-900/30 backdrop-blur-sm" onClick={onClose}>
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-6 modal-overlay" onClick={onClose}>
                     <div className="bg-gradient-to-br from-coral-500 to-sand-500 rounded-[2rem] p-8 text-center animate-bounce-in max-w-xs shadow-glow-coral" onClick={e => e.stopPropagation()}>
                         <div className="text-6xl mb-4">{badge.emoji}</div>
                         <h3 className="text-2xl font-bold text-white mb-2">{badge.name}</h3>
                         <p className="text-white/80 mb-6">{badge.desc}</p>
-                        <button onClick={onClose} className="px-6 py-3 bg-white/20 hover:bg-white/30 rounded-2xl text-white font-medium press">
-                            ¡Gracias! 🙌
-                        </button>
+                        <button onClick={onClose} className="px-6 py-3 bg-white/20 hover:bg-white/30 rounded-2xl text-white font-medium press">¡Gracias! 🙌</button>
                     </div>
                 </div>
             );
         }
 
-        function GuideModal({ onClose, initialTab = 'guide' }) {
-            const [tab, setTab] = useState(initialTab);
+        function RecipeModal({ meal, onClose, flavor }) {
+            const profile = flavorProfiles[flavor] || flavorProfiles.classic;
+            return (
+                <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={onClose}>
+                    <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[90vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
+                        <div className="px-5 pb-8 overflow-y-auto max-h-[calc(90vh-50px)]">
+                            <div className="mb-5">
+                                <h2 className="text-2xl font-bold text-warm-800 mb-1">{meal.name}</h2>
+                                <div className="flex items-center gap-3 text-sm flex-wrap">
+                                    <span className="text-warm-600">⏱️ {meal.time} min</span>
+                                    <span className="text-coral-500 font-semibold">~{meal.baseProtein}g protein</span>
+                                    {meal.netCarbs !== undefined && <span className="text-sage-600">{meal.netCarbs}g carbs</span>}
+                                    {meal.isVenezuelan && <span>🇻🇪</span>}
+                                </div>
+                            </div>
+                            
+                            {/* INGREDIENTS - NEW! */}
+                            {meal.ingredients && meal.ingredients.length > 0 && (
+                                <div className="mb-5">
+                                    <h3 className="text-warm-800 font-semibold mb-3">🛒 Ingredients</h3>
+                                    <div className="bg-white rounded-xl border border-cream-200 divide-y divide-cream-100">
+                                        {meal.ingredients.map((ing, i) => (
+                                            <div key={i} className="flex justify-between px-4 py-2.5">
+                                                <span className="text-warm-700 text-sm">{ing.item}</span>
+                                                <span className="text-warm-500 text-sm font-medium">{ing.amount}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                            
+                            {profile.seasonings && (
+                                <div className="bg-gradient-to-br from-coral-50 to-sand-50 rounded-2xl p-4 border border-coral-100 mb-5">
+                                    <h3 className="text-coral-600 font-semibold text-sm mb-2">{profile.emoji} {profile.name} Seasoning</h3>
+                                    <p className="text-warm-700 text-sm">{profile.seasonings}</p>
+                                    {profile.finisher && <p className="text-warm-600 text-xs mt-2">Finish: {profile.finisher}</p>}
+                                </div>
+                            )}
+                            
+                            {meal.steps && meal.steps.length > 0 && (
+                                <div className="mb-5">
+                                    <h3 className="text-warm-800 font-semibold mb-3">Steps</h3>
+                                    <div className="space-y-3">
+                                        {meal.steps.map((step, i) => (
+                                            <div key={i} className="flex gap-3">
+                                                <div className="w-7 h-7 rounded-full bg-coral-100 text-coral-600 flex items-center justify-center flex-shrink-0 text-sm font-semibold">{i + 1}</div>
+                                                <p className="text-warm-700 text-sm pt-1">{step}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                            
+                            {meal.tips && meal.tips.length > 0 && (
+                                <div className="bg-cream-100 rounded-2xl p-4 mb-5">
+                                    <h3 className="text-warm-800 font-semibold text-sm mb-2">💡 Tips</h3>
+                                    {meal.tips.map((tip, i) => <p key={i} className="text-warm-600 text-sm">• {tip}</p>)}
+                                </div>
+                            )}
+                            
+                            {meal.doneness && (
+                                <div className="bg-sage-50 border border-sage-100 rounded-2xl p-4">
+                                    <h3 className="text-sage-600 font-semibold text-sm mb-1">✓ Done when</h3>
+                                    <p className="text-warm-700 text-sm">{meal.doneness}</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function GuideModal({ onClose }) {
+            const [tab, setTab] = useState('guide');
             return (
                 <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={onClose}>
                     <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[85vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
                         <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
                         <div className="flex gap-2 px-5 pb-4">
                             {[{id:'guide',label:'📋 Guide'},{id:'dressings',label:'🥗 Dressings'}].map(t => (
-                                <button key={t.id} onClick={() => setTab(t.id)} className={`flex-1 py-2.5 rounded-2xl font-medium text-sm transition-all press ${tab === t.id ? 'bg-coral-500 text-white shadow-glow-coral' : 'bg-cream-200 text-warm-700 hover:bg-cream-300'}`}>
+                                <button key={t.id} onClick={() => setTab(t.id)} className={`flex-1 py-2.5 rounded-2xl font-medium text-sm transition-all press ${tab === t.id ? 'bg-coral-500 text-white shadow-glow-coral' : 'bg-cream-200 text-warm-700'}`}>
                                     {t.label}
                                 </button>
                             ))}
@@ -500,10 +1070,6 @@
                                         <div className="bg-coral-50 border border-coral-100 rounded-xl p-3"><div className="text-coral-600 font-semibold text-xs mb-1">✕ Never</div><div className="text-warm-700 text-xs">Vegetable, Canola, Sunflower oil</div></div>
                                     </div>
                                 </div>
-                                <div className="card rounded-2xl p-5">
-                                    <h3 className="text-sm font-semibold text-warm-600 uppercase tracking-wider mb-3">🧀 Cheese (max 50g)</h3>
-                                    <div className="flex gap-2">{cheeses.map(c => <span key={c.id} className="px-3 py-1.5 bg-sand-100 text-sand-600 rounded-full text-sm font-medium">{c.name}</span>)}</div>
-                                </div>
                                 <div className="bg-coral-50 border border-coral-100 rounded-2xl p-5">
                                     <h3 className="text-sm font-semibold text-coral-600 uppercase tracking-wider mb-3">🚫 Never List</h3>
                                     <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-warm-700">
@@ -511,10 +1077,6 @@
                                         <div>✕ Arepas (rare)</div><div>✕ Seed/veg oils</div>
                                         <div>✕ Juice, soda</div><div>✕ Potatoes, yuca</div>
                                     </div>
-                                </div>
-                                <div className="bg-gradient-to-br from-coral-50 to-sand-50 border border-coral-100 rounded-2xl p-5 text-center">
-                                    <span className="text-3xl">💕</span>
-                                    <p className="text-warm-700 text-sm mt-2">Diego owes Nene unlimited backrubs for this 💆‍♀️</p>
                                 </div>
                             </>)}
                             {tab === 'dressings' && (
@@ -560,76 +1122,21 @@
             );
         }
 
-        function RecipeModal({ meal, onClose, flavor }) {
-            const profile = flavorProfiles[flavor] || flavorProfiles.classic;
-            return (
-                <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={onClose}>
-                    <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[90vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
-                        <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
-                        <div className="px-5 pb-8 overflow-y-auto max-h-[calc(90vh-50px)]">
-                            <div className="mb-5">
-                                <h2 className="text-2xl font-bold text-warm-800 mb-1">{meal.name}</h2>
-                                <div className="flex items-center gap-3 text-sm">
-                                    <span className="text-warm-600">⏱️ {meal.time} min</span>
-                                    <span className="text-coral-500 font-semibold">~{meal.baseProtein}g protein</span>
-                                    {meal.isVenezuelan && <span>🇻🇪</span>}
-                                </div>
-                            </div>
-                            {profile.seasonings && (
-                                <div className="bg-gradient-to-br from-coral-50 to-sand-50 rounded-2xl p-4 border border-coral-100 mb-5">
-                                    <h3 className="text-coral-600 font-semibold text-sm mb-2">{profile.emoji} {profile.name} Seasoning</h3>
-                                    <p className="text-warm-700 text-sm">{profile.seasonings}</p>
-                                    {profile.finisher && <p className="text-warm-600 text-xs mt-2">Finish: {profile.finisher}</p>}
-                                </div>
-                            )}
-                            {meal.steps && meal.steps.length > 0 && (
-                                <div className="mb-5">
-                                    <h3 className="text-warm-800 font-semibold mb-3">Steps</h3>
-                                    <div className="space-y-3">
-                                        {meal.steps.map((step, i) => (
-                                            <div key={i} className="flex gap-3">
-                                                <div className="w-7 h-7 rounded-full bg-coral-100 text-coral-600 flex items-center justify-center flex-shrink-0 text-sm font-semibold">{i + 1}</div>
-                                                <p className="text-warm-700 text-sm pt-1">{step}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-                            {meal.tips && meal.tips.length > 0 && (
-                                <div className="bg-cream-100 rounded-2xl p-4 mb-5">
-                                    <h3 className="text-warm-800 font-semibold text-sm mb-2">💡 Tips</h3>
-                                    {meal.tips.map((tip, i) => <p key={i} className="text-warm-600 text-sm">• {tip}</p>)}
-                                </div>
-                            )}
-                            {meal.doneness && (
-                                <div className="bg-sage-50 border border-sage-100 rounded-2xl p-4">
-                                    <h3 className="text-sage-600 font-semibold text-sm mb-1">✓ Done when</h3>
-                                    <p className="text-warm-700 text-sm">{meal.doneness}</p>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            );
-        }
-
         // ==================== MAIN APP ====================
         function App() {
             const [tab, setTab] = useState('create');
             const [selProteins, setSelProteins] = useState([]);
             const [selVeggies, setSelVeggies] = useState([]);
-            const [selCheese, setSelCheese] = useState([]);
             const [selFlavor, setSelFlavor] = useState('any');
             const [selTime, setSelTime] = useState('any');
+            const [selCategory, setSelCategory] = useState('any');
             const [portions, setPortions] = useState(1);
             const [meals, setMeals] = useState([]);
             const [showMeals, setShowMeals] = useState(false);
-            const [suggestions, setSuggestions] = useState([]);
 
             const [favorites, setFavorites] = useState(() => load('favs', []));
             const [history, setHistory] = useState(() => load('hist', []));
             const [shopping, setShopping] = useState(() => load('shop', []));
-            const [weekPlan, setWeekPlan] = useState(() => load('week', Array(7).fill(null).map(() => ({ lunch: null, dinner: null }))));
             const [badges, setBadges] = useState(() => load('badges', []));
             const [stats, setStats] = useState(() => load('stats', { total: 0, streak: 0, lastDate: null }));
 
@@ -642,20 +1149,14 @@
             const [showRecipe, setShowRecipe] = useState(null);
             const [copied, setCopied] = useState(false);
 
-            // Debounced save - batches all localStorage writes
             const saveTimeoutRef = useRef(null);
             useEffect(() => {
                 if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
                 saveTimeoutRef.current = setTimeout(() => {
-                    save('favs', favorites);
-                    save('hist', history);
-                    save('shop', shopping);
-                    save('week', weekPlan);
-                    save('badges', badges);
-                    save('stats', stats);
+                    save('favs', favorites); save('hist', history); save('shop', shopping);
+                    save('badges', badges); save('stats', stats);
                 }, 300);
-                return () => { if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current); };
-            }, [favorites, history, shopping, weekPlan, badges, stats]);
+            }, [favorites, history, shopping, badges, stats]);
 
             const checkBadges = (s, f) => {
                 const cs = s || stats, cf = f || favorites;
@@ -682,15 +1183,18 @@
                     ns.streak = stats.lastDate === yesterday ? stats.streak + 1 : 1;
                     ns.lastDate = today;
                 }
-                setStats(ns);
-                checkBadges(ns, null);
+                setStats(ns); checkBadges(ns, null);
             };
 
             const addShopping = m => {
                 const items = [];
-                m.proteins?.forEach(id => { const p = proteins.find(x => x.id === id); if (p && !shopping.some(s => s.name === p.shopping)) items.push({ name: p.shopping, cat: 'protein' }); });
-                m.veggies?.forEach(id => { const v = vegetables.find(x => x.id === id); if (v && !shopping.some(s => s.name === v.shopping)) items.push({ name: v.shopping, cat: 'veggie' }); });
-                m.cheese?.forEach(id => { const c = cheeses.find(x => x.id === id); if (c && !shopping.some(s => s.name === c.shopping)) items.push({ name: c.shopping, cat: 'dairy' }); });
+                if (m.ingredients) {
+                    m.ingredients.forEach(ing => {
+                        if (!shopping.some(s => s.name === `${ing.item} (${ing.amount})`)) {
+                            items.push({ name: `${ing.item} (${ing.amount})`, cat: 'ingredient' });
+                        }
+                    });
+                }
                 if (items.length) setShopping([...shopping, ...items]);
             };
 
@@ -700,104 +1204,68 @@
                 else { navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000); }
             };
 
-            const genShopFromPlan = () => {
-                const all = new Map();
-                weekPlan.forEach(d => [d.lunch, d.dinner].forEach(m => {
-                    if (!m) return;
-                    m.proteins?.forEach(id => { const p = proteins.find(x => x.id === id); if (p) all.set(p.shopping, { name: p.shopping, cat: 'protein' }); });
-                    m.veggies?.forEach(id => { const v = vegetables.find(x => x.id === id); if (v) all.set(v.shopping, { name: v.shopping, cat: 'veggie' }); });
-                    m.cheese?.forEach(id => { const c = cheeses.find(x => x.id === id); if (c) all.set(c.shopping, { name: c.shopping, cat: 'dairy' }); });
-                }));
-                setShopping([...all.values()]);
-                setTab('shop');
+            const handleSurpriseMe = () => {
+                if (selProteins.length === 0) { alert('Select at least one protein first!'); return; }
+                const recipe = getSurpriseRecipe(selProteins, history);
+                if (recipe) {
+                    const flavor = selFlavor !== 'any' ? selFlavor : getRandom(recipe.flavors.filter(f => f !== 'any')) || 'classic';
+                    const meal = { id: `${recipe.id}_${Date.now()}`, recipeId: recipe.id, ...recipe, flavor, veggies: selVeggies };
+                    setMeals([meal]); setShowMeals(true);
+                    setTimeout(() => { setLoveMsg(getRandom(loveMessages)); setShowLove(true); }, 1500);
+                }
             };
 
-            const applyPortions = m => portions === 1 ? m : { ...m, displayProtein: Math.round(m.baseProtein * portions), displayServing: m.servingSize ? m.servingSize.replace(/(\d+)g/g, (_, n) => Math.round(parseInt(n) * portions) + 'g') : m.description };
-
             const genMeals = () => {
-                const matching = [];
-                const proteinSet = new Set(selProteins);
-                const timeFilter = timeCategories[selTime];
-
-                mealRecipes.forEach(r => {
-                    if (!r.proteins.every(p => proteinSet.has(p))) return;
-                    if (r.requiresVeggies && selVeggies.length === 0) return;
-                    if (r.saladOnly && !selVeggies.some(v => vegetables.find(x => x.id === v)?.salad)) return;
-                    if (selTime !== 'any' && (r.time < timeFilter.min || r.time > timeFilter.max)) return;
-                    if (selFlavor !== 'any' && !r.flavors.includes(selFlavor) && !r.flavors.includes('any')) return;
-                    matching.push(r);
+                const matching = mealRecipes.filter(r => {
+                    if (!r.proteins.every(p => selProteins.includes(p))) return false;
+                    if (r.requiresVeggies && selVeggies.length === 0) return false;
+                    if (selTime !== 'any') {
+                        const tf = timeCategories[selTime];
+                        if (r.time < tf.min || r.time > tf.max) return false;
+                    }
+                    if (selFlavor !== 'any' && !r.flavors.includes(selFlavor) && !r.flavors.includes('any')) return false;
+                    if (selCategory !== 'any' && r.category !== selCategory) return false;
+                    return true;
                 });
 
                 const results = matching.map(r => {
                     const flavor = selFlavor !== 'any' ? selFlavor : getRandom(r.flavors.filter(f => f !== 'any')) || 'classic';
-                    const profile = flavorProfiles[flavor];
-                    const veggieNames = selVeggies.map(id => vegetables.find(v => v.id === id)?.name).filter(Boolean);
-                    const cheeseNames = selCheese.map(id => cheeses.find(c => c.id === id)?.name).filter(Boolean);
-                    let desc = r.servingSize;
-                    if (veggieNames.length) desc += ` with ${veggieNames.slice(0,3).join(', ')}`;
-                    if (cheeseNames.length) desc += ` + ${cheeseNames[0]}`;
-                    if (flavor !== 'any') desc += ` • ${profile.emoji} ${profile.name} style`;
-
-                    return { id: `${r.id}_${Date.now()}`, recipeId: r.id, name: r.name, description: desc, baseProtein: r.baseProtein, time: r.time, flavor, proteins: r.proteins, veggies: selVeggies, cheese: selCheese, isVenezuelan: r.isVenezuelan, lowProteinWarning: r.lowProteinWarning, steps: r.steps, tips: r.tips, doneness: r.doneness, suggestDressing: r.suggestDressing, servingSize: r.servingSize };
+                    return { id: `${r.id}_${Date.now()}`, recipeId: r.id, ...r, flavor, veggies: selVeggies };
                 });
 
-                const shuffled = results.sort(() => 0.5 - Math.random());
-                const unique = []; const seen = new Set();
-                shuffled.forEach(m => { if (!seen.has(m.recipeId) && unique.length < 4) { seen.add(m.recipeId); unique.push(m); } });
-                setMeals(unique);
-                setShowMeals(true);
-
-                const suggs = [];
-                if (!selVeggies.length) suggs.push({ icon: '🥗', text: 'Add veggies — they\'re unlimited!' });
-                if (unique.some(m => m.lowProteinWarning)) suggs.push({ icon: '💪', text: 'Consider adding more protein' });
-                if (!selVeggies.includes('avocado') && selProteins.length) suggs.push({ icon: '🥑', text: 'Avocado adds healthy fats' });
-                setSuggestions(suggs.slice(0, 2));
-
+                const shuffled = results.sort(() => 0.5 - Math.random()).slice(0, 4);
+                setMeals(shuffled); setShowMeals(true);
                 setTimeout(() => { setLoveMsg(getRandom(loveMessages)); setShowLove(true); }, 2500);
             };
 
-            const getDressing = flavor => dressings.filter(d => d.flavor === flavor || flavor === 'any')[0] || dressings[0];
-            const reset = () => { setSelProteins([]); setSelVeggies([]); setSelCheese([]); setSelFlavor('any'); setSelTime('any'); setPortions(1); setMeals([]); setShowMeals(false); };
+            const getDressing = flavor => dressings.find(d => d.flavor === flavor) || dressings[0];
 
             const MealCard = ({ meal, actions = true }) => {
-                const dm = applyPortions(meal);
                 const dressing = meal.suggestDressing ? getDressing(meal.flavor) : null;
                 return (
-                    <div className="card rounded-[1.5rem] overflow-hidden border border-cream-200">
+                    <div className="card rounded-[1.5rem] overflow-hidden border border-cream-200 mb-4">
                         <div className="h-1.5 bg-gradient-to-r from-coral-500 to-sand-500" />
                         <div className="p-5">
                             <div className="flex items-start justify-between mb-3">
-                                <h3 className="text-lg font-bold text-warm-800 leading-tight">{meal.name}</h3>
-                                <div className="flex items-center gap-2 ml-3">
-                                    {meal.isVenezuelan && <span className="text-xs bg-coral-100 text-coral-600 px-2.5 py-1 rounded-full font-medium">🇻🇪</span>}
-                                    {meal.flavor && meal.flavor !== 'any' && <span className="text-xs bg-cream-200 text-warm-600 px-2.5 py-1 rounded-full">{flavorProfiles[meal.flavor]?.emoji}</span>}
-                                    <button onClick={() => toggleFav(meal)} className="text-xl hover:scale-110 transition-transform press">{isFav(meal) ? '❤️' : '🤍'}</button>
+                                <h3 className="text-lg font-bold text-warm-800">{meal.name}</h3>
+                                <div className="flex items-center gap-2">
+                                    {meal.isVenezuelan && <span className="text-xs bg-coral-100 text-coral-600 px-2 py-1 rounded-full">🇻🇪</span>}
+                                    <button onClick={() => toggleFav(meal)} className="text-xl press">{isFav(meal) ? '❤️' : '🤍'}</button>
                                 </div>
                             </div>
-                            <p className="text-warm-600 text-sm mb-4 leading-relaxed">{dm.displayServing || meal.description}</p>
-                            <div className="flex items-center gap-2 flex-wrap mb-4">
-                                <span className={`px-3 py-1.5 rounded-full text-xs font-semibold ${meal.lowProteinWarning ? 'bg-sand-100 text-sand-600' : 'bg-coral-100 text-coral-600'}`}>
-                                    ~{dm.displayProtein || meal.baseProtein}g protein
-                                </span>
+                            <p className="text-warm-600 text-sm mb-3">{meal.servingSize}</p>
+                            <div className="flex gap-2 flex-wrap mb-4">
+                                <span className={`px-3 py-1.5 rounded-full text-xs font-semibold ${meal.lowProteinWarning ? 'bg-sand-100 text-sand-600' : 'bg-coral-100 text-coral-600'}`}>~{meal.baseProtein}g protein</span>
                                 <span className="px-3 py-1.5 rounded-full text-xs bg-cream-200 text-warm-600">⏱️ {meal.time} min</span>
-                                {meal.lowProteinWarning && <span className="text-sand-500 text-xs font-medium">⚠️ Low</span>}
+                                {meal.netCarbs !== undefined && <span className="px-3 py-1.5 rounded-full text-xs bg-sage-100 text-sage-600">{meal.netCarbs}g carbs</span>}
                             </div>
-                            <button onClick={() => setShowRecipe(meal)} className="w-full py-2.5 mb-4 bg-cream-100 hover:bg-cream-200 rounded-xl text-warm-700 text-sm font-medium transition-colors press">
-                                📖 View Recipe
-                            </button>
-                            {dressing && (
-                                <div className="p-3 bg-sage-50 border border-sage-100 rounded-xl mb-4">
-                                    <p className="text-sage-600 text-xs font-semibold">🥗 Try: {dressing.name}</p>
-                                    <p className="text-warm-600 text-xs">{dressing.recipe}</p>
-                                </div>
-                            )}
+                            <button onClick={() => setShowRecipe(meal)} className="w-full py-2.5 mb-4 bg-cream-100 hover:bg-cream-200 rounded-xl text-warm-700 text-sm font-medium press">📖 View Recipe & Ingredients</button>
+                            {dressing && <div className="p-3 bg-sage-50 border border-sage-100 rounded-xl mb-4"><p className="text-sage-600 text-xs font-semibold">🥗 {dressing.name}</p><p className="text-warm-600 text-xs">{dressing.recipe}</p></div>}
                             {actions && (
                                 <div className="flex gap-2">
-                                    <button onClick={() => { addHistory(meal); addShopping(meal); }} className="flex-1 py-3 bg-gradient-to-r from-coral-500 to-coral-600 hover:from-coral-600 hover:to-coral-700 rounded-xl text-white text-sm font-semibold transition-all press shadow-glow-coral">
-                                        ✓ I made this
-                                    </button>
-                                    <button onClick={() => addShopping(meal)} className="py-3 px-4 bg-cream-200 hover:bg-cream-300 rounded-xl text-warm-700 text-sm transition-colors press">🛒</button>
-                                    <button onClick={() => setTimer({ min: meal.time, label: meal.name })} className="py-3 px-4 bg-cream-200 hover:bg-cream-300 rounded-xl text-warm-700 text-sm transition-colors press">⏱️</button>
+                                    <button onClick={() => { addHistory(meal); addShopping(meal); }} className="flex-1 py-3 bg-gradient-to-r from-coral-500 to-coral-600 rounded-xl text-white text-sm font-semibold press shadow-glow-coral">✓ I made this</button>
+                                    <button onClick={() => addShopping(meal)} className="py-3 px-4 bg-cream-200 rounded-xl text-warm-700 press">🛒</button>
+                                    <button onClick={() => setTimer({ min: meal.time, label: meal.name })} className="py-3 px-4 bg-cream-200 rounded-xl text-warm-700 press">⏱️</button>
                                 </div>
                             )}
                         </div>
@@ -807,11 +1275,9 @@
 
             return (
                 <div className="min-h-screen bg-cream-100 pb-28">
-                    {/* Background accents - simplified for performance */}
                     <div className="fixed inset-0 overflow-hidden pointer-events-none">
                         <div className="absolute -top-40 -right-40 w-96 h-96 bg-coral-50 rounded-full opacity-60" />
                         <div className="absolute top-1/2 -left-40 w-80 h-80 bg-sage-50 rounded-full opacity-60" />
-                        <div className="absolute bottom-20 right-0 w-72 h-72 bg-sand-50 rounded-full opacity-50" />
                     </div>
 
                     {showGuide && <GuideModal onClose={() => setShowGuide(false)} />}
@@ -820,7 +1286,6 @@
                     {timer && <Timer minutes={timer.min} label={timer.label} onClose={() => setTimer(null)} />}
                     {showRecipe && <RecipeModal meal={showRecipe} onClose={() => setShowRecipe(null)} flavor={showRecipe.flavor} />}
 
-                    {/* Love popup */}
                     {showLove && (
                         <div className="fixed inset-0 z-50 flex items-center justify-center p-6" onClick={() => setShowLove(false)}>
                             <div className="absolute inset-0 bg-warm-900/20 backdrop-blur-md">
@@ -829,271 +1294,119 @@
                             <div className="relative animate-bounce-in" onClick={e => e.stopPropagation()}>
                                 <div className="absolute -inset-6 bg-gradient-to-r from-coral-300 to-sand-300 rounded-[3rem] blur-2xl opacity-50 animate-pulse-soft" />
                                 <div className="relative bg-white rounded-[2rem] p-8 max-w-sm w-full border border-coral-100 shadow-soft-lg">
-                                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-coral-500 to-sand-500 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-glow-coral">💌 From Diego</div>
+                                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-coral-500 to-sand-500 text-white text-xs font-semibold px-4 py-2 rounded-full">💌 From Diego</div>
                                     <div className="flex justify-center mb-6 mt-2">
-                                        <div className="w-20 h-20 bg-gradient-to-br from-coral-400 to-sand-400 rounded-full flex items-center justify-center shadow-glow-coral">
+                                        <div className="w-20 h-20 bg-gradient-to-br from-coral-400 to-sand-400 rounded-full flex items-center justify-center">
                                             <span className="text-4xl animate-heartbeat">💕</span>
                                         </div>
                                     </div>
-                                    <p className="text-warm-800 text-xl font-medium text-center mb-6 leading-relaxed">{loveMsg}</p>
-                                    <button onClick={() => setShowLove(false)} className="w-full py-3.5 bg-gradient-to-r from-coral-500 to-sand-500 rounded-2xl text-white font-semibold press shadow-glow-coral">
-                                        Ay Diego 😅
-                                    </button>
+                                    <p className="text-warm-800 text-xl font-medium text-center mb-6">{loveMsg}</p>
+                                    <button onClick={() => setShowLove(false)} className="w-full py-3.5 bg-gradient-to-r from-coral-500 to-sand-500 rounded-2xl text-white font-semibold press">Ay Diego 😅</button>
                                 </div>
                             </div>
                         </div>
                     )}
 
-                    {/* Main content */}
                     <div className="relative max-w-lg mx-auto px-5 pt-6 pb-8">
-                        {/* Header */}
                         <div className="flex items-center justify-between mb-6">
-                            <button onClick={() => setShowGuide(true)} className="w-12 h-12 rounded-2xl card border border-cream-200 flex items-center justify-center text-xl press hover:bg-cream-50">📋</button>
+                            <button onClick={() => setShowGuide(true)} className="w-12 h-12 rounded-2xl card border border-cream-200 flex items-center justify-center text-xl press">📋</button>
                             <div className="text-center">
                                 <h1 className="text-2xl font-bold text-warm-800">Nene's Kitchen</h1>
-                                <p className="text-warm-600 text-sm">{stats.total} meals • {stats.streak} day streak 🔥</p>
+                                <p className="text-warm-600 text-sm">{stats.total} meals • {stats.streak}🔥</p>
                             </div>
-                            <button onClick={() => setShowBadges(true)} className="w-12 h-12 rounded-2xl card border border-cream-200 flex items-center justify-center text-xl press hover:bg-cream-50 relative">
-                                🏆
-                                {badges.length > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 bg-coral-500 rounded-full text-[10px] text-white flex items-center justify-center font-bold">{badges.length}</span>}
-                            </button>
+                            <button onClick={() => setShowBadges(true)} className="w-12 h-12 rounded-2xl card border border-cream-200 flex items-center justify-center text-xl press relative">🏆{badges.length > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 bg-coral-500 rounded-full text-[10px] text-white flex items-center justify-center">{badges.length}</span>}</button>
                         </div>
 
-                        {/* CREATE TAB */}
                         {tab === 'create' && (<>
-                            <div className="card rounded-2xl px-5 py-3 mb-5 border border-cream-200">
-                                <div className="flex items-center justify-center gap-4 text-sm">
-                                    <span className="text-warm-600">Target:</span>
-                                    <span className="text-coral-500 font-bold">80-100g protein</span>
-                                    <span className="text-cream-300">•</span>
-                                    <span className="text-warm-600">~1,800 cal</span>
+                            <button onClick={handleSurpriseMe} className="w-full mb-5 py-4 bg-gradient-to-r from-coral-500 to-sand-500 rounded-2xl text-white font-bold text-lg shadow-glow-coral press">🎲 Surprise Me!</button>
+
+                            <div className="mb-4">
+                                <h2 className="text-warm-600 text-xs font-semibold uppercase mb-3">Meal Type</h2>
+                                <div className="flex gap-2 flex-wrap">
+                                    {Object.values(mealCategories).map(c => (
+                                        <button key={c.id} onClick={() => setSelCategory(c.id)} className={`px-3 py-2 rounded-xl text-sm font-medium press ${selCategory === c.id ? 'chip-selected' : 'chip-unselected'}`}>{c.emoji} {c.name}</button>
+                                    ))}
                                 </div>
                             </div>
 
                             <div className="mb-4">
-                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3">What's the vibe?</h2>
+                                <h2 className="text-warm-600 text-xs font-semibold uppercase mb-3">Flavor</h2>
                                 <div className="flex gap-2 flex-wrap">
                                     {Object.values(flavorProfiles).map(f => (
-                                        <button key={f.id} onClick={() => { setSelFlavor(f.id); setShowMeals(false); }}
-                                            className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all press ${selFlavor === f.id ? 'chip-selected' : 'chip-unselected'}`}>
-                                            {f.emoji} {f.name}
-                                        </button>
+                                        <button key={f.id} onClick={() => setSelFlavor(f.id)} className={`px-4 py-2.5 rounded-xl text-sm font-medium press ${selFlavor === f.id ? 'chip-selected' : 'chip-unselected'}`}>{f.emoji} {f.name}</button>
                                     ))}
                                 </div>
                             </div>
 
                             <div className="mb-4">
-                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3">How much time?</h2>
+                                <h2 className="text-warm-600 text-xs font-semibold uppercase mb-3">Time</h2>
                                 <div className="flex gap-2">
                                     {Object.values(timeCategories).map(t => (
-                                        <button key={t.id} onClick={() => { setSelTime(t.id); setShowMeals(false); }}
-                                            className={`flex-1 px-3 py-2.5 rounded-xl text-sm font-medium transition-all press ${selTime === t.id ? 'bg-sage-500 text-white shadow-glow-sage' : 'chip-unselected'}`}>
-                                            {t.emoji} {t.name}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="card rounded-2xl px-5 py-4 mb-5 border border-cream-200 flex items-center justify-between">
-                                <span className="text-warm-600 text-sm">Cooking for</span>
-                                <div className="flex gap-2">
-                                    {[1, 2].map(n => (
-                                        <button key={n} onClick={() => setPortions(n)}
-                                            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all press ${portions === n ? 'bg-sand-500 text-white' : 'bg-cream-200 text-warm-600'}`}>
-                                            {n} {n === 1 ? 'person' : 'people'}
-                                        </button>
+                                        <button key={t.id} onClick={() => setSelTime(t.id)} className={`flex-1 px-3 py-2.5 rounded-xl text-sm font-medium press ${selTime === t.id ? 'bg-sage-500 text-white' : 'chip-unselected'}`}>{t.emoji} {t.name}</button>
                                     ))}
                                 </div>
                             </div>
 
                             <div className="mb-5">
-                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3 flex items-center gap-2">
-                                    <span className="w-6 h-6 rounded-lg bg-gradient-to-br from-coral-400 to-coral-500 flex items-center justify-center text-xs text-white">🥩</span>
-                                    What protein?
-                                </h2>
-                                <div className="grid grid-cols-3 gap-2">
+                                <h2 className="text-warm-600 text-xs font-semibold uppercase mb-3">🥩 Protein</h2>
+                                <div className="flex flex-wrap gap-2">
                                     {proteins.map(p => (
-                                        <button key={p.id} onClick={() => toggle(p.id, selProteins, setSelProteins)}
-                                            className={`p-3 rounded-2xl text-center transition-all press ${selProteins.includes(p.id) ? 'chip-selected scale-105' : 'chip-unselected'}`}>
-                                            <span className="text-2xl block mb-1">{p.emoji}</span>
-                                            <span className="text-xs font-medium">{p.name}</span>
-                                        </button>
+                                        <button key={p.id} onClick={() => toggle(p.id, selProteins, setSelProteins)} className={`px-4 py-2.5 rounded-xl text-sm font-medium press ${selProteins.includes(p.id) ? 'chip-selected' : 'chip-unselected'}`}>{p.emoji} {p.name}</button>
                                     ))}
                                 </div>
                             </div>
 
                             <div className="mb-5">
-                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3 flex items-center gap-2">
-                                    <span className="w-6 h-6 rounded-lg bg-gradient-to-br from-sage-400 to-sage-500 flex items-center justify-center text-xs text-white">🥬</span>
-                                    What veggies?
-                                </h2>
-                                <div className="grid grid-cols-4 gap-2">
+                                <h2 className="text-warm-600 text-xs font-semibold uppercase mb-3">🥬 Veggies</h2>
+                                <div className="flex flex-wrap gap-2">
                                     {vegetables.map(v => (
-                                        <button key={v.id} onClick={() => toggle(v.id, selVeggies, setSelVeggies)}
-                                            className={`p-2.5 rounded-xl text-center transition-all press relative ${selVeggies.includes(v.id) ? 'bg-sage-500 text-white scale-105 shadow-glow-sage' : 'chip-unselected'}`}>
-                                            <span className="text-xl block">{v.emoji}</span>
-                                            <span className="text-[10px] font-medium">{v.name}</span>
-                                            {v.warning && <span className="absolute -top-1 -right-1 w-4 h-4 bg-sand-500 rounded-full text-[8px] flex items-center justify-center text-white">⚠️</span>}
-                                        </button>
-                                    ))}
-                                </div>
-                                {selVeggies.includes('spinach') && <div className="mt-3 p-3 bg-sand-50 border border-sand-200 rounded-xl"><p className="text-sand-600 text-xs font-medium">⚠️ Spinach: Max 2-3x per week</p></div>}
-                            </div>
-
-                            <div className="mb-6">
-                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3 flex items-center gap-2">
-                                    <span className="w-6 h-6 rounded-lg bg-gradient-to-br from-sand-400 to-sand-500 flex items-center justify-center text-xs text-white">🧀</span>
-                                    Cheese? <span className="font-normal text-warm-500">(max 50g)</span>
-                                </h2>
-                                <div className="grid grid-cols-3 gap-2">
-                                    {cheeses.map(c => (
-                                        <button key={c.id} onClick={() => toggle(c.id, selCheese, setSelCheese)}
-                                            className={`p-3 rounded-2xl text-center transition-all press ${selCheese.includes(c.id) ? 'bg-sand-500 text-white scale-105' : 'chip-unselected'}`}>
-                                            <span className="text-2xl block mb-1">{c.emoji}</span>
-                                            <span className="text-xs font-medium">{c.name}</span>
-                                        </button>
+                                        <button key={v.id} onClick={() => toggle(v.id, selVeggies, setSelVeggies)} className={`px-3 py-2 rounded-xl text-sm font-medium press ${selVeggies.includes(v.id) ? 'bg-sage-500 text-white' : 'chip-unselected'}`}>{v.emoji} {v.name}</button>
                                     ))}
                                 </div>
                             </div>
 
-                            <button onClick={genMeals} disabled={!selProteins.length}
-                                className={`w-full py-4 rounded-2xl font-bold text-lg transition-all press ${selProteins.length ? 'bg-gradient-to-r from-coral-500 to-sand-500 text-white shadow-glow-coral hover:shadow-lg' : 'bg-cream-200 text-warm-500 cursor-not-allowed'}`}>
-                                ✨ What can I make?
-                            </button>
-                            {selProteins.length > 0 && <button onClick={reset} className="w-full py-3 mt-3 rounded-xl text-coral-500 border border-coral-200 hover:bg-coral-50 transition-all press text-sm font-medium">↺ Start Over</button>}
+                            <button onClick={genMeals} disabled={selProteins.length === 0} className={`w-full py-4 rounded-2xl font-bold text-lg mb-6 press ${selProteins.length > 0 ? 'bg-warm-800 text-white' : 'bg-cream-200 text-warm-500'}`}>Show Recipes</button>
 
                             {showMeals && meals.length > 0 && (
-                                <div className="mt-8 space-y-4">
-                                    <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider">👨‍🍳 Here's what you can make {portions > 1 && <span className="text-coral-500">(×{portions})</span>}</h2>
+                                <div className="animate-fade-in">
                                     {meals.map(m => <MealCard key={m.id} meal={m} />)}
-                                    {suggestions.length > 0 && (
-                                        <div className="space-y-2 mt-4">
-                                            {suggestions.map((s, i) => (
-                                                <div key={i} className="flex items-center gap-3 p-3 bg-cream-50 rounded-xl border border-cream-200">
-                                                    <span className="text-xl">{s.icon}</span>
-                                                    <span className="text-warm-600 text-sm">{s.text}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                    <p className="text-center text-warm-500 text-xs mt-4">Tap again for different ideas ↻</p>
-                                </div>
-                            )}
-                            {showMeals && meals.length === 0 && (
-                                <div className="mt-8 card rounded-2xl p-8 text-center border border-cream-200">
-                                    <span className="text-4xl mb-4 block">🤔</span>
-                                    <p className="text-warm-600">No recipes match. Try different options!</p>
+                                    <button onClick={() => { setMeals([]); setShowMeals(false); }} className="w-full py-3 text-warm-600 text-sm">Clear & Start Over</button>
                                 </div>
                             )}
                         </>)}
 
-                        {/* PLAN TAB */}
-                        {tab === 'plan' && (
-                            <div className="space-y-6">
-                                <div>
-                                    <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3">📜 Recent Meals</h2>
-                                    {history.length === 0 ? (
-                                        <div className="card rounded-2xl p-6 text-center border border-cream-200">
-                                            <span className="text-3xl mb-2 block">🍳</span>
-                                            <p className="text-warm-600 text-sm">No meals logged yet</p>
-                                        </div>
-                                    ) : (
-                                        <div className="space-y-2">
-                                            {history.slice(0, 5).map((m, i) => (
-                                                <div key={i} className="card rounded-xl p-4 border border-cream-200 flex items-center justify-between">
-                                                    <div>
-                                                        <h3 className="text-warm-800 font-medium text-sm">{m.name}</h3>
-                                                        <p className="text-warm-500 text-xs">{formatDate(m.cookedAt)}</p>
-                                                    </div>
-                                                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-coral-100 text-coral-600">~{m.baseProtein}g</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                                <div>
-                                    <div className="flex items-center justify-between mb-3">
-                                        <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider">📅 Week Planner</h2>
-                                        <button onClick={genShopFromPlan} className="px-4 py-2 bg-gradient-to-r from-coral-500 to-sand-500 rounded-xl text-white text-xs font-semibold press shadow-glow-coral">🛒 Generate List</button>
-                                    </div>
-                                    <div className="space-y-2">
-                                        {dayNames.map((day, di) => (
-                                            <div key={day} className="card rounded-xl p-4 border border-cream-200">
-                                                <h3 className="text-warm-800 font-semibold text-sm mb-2">{dayNamesFull[di]}</h3>
-                                                <div className="space-y-2">
-                                                    {['lunch', 'dinner'].map(slot => (
-                                                        <div key={slot} className="flex items-center gap-3">
-                                                            <span className="text-warm-500 text-xs w-10">{slot === 'lunch' ? '12pm' : '5pm'}</span>
-                                                            {weekPlan[di][slot] ? (
-                                                                <div className="flex-1 flex items-center justify-between bg-cream-100 rounded-lg px-3 py-2">
-                                                                    <span className="text-warm-800 text-sm">{weekPlan[di][slot].name}</span>
-                                                                    <button onClick={() => { const np = [...weekPlan]; np[di] = { ...np[di], [slot]: null }; setWeekPlan(np); }} className="text-warm-500 hover:text-coral-500 text-sm">✕</button>
-                                                                </div>
-                                                            ) : (
-                                                                <select onChange={e => { const m = favorites.find(f => f.name === e.target.value); if (m) { const np = [...weekPlan]; np[di] = { ...np[di], [slot]: m }; setWeekPlan(np); } }}
-                                                                    className="flex-1 bg-cream-100 rounded-lg px-3 py-2 text-warm-500 text-sm border-0 outline-none" value="">
-                                                                    <option value="">+ Add from favorites</option>
-                                                                    {favorites.map((f, fi) => <option key={fi} value={f.name}>{f.name}</option>)}
-                                                                </select>
-                                                            )}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                    {favorites.length === 0 && <div className="mt-3 p-4 bg-sand-50 border border-sand-200 rounded-xl"><p className="text-sand-600 text-xs text-center font-medium">💡 Save favorites first!</p></div>}
-                                </div>
-                            </div>
-                        )}
-
-                        {/* SHOP TAB */}
                         {tab === 'shop' && (
-                            <div className="space-y-4">
-                                <div className="flex items-center justify-between">
-                                    <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider">🛒 Shopping List ({shopping.length})</h2>
-                                    {shopping.length > 0 && (
-                                        <div className="flex gap-2">
-                                            <button onClick={share} className="px-3 py-1.5 bg-cream-200 hover:bg-cream-300 rounded-lg text-warm-600 text-xs press">📤 Share</button>
-                                            <button onClick={() => setShopping([])} className="px-3 py-1.5 bg-coral-100 hover:bg-coral-200 rounded-lg text-coral-600 text-xs press">Clear</button>
-                                        </div>
-                                    )}
+                            <div>
+                                <div className="flex justify-between items-center mb-4">
+                                    <h2 className="text-warm-800 font-bold text-lg">🛒 Shopping List</h2>
+                                    <div className="flex gap-2">
+                                        {shopping.length > 0 && <button onClick={share} className="px-4 py-2 bg-sage-500 text-white rounded-xl text-sm font-medium press">📤 Share</button>}
+                                        {shopping.length > 0 && <button onClick={() => setShopping([])} className="px-4 py-2 bg-cream-200 text-warm-600 rounded-xl text-sm press">Clear</button>}
+                                    </div>
                                 </div>
-                                {copied && <div className="bg-sage-100 rounded-xl p-3 text-sage-600 text-sm text-center font-medium">✓ Copied!</div>}
+                                {copied && <div className="bg-sage-100 rounded-xl p-3 text-sage-600 text-sm text-center mb-4">✓ Copied!</div>}
                                 {shopping.length === 0 ? (
                                     <div className="card rounded-2xl p-8 text-center border border-cream-200">
                                         <span className="text-4xl mb-3 block">🛒</span>
                                         <p className="text-warm-600">List is empty</p>
-                                        <p className="text-warm-500 text-sm mt-1">Add from meals or generate from planner</p>
+                                        <p className="text-warm-500 text-sm mt-1">Add ingredients from recipes</p>
                                     </div>
                                 ) : (
                                     <div className="card rounded-2xl border border-cream-200 overflow-hidden">
-                                        {['protein', 'veggie', 'dairy'].map(cat => {
-                                            const items = shopping.filter(i => i.cat === cat);
-                                            if (!items.length) return null;
-                                            return (
-                                                <div key={cat}>
-                                                    <div className="px-4 py-2 bg-cream-100 text-warm-600 text-xs uppercase font-semibold">
-                                                        {cat === 'protein' ? '🥩 Proteins' : cat === 'veggie' ? '🥬 Veggies' : '🧀 Dairy'}
-                                                    </div>
-                                                    {items.map((item, i) => (
-                                                        <div key={i} className="flex items-center justify-between px-4 py-3 border-b border-cream-200 last:border-0 bg-white">
-                                                            <span className="text-warm-800 text-sm">{item.name}</span>
-                                                            <button onClick={() => setShopping(shopping.filter(x => x.name !== item.name))} className="text-warm-500 hover:text-coral-500 text-sm">✕</button>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            );
-                                        })}
+                                        {shopping.map((item, i) => (
+                                            <div key={i} className="flex items-center justify-between px-4 py-3 border-b border-cream-100 last:border-0">
+                                                <span className="text-warm-700 text-sm">{item.name}</span>
+                                                <button onClick={() => setShopping(shopping.filter((_, idx) => idx !== i))} className="text-warm-400 hover:text-coral-500">✕</button>
+                                            </div>
+                                        ))}
                                     </div>
                                 )}
                             </div>
                         )}
 
-                        {/* SAVED TAB */}
                         {tab === 'saved' && (
-                            <div className="space-y-4">
-                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider">❤️ Favorites ({favorites.length})</h2>
+                            <div>
+                                <h2 className="text-warm-800 font-bold text-lg mb-4">❤️ Favorites ({favorites.length})</h2>
                                 {favorites.length === 0 ? (
                                     <div className="card rounded-2xl p-8 text-center border border-cream-200">
                                         <span className="text-4xl mb-3 block">💔</span>
@@ -1101,28 +1414,41 @@
                                         <p className="text-warm-500 text-sm mt-1">Tap ❤️ on any meal</p>
                                     </div>
                                 ) : (
-                                    <div className="space-y-4">{favorites.map(m => <MealCard key={m.name} meal={m} />)}</div>
+                                    favorites.map(m => <MealCard key={m.name} meal={m} />)
                                 )}
                             </div>
                         )}
 
-                        <div className="text-center mt-10 text-warm-500 text-xs">Made with 💕 for Nene</div>
+                        {tab === 'history' && (
+                            <div>
+                                <h2 className="text-warm-800 font-bold text-lg mb-4">📜 History ({history.length})</h2>
+                                {history.length === 0 ? (
+                                    <div className="card rounded-2xl p-8 text-center border border-cream-200">
+                                        <span className="text-4xl mb-3 block">📜</span>
+                                        <p className="text-warm-600">No meals logged yet</p>
+                                    </div>
+                                ) : (
+                                    history.slice(0, 20).map((m, i) => (
+                                        <div key={i} className="card rounded-xl p-4 mb-3 border border-cream-200">
+                                            <div className="flex justify-between">
+                                                <span className="text-warm-800 font-medium">{m.name}</span>
+                                                <span className="text-warm-500 text-sm">{formatDate(m.cookedAt)}</span>
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
+                        )}
+
+                        <div className="text-center mt-10 text-warm-500 text-xs">Made with 💕 for Nene • V5 with {mealRecipes.length} recipes</div>
                     </div>
 
-                    {/* BOTTOM NAV */}
-                    <div className="fixed bottom-0 left-0 right-0 glass border-t border-cream-200 px-4 py-3 z-30">
+                    <div className="fixed bottom-0 left-0 right-0 bg-cream-100/95 border-t border-cream-200 px-4 py-3 z-30">
                         <div className="max-w-lg mx-auto flex justify-around">
-                            {[
-                                { id: 'create', icon: '✨', label: 'Create' },
-                                { id: 'plan', icon: '📅', label: 'Plan' },
-                                { id: 'shop', icon: '🛒', label: 'Shop' },
-                                { id: 'saved', icon: '❤️', label: 'Saved' },
-                            ].map(t => (
-                                <button key={t.id} onClick={() => setTab(t.id)}
-                                    className={`flex flex-col items-center py-2 px-5 rounded-2xl transition-all press ${tab === t.id ? 'text-coral-500' : 'text-warm-500'}`}>
-                                    <span className={`text-2xl mb-1 transition-transform ${tab === t.id ? 'scale-110' : ''}`}>{t.icon}</span>
+                            {[{ id: 'create', icon: '✨', label: 'Create' }, { id: 'shop', icon: '🛒', label: 'Shop' }, { id: 'saved', icon: '❤️', label: 'Saved' }, { id: 'history', icon: '📜', label: 'History' }].map(t => (
+                                <button key={t.id} onClick={() => setTab(t.id)} className={`flex flex-col items-center py-2 px-5 rounded-2xl press ${tab === t.id ? 'text-coral-500' : 'text-warm-500'}`}>
+                                    <span className={`text-2xl mb-1 ${tab === t.id ? 'scale-110' : ''}`}>{t.icon}</span>
                                     <span className="text-[10px] font-semibold">{t.label}</span>
-                                    {tab === t.id && <div className="w-1.5 h-1.5 rounded-full bg-coral-500 mt-1" />}
                                 </button>
                             ))}
                         </div>
