@@ -1165,7 +1165,7 @@
 
             // Kitchen Essentials - what your protocol needs stocked
             const kitchenEssentials = [
-                { id: 'protein', name: 'Protein source', emoji: '🥩', description: 'Chicken, beef, fish, etc.', addText: 'Pick protein this week', cat: 'protein' },
+                { id: 'protein', name: 'Protein source', emoji: '🥩', description: 'Chicken, beef, fish, etc.', addText: 'Pick protein this week', cat: 'protein', hasPicker: true },
                 { id: 'eggs', name: 'Eggs', emoji: '🥚', description: 'Always need these', addText: 'Eggs (2 dozen)', cat: 'protein' },
                 { id: 'avocado', name: 'Avocados', emoji: '🥑', description: 'Healthy fats', addText: 'Avocados (6)', cat: 'produce' },
                 { id: 'greens', name: 'Greens & Veggies', emoji: '🥬', description: 'Unlimited on protocol', addText: 'Fresh vegetables', cat: 'produce' },
@@ -1174,6 +1174,40 @@
                 { id: 'lemons', name: 'Lemons/Limes', emoji: '🍋', description: 'For flavor', addText: 'Lemons (6)', cat: 'produce' },
                 { id: 'garlic', name: 'Garlic & Onions', emoji: '🧄', description: 'Aromatics', addText: 'Garlic + Onions', cat: 'produce' },
             ];
+
+            // Protein options for the picker
+            const proteinOptions = [
+                { 
+                    name: 'Chicken', emoji: '🍗', 
+                    cuts: ['Chicken breast (1kg)', 'Chicken thighs (1kg)', 'Whole chicken', 'Chicken wings (1kg)']
+                },
+                { 
+                    name: 'Beef', emoji: '🥩', 
+                    cuts: ['Ribeye steaks (4)', 'Sirloin steak (1kg)', 'Flank steak (800g)', 'Ground beef (1kg)', 'Beef roast (1.5kg)']
+                },
+                { 
+                    name: 'Pork', emoji: '🐷', 
+                    cuts: ['Pork chops (6)', 'Pork tenderloin (800g)', 'Pork shoulder (1.5kg)', 'Pork ribs (1kg)', 'Bacon (500g)']
+                },
+                { 
+                    name: 'Lamb', emoji: '🍖', 
+                    cuts: ['Lamb chops (8)', 'Lamb leg (1.5kg)', 'Ground lamb (500g)', 'Lamb shoulder (1kg)']
+                },
+                { 
+                    name: 'Salmon', emoji: '🐟', 
+                    cuts: ['Salmon fillets (4)', 'Whole salmon side (1kg)', 'Smoked salmon (200g)']
+                },
+                { 
+                    name: 'White Fish', emoji: '🐠', 
+                    cuts: ['Cod fillets (4)', 'Sea bass (2)', 'Tilapia fillets (6)', 'Halibut (500g)']
+                },
+                { 
+                    name: 'Shrimp', emoji: '🦐', 
+                    cuts: ['Large shrimp (500g)', 'Jumbo shrimp (400g)', 'Shrimp (1kg bag)']
+                },
+            ];
+
+            const [showProteinPicker, setShowProteinPicker] = useState(false);
 
             // Check if essential is covered in shopping list
             const isEssentialInList = (essential) => {
@@ -1193,10 +1227,24 @@
 
             const addEssential = (essential) => {
                 if (isEssentialInList(essential)) return;
+                if (essential.hasPicker) {
+                    setShowProteinPicker(true);
+                    return;
+                }
                 setShopping([...shopping, {
                     id: Date.now(),
                     name: essential.addText,
                     cat: essential.cat,
+                    checked: false
+                }]);
+            };
+
+            const addProteinCut = (cut) => {
+                if (shopping.some(s => s.name === cut)) return;
+                setShopping([...shopping, {
+                    id: Date.now(),
+                    name: cut,
+                    cat: 'protein',
                     checked: false
                 }]);
             };
@@ -1835,6 +1883,52 @@
                                                 )}
                                                 
                                                 <button onClick={() => setShowStaplesModal(false)} className="w-full py-3 bg-warm-800 text-white rounded-xl font-medium press">Done</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Protein Picker Modal */}
+                                {showProteinPicker && (
+                                    <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={() => setShowProteinPicker(false)}>
+                                        <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[85vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
+                                            <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
+                                            <div className="px-5 pb-8 overflow-y-auto max-h-[75vh]">
+                                                <h3 className="text-warm-800 font-bold text-lg mb-1">🥩 Pick Your Proteins</h3>
+                                                <p className="text-warm-500 text-sm mb-4">Tap to add to shopping list</p>
+                                                
+                                                <div className="space-y-4">
+                                                    {proteinOptions.map((protein, i) => (
+                                                        <div key={i} className="card rounded-2xl border border-cream-200 overflow-hidden">
+                                                            <div className="px-4 py-2.5 bg-cream-100 border-b border-cream-200 flex items-center gap-2">
+                                                                <span className="text-xl">{protein.emoji}</span>
+                                                                <span className="text-warm-800 font-semibold text-sm">{protein.name}</span>
+                                                            </div>
+                                                            <div className="p-2 flex flex-wrap gap-2">
+                                                                {protein.cuts.map((cut, j) => {
+                                                                    const inList = shopping.some(s => s.name === cut);
+                                                                    return (
+                                                                        <button
+                                                                            key={j}
+                                                                            onClick={() => addProteinCut(cut)}
+                                                                            disabled={inList}
+                                                                            className={`px-3 py-2 rounded-xl text-sm transition-all press ${
+                                                                                inList 
+                                                                                    ? 'bg-sage-100 text-sage-600' 
+                                                                                    : 'bg-white border border-cream-200 text-warm-700 hover:border-coral-300 hover:bg-coral-50'
+                                                                            }`}
+                                                                        >
+                                                                            {inList && <span className="mr-1">✓</span>}
+                                                                            {cut}
+                                                                        </button>
+                                                                    );
+                                                                })}
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                                
+                                                <button onClick={() => setShowProteinPicker(false)} className="w-full py-3 mt-5 bg-warm-800 text-white rounded-xl font-medium press">Done</button>
                                             </div>
                                         </div>
                                     </div>
