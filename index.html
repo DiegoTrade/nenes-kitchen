@@ -1139,6 +1139,41 @@
             const [favorites, setFavorites] = useState(() => load('favs', []));
             const [history, setHistory] = useState(() => load('hist', []));
             const [shopping, setShopping] = useState(() => load('shop', []));
+            const [staples, setStaples] = useState(() => load('staples', []));
+            const [newItem, setNewItem] = useState('');
+            const [editingItem, setEditingItem] = useState(null);
+            const [showStaplesModal, setShowStaplesModal] = useState(false);
+
+            // Shopping categories
+            const shopCategories = {
+                protein: { id: 'protein', name: 'Proteins', emoji: '🥩' },
+                produce: { id: 'produce', name: 'Produce', emoji: '🥬' },
+                dairy: { id: 'dairy', name: 'Dairy', emoji: '🧀' },
+                pantry: { id: 'pantry', name: 'Pantry', emoji: '🫙' },
+                other: { id: 'other', name: 'Other', emoji: '🛒' },
+            };
+
+            // Quick add items - common things Nene buys
+            const quickAddItems = [
+                { name: 'Eggs (2 dozen)', cat: 'protein', emoji: '🥚' },
+                { name: 'Avocados (6)', cat: 'produce', emoji: '🥑' },
+                { name: 'Butter', cat: 'dairy', emoji: '🧈' },
+                { name: 'Olive oil', cat: 'pantry', emoji: '🫒' },
+                { name: 'Lemons (6)', cat: 'produce', emoji: '🍋' },
+                { name: 'Garlic', cat: 'produce', emoji: '🧄' },
+                { name: 'Heavy cream', cat: 'dairy', emoji: '🥛' },
+                { name: 'Greek yogurt', cat: 'dairy', emoji: '🥛' },
+            ];
+
+            // Auto-categorize items
+            const categorizeItem = (name) => {
+                const lower = name.toLowerCase();
+                if (/chicken|beef|steak|salmon|fish|shrimp|lamb|pork|bacon|prosciutto|egg/i.test(lower)) return 'protein';
+                if (/cheese|feta|parmesan|halloumi|cream|milk|yogurt|butter/i.test(lower)) return 'dairy';
+                if (/broccoli|spinach|pepper|zucchini|mushroom|asparagus|avocado|tomato|onion|cucumber|lettuce|arugula|cabbage|cauliflower|garlic|ginger|lemon|lime|cilantro|parsley|basil/i.test(lower)) return 'produce';
+                if (/oil|vinegar|spice|cumin|paprika|salt|pepper|sauce|paste|coconut|tahini|almond/i.test(lower)) return 'pantry';
+                return 'other';
+            };
             const [badges, setBadges] = useState(() => load('badges', []));
             const [stats, setStats] = useState(() => load('stats', { total: 0, streak: 0, lastDate: null }));
 
@@ -1156,9 +1191,9 @@
                 if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
                 saveTimeoutRef.current = setTimeout(() => {
                     save('favs', favorites); save('hist', history); save('shop', shopping);
-                    save('badges', badges); save('stats', stats);
+                    save('badges', badges); save('stats', stats); save('staples', staples);
                 }, 300);
-            }, [favorites, history, shopping, badges, stats]);
+            }, [favorites, history, shopping, badges, stats, staples]);
 
             const checkBadges = (s, f) => {
                 const cs = s || stats, cf = f || favorites;
@@ -1192,17 +1227,102 @@
                 const items = [];
                 if (m.ingredients) {
                     m.ingredients.forEach(ing => {
-                        if (!shopping.some(s => s.name === `${ing.item} (${ing.amount})`)) {
-                            items.push({ name: `${ing.item} (${ing.amount})`, cat: 'ingredient' });
+                        const itemName = `${ing.item} (${ing.amount})`;
+                        if (!shopping.some(s => s.name === itemName)) {
+                            items.push({ 
+                                id: Date.now() + Math.random(),
+                                name: itemName, 
+                                cat: categorizeItem(ing.item),
+                                checked: false 
+                            });
                         }
                     });
                 }
                 if (items.length) setShopping([...shopping, ...items]);
             };
 
+            const addManualItem = () => {
+                if (!newItem.trim()) return;
+                const item = {
+                    id: Date.now(),
+                    name: newItem.trim(),
+                    cat: categorizeItem(newItem),
+                    checked: false
+                };
+                setShopping([...shopping, item]);
+                setNewItem('');
+            };
+
+            const addQuickItem = (item) => {
+                if (shopping.some(s => s.name === item.name)) return;
+                setShopping([...shopping, { 
+                    id: Date.now(), 
+                    name: item.name, 
+                    cat: item.cat, 
+                    checked: false 
+                }]);
+            };
+
+            const toggleChecked = (id) => {
+                setShopping(shopping.map(item => 
+                    item.id === id ? { ...item, checked: !item.checked } : item
+                ));
+            };
+
+            const updateItemName = (id, newName) => {
+                setShopping(shopping.map(item => 
+                    item.id === id ? { ...item, name: newName } : item
+                ));
+                setEditingItem(null);
+            };
+
+            const deleteItem = (id) => {
+                setShopping(shopping.filter(item => item.id !== id));
+            };
+
+            const clearChecked = () => {
+                setShopping(shopping.filter(item => !item.checked));
+            };
+
+            const addStaplestoList = () => {
+                const newItems = staples
+                    .filter(s => !shopping.some(sh => sh.name === s.name))
+                    .map(s => ({ ...s, id: Date.now() + Math.random(), checked: false }));
+                if (newItems.length) setShopping([...shopping, ...newItems]);
+            };
+
+            const addToStaples = (item) => {
+                if (staples.some(s => s.name === item.name)) return;
+                setStaples([...staples, { name: item.name, cat: item.cat }]);
+            };
+
+            const removeFromStaples = (name) => {
+                setStaples(staples.filter(s => s.name !== name));
+            };
+
+            const getItemsByCategory = () => {
+                const grouped = { protein: [], produce: [], dairy: [], pantry: [], other: [] };
+                shopping.forEach(item => {
+                    const cat = item.cat || 'other';
+                    if (grouped[cat]) grouped[cat].push(item);
+                    else grouped.other.push(item);
+                });
+                return grouped;
+            };
+
             const share = () => {
-                const text = `🛒 Shopping List:\n\n${shopping.map(i => '• ' + i.name).join('\n')}`;
-                if (navigator.share) navigator.share({ title: 'Shopping', text });
+                const grouped = getItemsByCategory();
+                let text = '🛒 *Shopping List*\n';
+                Object.entries(grouped).forEach(([cat, items]) => {
+                    if (items.length === 0) return;
+                    const unchecked = items.filter(i => !i.checked);
+                    if (unchecked.length === 0) return;
+                    text += `\n${shopCategories[cat]?.emoji || '📦'} *${shopCategories[cat]?.name || cat}*\n`;
+                    unchecked.forEach(item => {
+                        text += `• ${item.name}\n`;
+                    });
+                });
+                if (navigator.share) navigator.share({ title: 'Shopping List', text });
                 else { navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000); }
             };
 
@@ -1467,29 +1587,190 @@
                         </>)}
 
                         {tab === 'shop' && (
-                            <div>
+                            <div className="animate-fade-in">
+                                {/* Header */}
                                 <div className="flex justify-between items-center mb-4">
                                     <h2 className="text-warm-800 font-bold text-lg">🛒 Shopping List</h2>
                                     <div className="flex gap-2">
-                                        {shopping.length > 0 && <button onClick={share} className="px-4 py-2 bg-sage-500 text-white rounded-xl text-sm font-medium press">📤 Share</button>}
-                                        {shopping.length > 0 && <button onClick={() => setShopping([])} className="px-4 py-2 bg-cream-200 text-warm-600 rounded-xl text-sm press">Clear</button>}
+                                        {shopping.length > 0 && <button onClick={share} className="px-3 py-2 bg-sage-500 text-white rounded-xl text-sm font-medium press">📤</button>}
+                                        {shopping.some(i => i.checked) && <button onClick={clearChecked} className="px-3 py-2 bg-cream-200 text-warm-600 rounded-xl text-sm press">Clear ✓</button>}
                                     </div>
                                 </div>
-                                {copied && <div className="bg-sage-100 rounded-xl p-3 text-sage-600 text-sm text-center mb-4">✓ Copied!</div>}
+
+                                {copied && <div className="bg-sage-100 rounded-xl p-3 text-sage-600 text-sm text-center mb-4 animate-fade-in">✓ Copied to clipboard!</div>}
+
+                                {/* Manual Add Input */}
+                                <div className="flex gap-2 mb-4">
+                                    <input
+                                        type="text"
+                                        value={newItem}
+                                        onChange={(e) => setNewItem(e.target.value)}
+                                        onKeyDown={(e) => e.key === 'Enter' && addManualItem()}
+                                        placeholder="Add item..."
+                                        className="flex-1 px-4 py-3 rounded-xl border border-cream-300 bg-white text-warm-800 text-sm focus:outline-none focus:border-coral-400"
+                                    />
+                                    <button onClick={addManualItem} className="px-4 py-3 bg-coral-500 text-white rounded-xl font-medium press">+</button>
+                                </div>
+
+                                {/* Quick Add Buttons */}
+                                <div className="mb-5">
+                                    <p className="text-warm-500 text-xs mb-2">Quick add:</p>
+                                    <div className="flex gap-2 flex-wrap">
+                                        {quickAddItems.map((item, i) => (
+                                            <button
+                                                key={i}
+                                                onClick={() => addQuickItem(item)}
+                                                disabled={shopping.some(s => s.name === item.name)}
+                                                className={`px-3 py-1.5 rounded-lg text-xs font-medium press transition-all ${
+                                                    shopping.some(s => s.name === item.name)
+                                                        ? 'bg-cream-200 text-warm-400'
+                                                        : 'bg-cream-100 text-warm-600 border border-cream-200 hover:border-coral-300'
+                                                }`}
+                                            >
+                                                {item.emoji} {item.name.split(' (')[0]}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Staples Section */}
+                                {staples.length > 0 && (
+                                    <div className="mb-5">
+                                        <div className="flex justify-between items-center mb-2">
+                                            <p className="text-warm-500 text-xs">⭐ Your staples:</p>
+                                            <button onClick={addStaplestoList} className="text-coral-500 text-xs font-medium press">+ Add all to list</button>
+                                        </div>
+                                        <div className="flex gap-2 flex-wrap">
+                                            {staples.map((item, i) => (
+                                                <span key={i} className="px-3 py-1.5 bg-sand-50 border border-sand-200 rounded-lg text-xs text-warm-600">
+                                                    {item.name.split(' (')[0]}
+                                                </span>
+                                            ))}
+                                        </div>
+                                        <button onClick={() => setShowStaplesModal(true)} className="text-warm-500 text-xs mt-2 underline">Manage staples</button>
+                                    </div>
+                                )}
+
+                                {/* Empty State */}
                                 {shopping.length === 0 ? (
                                     <div className="card rounded-2xl p-8 text-center border border-cream-200">
-                                        <span className="text-4xl mb-3 block">🛒</span>
-                                        <p className="text-warm-600">List is empty</p>
-                                        <p className="text-warm-500 text-sm mt-1">Add ingredients from recipes</p>
+                                        <span className="text-5xl mb-4 block">🛒</span>
+                                        <p className="text-warm-700 font-medium mb-1">List is empty</p>
+                                        <p className="text-warm-500 text-sm">Add items above or from recipes</p>
+                                        {staples.length === 0 && (
+                                            <button onClick={() => setShowStaplesModal(true)} className="mt-4 text-coral-500 text-sm font-medium">+ Set up your staples</button>
+                                        )}
                                     </div>
                                 ) : (
-                                    <div className="card rounded-2xl border border-cream-200 overflow-hidden">
-                                        {shopping.map((item, i) => (
-                                            <div key={i} className="flex items-center justify-between px-4 py-3 border-b border-cream-100 last:border-0">
-                                                <span className="text-warm-700 text-sm">{item.name}</span>
-                                                <button onClick={() => setShopping(shopping.filter((_, idx) => idx !== i))} className="text-warm-400 hover:text-coral-500 text-lg">×</button>
+                                    /* Shopping List by Category */
+                                    <div className="space-y-4">
+                                        {Object.entries(getItemsByCategory()).map(([cat, items]) => {
+                                            if (items.length === 0) return null;
+                                            const catInfo = shopCategories[cat] || { name: cat, emoji: '📦' };
+                                            return (
+                                                <div key={cat} className="card rounded-2xl border border-cream-200 overflow-hidden">
+                                                    <div className="px-4 py-2.5 bg-cream-100 border-b border-cream-200">
+                                                        <span className="text-warm-700 font-semibold text-sm">{catInfo.emoji} {catInfo.name}</span>
+                                                        <span className="text-warm-500 text-xs ml-2">({items.filter(i => !i.checked).length})</span>
+                                                    </div>
+                                                    <div>
+                                                        {items.map((item) => (
+                                                            <div 
+                                                                key={item.id} 
+                                                                className={`flex items-center gap-3 px-4 py-3 border-b border-cream-100 last:border-0 transition-all ${item.checked ? 'bg-cream-50' : ''}`}
+                                                            >
+                                                                <button 
+                                                                    onClick={() => toggleChecked(item.id)}
+                                                                    className={`w-6 h-6 rounded-full border-2 flex items-center justify-center press transition-all ${
+                                                                        item.checked 
+                                                                            ? 'bg-sage-500 border-sage-500 text-white' 
+                                                                            : 'border-cream-300 hover:border-sage-400'
+                                                                    }`}
+                                                                >
+                                                                    {item.checked && <span className="text-sm">✓</span>}
+                                                                </button>
+                                                                
+                                                                {editingItem === item.id ? (
+                                                                    <input
+                                                                        type="text"
+                                                                        defaultValue={item.name}
+                                                                        autoFocus
+                                                                        onBlur={(e) => updateItemName(item.id, e.target.value)}
+                                                                        onKeyDown={(e) => e.key === 'Enter' && updateItemName(item.id, e.target.value)}
+                                                                        className="flex-1 px-2 py-1 rounded border border-coral-300 text-sm text-warm-800 focus:outline-none"
+                                                                    />
+                                                                ) : (
+                                                                    <span 
+                                                                        onClick={() => setEditingItem(item.id)}
+                                                                        className={`flex-1 text-sm cursor-pointer ${item.checked ? 'line-through text-warm-400' : 'text-warm-700'}`}
+                                                                    >
+                                                                        {item.name}
+                                                                    </span>
+                                                                )}
+                                                                
+                                                                <div className="flex items-center gap-1">
+                                                                    {!staples.some(s => s.name === item.name) && (
+                                                                        <button 
+                                                                            onClick={() => addToStaples(item)}
+                                                                            className="p-1.5 text-warm-400 hover:text-sand-500 text-sm"
+                                                                            title="Add to staples"
+                                                                        >
+                                                                            ⭐
+                                                                        </button>
+                                                                    )}
+                                                                    <button 
+                                                                        onClick={() => deleteItem(item.id)}
+                                                                        className="p-1.5 text-warm-400 hover:text-coral-500 text-lg"
+                                                                    >
+                                                                        ×
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+
+                                        {/* Summary */}
+                                        <div className="text-center py-4">
+                                            <p className="text-warm-500 text-sm">
+                                                {shopping.filter(i => i.checked).length} of {shopping.length} items checked
+                                            </p>
+                                            {shopping.length > 0 && (
+                                                <button onClick={() => setShopping([])} className="text-warm-400 text-xs mt-2 underline">Clear entire list</button>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Staples Modal */}
+                                {showStaplesModal && (
+                                    <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={() => setShowStaplesModal(false)}>
+                                        <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[80vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
+                                            <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
+                                            <div className="px-5 pb-8">
+                                                <h3 className="text-warm-800 font-bold text-lg mb-2">⭐ Manage Staples</h3>
+                                                <p className="text-warm-500 text-sm mb-4">Items you buy every week. One tap to add them all.</p>
+                                                
+                                                {staples.length === 0 ? (
+                                                    <div className="text-center py-8">
+                                                        <p className="text-warm-500 text-sm mb-4">No staples yet. Add items to your shopping list, then tap ⭐ to save them as staples.</p>
+                                                    </div>
+                                                ) : (
+                                                    <div className="space-y-2 mb-4">
+                                                        {staples.map((item, i) => (
+                                                            <div key={i} className="flex items-center justify-between px-4 py-3 bg-white rounded-xl border border-cream-200">
+                                                                <span className="text-warm-700 text-sm">{item.name}</span>
+                                                                <button onClick={() => removeFromStaples(item.name)} className="text-warm-400 hover:text-coral-500">×</button>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                                
+                                                <button onClick={() => setShowStaplesModal(false)} className="w-full py-3 bg-warm-800 text-white rounded-xl font-medium press">Done</button>
                                             </div>
-                                        ))}
+                                        </div>
                                     </div>
                                 )}
                             </div>
