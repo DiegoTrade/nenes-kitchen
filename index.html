@@ -1129,9 +1129,7 @@
             const [selVeggies, setSelVeggies] = useState([]);
             const [selCheese, setSelCheese] = useState([]);
             const [selFlavor, setSelFlavor] = useState('any');
-            const [selTime, setSelTime] = useState('any');
             const [selCategory, setSelCategory] = useState('any');
-            const [showCategoryFilter, setShowCategoryFilter] = useState(false);
             const [portions, setPortions] = useState(1);
             const [meals, setMeals] = useState([]);
             const [showMeals, setShowMeals] = useState(false);
@@ -1343,10 +1341,6 @@
                 const matching = mealRecipes.filter(r => {
                     if (!r.proteins.every(p => selProteins.includes(p))) return false;
                     if (r.requiresVeggies && selVeggies.length === 0) return false;
-                    if (selTime !== 'any') {
-                        const tf = timeCategories[selTime];
-                        if (r.time < tf.min || r.time > tf.max) return false;
-                    }
                     if (selFlavor !== 'any' && !r.flavors.includes(selFlavor) && !r.flavors.includes('any')) return false;
                     if (selCategory !== 'any' && r.category !== selCategory) return false;
                     return true;
@@ -1454,6 +1448,19 @@
                                 </div>
                             </div>
 
+                            {/* Meal Type - Now prominent */}
+                            <div className="mb-4">
+                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3">What meal?</h2>
+                                <div className="flex gap-2 flex-wrap">
+                                    {Object.values(mealCategories).map(c => (
+                                        <button key={c.id} onClick={() => { setSelCategory(c.id); setShowMeals(false); }}
+                                            className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all press ${selCategory === c.id ? 'chip-selected' : 'chip-unselected'}`}>
+                                            {c.emoji} {c.name}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
                             {/* Flavor - What's the vibe */}
                             <div className="mb-4">
                                 <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3">What's the vibe?</h2>
@@ -1465,39 +1472,6 @@
                                         </button>
                                     ))}
                                 </div>
-                            </div>
-
-                            {/* Time */}
-                            <div className="mb-4">
-                                <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider mb-3">How much time?</h2>
-                                <div className="flex gap-2">
-                                    {Object.values(timeCategories).map(t => (
-                                        <button key={t.id} onClick={() => { setSelTime(t.id); setShowMeals(false); }}
-                                            className={`flex-1 px-3 py-2.5 rounded-xl text-sm font-medium transition-all press ${selTime === t.id ? 'bg-sage-500 text-white shadow-glow-sage' : 'chip-unselected'}`}>
-                                            {t.emoji} {t.name}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Meal Type - Collapsible */}
-                            <div className="mb-4">
-                                <button onClick={() => setShowCategoryFilter(!showCategoryFilter)} className="flex items-center justify-between w-full text-left mb-3">
-                                    <h2 className="text-warm-600 text-xs font-semibold uppercase tracking-wider">
-                                        Meal type {selCategory !== 'any' && <span className="text-coral-500 normal-case">({mealCategories[selCategory]?.name})</span>}
-                                    </h2>
-                                    <span className="text-warm-400 text-xs">{showCategoryFilter ? '▲' : '▼'}</span>
-                                </button>
-                                {showCategoryFilter && (
-                                    <div className="flex gap-2 flex-wrap animate-fade-in">
-                                        {Object.values(mealCategories).map(c => (
-                                            <button key={c.id} onClick={() => { setSelCategory(c.id); setShowMeals(false); }}
-                                                className={`px-3 py-2 rounded-xl text-sm font-medium press ${selCategory === c.id ? 'chip-selected' : 'chip-unselected'}`}>
-                                                {c.emoji} {c.name}
-                                            </button>
-                                        ))}
-                                    </div>
-                                )}
                             </div>
 
                             {/* Portions */}
