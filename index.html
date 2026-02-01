@@ -1253,6 +1253,13 @@
             const [showRecipeBook, setShowRecipeBook] = useState(false);
             const [recipeBookFilter, setRecipeBookFilter] = useState('any');
             const [showWeeklySummary, setShowWeeklySummary] = useState(false);
+            const [showCustomMeal, setShowCustomMeal] = useState(false);
+            const [customMeal, setCustomMeal] = useState({
+                protein: null,
+                grams: '',
+                extras: [],
+                carbsEstimate: ''
+            });
 
             // Calculate weekly summary from history
             const getWeeklySummary = () => {
@@ -1335,6 +1342,82 @@
                     targetMeals,
                     targetProteinWeek
                 };
+            };
+
+            // Custom meal extras options
+            const customExtras = [
+                { id: 'avocado', name: 'Avocado', emoji: '🥑', carbs: 2 },
+                { id: 'veggies', name: 'Veggies', emoji: '🥬', carbs: 3 },
+                { id: 'cheese', name: 'Cheese', emoji: '🧀', carbs: 1 },
+                { id: 'eggs', name: 'Eggs', emoji: '🥚', carbs: 0, proteinPer: 6 },
+            ];
+
+            // Calculate protein from grams
+            const calcCustomProtein = () => {
+                if (!customMeal.protein || !customMeal.grams) return 0;
+                const proteinData = proteins.find(p => p.id === customMeal.protein);
+                const gramsNum = parseInt(customMeal.grams) || 0;
+                let totalProtein = Math.round((gramsNum * (proteinData?.proteinPer100g || 25)) / 100);
+                
+                // Add eggs protein if selected
+                if (customMeal.extras.includes('eggs')) {
+                    totalProtein += 6 * 2; // Assume 2 eggs = 12g
+                }
+                return totalProtein;
+            };
+
+            const calcCustomCarbs = () => {
+                if (customMeal.carbsEstimate) return parseInt(customMeal.carbsEstimate) || 0;
+                let carbs = 0;
+                customMeal.extras.forEach(extraId => {
+                    const extra = customExtras.find(e => e.id === extraId);
+                    if (extra) carbs += extra.carbs;
+                });
+                return carbs;
+            };
+
+            const logCustomMeal = () => {
+                if (!customMeal.protein || !customMeal.grams) return;
+                
+                const proteinData = proteins.find(p => p.id === customMeal.protein);
+                const extrasText = customMeal.extras.length > 0 
+                    ? ' + ' + customMeal.extras.map(id => customExtras.find(e => e.id === id)?.name).join(', ')
+                    : '';
+                
+                const meal = {
+                    name: `${proteinData?.name} (${customMeal.grams}g)${extrasText}`,
+                    baseProtein: calcCustomProtein(),
+                    netCarbs: calcCustomCarbs(),
+                    proteins: [customMeal.protein],
+                    isCustom: true,
+                    cookedAt: new Date().toISOString()
+                };
+                
+                setHistory([meal, ...history].slice(0, 50));
+                
+                // Update stats
+                const today = new Date().toISOString().split('T')[0];
+                const ns = { ...stats, total: stats.total + 1 };
+                if (stats.lastDate !== today) {
+                    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+                    ns.streak = stats.lastDate === yesterday ? stats.streak + 1 : 1;
+                    ns.lastDate = today;
+                }
+                setStats(ns);
+                checkBadges(ns, null);
+                
+                // Reset form
+                setCustomMeal({ protein: null, grams: '', extras: [], carbsEstimate: '' });
+                setShowCustomMeal(false);
+            };
+
+            const toggleCustomExtra = (id) => {
+                setCustomMeal(prev => ({
+                    ...prev,
+                    extras: prev.extras.includes(id) 
+                        ? prev.extras.filter(e => e !== id)
+                        : [...prev.extras, id]
+                }));
             };
 
             // Check if essential is covered in shopping list
@@ -2253,20 +2336,34 @@
                             <div>
                                 <div className="flex justify-between items-center mb-4">
                                     <h2 className="text-warm-800 font-bold text-lg">📜 History ({history.length})</h2>
-                                    {history.length > 0 && (
+                                    <div className="flex gap-2">
                                         <button 
-                                            onClick={() => setShowWeeklySummary(true)}
-                                            className="px-4 py-2 bg-gradient-to-r from-coral-500 to-sand-500 text-white rounded-xl text-sm font-medium press shadow-glow-coral"
+                                            onClick={() => setShowCustomMeal(true)}
+                                            className="px-3 py-2 bg-warm-800 text-white rounded-xl text-sm font-medium press"
                                         >
-                                            📊 This Week
+                                            + Log
                                         </button>
-                                    )}
+                                        {history.length > 0 && (
+                                            <button 
+                                                onClick={() => setShowWeeklySummary(true)}
+                                                className="px-3 py-2 bg-gradient-to-r from-coral-500 to-sand-500 text-white rounded-xl text-sm font-medium press shadow-glow-coral"
+                                            >
+                                                📊 Week
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
                                 {history.length === 0 ? (
                                     <div className="card rounded-2xl p-8 text-center border border-cream-200">
                                         <span className="text-4xl mb-3 block">📜</span>
                                         <p className="text-warm-600">No meals logged yet</p>
                                         <p className="text-warm-500 text-sm mt-1">Tap "I made this" on recipes to track</p>
+                                        <button 
+                                            onClick={() => setShowCustomMeal(true)}
+                                            className="mt-4 px-4 py-2 bg-coral-500 text-white rounded-xl text-sm font-medium press"
+                                        >
+                                            + Log a custom meal
+                                        </button>
                                     </div>
                                 ) : (
                                     <div>
@@ -2274,7 +2371,10 @@
                                             <div key={i} className="card rounded-xl p-4 mb-3 border border-cream-200">
                                                 <div className="flex justify-between items-start">
                                                     <div>
-                                                        <span className="text-warm-800 font-medium">{m.name}</span>
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-warm-800 font-medium">{m.name}</span>
+                                                            {m.isCustom && <span className="text-xs bg-cream-200 text-warm-500 px-1.5 py-0.5 rounded">custom</span>}
+                                                        </div>
                                                         <div className="flex gap-2 mt-1">
                                                             <span className="text-coral-500 text-xs">~{m.baseProtein}g protein</span>
                                                             {m.netCarbs !== undefined && <span className="text-sage-500 text-xs">{m.netCarbs}g carbs</span>}
@@ -2287,7 +2387,135 @@
                                     </div>
                                 )}
 
-                                {/* Weekly Summary Modal */}
+                                {/* Custom Meal Logger Modal */}
+                                {showCustomMeal && (
+                                    <div className="fixed inset-0 z-50 flex items-end justify-center modal-overlay" onClick={() => setShowCustomMeal(false)}>
+                                        <div className="bg-cream-50 rounded-t-[2rem] w-full max-w-lg max-h-[90vh] overflow-hidden animate-slide-up shadow-soft-lg" onClick={e => e.stopPropagation()}>
+                                            <div className="flex justify-center pt-3 pb-2"><div className="w-12 h-1 bg-cream-300 rounded-full" /></div>
+                                            <div className="px-5 pb-8 overflow-y-auto max-h-[80vh]">
+                                                <h2 className="text-warm-800 font-bold text-xl mb-1">📝 Log Custom Meal</h2>
+                                                <p className="text-warm-500 text-sm mb-5">For meals not from a recipe</p>
+
+                                                {/* Protein Selection */}
+                                                <div className="mb-5">
+                                                    <label className="text-warm-600 text-sm font-medium mb-2 block">What protein?</label>
+                                                    <div className="grid grid-cols-3 gap-2">
+                                                        {proteins.map(p => (
+                                                            <button
+                                                                key={p.id}
+                                                                onClick={() => setCustomMeal(prev => ({ ...prev, protein: p.id }))}
+                                                                className={`p-3 rounded-xl text-center transition-all press ${
+                                                                    customMeal.protein === p.id 
+                                                                        ? 'bg-coral-500 text-white' 
+                                                                        : 'bg-white border border-cream-200 text-warm-700'
+                                                                }`}
+                                                            >
+                                                                <span className="text-xl block">{p.emoji}</span>
+                                                                <span className="text-xs">{p.name}</span>
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                </div>
+
+                                                {/* Grams Input */}
+                                                <div className="mb-5">
+                                                    <label className="text-warm-600 text-sm font-medium mb-2 block">
+                                                        Amount (raw grams)
+                                                        <span className="text-warm-400 font-normal ml-2">• cooked? add ~30%</span>
+                                                    </label>
+                                                    <div className="flex items-center gap-2">
+                                                        <input
+                                                            type="number"
+                                                            value={customMeal.grams}
+                                                            onChange={(e) => setCustomMeal(prev => ({ ...prev, grams: e.target.value }))}
+                                                            placeholder="e.g. 350"
+                                                            className="flex-1 px-4 py-3 rounded-xl border border-cream-300 bg-white text-warm-800 text-lg font-medium focus:outline-none focus:border-coral-400"
+                                                        />
+                                                        <span className="text-warm-600 font-medium">g</span>
+                                                    </div>
+                                                    {customMeal.protein && customMeal.grams && (
+                                                        <p className="text-coral-500 text-sm mt-2 font-medium">
+                                                            ≈ {calcCustomProtein()}g protein
+                                                        </p>
+                                                    )}
+                                                </div>
+
+                                                {/* Extras */}
+                                                <div className="mb-5">
+                                                    <label className="text-warm-600 text-sm font-medium mb-2 block">Extras (optional)</label>
+                                                    <div className="flex gap-2 flex-wrap">
+                                                        {customExtras.map(extra => (
+                                                            <button
+                                                                key={extra.id}
+                                                                onClick={() => toggleCustomExtra(extra.id)}
+                                                                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all press ${
+                                                                    customMeal.extras.includes(extra.id)
+                                                                        ? 'bg-sage-500 text-white'
+                                                                        : 'bg-white border border-cream-200 text-warm-700'
+                                                                }`}
+                                                            >
+                                                                {extra.emoji} {extra.name}
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                </div>
+
+                                                {/* Carbs Override */}
+                                                <div className="mb-6">
+                                                    <label className="text-warm-600 text-sm font-medium mb-2 block">
+                                                        Carbs estimate
+                                                        <span className="text-warm-400 font-normal ml-2">• auto: {calcCustomCarbs()}g</span>
+                                                    </label>
+                                                    <div className="flex items-center gap-2">
+                                                        <input
+                                                            type="number"
+                                                            value={customMeal.carbsEstimate}
+                                                            onChange={(e) => setCustomMeal(prev => ({ ...prev, carbsEstimate: e.target.value }))}
+                                                            placeholder={calcCustomCarbs().toString()}
+                                                            className="w-24 px-4 py-3 rounded-xl border border-cream-300 bg-white text-warm-800 text-lg font-medium focus:outline-none focus:border-coral-400"
+                                                        />
+                                                        <span className="text-warm-600 font-medium">g</span>
+                                                    </div>
+                                                </div>
+
+                                                {/* Summary */}
+                                                {customMeal.protein && customMeal.grams && (
+                                                    <div className="bg-gradient-to-br from-coral-50 to-sand-50 border border-coral-100 rounded-2xl p-4 mb-5">
+                                                        <div className="flex justify-between items-center">
+                                                            <div>
+                                                                <p className="text-warm-800 font-semibold">
+                                                                    {proteins.find(p => p.id === customMeal.protein)?.name} ({customMeal.grams}g)
+                                                                    {customMeal.extras.length > 0 && (
+                                                                        <span className="font-normal text-warm-600">
+                                                                            {' + ' + customMeal.extras.map(id => customExtras.find(e => e.id === id)?.name).join(', ')}
+                                                                        </span>
+                                                                    )}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="flex gap-4 mt-2">
+                                                            <span className="text-coral-500 font-bold">~{calcCustomProtein()}g protein</span>
+                                                            <span className="text-sage-500 font-medium">{calcCustomCarbs()}g carbs</span>
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {/* Log Button */}
+                                                <button 
+                                                    onClick={logCustomMeal}
+                                                    disabled={!customMeal.protein || !customMeal.grams}
+                                                    className={`w-full py-4 rounded-xl font-bold text-lg press ${
+                                                        customMeal.protein && customMeal.grams
+                                                            ? 'bg-coral-500 text-white shadow-glow-coral'
+                                                            : 'bg-cream-200 text-warm-400'
+                                                    }`}
+                                                >
+                                                    ✓ Log This Meal
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                                 {showWeeklySummary && (() => {
                                     const summary = getWeeklySummary();
                                     return (
