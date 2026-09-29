@@ -6,7 +6,7 @@ Una app de recetas hecha para Nene: platos altos en proteína y bajos en carbohi
 
 | Función | Descripción |
 |---|---|
-| 📖 **99 recetas** | Ingredientes con cantidades, pasos, consejos y qué servir al resto de la familia |
+| 📖 **100 recetas** | Ingredientes con cantidades, pasos, consejos y qué servir al resto de la familia |
 | 🎲 **¿Qué cocino hoy?** | Propone una receta al azar |
 | 📅 **Menú de la semana** | Registro de cada día: elige recetas, añade alimentos rápidos o algo a mano, ajusta porciones, copia a otro día o quita lo que no comió. Suma proteína, carbos y calorías del día |
 | 🛒 **Lista de la compra** | Se arma sola con el menú o las recetas, y se envía por WhatsApp |
@@ -31,6 +31,7 @@ Una app de recetas hecha para Nene: platos altos en proteína y bajos en carbohi
 | Versión | Cambios |
 |---|---|
 | V1 a V5 | Nene's Kitchen: generador de comidas, recetas, favoritos, lista de la compra |
+| **V6.2** | Nueva receta: ensalada griega con pollo (100 recetas) |
 | **V6.1** | Menú editable como registro diario, calorías y grasa por receta |
 | **V6** | La Cocina de Nene: 99 recetas en español, menú semanal, lista de la compra por categorías, filtro de recetas ligeras, guía rápida |
 
