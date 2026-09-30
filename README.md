@@ -32,6 +32,7 @@ Una app de recetas hecha para Nene: platos altos en proteína y bajos en carbohi
 | Versión | Cambios |
 |---|---|
 | V1 a V5 | Nene's Kitchen: generador de comidas, recetas, favoritos, lista de la compra |
+| **V7.1** | Al elegir una receta en el Menú solo salen las de esa comida (primera, merienda, principal o extra), con filtro por proteína en las principales |
 | **V7** | Menú con fechas reales, historial semanal, plan frente a lo comido, recientes e «Igual que ayer» |
 | **V6.2** | Nueva receta: ensalada griega con pollo (100 recetas) |
 | **V6.1** | Menú editable como registro diario, calorías y grasa por receta |
