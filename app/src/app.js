@@ -34,7 +34,7 @@ var ICON = {
   dice: svg('<rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="9" cy="9" r="1" fill="currentColor"/><circle cx="15" cy="15" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/><circle cx="9" cy="15" r="1" fill="currentColor"/>', 18),
   sliders: svg('<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>', 17),
   copy: svg('<rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2"/>', 17),
-  send: svg('<path d="M20.5 3.5L3.5 10.3l6.8 2.9 2.9 6.8z"/><path d="M20.5 3.5l-10.2 9.7"/>', 17),
+  chat: svg('<path d="M5 4.5h14a2 2 0 012 2v8a2 2 0 01-2 2h-6.5L8 20v-3.5H5a2 2 0 01-2-2v-8a2 2 0 012-2z"/><path d="M8 9h8M8 12.5h5"/>', 18),
   trash: svg('<path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13"/>', 17),
   x: svg('<path d="M7 7l10 10M17 7L7 17"/>', 14),
   plus: svg('<path d="M12 5v14M5 12h14"/>', 18),
@@ -693,7 +693,7 @@ function dayText(k, i){
   return ['*' + DIAS[i] + ' ' + fmtDate(dateOf(k, i)) + '*'].concat(dayLines(d, st <= 0), [''], foot).join('\n');
 }
 function waLink(text, cls, label){
-  return '<a class="' + cls + '" href="https://wa.me/?text=' + encodeURIComponent(text) + '" target="_blank" rel="noopener">' + ICON.send + label + '</a>';
+  return '<a class="' + cls + '" href="https://wa.me/?text=' + encodeURIComponent(text) + '" target="_blank" rel="noopener">' + ICON.chat + label + '</a>';
 }
 function summaryHTML(){
   var k = S.wk, s = weekStats(k), h = '<section class="wsum" aria-labelledby="wsum-t"><h3 id="wsum-t">' + (k === CUR ? 'Esta semana' : weekLabel(k).name) + '</h3>';
@@ -735,7 +735,7 @@ function renderMenu(o){
   h += '<div class="day-tools">' +
     (p && p.d.items.length ? '<button type="button" class="daybtn" data-sameprev>' + ic(ICON.copy) + '<span>' + (yest ? 'Igual que ayer' : 'Igual que el ' + DIAS[p.i].toLowerCase()) + '</span></button>' : '') +
     (st >= 0 ? '<button type="button" class="daybtn" data-dayrandom>' + ic(ICON.dice) + '<span>Otro día al azar</span></button>' : '') +
-    (d.items.length ? '<a class="daybtn wa-day" href="https://wa.me/?text=' + encodeURIComponent(dayText(k, S.day)) + '" target="_blank" rel="noopener">' + ic(ICON.send) + '<span>Enviar este día</span></a>' : '') +
+    (d.items.length ? '<a class="daybtn wa-day" href="https://wa.me/?text=' + encodeURIComponent(dayText(k, S.day)) + '" target="_blank" rel="noopener">' + ic(ICON.chat) + '<span>Enviar por WhatsApp</span></a>' : '') +
     (d.items.length ? '<button type="button" class="daybtn daybtn-del" data-dayclear>' + ic(ICON.trash) + '<span>Vaciar el día</span></button>' : '') + '</div></section>';
   h += summaryHTML();
   $('#v-menu').innerHTML = h;
@@ -1362,7 +1362,7 @@ function renderShop(){
   var total = d.items.length + own.length, pend = pendingCount();
   h += '<p>' + (total === 1 ? '1 producto' : total + ' productos') + ' · ' + (pend ? pend + ' por comprar' : 'todo comprado') + '. Toca un producto para tacharlo.</p></header>';
   h += '<div class="toolbar"><button type="button" class="btn" data-copy>' + ICON.copy + 'Copiar</button>' +
-    '<a class="btn" data-wa href="https://wa.me/?text=' + encodeURIComponent(shopText()) + '" target="_blank" rel="noopener">' + ICON.send + 'Enviar por WhatsApp</a>' +
+    '<a class="btn" data-wa href="https://wa.me/?text=' + encodeURIComponent(shopText()) + '" target="_blank" rel="noopener">' + ICON.chat + 'Enviar por WhatsApp</a>' +
     '<button type="button" class="btn danger" data-clear>' + ICON.trash + 'Vaciar</button></div>';
   h += ownFormHTML();
   var ne = S.shop.entries.length + S.shop.dishes.length;
