@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La Cocina de Nene</title>
+<meta name="description" content="Recetas altas en proteína y bajas en carbohidratos para Diego, con menú semanal y lista de la compra.">
+<meta name="theme-color" content="#FAF7F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#181411" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Cocina de Nene">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
+<style>
+{{STYLE}}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add("js");window.addEventListener("error",function(e){if(!window.__appOK){document.documentElement.classList.remove("js");var n=document.getElementById("js-err");if(n){n.hidden=false;n.textContent="Detalle del error: "+(e.message||"desconocido");}}});</script>
+<div class="app" id="app">
+  <main class="wrap">
+    <section id="v-recetas" class="view">
+      <header class="app-head">
+        <p class="eyebrow">Recetas para Diego</p>
+        <h1>La Cocina de Nene</h1>
+        <p class="sub">{{N}} recetas con mucha proteína y pocos carbohidratos, para cocinar sin pensar demasiado. Incluye las recetas de pollo, carne y pescado más valoradas de internet, adaptadas a su dieta.</p>
+      </header>
+      <button class="cta" id="random" type="button">
+        <span class="cta-ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="9" cy="9" r="1.1" fill="currentColor"/><circle cx="15" cy="15" r="1.1" fill="currentColor"/><circle cx="15" cy="9" r="1.1" fill="currentColor"/><circle cx="9" cy="15" r="1.1" fill="currentColor"/><circle cx="12" cy="12" r="1.1" fill="currentColor"/></svg></span>
+        <span><strong>¿Qué cocino hoy?</strong><small>Te propongo una receta al azar</small></span>
+      </button>
+      <label class="search" for="q">
+        <span class="sr">Buscar recetas</span>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>
+        <input id="q" type="search" placeholder="Busca: pollo, berenjena, mojo…" autocomplete="off" enterkeyhint="search">
+      </label>
+      <div id="controls"></div>
+      <div id="grid" class="grid"></div>
+    </section>
+
+    <section id="v-menu" class="view" hidden></section>
+    <section id="v-compra" class="view" hidden></section>
+
+    <section id="v-guia" class="view" hidden>
+      <header class="view-head">
+        <h2>Guía rápida</h2>
+        <p>Lo básico para cocinar para Diego, en una sola página.</p>
+      </header>
+      <div class="guide">{{GUIDE}}<div id="backup"></div></div>
+    </section>
+
+    <footer class="foot">Proteína, carbohidratos y calorías aproximados, por porción. Hecho con cariño para Nene.</footer>
+  </main>
+
+  <nav class="nav" aria-label="Secciones">
+    <div class="nav-inner">
+      <button type="button" data-tab="recetas"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 015.5 4H11v16H5.5A1.5 1.5 0 014 18.5z"/><path d="M20 5.5A1.5 1.5 0 0018.5 4H13v16h5.5a1.5 1.5 0 001.5-1.5z"/></svg><span>Recetas</span></button>
+      <button type="button" data-tab="menu"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><span>Menú</span></button>
+      <button type="button" data-tab="compra"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2.2l2.3 11h10.8l2-8H6.3"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg><span>Compra</span><b class="nav-count" id="shop-count" hidden></b></button>
+      <button type="button" data-tab="guia"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg><span>Guía</span></button>
+    </div>
+  </nav>
+
+  <div class="sheet" id="sheet" hidden>
+    <div class="sheet-backdrop"></div>
+    <div class="sheet-panel" id="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title" tabindex="-1"></div>
+  </div>
+  <div class="sheet picker" id="picker" hidden>
+    <div class="sheet-backdrop"></div>
+    <div class="sheet-panel" id="picker-panel" role="dialog" aria-modal="true" aria-labelledby="pk-title" tabindex="-1"></div>
+  </div>
+  <div class="cook" id="cook" role="dialog" aria-modal="true" aria-label="Modo cocina" tabindex="-1" hidden></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <div class="update" id="update" role="status" hidden><span>Hay una versión nueva de la app.</span><button type="button" class="btn small" id="update-btn">Actualizar</button></div>
+  <div class="love" id="love" hidden>
+    <div class="love-bg" data-love-close></div>
+    <div class="love-hearts" aria-hidden="true"></div>
+    <div class="love-card" role="dialog" aria-modal="true" aria-labelledby="love-msg">
+      <span class="love-pill">💌 From Diego</span>
+      <div class="love-heart" aria-hidden="true">💕</div>
+      <p class="love-msg" id="love-msg"></p>
+      <button type="button" class="love-btn" data-love-close>Ay Diego 😅</button>
+    </div>
+  </div>
+</div>
+
+<div class="book" id="book">
+    <p class="eyebrow">Recetas para Diego</p>
+    <h1>La Cocina de Nene</h1>
+    <p class="note-js">Estás viendo la versión sencilla, sin botones. Aquí están todas las recetas y la guía.</p>
+    <p class="note-js" id="js-err" hidden></p>
+    {{BOOK}}
+  </div>
+
+<script>
+var APP_V = '{{VERSION}}';
+{{SCRIPT}}
+</script>
+</body>
+</html>

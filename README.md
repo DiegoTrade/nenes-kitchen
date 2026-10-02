@@ -11,7 +11,10 @@ Una app de recetas hecha para Nene: platos altos en proteína y bajos en carbohi
 | 📅 **Menú** | Registro de cada día con su fecha: suma proteína, carbos y calorías, dice cuánto falta para la meta, y separa lo que ya pasó del plan. Cada lunes llega un menú nuevo y las semanas anteriores se guardan con su media |
 | 🥚 **Armar un plato** | En «A mano» se eligen los ingredientes (unos 125 alimentos comunes, con medidas caseras) y la app suma proteína, carbos y calorías. El plato se guarda en Recientes y se puede editar |
 | ⚡ **Apuntar rápido** | Recientes, «Igual que ayer», copiar a otro día, mover de comida, deslizar entre días y deshacer |
-| 🛒 **Lista de la compra** | Se arma sola con el menú o las recetas, y se envía por WhatsApp |
+| 🛒 **Lista de la compra** | Se arma sola con el menú, las recetas y los platos armados a mano. Se le puede añadir cualquier otra cosa y se envía por WhatsApp |
+| 👩‍🍳 **Modo cocina** | Los pasos en grande, uno a uno, con la pantalla encendida y avisos de tiempo |
+| 💾 **Copia de seguridad** | Guarda y restaura todo lo apuntado, por si se cambia de móvil |
+| 📶 **Sin conexión** | La app abre aunque no haya cobertura, y avisa cuando hay una versión nueva |
 | 🍃 **Ligeras** | Recetas suaves para los días de poco apetito |
 | 🔎 **Filtros** | Tipo de comida, proteína, tiempo y estilo (venezolana, canaria, española, internacional, virales) |
 | ❤️ **Guardadas** | Las recetas favoritas, a un toque |
@@ -24,15 +27,37 @@ Una app de recetas hecha para Nene: platos altos en proteína y bajos en carbohi
 
 ## Técnica
 
-- Un solo `index.html`, sin librerías (HTML, CSS y JavaScript).
+- La app publicada es un solo `index.html`, sin librerías (HTML, CSS y JavaScript).
 - Los favoritos, el menú y la lista se guardan en el navegador del móvil (`localStorage`).
+- `sw.js` guarda una copia para que funcione sin conexión. Cuando hay red, siempre se carga la última versión.
 - Si algo falla al cargar, la página muestra todas las recetas en versión sencilla.
+
+## Desarrollo
+
+El código fuente está en `app/`:
+
+| Carpeta | Qué hay |
+|---|---|
+| `app/src/` | Recetas (`data.js`), alimentos (`foods.js`), pantallas (`render.js`, `app.js`), estilos y plantilla |
+| `app/build.js` | Junta todo en `index.html` y escribe `version.json` |
+| `app/tests/` | Pruebas en un móvil simulado: menú, compra, modo cocina, copia de seguridad y uso sin conexión |
+| `app/tools/` | Comprobación de la proteína, los carbos y las calorías de cada receta a partir de sus ingredientes |
+
+```
+node app/build.js                # construye index.html
+python3 app/tests/test_app.py    # pruebas (necesita playwright)
+python3 app/tools/audit.py       # revisa proteína y carbos de las recetas
+python3 app/tools/fat.py         # revisa grasa y calorías
+```
+
+Después de cambiar algo en `app/src/`, hay que construir y subir también `index.html` y `version.json`.
 
 ## Versiones
 
 | Versión | Cambios |
 |---|---|
 | V1 a V5 | Nene's Kitchen: generador de comidas, recetas, favoritos, lista de la compra |
+| **V8** | Modo cocina, copia de seguridad, uso sin conexión con aviso de versión nueva, lista de la compra con cosas propias y platos a mano. El código fuente y las pruebas pasan a estar en el repositorio |
 | **V7.3** | Guía: ranking de lo que más daño le hace, de peor a menos malo |
 | **V7.2** | Armar un plato con ingredientes: la app calcula proteína, carbos y calorías |
 | **V7.1** | Al elegir una receta en el Menú solo salen las de esa comida (primera, merienda, principal o extra), con filtro por proteína en las principales |

@@ -12,6 +12,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
@@ -446,6 +448,57 @@ html:not(.js) .app{display:none}
 
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 
+/* Compra: cosas propias y platos armados a mano */
+.shop-add{display:flex;gap:8px;margin-top:14px}
+.shop-add input{flex:1;min-width:0;padding:12px 14px;border:1px solid var(--line-2);border-radius:14px;background:var(--surface);color:var(--ink);font:inherit;font-size:16px}
+.shop-add input::placeholder{color:var(--ink-3)}
+.shop-add .btn{flex:none;padding:0 15px}
+.own-row{display:flex;align-items:center}
+.own-row .ing{flex:1;min-width:0}
+.own-row .rec-x{flex:none;width:44px;height:44px}
+.rec-dish{display:inline-block;padding:7px 4px 7px 12px;font-size:14px;font-weight:500}
+.rec-dish small{color:var(--ink-3)}
+
+/* Copia de seguridad */
+#backup:empty{display:none}
+.bk .actions{margin-top:12px}
+.bk .actions .btn{flex:1 1 180px}
+.g-card .bk-last{color:var(--ink)}
+.bk-box{margin-top:12px;padding:12px 14px;border-radius:14px;background:var(--sand-soft)}
+.g-card .bk-box p{color:var(--sand-ink);margin:0}
+.bk .form-err{margin-top:10px}
+
+/* Aviso de versión nueva */
+.update{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:55;display:flex;align-items:center;gap:12px;width:max-content;max-width:calc(100% - 32px);background:var(--ink);color:var(--bg);padding:10px 10px 10px 16px;border-radius:14px;font-weight:600;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.update .btn{flex:none;background:var(--bg);color:var(--ink);border-color:transparent}
+
+/* Modo cocina */
+.sec-h:has(.cook-go){align-items:center}
+.cook-go{color:var(--coral-ink)}
+.cook{position:fixed;inset:0;z-index:70;background:var(--bg);display:flex;flex-direction:column;outline:none;padding-top:env(safe-area-inset-top,0px)}
+.ck-bar{display:grid;grid-template-columns:40px minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 16px 10px 12px}
+.ck-title{margin:0;font-weight:700;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ck-count{font-size:13px;font-weight:600;color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.ck-prog{height:4px;background:var(--surface-2);margin:0 16px;border-radius:2px;overflow:hidden}
+.ck-prog i{display:block;height:100%;background:var(--coral);border-radius:2px;transition:width .2s ease}
+.ck-timers{display:flex;flex-wrap:wrap;gap:6px;padding:12px 16px 0}
+.ck-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 4px 4px 10px;border-radius:999px;background:var(--surface);box-shadow:var(--shadow);font-size:14px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.ck-chip b{color:var(--ink);min-width:3.2ch}
+.ck-chip.done{background:var(--sage-soft);color:var(--sage-ink)}
+.ck-chip.done b{color:var(--sage-ink)}
+.ck-chip button{width:30px;height:30px;border:0;background:none;border-radius:50%;display:grid;place-items:center;color:inherit;cursor:pointer}
+.ck-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:22px 20px 24px;width:100%;max-width:720px;margin:0 auto}
+.ck-h{margin:0;font-size:24px;line-height:1.2}
+.ck-sub{margin:4px 0 14px;color:var(--ink-2)}
+.ck-step{margin:0;font-size:26px;line-height:1.4;font-weight:500;text-wrap:pretty}
+.ck-tbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.ck-tip{margin:24px 0 0;padding:12px 14px;border-radius:14px;background:var(--sand-soft);font-size:15px;line-height:1.5}
+.ck-tip b{display:block;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--sand-ink);margin-bottom:2px}
+.ck-note{margin:14px 2px 0;font-size:13px;color:var(--ink-3)}
+.ck-nav{display:grid;grid-template-columns:1fr 1.4fr;gap:10px;width:100%;max-width:720px;margin:0 auto;padding:12px 16px calc(14px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:var(--bg)}
+.ck-nav .btn{padding:15px 16px;font-size:16px}
+.ck-nav .btn:disabled{opacity:.35;cursor:default}
+
 </style>
 </head>
 <body>
@@ -479,7 +532,7 @@ html:not(.js) .app{display:none}
         <h2>Guía rápida</h2>
         <p>Lo básico para cocinar para Diego, en una sola página.</p>
       </header>
-      <div class="guide"><section class="g-card g-plate"><div class="plate" role="img" aria-label="Plato: casi la mitad proteína, la otra mitad verduras y un poco de grasa buena"></div><div><h3>El plato de Diego</h3><ul class="legend"><li><i class="sw sw-pro"></i><span><b>Proteína primero.</b> 200 a 250 g de carne o pescado, o 3 a 4 huevos.</span></li><li><i class="sw sw-veg"></i><span><b>Verduras sin límite.</b> De hoja, calabacín, brócoli, coliflor, pimiento, champiñones, judías verdes.</span></li><li><i class="sw sw-fat"></i><span><b>Un poco de grasa buena.</b> Aceite de oliva, aguacate o queso.</span></li></ul></div></section><section class="g-card"><h3>Lo que más daño le hace</h3><p>De peor a menos malo. Los seis primeros no se compran ni se sirven, ni en casa ni fuera.</p><p class="rk-h rk-no">Evitar siempre</p><ol class="rank"><li><span class="rk-n" aria-hidden="true">1</span><div><b>Bebidas con azúcar</b><span class="rk-ex">Refrescos, zumos (también los naturales), batidos de fruta, bebidas energéticas y café con azúcar.</span><span class="rk-why">El azúcar líquido llega al hígado en minutos y se convierte en grasa. Es lo peor de todo.</span></div></li><li><span class="rk-n" aria-hidden="true">2</span><div><b>Alcohol, sobre todo cerveza</b><span class="rk-ex">Cerveza, combinados con refresco, vino dulce y licores.</span><span class="rk-why">El hígado deja todo lo demás para procesarlo, y mientras tanto la grasa se queda guardada.</span></div></li><li><span class="rk-n" aria-hidden="true">3</span><div><b>Dulces y bollería</b><span class="rk-ex">Galletas, bizcochos, helados, chocolate con leche, golosinas y postres.</span><span class="rk-why">Azúcar, harina y grasa juntos: lo que más rápido engorda.</span></div></li><li><span class="rk-n" aria-hidden="true">4</span><div><b>Harinas y almidones</b><span class="rk-ex">Casabe, arepas, pan, arroz, pasta, papas, yuca, plátano y gofio.</span><span class="rk-why">Al digerirse son azúcar. 100 g de casabe equivalen a unas 5 rebanadas de pan. Lo que más pesa es la costumbre de todos los días.</span></div></li><li><span class="rk-n" aria-hidden="true">5</span><div><b>Fritos y ultraprocesados</b><span class="rk-ex">Papas fritas, chips, empanadas, tequeños, pizza y comida rápida.</span><span class="rk-why">Harina con grasa industrial, y es muy fácil comer de más.</span></div></li><li><span class="rk-n" aria-hidden="true">6</span><div><b>Azúcares que parecen sanos</b><span class="rk-ex">Miel, papelón, siropes, fruta seca, yogures de sabores, granola, cereales y barritas.</span><span class="rk-why">Para el cuerpo son azúcar, diga lo que diga la etiqueta.</span></div></li></ol><p class="rk-h rk-some">Solo de vez en cuando</p><ol class="rank rank-some" start="7"><li><span class="rk-n" aria-hidden="true">7</span><div><b>Fruta muy dulce</b><span class="rk-ex">Mango, uvas, piña y plátano.</span><span class="rk-why">Una pieza está bien. Un bol grande o un zumo ya es mucho azúcar. Mejor frutos rojos.</span></div></li><li><span class="rk-n" aria-hidden="true">8</span><div><b>Marisco, sardinas, anchoas y embutidos</b><span class="rk-ex">También chorizo y salchichas.</span><span class="rk-why">Una vez por semana y en ración pequeña. Vísceras (hígado, riñones, mollejas), nunca.</span></div></li></ol><p class="rk-foot">Lo que no está en esta lista: huevos, carne, pollo, pescado, queso, aguacate, aceite de oliva y verduras. La grasa buena no es el problema. El azúcar, las harinas y el alcohol, sí.</p></section><section class="g-card"><h3>Horario</h3><p>Diego come dentro de una ventana de 6 horas. Fuera de ella, solo agua, café solo, té o agua con gas.</p><ol class="sched"><li><span class="sched-t">12:00</span><span>Primera comida</span></li><li><span class="sched-t">15:00</span><span>Merienda</span></li><li><span class="sched-t">17:30</span><span>Comida principal</span></li><li><span class="sched-t">18:00</span><span>Cierra la cocina</span></li></ol></section><section class="g-card"><h3>Proteína: 150 a 180 g al día</h3><p>Así se suma. Carnes y pescados, pesados en crudo.</p><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Alimento</th><th>Cantidad</th><th class="num">Proteína</th></tr></thead><tbody><tr><td>Pechuga de pollo</td><td>100 g</td><td class="num">23 g</td></tr><tr><td>Ternera o cerdo magro</td><td>100 g</td><td class="num">21 g</td></tr><tr><td>Salmón o atún fresco</td><td>100 g</td><td class="num">20 g</td></tr><tr><td>Pescado blanco</td><td>100 g</td><td class="num">18 g</td></tr><tr><td>Huevo</td><td>1</td><td class="num">7 g</td></tr><tr><td>Claras líquidas</td><td>100 ml</td><td class="num">11 g</td></tr><tr><td>Skyr natural</td><td>200 g</td><td class="num">22 g</td></tr><tr><td>Queso fresco</td><td>100 g</td><td class="num">12 g</td></tr><tr><td>Jamón serrano</td><td>50 g</td><td class="num">15 g</td></tr><tr><td>Atún en lata</td><td>1 lata escurrida</td><td class="num">13 g</td></tr><tr><td>Proteína whey</td><td>1 cazo (30 g)</td><td class="num">24 g</td></tr></tbody></table></div></section><section class="g-card"><h3>Qué sí, qué poco y qué no</h3><div class="lists"><div class="list yes"><h4>Sí</h4><ul><li>Pollo, carne, cerdo, pescado y huevos</li><li>Verduras de hoja, calabacín, berenjena, pimiento, brócoli, coliflor, champiñones, judías verdes y tomate</li><li>Aguacate, aceitunas, aceite de oliva, mantequilla y nata</li><li>Skyr, queso fresco y queso fresco batido</li><li>Especias, hierbas, ajo, limón, vinagre y mostaza</li><li>Café y té sin azúcar, agua con gas</li></ul></div><div class="list some"><h4>Con moderación</h4><ul><li>Queso curado: unos 50 g por comida</li><li>Frutos secos y frutos rojos: un puñado</li><li>Caraotas, lentejas o garbanzos: 3 cucharadas</li><li>Zanahoria, calabaza y cebolla: como acompañante, no de base</li><li>Papas arrugadas: una o dos, de vez en cuando</li><li>Marisco, sardinas y anchoas: una vez por semana</li><li>Chocolate negro 85 %: dos onzas</li></ul></div><div class="list no"><h4>No</h4><ul><li>Azúcar, miel, papelón y panela</li><li>Pan, casabe, arepas, cachapas, pasta, arroz y cereales</li><li>Papa, yuca, plátano, batata y gofio</li><li>Zumos, refrescos y batidos de fruta</li><li>Cerveza y alcohol</li><li>Dulces, bollería, galletas y helados</li><li>Tomate frito, ketchup y salsas de bote</li><li>Rebozados y fritos en aceite de girasol</li><li>Vísceras: hígado, riñones y mollejas</li></ul></div></div></section><section class="g-card"><h3>Si no encuentras skyr</h3><p>Donde pone skyr vale cualquiera de estos, en la misma cantidad. Mira la etiqueta: al menos 8 g de proteína y como mucho 5 g de azúcar por 100 g.</p><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Cambio</th><th class="num">Proteína por 100 g</th></tr></thead><tbody><tr><td>Queso cottage o requesón (mejor en recetas saladas)</td><td class="num">11 g</td></tr><tr><td>Yogur alto en proteína (YoPro u otros)</td><td class="num">9 a 10 g</td></tr><tr><td>Queso fresco batido 0 %</td><td class="num">8 g</td></tr><tr><td>Yogur griego 0 % o ligero</td><td class="num">8 a 10 g</td></tr><tr><td>Yogur natural colado una noche en un paño, en la nevera</td><td class="num">8 a 9 g</td></tr></tbody></table></div><p>El yogur griego normal no sirve: tiene mucha grasa y poca proteína. El kéfir tampoco: es líquido y tiene la proteína de la leche.</p></section><section class="g-card"><h3>Cambios fáciles</h3><div class="tbl-wrap"><table class="tbl"><thead><tr><th>En vez de</th><th>Usa</th></tr></thead><tbody><tr><td>Arroz</td><td>Arroz de coliflor</td></tr><tr><td>Puré de papas</td><td>Puré de coliflor</td></tr><tr><td>Pasta</td><td>Espaguetis de calabacín</td></tr><tr><td>Arepa o pan</td><td>Hojas de lechuga o un crepe de huevo</td></tr><tr><td>Tajadas o papas fritas</td><td>Aguacate o verduras a la plancha</td></tr><tr><td>Pan rallado</td><td>Parmesano rallado o almendra molida</td></tr><tr><td>Tomate frito</td><td>Tomate triturado natural</td></tr><tr><td>Refresco</td><td>Agua con gas y limón</td></tr><tr><td>Postre</td><td>Mousse de chocolate con proteína</td></tr></tbody></table></div></section><section class="g-card"><h3>Con la medicación</h3><ul class="tips"><li>Se llena muy rápido. Sirve primero la proteína: si no termina, que deje las verduras, no la carne.</li><li>Mejor platos pequeños. Si tiene hambre, que repita.</li><li>Lo muy grasiento o frito le puede dar náuseas, sobre todo la semana en que sube la dosis.</li><li>Que beba de 2 a 3 litros de agua al día.</li><li>Si no tiene hambre, un batido de proteína o un skyr es mejor que nada.</li><li>La medicación puede estreñir. Verduras en cada comida, una cucharada de chía o linaza al día y mucha agua.</li></ul></section><section class="g-card"><h3>Por qué comemos así</h3><p>Menos azúcar y harinas, más proteína y verduras. Así se baja de peso sin perder músculo.</p><p>El marisco, las sardinas y las anchoas van con moderación, y nada de vísceras. La carne roja, mejor dos o tres veces por semana. Y mucha agua todos los días.</p></section></div>
+      <div class="guide"><section class="g-card g-plate"><div class="plate" role="img" aria-label="Plato: casi la mitad proteína, la otra mitad verduras y un poco de grasa buena"></div><div><h3>El plato de Diego</h3><ul class="legend"><li><i class="sw sw-pro"></i><span><b>Proteína primero.</b> 200 a 250 g de carne o pescado, o 3 a 4 huevos.</span></li><li><i class="sw sw-veg"></i><span><b>Verduras sin límite.</b> De hoja, calabacín, brócoli, coliflor, pimiento, champiñones, judías verdes.</span></li><li><i class="sw sw-fat"></i><span><b>Un poco de grasa buena.</b> Aceite de oliva, aguacate o queso.</span></li></ul></div></section><section class="g-card"><h3>Lo que más daño le hace</h3><p>De peor a menos malo. Los seis primeros no se compran ni se sirven, ni en casa ni fuera.</p><p class="rk-h rk-no">Evitar siempre</p><ol class="rank"><li><span class="rk-n" aria-hidden="true">1</span><div><b>Bebidas con azúcar</b><span class="rk-ex">Refrescos, zumos (también los naturales), batidos de fruta, bebidas energéticas y café con azúcar.</span><span class="rk-why">El azúcar líquido llega al hígado en minutos y se convierte en grasa. Es lo peor de todo.</span></div></li><li><span class="rk-n" aria-hidden="true">2</span><div><b>Alcohol, sobre todo cerveza</b><span class="rk-ex">Cerveza, combinados con refresco, vino dulce y licores.</span><span class="rk-why">El hígado deja todo lo demás para procesarlo, y mientras tanto la grasa se queda guardada.</span></div></li><li><span class="rk-n" aria-hidden="true">3</span><div><b>Dulces y bollería</b><span class="rk-ex">Galletas, bizcochos, helados, chocolate con leche, golosinas y postres.</span><span class="rk-why">Azúcar, harina y grasa juntos: lo que más rápido engorda.</span></div></li><li><span class="rk-n" aria-hidden="true">4</span><div><b>Harinas y almidones</b><span class="rk-ex">Casabe, arepas, pan, arroz, pasta, papas, yuca, plátano y gofio.</span><span class="rk-why">Al digerirse son azúcar. 100 g de casabe equivalen a unas 5 rebanadas de pan. Lo que más pesa es la costumbre de todos los días.</span></div></li><li><span class="rk-n" aria-hidden="true">5</span><div><b>Fritos y ultraprocesados</b><span class="rk-ex">Papas fritas, chips, empanadas, tequeños, pizza y comida rápida.</span><span class="rk-why">Harina con grasa industrial, y es muy fácil comer de más.</span></div></li><li><span class="rk-n" aria-hidden="true">6</span><div><b>Azúcares que parecen sanos</b><span class="rk-ex">Miel, papelón, siropes, fruta seca, yogures de sabores, granola, cereales y barritas.</span><span class="rk-why">Para el cuerpo son azúcar, diga lo que diga la etiqueta.</span></div></li></ol><p class="rk-h rk-some">Solo de vez en cuando</p><ol class="rank rank-some" start="7"><li><span class="rk-n" aria-hidden="true">7</span><div><b>Fruta muy dulce</b><span class="rk-ex">Mango, uvas, piña y plátano.</span><span class="rk-why">Una pieza está bien. Un bol grande o un zumo ya es mucho azúcar. Mejor frutos rojos.</span></div></li><li><span class="rk-n" aria-hidden="true">8</span><div><b>Marisco, sardinas, anchoas y embutidos</b><span class="rk-ex">También chorizo y salchichas.</span><span class="rk-why">Una vez por semana y en ración pequeña. Vísceras (hígado, riñones, mollejas), nunca.</span></div></li></ol><p class="rk-foot">Lo que no está en esta lista: huevos, carne, pollo, pescado, queso, aguacate, aceite de oliva y verduras. La grasa buena no es el problema. El azúcar, las harinas y el alcohol, sí.</p></section><section class="g-card"><h3>Horario</h3><p>Diego come dentro de una ventana de 6 horas. Fuera de ella, solo agua, café solo, té o agua con gas.</p><ol class="sched"><li><span class="sched-t">12:00</span><span>Primera comida</span></li><li><span class="sched-t">15:00</span><span>Merienda</span></li><li><span class="sched-t">17:30</span><span>Comida principal</span></li><li><span class="sched-t">18:00</span><span>Cierra la cocina</span></li></ol></section><section class="g-card"><h3>Proteína: 150 a 180 g al día</h3><p>Así se suma. Carnes y pescados, pesados en crudo.</p><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Alimento</th><th>Cantidad</th><th class="num">Proteína</th></tr></thead><tbody><tr><td>Pechuga de pollo</td><td>100 g</td><td class="num">23 g</td></tr><tr><td>Ternera o cerdo magro</td><td>100 g</td><td class="num">21 g</td></tr><tr><td>Salmón o atún fresco</td><td>100 g</td><td class="num">20 g</td></tr><tr><td>Pescado blanco</td><td>100 g</td><td class="num">18 g</td></tr><tr><td>Huevo</td><td>1</td><td class="num">7 g</td></tr><tr><td>Claras líquidas</td><td>100 ml</td><td class="num">11 g</td></tr><tr><td>Skyr natural</td><td>200 g</td><td class="num">22 g</td></tr><tr><td>Queso fresco</td><td>100 g</td><td class="num">12 g</td></tr><tr><td>Jamón serrano</td><td>50 g</td><td class="num">15 g</td></tr><tr><td>Atún en lata</td><td>1 lata escurrida</td><td class="num">13 g</td></tr><tr><td>Proteína whey</td><td>1 cazo (30 g)</td><td class="num">24 g</td></tr></tbody></table></div></section><section class="g-card"><h3>Qué sí, qué poco y qué no</h3><div class="lists"><div class="list yes"><h4>Sí</h4><ul><li>Pollo, carne, cerdo, pescado y huevos</li><li>Verduras de hoja, calabacín, berenjena, pimiento, brócoli, coliflor, champiñones, judías verdes y tomate</li><li>Aguacate, aceitunas, aceite de oliva, mantequilla y nata</li><li>Skyr, queso fresco y queso fresco batido</li><li>Especias, hierbas, ajo, limón, vinagre y mostaza</li><li>Café y té sin azúcar, agua con gas</li></ul></div><div class="list some"><h4>Con moderación</h4><ul><li>Queso curado: unos 50 g por comida</li><li>Frutos secos y frutos rojos: un puñado</li><li>Caraotas, lentejas o garbanzos: 3 cucharadas</li><li>Zanahoria, calabaza y cebolla: como acompañante, no de base</li><li>Papas arrugadas: una o dos, de vez en cuando</li><li>Marisco, sardinas y anchoas: una vez por semana</li><li>Chocolate negro 85 %: dos onzas</li></ul></div><div class="list no"><h4>No</h4><ul><li>Azúcar, miel, papelón y panela</li><li>Pan, casabe, arepas, cachapas, pasta, arroz y cereales</li><li>Papa, yuca, plátano, batata y gofio</li><li>Zumos, refrescos y batidos de fruta</li><li>Cerveza y alcohol</li><li>Dulces, bollería, galletas y helados</li><li>Tomate frito, ketchup y salsas de bote</li><li>Rebozados y fritos en aceite de girasol</li><li>Vísceras: hígado, riñones y mollejas</li></ul></div></div></section><section class="g-card"><h3>Si no encuentras skyr</h3><p>Donde pone skyr vale cualquiera de estos, en la misma cantidad. Mira la etiqueta: al menos 8 g de proteína y como mucho 5 g de azúcar por 100 g.</p><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Cambio</th><th class="num">Proteína por 100 g</th></tr></thead><tbody><tr><td>Queso cottage o requesón (mejor en recetas saladas)</td><td class="num">11 g</td></tr><tr><td>Yogur alto en proteína (YoPro u otros)</td><td class="num">9 a 10 g</td></tr><tr><td>Queso fresco batido 0 %</td><td class="num">8 g</td></tr><tr><td>Yogur griego 0 % o ligero</td><td class="num">8 a 10 g</td></tr><tr><td>Yogur natural colado una noche en un paño, en la nevera</td><td class="num">8 a 9 g</td></tr></tbody></table></div><p>El yogur griego normal no sirve: tiene mucha grasa y poca proteína. El kéfir tampoco: es líquido y tiene la proteína de la leche.</p></section><section class="g-card"><h3>Cambios fáciles</h3><div class="tbl-wrap"><table class="tbl"><thead><tr><th>En vez de</th><th>Usa</th></tr></thead><tbody><tr><td>Arroz</td><td>Arroz de coliflor</td></tr><tr><td>Puré de papas</td><td>Puré de coliflor</td></tr><tr><td>Pasta</td><td>Espaguetis de calabacín</td></tr><tr><td>Arepa o pan</td><td>Hojas de lechuga o un crepe de huevo</td></tr><tr><td>Tajadas o papas fritas</td><td>Aguacate o verduras a la plancha</td></tr><tr><td>Pan rallado</td><td>Parmesano rallado o almendra molida</td></tr><tr><td>Tomate frito</td><td>Tomate triturado natural</td></tr><tr><td>Refresco</td><td>Agua con gas y limón</td></tr><tr><td>Postre</td><td>Mousse de chocolate con proteína</td></tr></tbody></table></div></section><section class="g-card"><h3>Con la medicación</h3><ul class="tips"><li>Se llena muy rápido. Sirve primero la proteína: si no termina, que deje las verduras, no la carne.</li><li>Mejor platos pequeños. Si tiene hambre, que repita.</li><li>Lo muy grasiento o frito le puede dar náuseas, sobre todo la semana en que sube la dosis.</li><li>Que beba de 2 a 3 litros de agua al día.</li><li>Si no tiene hambre, un batido de proteína o un skyr es mejor que nada.</li><li>La medicación puede estreñir. Verduras en cada comida, una cucharada de chía o linaza al día y mucha agua.</li></ul></section><section class="g-card"><h3>Por qué comemos así</h3><p>Menos azúcar y harinas, más proteína y verduras. Así se baja de peso sin perder músculo.</p><p>El marisco, las sardinas y las anchoas van con moderación, y nada de vísceras. La carne roja, mejor dos o tres veces por semana. Y mucha agua todos los días.</p></section><div id="backup"></div></div>
     </section>
 
     <footer class="foot">Proteína, carbohidratos y calorías aproximados, por porción. Hecho con cariño para Nene.</footer>
@@ -502,7 +555,9 @@ html:not(.js) .app{display:none}
     <div class="sheet-backdrop"></div>
     <div class="sheet-panel" id="picker-panel" role="dialog" aria-modal="true" aria-labelledby="pk-title" tabindex="-1"></div>
   </div>
+  <div class="cook" id="cook" role="dialog" aria-modal="true" aria-label="Modo cocina" tabindex="-1" hidden></div>
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <div class="update" id="update" role="status" hidden><span>Hay una versión nueva de la app.</span><button type="button" class="btn small" id="update-btn">Actualizar</button></div>
   <div class="love" id="love" hidden>
     <div class="love-bg" data-love-close></div>
     <div class="love-hearts" aria-hidden="true"></div>
@@ -524,6 +579,7 @@ html:not(.js) .app{display:none}
   </div>
 
 <script>
+var APP_V = '419317f028';
 /* Recetas de La Cocina de Nene.
    Ingrediente: [cantidad, unidad, nombre, categoría, nota, receta enlazada]
    Categorías: p carne/pescado · h huevos/lácteos · v frutas/verduras · d despensa · e básicos (sin cantidad en la compra) · r receta casera
@@ -1614,13 +1670,18 @@ var ICON = {
   copy: svg('<rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2"/>', 17),
   send: svg('<path d="M20.5 3.5L3.5 10.3l6.8 2.9 2.9 6.8z"/><path d="M20.5 3.5l-10.2 9.7"/>', 17),
   trash: svg('<path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13"/>', 17),
-  x: svg('<path d="M7 7l10 10M17 7L7 17"/>', 14)
+  x: svg('<path d="M7 7l10 10M17 7L7 17"/>', 14),
+  plus: svg('<path d="M12 5v14M5 12h14"/>', 18),
+  play: svg('<path d="M8 5.5v13l10-6.5z" fill="currentColor"/>', 15),
+  save: svg('<path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19h14"/>', 18),
+  up: svg('<path d="M12 20V9M7.5 13.5L12 9l4.5 4.5M5 5h14"/>', 18)
 };
 
 /* ---------- estado guardado en este navegador ---------- */
 var KEY = 'cocina-nene-v1';
 function load(){ try { var v = JSON.parse(localStorage.getItem(KEY)); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; } }
-function save(){ try { pruneWeeks(); localStorage.setItem(KEY, JSON.stringify({tab: S.tab, favs: Array.from(S.favs), menu: S.menu, shop: S.shop})); } catch (e) {} }
+function snapshot(){ return {tab: S.tab, favs: Array.from(S.favs), menu: S.menu, shop: S.shop, bk: S.bk}; }
+function save(){ try { pruneWeeks(); localStorage.setItem(KEY, JSON.stringify(snapshot())); } catch (e) {} }
 
 var DIAS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 var SLOTS = [['p', '12:00', 'Primera comida'], ['s1', '15:00', 'Merienda'], ['m', '17:30', 'Comida principal'], ['s2', 'Extra', 'Snack o batido']];
@@ -1747,12 +1808,21 @@ var S = {
   tipo: 'todas', prot: null, tiempo: null, orig: null, prep: false, fav: false, li: false, q: '', open: false,
   favs: new Set((Array.isArray(saved.favs) ? saved.favs : []).filter(function(id){ return byId[id]; })),
   menu: loadMenu(saved.menu), wk: CUR, day: TODAY,
-  shop: {entries: [], checked: {}}
+  bk: typeof saved.bk === 'string' ? saved.bk : null,
+  shop: {entries: [], checked: {}, own: [], dishes: []}
 };
 ensureWeek(CUR);
 if (saved.shop && Array.isArray(saved.shop.entries)) {
   S.shop.entries = saved.shop.entries.filter(function(e){ return e && byId[e.id] && e.f > 0; });
   S.shop.checked = saved.shop.checked && typeof saved.shop.checked === 'object' ? saved.shop.checked : {};
+}
+if (saved.shop) {
+  S.shop.own = (Array.isArray(saved.shop.own) ? saved.shop.own : []).filter(function(t){ return typeof t === 'string' && t.trim(); })
+    .map(function(t){ return t.trim().slice(0, 60); }).slice(0, 80);
+  S.shop.dishes = (Array.isArray(saved.shop.dishes) ? saved.shop.dishes : []).map(function(d){
+    var ing = d ? cleanIng(d.ing) : null;
+    return ing && typeof d.n === 'string' ? {n: d.n.slice(0, 60), ing: ing, f: Number(d.f) > 0 ? Math.min(20, Number(d.f)) : 1} : null;
+  }).filter(Boolean);
 }
 var hash = (location.hash || '').slice(1);
 if (['recetas', 'menu', 'compra', 'guia'].indexOf(hash) >= 0) S.tab = hash;
@@ -1939,7 +2009,7 @@ function renderSheet(){
     fact('', 'Calorías', fmtKc(r.kc), 'kcal por porción') +
     '</div>';
   h += '<div class="sec-h"><h3>Ingredientes</h3><span>Toca para tachar</span></div><ul class="ings" id="ings">' + ingsHTML(r) + '</ul>';
-  h += '<div class="sec-h"><h3>Preparación</h3></div><ol class="steps">' + r.st.map(function(s, k){
+  h += '<div class="sec-h"><h3>Preparación</h3><button type="button" class="btn small cook-go" data-cook>' + ICON.play + 'Modo cocina</button></div><ol class="steps">' + r.st.map(function(s, k){
     return '<li><button type="button" class="step" aria-pressed="false"><span class="step-n" aria-hidden="true">' + (k + 1) + '</span><span class="step-t">' + esc(s) + '</span></button></li>';
   }).join('') + '</ol>';
   h += notesHTML(r);
@@ -1965,6 +2035,7 @@ panel.addEventListener('click', function(e){
   if (t.hasAttribute('data-back')) { back(); return; }
   if (t.hasAttribute('data-serv')) { SH.serv = Math.min(12, Math.max(1, SH.serv + Number(t.getAttribute('data-serv')))); updateIngs(); return; }
   if (t.hasAttribute('data-ref')) { openRecipe(t.getAttribute('data-ref'), {push: true}); return; }
+  if (t.hasAttribute('data-cook')) { openCook(r.id); return; }
   if (t.classList.contains('ing') || t.classList.contains('step')) { t.setAttribute('aria-pressed', t.getAttribute('aria-pressed') === 'true' ? 'false' : 'true'); return; }
   if (t.hasAttribute('data-add')) { addToShop(r.id, SH.serv / r.s, false); toast('Añadido a la compra: ' + r.n); return; }
   if (t.hasAttribute('data-favsheet')) {
@@ -2168,8 +2239,16 @@ function undoDay(){
 function menuToShop(k){
   k = k || CUR;
   var w = ensureWeek(k), c = {};
-  w.days.forEach(function(d, i){ if (when(k, i) >= 0) d.items.forEach(function(it){ if (it.id) c[it.id] = (c[it.id] || 0) + it.f; }); });
-  if (!Object.keys(c).length) { toast('No quedan recetas en el menú de esta semana'); return; }
+  var dishes = {};
+  w.days.forEach(function(d, i){
+    if (when(k, i) < 0) return;
+    d.items.forEach(function(it){
+      if (it.id) c[it.id] = (c[it.id] || 0) + it.f;
+      else if (it.ing) { var dk = it.n + JSON.stringify(it.ing); if (dishes[dk]) dishes[dk].f += it.f; else dishes[dk] = {n: it.n, ing: clone(it.ing), f: it.f}; }
+    });
+  });
+  if (!Object.keys(c).length && !Object.keys(dishes).length) { toast('No quedan platos en el menú de esta semana'); return; }
+  S.shop.dishes = Object.keys(dishes).map(function(dk){ return dishes[dk]; });
   S.shop.entries = S.shop.entries.filter(function(e){ return !e.m; });
   Object.keys(c).forEach(function(id){ S.shop.entries.push({id: id, f: Math.ceil(c[id] / byId[id].s - 1e-9), m: true}); });
   save(); updateShopCount();
@@ -2653,8 +2732,38 @@ function addToShop(id, f, fromMenu){
   else S.shop.entries.push({id: id, f: f, m: !!fromMenu});
   save(); updateShopCount();
 }
+/* cómo se compra cada alimento de los platos armados a mano */
+var FCAT = {};
+[['p', 'pechuga pollo-cocinado contramuslo pavo pavo-fiambre jamon-york jamon-serrano cecina chorizo bacon ternera-picada ternera-filete entrecot cerdo-lomo cerdo-solomillo cerdo-picada cabra conejo cordero salmon salmon-ahumado atun-fresco merluza pescado-blanco bacalao caballa langostinos pulpo calamar mejillones'],
+ ['h', 'huevo clara queso-fresco queso-batido skyr yogur yogur-griego cottage queso-semi queso-cabra queso-curado queso-lonchas mozzarella queso-rallado parmesano queso-crema leche-entera leche-semi leche-desnatada kefir nata-cocinar nata-montar mantequilla'],
+ ['v', 'puerro cebolla ajo tomate tomate-cherry pimiento-rojo pimiento-verde calabacin berenjena espinacas champinones brocoli coliflor judias esparragos lechuga pepino zanahoria calabaza col aguacate papa batata platano manzana naranja fresas frutos-rojos papaya pina mango'],
+ ['e', 'aceite mayonesa mojo guasacaca salsa-soja ketchup azucar miel']
+].forEach(function(g){ g[1].split(' ').forEach(function(id){ FCAT[id] = g[0]; }); });
+var SHOP_NAME = {huevo: 'Huevos', clara: 'Claras de huevo', pechuga: 'Pechuga de pollo', 'pollo-cocinado': 'Pollo cocinado', contramuslo: 'Contramuslo de pollo deshuesado',
+  'ternera-picada': 'Carne picada de ternera', 'ternera-filete': 'Filete de ternera', 'cerdo-picada': 'Carne picada de cerdo', salmon: 'Lomo de salmón', 'atun-fresco': 'Atún fresco',
+  'atun-aceite': 'Atún en aceite de oliva', langostinos: 'Langostinos o gambas peladas', 'queso-fresco': 'Queso fresco', 'queso-batido': 'Queso fresco batido 0 %',
+  'queso-cabra': 'Queso de cabra semicurado', 'queso-rallado': 'Queso rallado para gratinar', 'tomate-cherry': 'Tomates cherry', espinacas: 'Espinacas baby',
+  champinones: 'Champiñones', esparragos: 'Espárragos trigueros', judias: 'Judías verdes', col: 'Col o repollo', 'frutos-rojos': 'Frambuesas o arándanos', whey: 'Proteína whey'};
+var SHOP_UNIT = {huevo: '', unidad: '', yogur: '', bola: '', diente: 'diente', lata: 'lata', cazo: 'cazo', 'puñado': 'puñado'};
+function shopItem(g, f){
+  /* lo que se cuenta (huevos, tomates, latas) va por unidades aunque el plato esté en gramos; lo demás, en gramos o ml */
+  var x = FOOD[g[0]], first = x.u ? x.u[0] : null, grams = g[1] * f * unitOf(x, g[2])[1], unit = baseUnit(x), q = grams;
+  if (x.id === 'clara') unit = 'ml';
+  else if (first && SHOP_UNIT[first[0]] != null) { unit = SHOP_UNIT[first[0]]; q = grams / first[1]; }
+  return {n: SHOP_NAME[x.id] || shortName(x), u: unit, c: FCAT[x.id] || 'd', q: q};
+}
+function ownKey(t){ return 'o|' + norm(t); }
 function shopData(){
   var map = {}, basics = {}, refs = {};
+  S.shop.dishes.forEach(function(d){
+    d.ing.forEach(function(g){
+      var x = shopItem(g, d.f);
+      if (x.c === 'e') { basics['e|' + norm(x.n)] = x.n; return; }
+      var k = norm(x.n) + '|' + x.u, it = map[k] || (map[k] = {k: k, n: x.n, u: x.u, c: x.c, q: 0, from: []});
+      it.q += x.q;
+      if (it.from.indexOf(d.n) < 0) it.from.push(d.n);
+    });
+  });
   S.shop.entries.forEach(function(e){
     var r = byId[e.id];
     r.i.forEach(function(x){
@@ -2691,13 +2800,15 @@ function shopText(){
     its.forEach(function(it){ var q = shopQty(it); lines.push('• ' + it.n + (q ? ': ' + q : '')); });
     lines.push('');
   });
+  var own = S.shop.own.filter(function(t){ return !S.shop.checked[ownKey(t)]; });
+  if (own.length) { lines.push('OTRAS COSAS'); own.forEach(function(t){ lines.push('• ' + t); }); lines.push(''); }
   var bk = Object.keys(d.basics).filter(function(k){ return !S.shop.checked[k]; });
   if (bk.length) { lines.push('REVISA QUE HAYA EN CASA'); bk.sort().forEach(function(k){ lines.push('• ' + d.basics[k]); }); }
   return lines.join('\n').trim();
 }
 function pendingCount(){
   var d = shopData();
-  return d.items.filter(function(it){ return !S.shop.checked[it.k]; }).length;
+  return d.items.filter(function(it){ return !S.shop.checked[it.k]; }).length + S.shop.own.filter(function(t){ return !S.shop.checked[ownKey(t)]; }).length;
 }
 function updateShopCount(){
   var n = pendingCount(), b = $('#shop-count');
@@ -2709,30 +2820,46 @@ function shopRow(key, name, sub, qty){
     '<span class="ing-n">' + esc(name) + (sub ? '<small>' + esc(sub) + '</small>' : '') + '</span>' +
     (qty ? '<span class="ing-q">' + esc(qty) + '</span>' : '') + '</button></li>';
 }
+function ownFormHTML(){
+  return '<form class="shop-add" id="shop-add"><label class="sr" for="shop-own">Añadir otra cosa a la lista</label>' +
+    '<input id="shop-own" type="text" maxlength="60" placeholder="Añade algo más a la lista" autocomplete="off" enterkeyhint="done">' +
+    '<button type="submit" class="btn" aria-label="Añadir a la lista">' + ICON.plus + '</button></form>';
+}
 function renderShop(){
-  var v = $('#v-compra'), d = shopData();
+  var v = $('#v-compra'), d = shopData(), own = S.shop.own;
   var h = '<header class="view-head"><h2>Lista de la compra</h2>';
-  if (!S.shop.entries.length) {
-    v.innerHTML = h + '<p>Añade una receta desde su ficha, o el menú entero de la semana.</p></header>' +
+  if (!S.shop.entries.length && !S.shop.dishes.length && !own.length) {
+    v.innerHTML = h + '<p>Añade una receta desde su ficha, el menú de la semana o cualquier otra cosa que haga falta.</p></header>' + ownFormHTML() +
       '<div class="empty"><p>La lista está vacía.</p><button type="button" class="btn primary" data-menushop>' + ICON.cart + 'Añadir el menú de hoy al domingo</button></div>';
     return;
   }
-  var pend = d.items.filter(function(it){ return !S.shop.checked[it.k]; }).length;
-  h += '<p>' + d.items.length + ' productos · ' + (pend ? pend + ' por comprar' : 'todo comprado') + '. Toca un producto para tacharlo.</p></header>';
+  var total = d.items.length + own.length, pend = pendingCount();
+  h += '<p>' + (total === 1 ? '1 producto' : total + ' productos') + ' · ' + (pend ? pend + ' por comprar' : 'todo comprado') + '. Toca un producto para tacharlo.</p></header>';
   h += '<div class="toolbar"><button type="button" class="btn" data-copy>' + ICON.copy + 'Copiar</button>' +
     '<a class="btn" data-wa href="https://wa.me/?text=' + encodeURIComponent(shopText()) + '" target="_blank" rel="noopener">' + ICON.send + 'Enviar por WhatsApp</a>' +
     '<button type="button" class="btn danger" data-clear>' + ICON.trash + 'Vaciar</button></div>';
-  var ne = S.shop.entries.length;
-  h += '<details class="shop-recs"' + (S.recsOpen ? ' open' : '') + '><summary>' + (ne === 1 ? '1 receta en la lista' : ne + ' recetas en la lista') + '</summary><div class="fchips">' + S.shop.entries.map(function(e, k){
+  h += ownFormHTML();
+  var ne = S.shop.entries.length + S.shop.dishes.length;
+  if (ne) h += '<details class="shop-recs"' + (S.recsOpen ? ' open' : '') + '><summary>' + (ne === 1 ? '1 plato en la lista' : ne + ' platos en la lista') + '</summary><div class="fchips">' + S.shop.entries.map(function(e, k){
     var r = byId[e.id], sv = Math.round(e.f * r.s * 100) / 100;
     return '<span class="rec-chip"><button type="button" class="rec-open" data-open="' + r.id + '">' + esc(r.n) + ' <small>' + fmtNum(sv) + (sv === 1 ? ' porción' : ' porciones') + '</small></button>' +
       '<button type="button" class="rec-x" data-remove="' + k + '" aria-label="Quitar ' + esc(r.n) + ' de la lista">' + ICON.x + '</button></span>';
+  }).join('') + S.shop.dishes.map(function(x, k){
+    return '<span class="rec-chip"><span class="rec-open rec-dish">' + esc(x.n) + ' <small>a mano' + (x.f !== 1 ? ' ×' + fmtNum(x.f) : '') + '</small></span>' +
+      '<button type="button" class="rec-x" data-rmdish="' + k + '" aria-label="Quitar ' + esc(x.n) + ' de la lista">' + ICON.x + '</button></span>';
   }).join('') + '</div></details>';
   CATS.forEach(function(c){
     var its = d.items.filter(function(it){ return it.c === c[0]; }).sort(byName);
     if (!its.length) return;
     h += '<section class="shop-group"><h3>' + c[1] + '</h3><ul class="ings">' + its.map(function(it){ return shopRow(it.k, it.n, it.from.join(', '), shopQty(it)); }).join('') + '</ul></section>';
   });
+  if (own.length) {
+    h += '<section class="shop-group"><h3>Otras cosas</h3><ul class="ings">' + own.map(function(t, k){
+      var key = ownKey(t), on = !!S.shop.checked[key];
+      return '<li class="own-row"><button type="button" class="ing" data-check="' + esc(key) + '" aria-pressed="' + on + '"><span class="tick" aria-hidden="true">' + ICON.check + '</span><span class="ing-n">' + esc(t) + '</span></button>' +
+        '<button type="button" class="rec-x" data-rmown="' + k + '" aria-label="Quitar ' + esc(t) + ' de la lista">' + ICON.x + '</button></li>';
+    }).join('') + '</ul></section>';
+  }
   var bk = Object.keys(d.basics).sort();
   if (bk.length) {
     h += '<section class="shop-group"><h3>Revisa que haya en casa</h3><ul class="ings">' + bk.map(function(k){ return shopRow(k, d.basics[k], '', ''); }).join('') + '</ul></section>';
@@ -2757,9 +2884,22 @@ function copyText(txt){
 }
 var clearTimer = null;
 $('#v-compra').addEventListener('toggle', function(e){ if (e.target.classList.contains('shop-recs')) S.recsOpen = e.target.open; }, true);
+$('#v-compra').addEventListener('submit', function(e){
+  if (e.target.id !== 'shop-add') return;
+  e.preventDefault();
+  var t = $('#shop-own').value.trim().slice(0, 60);
+  if (!t) { $('#shop-own').focus(); return; }
+  var key = ownKey(t);
+  if (!S.shop.own.some(function(x){ return ownKey(x) === key; })) S.shop.own.push(t);
+  delete S.shop.checked[key];
+  save(); updateShopCount(); renderShop();
+  $('#shop-own').focus({preventScroll: true});
+});
 $('#v-compra').addEventListener('click', function(e){
   var t = e.target.closest('button');
   if (!t) return;
+  if (t.hasAttribute('data-rmown')) { var rm = S.shop.own.splice(Number(t.getAttribute('data-rmown')), 1)[0]; if (rm) delete S.shop.checked[ownKey(rm)]; save(); updateShopCount(); renderShop(); return; }
+  if (t.hasAttribute('data-rmdish')) { S.shop.dishes.splice(Number(t.getAttribute('data-rmdish')), 1); save(); updateShopCount(); renderShop(); return; }
   if (t.hasAttribute('data-check')) {
     var k = t.getAttribute('data-check');
     if (S.shop.checked[k]) delete S.shop.checked[k]; else S.shop.checked[k] = 1;
@@ -2779,9 +2919,215 @@ $('#v-compra').addEventListener('click', function(e){
       clearTimer = setTimeout(function(){ if (document.body.contains(t)) { t.classList.remove('confirm'); t.lastChild.textContent = 'Vaciar'; } }, 3000);
       return;
     }
-    S.shop = {entries: [], checked: {}}; save(); updateShopCount(); renderShop(); toast('Lista vaciada');
+    S.shop = {entries: [], checked: {}, own: [], dishes: []}; save(); updateShopCount(); renderShop(); toast('Lista vaciada');
   }
 });
+
+/* ---------- modo cocina: pasos grandes, pantalla encendida y temporizadores ---------- */
+var cookEl = $('#cook'), CK = {id: null, step: 0, lastFocus: null}, TIMERS = [], timerTick = null, audioCtx = null, wakeLock = null;
+function keepAwake(on){
+  if (!('wakeLock' in navigator)) return;
+  if (on) navigator.wakeLock.request('screen').then(function(l){ wakeLock = l; }).catch(function(){});
+  else if (wakeLock) { wakeLock.release().catch(function(){}); wakeLock = null; }
+}
+function durations(text){
+  var out = [], re = /(\d+)(?:\s*(?:o|a|-|–)\s*(\d+))?\s*(minutos?|min|horas?|h|segundos?)(?![a-záéíóúñ])/gi, m;
+  while ((m = re.exec(text))) {
+    var c = m[3].charAt(0).toLowerCase(), mult = c === 'h' ? 3600 : c === 's' ? 1 : 60;
+    [m[1], m[2]].forEach(function(v){ var x = Number(v) * mult; if (v && x >= 10 && x <= 21600 && out.indexOf(x) < 0) out.push(x); });
+  }
+  return out;
+}
+function fmtDur(x){
+  if (x >= 3600) return Math.floor(x / 3600) + ' h' + (x % 3600 ? ' ' + Math.round(x % 3600 / 60) + ' min' : '');
+  return x >= 60 ? Math.round(x / 60) + ' min' : x + ' s';
+}
+function clock(x){
+  var h = Math.floor(x / 3600), m = Math.floor(x % 3600 / 60), sc = x % 60;
+  return (h ? h + ':' + pad2(m) : m) + ':' + pad2(sc);
+}
+function timersHTML(){
+  return TIMERS.map(function(t, i){
+    var left = Math.max(0, Math.ceil((t.end - Date.now()) / 1000));
+    return '<span class="ck-chip' + (t.done ? ' done' : '') + '">' + ICON.clock + '<b>' + (t.done ? '¡Listo!' : clock(left)) + '</b><span>' + esc(t.label) + '</span>' +
+      '<button type="button" data-ck-rmtimer="' + i + '" aria-label="Quitar el temporizador de ' + esc(t.label) + '">' + ICON.x + '</button></span>';
+  }).join('');
+}
+function paintTimers(){ var el = $('#ck-timers'); if (el) { el.innerHTML = timersHTML(); el.hidden = !TIMERS.length; } }
+function beep(){
+  if (!audioCtx) return;
+  try {
+    var t0 = audioCtx.currentTime;
+    [0, 0.35, 0.7].forEach(function(dt){
+      var o = audioCtx.createOscillator(), g = audioCtx.createGain();
+      o.frequency.value = 880; o.connect(g); g.connect(audioCtx.destination);
+      g.gain.setValueAtTime(0.0001, t0 + dt); g.gain.exponentialRampToValueAtTime(0.4, t0 + dt + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dt + 0.25);
+      o.start(t0 + dt); o.stop(t0 + dt + 0.3);
+    });
+  } catch (e) {}
+}
+function tickTimers(){
+  var now = Date.now(), rang = false;
+  TIMERS.forEach(function(t){
+    if (!t.done && now >= t.end) { t.done = true; rang = true; if (cookEl.hidden) toast('Tiempo cumplido: ' + t.label + ' de ' + t.rec); }
+  });
+  if (rang) { beep(); if (navigator.vibrate) { try { navigator.vibrate([300, 150, 300]); } catch (e) {} } }
+  if (!TIMERS.length) { clearInterval(timerTick); timerTick = null; }
+  paintTimers();
+}
+function startTimer(secs){
+  if (!audioCtx) { try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} }
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+  TIMERS.push({label: 'Paso ' + CK.step, rec: byId[CK.id].n, end: Date.now() + secs * 1000, done: false});
+  if (!timerTick) timerTick = setInterval(tickTimers, 500);
+  paintTimers();
+}
+function renderCook(){
+  var r = byId[CK.id], n = r.st.length, k = CK.step, f = SH.serv / r.s;
+  var h = '<header class="ck-bar"><button type="button" class="icon-btn" data-ck-close aria-label="Salir del modo cocina">' + ICON.close + '</button>' +
+    '<p class="ck-title">' + esc(r.n) + '</p><span class="ck-count">' + (k === 0 ? 'Antes de empezar' : 'Paso ' + k + ' de ' + n) + '</span></header>' +
+    '<div class="ck-prog" aria-hidden="true"><i style="width:' + (k / n * 100).toFixed(1) + '%"></i></div>' +
+    '<div class="ck-timers" id="ck-timers"' + (TIMERS.length ? '' : ' hidden') + '>' + timersHTML() + '</div><div class="ck-body" id="ck-body">';
+  if (k === 0) {
+    h += '<h2 class="ck-h">Ten a mano</h2><p class="ck-sub">Para ' + porciones(SH.serv) + '. Toca lo que ya tengas listo.</p><ul class="ings">' + r.i.map(function(x){
+      var q = x[0] == null ? null : roundQty(x[0] * f, x[1]);
+      return '<li><button type="button" class="ing" aria-pressed="false"><span class="tick" aria-hidden="true">' + ICON.check + '</span>' +
+        '<span class="ing-n">' + esc(x[2]) + (x[4] ? '<small>' + esc(x[4]) + '</small>' : '') + '</span><span class="ing-q">' + esc(qtyText(q, x[1])) + '</span></button></li>';
+    }).join('') + '</ul><p class="ck-note">La pantalla se queda encendida mientras estés en el modo cocina.</p>';
+  } else {
+    var ds = durations(r.st[k - 1]);
+    h += '<p class="ck-step">' + esc(r.st[k - 1]) + '</p>';
+    if (ds.length) h += '<div class="ck-tbtns">' + ds.map(function(x){ return '<button type="button" class="btn" data-ck-timer="' + x + '">' + ICON.clock + 'Avisar en ' + fmtDur(x) + '</button>'; }).join('') + '</div>';
+    if (k === n && r.tip) h += '<p class="ck-tip"><b>Consejo</b>' + esc(r.tip) + '</p>';
+  }
+  h += '</div><footer class="ck-nav"><button type="button" class="btn" data-ck-go="-1"' + (k === 0 ? ' disabled' : '') + '>' + ICON.back + 'Anterior</button>' +
+    '<button type="button" class="btn primary" data-ck-go="1">' + (k === 0 ? 'Empezar' : k < n ? 'Siguiente' : 'Terminar') + (k < n ? ICON.next : '') + '</button></footer>';
+  cookEl.innerHTML = h;
+}
+function openCook(id){
+  CK.id = id; CK.step = 0; CK.lastFocus = document.activeElement;
+  renderCook();
+  cookEl.hidden = false;
+  document.documentElement.classList.add('locked');
+  keepAwake(true);
+  cookEl.focus({preventScroll: true});
+}
+function closeCook(){
+  cookEl.hidden = true;
+  keepAwake(false);
+  if (sheet.hidden && picker.hidden) document.documentElement.classList.remove('locked');
+  if (CK.lastFocus && document.body.contains(CK.lastFocus)) CK.lastFocus.focus({preventScroll: true});
+}
+function cookGo(d){
+  var n = byId[CK.id].st.length, k = CK.step + d;
+  if (k < 0) return;
+  if (k > n) { closeCook(); toast('¡Buen provecho!'); return; }
+  CK.step = k; renderCook();
+  $('#ck-body').scrollTop = 0;
+  var b = cookEl.querySelector('[data-ck-go="' + d + '"]'); if (b && !b.disabled) b.focus({preventScroll: true});
+}
+cookEl.addEventListener('click', function(e){
+  var t = e.target.closest('button');
+  if (!t) return;
+  if (t.hasAttribute('data-ck-close')) { closeCook(); return; }
+  if (t.hasAttribute('data-ck-go')) { cookGo(Number(t.getAttribute('data-ck-go'))); return; }
+  if (t.hasAttribute('data-ck-timer')) { startTimer(Number(t.getAttribute('data-ck-timer'))); toast('Temporizador en marcha: ' + fmtDur(Number(t.getAttribute('data-ck-timer')))); return; }
+  if (t.hasAttribute('data-ck-rmtimer')) { TIMERS.splice(Number(t.getAttribute('data-ck-rmtimer')), 1); paintTimers(); return; }
+  if (t.classList.contains('ing')) t.setAttribute('aria-pressed', t.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+});
+document.addEventListener('keydown', function(e){
+  if (cookEl.hidden) return;
+  if (e.key === 'Escape') { e.stopImmediatePropagation(); closeCook(); }
+  else if (e.key === 'ArrowRight') cookGo(1);
+  else if (e.key === 'ArrowLeft') cookGo(-1);
+}, true);
+var ckSwipe = null;
+cookEl.addEventListener('touchstart', function(e){ ckSwipe = e.touches.length === 1 ? {x: e.touches[0].clientX, y: e.touches[0].clientY, t: Date.now()} : null; }, {passive: true});
+cookEl.addEventListener('touchend', function(e){
+  if (!ckSwipe) return;
+  var c = e.changedTouches[0], dx = c.clientX - ckSwipe.x, dy = c.clientY - ckSwipe.y, quick = Date.now() - ckSwipe.t < 700;
+  ckSwipe = null;
+  if (quick && Math.abs(dx) > 70 && Math.abs(dy) < Math.abs(dx) * 0.5) cookGo(dx < 0 ? 1 : -1);
+}, {passive: true});
+document.addEventListener('visibilitychange', function(){ if (!document.hidden && !cookEl.hidden) keepAwake(true); });
+
+/* ---------- copia de seguridad ---------- */
+var BK = {pending: null, err: ''};
+function longDate(iso){ var d = new Date(iso); return isNaN(d) ? '' : d.getDate() + ' ' + MESES[d.getMonth()] + ' ' + d.getFullYear(); }
+function renderBackup(){
+  var el = $('#backup');
+  if (!el) return;
+  var h = '<section class="g-card bk"><h3>Copia de seguridad</h3>' +
+    '<p>El menú, lo apuntado, la lista de la compra y las recetas guardadas están solo en este móvil. Guarda una copia de vez en cuando, por si cambias de teléfono o se borran los datos.</p>' +
+    '<p class="bk-last">' + (S.bk && longDate(S.bk) ? 'Última copia: <b>' + longDate(S.bk) + '</b>.' : 'Todavía no has guardado ninguna copia.') + '</p>';
+  if (BK.pending) {
+    h += '<div class="bk-box"><p>Copia del <b>' + (longDate(BK.pending.date) || 'archivo') + '</b>. Al restaurarla se reemplaza todo lo que hay ahora en este móvil.</p>' +
+      '<div class="actions"><button type="button" class="btn primary" data-bk-ok>Restaurar esta copia</button><button type="button" class="btn" data-bk-cancel>Cancelar</button></div></div>';
+  } else {
+    h += '<div class="actions"><button type="button" class="btn primary" data-bk-save>' + ICON.save + 'Guardar una copia</button>' +
+      '<button type="button" class="btn" data-bk-load>' + ICON.up + 'Restaurar una copia</button></div>';
+  }
+  if (BK.err) h += '<p class="form-err" role="alert">' + esc(BK.err) + '</p>';
+  h += '<input type="file" id="bk-file" accept=".json,application/json,text/plain" hidden></section>';
+  el.innerHTML = h;
+}
+function saveBackup(){
+  var now = new Date(), name = 'cocina-de-nene-' + keyOf(now) + '.json';
+  var txt = JSON.stringify({app: 'cocina-nene', v: 1, date: now.toISOString(), data: snapshot()});
+  function done(){ S.bk = now.toISOString(); BK.err = ''; save(); renderBackup(); toast('Copia guardada'); }
+  function download(){
+    var a = document.createElement('a'), url = URL.createObjectURL(new Blob([txt], {type: 'application/json'}));
+    a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 5000);
+    done();
+  }
+  var file = null;
+  try { file = new File([txt], name, {type: 'application/json'}); } catch (e) {}
+  if (file && navigator.canShare && navigator.canShare({files: [file]})) {
+    navigator.share({files: [file], title: 'Copia de La Cocina de Nene'}).then(done, function(err){ if (!err || err.name !== 'AbortError') download(); });
+  } else download();
+}
+$('#backup').addEventListener('click', function(e){
+  var t = e.target.closest('button');
+  if (!t) return;
+  if (t.hasAttribute('data-bk-save')) { saveBackup(); return; }
+  if (t.hasAttribute('data-bk-load')) { BK.err = ''; $('#bk-file').click(); return; }
+  if (t.hasAttribute('data-bk-cancel')) { BK.pending = null; renderBackup(); return; }
+  if (t.hasAttribute('data-bk-ok') && BK.pending) {
+    try { localStorage.setItem(KEY, JSON.stringify(BK.pending.data)); }
+    catch (err) { BK.err = 'No se pudo restaurar en este navegador.'; BK.pending = null; renderBackup(); return; }
+    location.reload();
+  }
+});
+$('#backup').addEventListener('change', function(e){
+  var f = e.target.id === 'bk-file' && e.target.files && e.target.files[0];
+  if (!f) return;
+  var fr = new FileReader();
+  fr.onload = function(){
+    var o = null;
+    try { o = JSON.parse(fr.result); } catch (err) {}
+    if (o && o.app === 'cocina-nene' && o.data && typeof o.data === 'object' && !Array.isArray(o.data)) { BK.pending = o; BK.err = ''; }
+    else { BK.pending = null; BK.err = 'Ese archivo no es una copia de La Cocina de Nene.'; }
+    renderBackup();
+  };
+  fr.onerror = function(){ BK.pending = null; BK.err = 'No se pudo leer el archivo.'; renderBackup(); };
+  fr.readAsText(f);
+});
+
+/* ---------- sin conexión y aviso de versión nueva ---------- */
+var lastCheck = 0;
+function checkVersion(){
+  if (location.protocol === 'file:' || typeof APP_V === 'undefined' || Date.now() - lastCheck < 300000) return;
+  lastCheck = Date.now();
+  fetch('version.json?t=' + lastCheck, {cache: 'no-store'}).then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(j){ if (j && j.v && j.v !== APP_V) $('#update').hidden = false; }).catch(function(){});
+}
+$('#update-btn').addEventListener('click', function(){ location.reload(); });
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
+}
+document.addEventListener('visibilitychange', function(){ if (!document.hidden) checkVersion(); });
+setTimeout(checkVersion, 3000);
 
 /* ---------- notas de amor ---------- */
 var loveTimer = null, lastLove = -1;
@@ -2823,6 +3169,7 @@ $('#toast').addEventListener('click', function(e){
 
 /* ---------- inicio ---------- */
 renderList();
+renderBackup();
 setTab(S.tab, true);
 updateShopCount();
 READY = true;
