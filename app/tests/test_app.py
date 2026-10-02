@@ -154,8 +154,17 @@ async def t_migration_and_flows(p, url):
     b, ctx, pg = await new_page(p, url, st, when=datetime.datetime(2026, 10, 7, 20, 0))
     st2 = await state(pg)
     check('semana nueva y la anterior guardada', sorted(st2['menu']['weeks'].keys()) == ['2026-09-28', '2026-10-05'], sorted(st2['menu']['weeks'].keys()))
+    check('pregunta por el último día que quedó sin marcar', 'El domingo 4 quedaron 4 platos sin marcar' in await pg.inner_text('.review'))
+    await pg.click('[data-review="si"]'); await pg.wait_for_timeout(150)
+    st3 = await state(pg)
+    sun = st3['menu']['weeks']['2026-09-28']['days'][6]
+    check('«Sí, se comieron» los marca y no vuelve a preguntar', all(it.get('e') == 1 for it in sun['items']) and sun.get('rv') == 1 and await pg.locator('.review').count() == 0)
+    for i in range(await pg.locator('[data-eat]').count()):
+        await pg.click('[data-eat] >> nth=%d' % i); await pg.wait_for_timeout(120)
+        if await pg.is_visible('#love'):
+            await pg.click('#love-btn'); await pg.wait_for_timeout(80)
     await pg.evaluate("window.scrollTo(0, 99999)"); await pg.wait_for_timeout(100)
-    check('tendencia por semanas', await pg.locator('.tr').count() == 2)
+    check('tendencia por semanas, con los días ya comidos', await pg.locator('.tr').count() == 2)
     check('sin errores de JavaScript', not pg.errs, pg.errs)
     await b.close()
 
@@ -198,6 +207,7 @@ async def t_builder_and_shop(p, url):
     check('5 huevos + puerro + 100 g de queso fresco = 49 g / 16 g / 630 kcal', tot == '49 g proteína 16 g carbos 630 kcal', tot)
     await pg.click('#pk-form [type=submit]'); await pg.wait_for_timeout(200)
     check('el plato queda en el menú con nombre automático', '5 huevos, puerro y queso fresco' in await pg.inner_text('#v-menu'))
+    check('lo apuntado a mano hoy queda marcado como comido', await pg.locator('.it-li.done', has_text='5 huevos').count() == 1 and await pg.inner_text('.st-big b') == '49')
     idx = await pg.eval_on_selector_all('[data-item]', "els => els.find(e => e.textContent.includes('5 huevos')).dataset.item")
     await pg.click('[data-item="%s"]' % idx); await pg.click('[data-pk="editar"]'); await pg.wait_for_timeout(150)
     await pg.select_option('[data-bdu="0"]', 'g'); await pg.wait_for_timeout(100)
@@ -210,7 +220,9 @@ async def t_builder_and_shop(p, url):
     await pg.click('[data-add="m"]'); await pg.click('[data-pktab="mano"]'); await pg.click('[data-bdnums]'); await pg.wait_for_timeout(100)
     await pg.fill('#pk-n', 'Pollo del restaurante'); await pg.fill('#pk-pr', '45'); await pg.click('#pk-form [type=submit]'); await pg.wait_for_timeout(150)
     check('«solo sé los números» sigue funcionando', 'Pollo del restaurante' in await pg.inner_text('#v-menu'))
-    # compra
+    # compra: lo ya comido no se compra, así que la tortilla vuelve a ser plan
+    idx = await pg.eval_on_selector_all('[data-item]', "els => els.find(e => e.textContent.includes('Tortilla de puerro')).dataset.item")
+    await pg.click('[data-eat="%s"]' % idx); await pg.wait_for_timeout(120)
     await pg.evaluate("window.scrollTo(0, 99999)")
     await pg.click('[data-menushop]'); await pg.wait_for_timeout(150)
     await pg.click('[data-tab="compra"]'); await pg.wait_for_timeout(200)
@@ -236,9 +248,71 @@ async def t_builder_and_shop(p, url):
     await b.close()
 
 
+async def t_tracking(p, url):
+    print('Menú: plan y comido')
+    seed = {"tab": "menu", "favs": [], "menu": {"v": 4, "seen": True, "recent": [], "weeks": {"2026-09-28": {"days":
+            [{"items": []}, old_day(), old_day(), old_day(), {"items": []}, {"items": []}, {"items": []}]}}}, "shop": {"entries": [], "checked": {}}}
+    b, ctx, pg = await new_page(p, url, seed)
+    check('hoy empieza en 0 g: el plan no cuenta como comido', await pg.inner_text('.st-big b') == '0' and await pg.locator('.it-li.open').count() == 4)
+    check('y dice a dónde llega el plan', 'llegas a 161 g' in await pg.inner_text('.st-plan'))
+    check('explica el círculo la primera vez', 'círculo' in await pg.inner_text('.day-hint'))
+    check('ayer quedó sin marcar: pregunta', 'Ayer quedaron 4 platos sin marcar' in await pg.inner_text('.review'))
+    await pg.click('[data-review="no"]'); await pg.wait_for_timeout(120)
+    st = await state(pg)
+    tue = st['menu']['weeks']['2026-09-28']['days'][1]
+    check('«No» deja el día sin contar y no vuelve a preguntar', tue.get('rv') == 1 and not any(it.get('e') for it in tue['items'])
+          and await pg.locator('.review').count() == 0 and await pg.inner_text('.wk .wk-n >> nth=1') == '–')
+    await pg.click('.toast-act'); await pg.wait_for_timeout(120)
+    check('se puede deshacer', await pg.locator('.review').count() == 1)
+    await pg.click('[data-review="ver"]'); await pg.wait_for_timeout(150)
+    check('«Ver el día» lleva a ese día', await pg.inner_text('#day-title') == 'Martes 29 sep' and 'No se marcó nada' in await pg.inner_text('.st-msg'))
+    await pg.click('[data-today]'); await pg.wait_for_timeout(150)
+    # marcar la primera comida: cuenta y sale una nota de amor
+    await pg.click('[data-eat="0"]'); await pg.wait_for_timeout(200)
+    msgs = await pg.evaluate("LOVE")
+    check('al marcar una comida sale una nota de amor', await pg.is_visible('#love') and await pg.inner_text('#love-msg') in msgs and 'From Diego' in await pg.inner_text('#love-pill'))
+    await pg.click('#love-btn'); await pg.wait_for_timeout(100)
+    check('y cuenta su proteína', await pg.inner_text('.st-big b') == '48' and await pg.locator('.it-li.done').count() == 1 and await pg.inner_text('.wk.today .wk-n') == '48')
+    check('la barra de hoy tiene parte comida y parte de plan', await pg.locator('.wk.today .wk-bar i').count() == 2 and await pg.locator('.pbar i').count() == 2)
+    check('el aviso del círculo desaparece', await pg.locator('.day-hint').count() == 0)
+    await pg.click('[data-eat="1"]'); await pg.wait_for_timeout(200)
+    check('un snack se marca con un aviso corto, sin nota', await pg.is_hidden('#love') and 'Comido: ' in await pg.inner_text('#toast'))
+    from urllib.parse import unquote
+    wd = unquote(await pg.get_attribute('.wa-day', 'href'))
+    check('el mensaje del día marca lo comido', 'Perico con jamón ✅' in wd and 'Comido: 73 g de proteína' in wd and 'Plan del día: 161 g' in wd, wd)
+    await pg.click('[data-eat="0"]'); await pg.wait_for_timeout(150)
+    check('se puede desmarcar', await pg.inner_text('.st-big b') == '25' and await pg.is_hidden('#love'))
+    await pg.click('[data-eat="0"]'); await pg.wait_for_timeout(150)
+    check('la nota no se repite para el mismo plato', await pg.is_hidden('#love'))
+    await pg.click('[data-eat="3"]'); await pg.wait_for_timeout(150)
+    await pg.click('[data-eat="2"]'); await pg.wait_for_timeout(250)
+    check('al cruzar los 150 g comidos, celebra la meta', await pg.locator('.status.met.party').count() == 1 and 'Meta cumplida' in await pg.inner_text('.st-msg')
+          and await pg.is_visible('#love') and 'Meta' in await pg.inner_text('#love-pill'))
+    await pg.click('#love-btn'); await pg.wait_for_timeout(100)
+    st = await state(pg)
+    check('se guarda qué se comió', all(it.get('e') == 1 for it in st['menu']['weeks']['2026-09-28']['days'][2]['items']) and st['menu']['v'] == 4)
+    # otro día al azar no pisa lo comido
+    await pg.click('[data-eat="1"]'); await pg.wait_for_timeout(120)
+    await pg.click('[data-dayrandom]'); await pg.wait_for_timeout(200)
+    names = await pg.eval_on_selector_all('.it-li.done .it-n', 'e => e.map(x => x.textContent)')
+    check('«Otro día al azar» conserva lo ya comido', len(names) == 3 and 'Perico con jamón' in names and await pg.locator('.it').count() == 4, names)
+    await pg.wait_for_timeout(1800)
+    check('ya no salen notas de amor al azar', await pg.is_hidden('#love'))
+    # un día que no ha llegado es solo plan
+    await pg.click('[data-day="3"]'); await pg.wait_for_timeout(150)
+    check('en el plan de mañana no hay círculos', await pg.locator('.it-chk').count() == 0 and await pg.locator('.it').count() == 4)
+    await pg.click('[data-add="s2"]'); await pg.click('[data-pktab="rapidos"]'); await pg.click('[data-quick="0"]'); await pg.wait_for_timeout(150)
+    st = await state(pg)
+    check('lo añadido a un día futuro es plan', not any(it.get('e') for it in st['menu']['weeks']['2026-09-28']['days'][3]['items']))
+    check('sin desbordes a 390 px', await pg.evaluate("document.documentElement.scrollWidth") == 390)
+    check('sin errores de JavaScript', not pg.errs, pg.errs)
+    await b.close()
+
+
 async def t_cook_mode(p, url):
     print('Modo cocina')
-    b, ctx, pg = await new_page(p, url)
+    seed = {"tab": "recetas", "favs": [], "menu": {"v": 2, "days": [old_day() for _ in range(7)]}, "shop": {"entries": [], "checked": {}}}
+    b, ctx, pg = await new_page(p, url, seed)
     await pg.fill('#q', 'pollo al ajillo'); await pg.wait_for_timeout(150)
     await pg.locator('#grid .card').first.click(); await pg.wait_for_timeout(250)
     await pg.click('[data-cook]'); await pg.wait_for_timeout(200)
@@ -258,6 +332,10 @@ async def t_cook_mode(p, url):
     check('cuenta los pasos', ('Paso %d de %d' % (n, n)) in await pg.inner_text('.ck-count'))
     await pg.click('[data-ck-go="1"]'); await pg.wait_for_timeout(150)
     check('al terminar vuelve a la ficha', await pg.is_hidden('#cook') and await pg.is_visible('#sheet'))
+    st = await state(pg)
+    today = {it['id']: it.get('e') for it in st['menu']['weeks']['2026-09-28']['days'][2]['items']}
+    check('y el plato de hoy queda marcado como comido, con su nota', today == {'perico': None, 'batido-cafe': None, 'pollo-ajillo': 1, 'cottage-atun': None}
+          and 'marcado' in await pg.inner_text('#love-pill') and await pg.inner_text('#love-msg') in await pg.evaluate("LOVE"), today)
     check('sin errores de JavaScript', not pg.errs, pg.errs)
     await b.close()
 
@@ -332,6 +410,7 @@ async def main():
             await t_migration_and_flows(p, url)
             await t_picker_filters(p, url)
             await t_builder_and_shop(p, url)
+            await t_tracking(p, url)
             await t_cook_mode(p, url)
             await t_backup(p, url)
             await t_small_and_dark(p, url)

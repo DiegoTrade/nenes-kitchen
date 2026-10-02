@@ -200,7 +200,7 @@ h1,h2,h3,h4{text-wrap:balance}
 .wk-bar{height:40px;margin-top:4px}
 .band{position:absolute;left:0;right:0;background:var(--sage-soft)}
 .wk-bar i,.tr-bar i{position:relative;display:block;width:12px;border-radius:4px 4px 0 0;background:var(--coral)}
-.wk.plan .wk-bar i,.lg-plan{background:repeating-linear-gradient(135deg,var(--coral) 0 1.5px,transparent 1.5px 4.5px);box-shadow:inset 0 0 0 1.5px var(--coral)}
+.wk-bar i.pl,.pbar i.pl,.lg-plan{background:repeating-linear-gradient(135deg,var(--coral) 0 1.5px,transparent 1.5px 4.5px);box-shadow:inset 0 0 0 1.5px var(--coral)}
 .wk-n{font-size:12px;color:var(--ink-3);margin-top:4px}
 .wk[aria-selected="true"] .wk-n{color:var(--ink);font-weight:700}
 .wk-legend{display:flex;flex-wrap:wrap;gap:4px 16px;margin:8px 8px 0;font-size:12px;color:var(--ink-3)}
@@ -703,3 +703,24 @@ b,strong{font-weight:800}
 .daybtn-del{color:var(--coral-ink)}
 .daybtn-del .db-ic{background:var(--coral-soft);color:var(--coral-ink)}
 .wsum-acts .btn{width:100%}
+
+/* Menú: plan (rayado) frente a comido (sólido) */
+.wk-bar i.pl{position:absolute;left:50%;bottom:0;margin-left:-6px}
+.wk-bar i:not(.pl){z-index:1}
+.st-plan{display:flex;align-items:center;gap:8px;margin:8px 0 0;font-size:14px;font-weight:600;color:var(--ink-2)}
+.st-plan b{color:var(--ink);font-variant-numeric:tabular-nums}
+.st-plan .lg{flex:none}
+.items li.it-li{display:flex;align-items:stretch}
+.it-chk{flex:none;display:grid;place-items:center;width:56px;padding:0 0 0 8px;background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.it-chk .tick{width:30px;height:30px;border:2px dashed var(--ink-3);color:transparent;transition:transform .12s ease}
+.it-chk[aria-pressed="true"] .tick{background:var(--sage);border:2px solid var(--sage);color:#fff}
+.it-chk:active .tick{transform:scale(.88)}
+.it-chk+.it{padding-left:6px;min-width:0;flex:1}
+.it-li.open .it-n{color:var(--ink-2)}
+.it-li.pop .tick{animation:tick-pop .4s cubic-bezier(.3,1.7,.5,1)}
+@keyframes tick-pop{from{transform:scale(.4)}to{transform:none}}
+.pk-act[aria-pressed="true"]{background:var(--sage-soft);border-color:var(--sage);color:var(--sage-ink)}
+.review{margin-top:14px;padding:12px 14px 14px;border-radius:20px;background:var(--yolk-soft);border:1.5px solid var(--yolk)}
+.rv-t{margin:0;font-family:var(--display);font-weight:600;font-size:17px;color:var(--ink)}
+.rv-l{margin:2px 0 0;font-size:14px;font-weight:600;color:var(--ink-2)}
+.rv-acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}

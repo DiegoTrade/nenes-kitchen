@@ -8,7 +8,7 @@ Una app de recetas hecha para Nene: platos altos en proteína y bajos en carbohi
 |---|---|
 | 📖 **118 recetas** | Ingredientes con cantidades, pasos, consejos y qué servir al resto de la familia |
 | 🎲 **¿Qué cocino hoy?** | Propone una receta al azar |
-| 📅 **Menú** | Registro de cada día con su fecha: suma proteína, carbos y calorías, dice cuánto falta para la meta, y separa lo que ya pasó del plan. Cada lunes llega un menú nuevo y las semanas anteriores se guardan con su media |
+| 📅 **Menú** | Registro de cada día con su fecha: cada plato se marca cuando se ha comido, y la app suma la proteína, los carbos y las calorías de lo comido, dice cuánto falta para la meta y a dónde llega lo que queda del plan. Cada lunes llega un menú nuevo y las semanas anteriores se guardan con su media |
 | 🥚 **Armar un plato** | En «A mano» se eligen los ingredientes (unos 125 alimentos comunes, con medidas caseras) y la app suma proteína, carbos y calorías. El plato se guarda en Recientes y se puede editar |
 | ⚡ **Apuntar rápido** | Recientes, «Igual que ayer», copiar a otro día, mover de comida, deslizar entre días y deshacer |
 | 🛒 **Lista de la compra** | Se arma sola con el menú, las recetas y los platos armados a mano. Se le puede añadir cualquier otra cosa y se envía por WhatsApp |
@@ -57,6 +57,7 @@ Después de cambiar algo en `app/src/`, hay que construir y subir también `inde
 | Versión | Cambios |
 |---|---|
 | V1 a V5 | Nene's Kitchen: generador de comidas, recetas, favoritos, lista de la compra |
+| **V9.2** | Plan y comido: cada plato se marca con un toque cuando se ha comido y solo cuenta lo marcado. La tarjeta del día y la semana distinguen lo comido (sólido) del plan (rayado), la app pregunta por lo que quedó sin marcar, y las notas de amor salen al marcar una comida, ya no al azar |
 | **V9.1** | Cocina asiática: 18 recetas nuevas (tailandesa, china, coreana, japonesa, vietnamita e india) sin arroz, fideos ni azúcar, con filtro «Asiáticas» (118 recetas) |
 | **V9** | Diseño nuevo alrededor de la mascota: portada, colores de yema y coral, títulos redondos, tarjetas de receta con pegatina, ficha compacta, celebración al cumplir la meta y texto con mejor contraste |
 | **V8.1** | El menú de la semana, o un solo día, se puede enviar por WhatsApp |
