@@ -1,0 +1,26 @@
+name: Pruebas
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Construir
+        run: node app/build.js
+      - name: El index.html subido coincide con el código fuente
+        run: git diff --exit-code -- index.html version.json
+      - name: Instalar Playwright
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Pruebas en móvil simulado
+        run: python app/tests/test_app.py
