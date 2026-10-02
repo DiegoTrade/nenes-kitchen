@@ -1,7 +1,7 @@
 /* Etiquetas, formato de cantidades y HTML estático (lo usan la app y la versión sin JavaScript) */
 var TIPO = {primera:'Primera comida', fuerte:'Plato fuerte', fria:'Plato frío', sopa:'Sopa', snack:'Snack', base:'Salsa o base'};
 var TIPOS_CHIPS = [['todas','Todas'],['primera','Primera comida'],['fuerte','Platos fuertes'],['fria','Frías'],['sopa','Sopas'],['snack','Snacks'],['base','Salsas y bases']];
-var ORIG = {ve:'Venezolana', ca:'Canaria', es:'Española', in:'Internacional', vi:'Viral y favorita'};
+var ORIG = {ve:'Venezolana', ca:'Canaria', es:'Española', as:'Asiática', in:'Internacional', vi:'Viral y favorita'};
 var PROTS = [['pollo','Pollo'],['carne','Ternera'],['cerdo','Cerdo'],['pescado','Pescado'],['marisco','Marisco'],['huevos','Huevos'],['lacteos','Lácteos'],['otros','Cordero y conejo']];
 var TIEMPOS = [['rapida','15 min o menos'],['media','Hasta 35 min'],['lenta','Sin prisa']];
 
@@ -142,7 +142,7 @@ function guideHTML(){
     '<li>Zumos, refrescos y batidos de fruta</li>' +
     '<li>Cerveza y alcohol</li>' +
     '<li>Dulces, bollería, galletas y helados</li>' +
-    '<li>Tomate frito, ketchup y salsas de bote</li>' +
+    '<li>Tomate frito, ketchup y salsas de bote (también teriyaki, agridulce y hoisin)</li>' +
     '<li>Rebozados y fritos en aceite de girasol</li>' +
     '<li>Vísceras: hígado, riñones y mollejas</li>' +
   '</ul></div>' +

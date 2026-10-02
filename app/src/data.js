@@ -99,6 +99,12 @@ var RECETAS = [
  i:[[3,'','Huevos','h'],[200,'g','Skyr o yogur alto en proteína','h'],[1,'diente','Ajo','v','rallado'],[15,'g','Mantequilla','h'],[1,'cdta','Pimentón dulce','e','y una pizca de picante'],[null,'','Eneldo o perejil','v'],[1,'cda','Vinagre de vino blanco','e'],[null,'','Sal','e']],
  st:['Mezcla el skyr con el ajo rallado y sal, y extiéndelo en un plato hondo. Mejor a temperatura ambiente.','Pon agua con el vinagre a fuego suave, sin que hierva fuerte. Casca cada huevo en una taza, échalo al agua y cuécelo 3 minutos. Sácalo con una espumadera.','Pon los huevos sobre el yogur.','Derrite la mantequilla con el pimentón 30 segundos, sin que se queme, y échala por encima. Termina con eneldo.']},
 
+{id:'tortilla-china', n:'Tortilla china de gambas (egg foo young)', t:'primera', p:'huevos', o:'as', min:15, s:1, pr:52, ch:10, gr:41, kc:620,
+ d:'Tortilla con gambas, col y cebolleta, con soja y sésamo.',
+ cr:'Clásico de los restaurantes chinos (egg foo young). Sin la salsa espesa.',
+ i:[[4,'','Huevos','h'],[100,'g','Langostinos o gambas peladas','p','o pollo cocinado desmenuzado'],[100,'g','Col o repollo','v','en tiras muy finas'],[50,'g','Champiñones','v','laminados'],[2,'','Cebolleta','v'],[1,'cda','Salsa de soja','e'],[1,'cdta','Aceite de sésamo','e'],[1,'cda','Aceite de oliva','e'],[null,'','Salsa sriracha','e','al servir']],
+ st:['Saltea la col y los champiñones en la mitad del aceite de oliva, a fuego fuerte, 3 minutos. Añade las gambas troceadas y deja 1 minuto.','Bate los huevos con la salsa de soja y la mitad de la cebolleta picada. Mezcla con el salteado.','Calienta el resto del aceite de oliva en una sartén antiadherente a fuego medio. Vierte la mezcla y cocina 3 minutos, hasta que cuaje por debajo.','Dale la vuelta con un plato y cocina 2 minutos más.','Sirve con el aceite de sésamo, el resto de la cebolleta y sriracha.']},
+
 /* ---------------- PLATOS FUERTES: POLLO ---------------- */
 {id:'pollo-cremoso', n:'Pollo cremoso con champiñones', t:'fuerte', p:'pollo', o:'in', min:25, s:1, pr:74, ch:14, gr:32, kc:640,
  d:'Tiras de pechuga en salsa de nata, parmesano y champiñones.',
@@ -120,7 +126,7 @@ var RECETAS = [
  fam:'Para los demás, con arroz blanco y tajadas. Para Diego, con arroz o puré de coliflor.',
  keep:'4 días en la nevera. Se congela muy bien en porciones.'},
 
-{id:'pollo-curry', n:'Pollo al curry con leche de coco', t:'fuerte', p:'pollo', o:'in', min:30, s:2, pr:65, ch:16, gr:30, kc:590,
+{id:'pollo-curry', n:'Pollo al curry con leche de coco', t:'fuerte', p:'pollo', o:'as', min:30, s:2, pr:65, ch:16, gr:30, kc:590,
  d:'Curry suave y cremoso, con arroz de coliflor.',
  i:[[500,'g','Pechuga de pollo','p','en dados'],[200,'ml','Leche de coco','d','de lata, sin azúcar'],[0.5,'','Cebolla','v'],[2,'diente','Ajo','v'],[1,'trozo','Jengibre fresco','v','de 2 cm'],[100,'g','Tomate triturado natural','d'],[2,'puñado','Espinacas baby','v'],[0.5,'manojo','Cilantro','v'],[0.5,'','Coliflor','v','para arroz de coliflor','arroz-coliflor'],[1,'cda','Curry en polvo','e'],[0.5,'cdta','Cúrcuma','e'],[1,'cda','Aceite de oliva','e'],[null,'','Sal','e']],
  st:['Sofríe la cebolla picada en el aceite 4 minutos. Añade el ajo y el jengibre rallados y remueve 1 minuto.','Añade el curry y la cúrcuma y remueve 30 segundos para que suelten el aroma.','Sube el fuego, añade el pollo con sal y dóralo 4 minutos.','Echa el tomate y la leche de coco. Cocina a fuego bajo 12 minutos.','Añade las espinacas, deja 1 minuto y termina con cilantro. Sirve con arroz de coliflor.'],
@@ -200,7 +206,7 @@ var RECETAS = [
  fam:'Todos comen lo mismo. Los demás, con pan o arroz al lado.',
  keep:'3 días en la nevera.'},
 
-{id:'ternera-brocoli', n:'Ternera salteada con brócoli y jengibre', t:'fuerte', p:'carne', o:'in', min:20, s:1, pr:63, ch:18, gr:33, kc:620,
+{id:'ternera-brocoli', n:'Ternera salteada con brócoli y jengibre', t:'fuerte', p:'carne', o:'as', min:20, s:1, pr:63, ch:18, gr:33, kc:620,
  d:'Salteado al estilo chino, rápido y con mucho sabor.',
  i:[[250,'g','Filete de ternera','p','en tiras finas'],[200,'g','Brócoli','v'],[0.5,'','Pimiento rojo','v'],[2,'diente','Ajo','v'],[1,'trozo','Jengibre fresco','v','de 2 cm'],[2,'cda','Salsa de soja','e'],[1,'cdta','Aceite de sésamo','e'],[1,'cda','Aceite de oliva','e'],[1,'cdta','Sésamo','e']],
  st:['Calienta el aceite de oliva en una sartén grande o wok a fuego máximo. Saltea la ternera 2 minutos, en dos tandas para que se dore. Sácala.','Añade el brócoli en ramitos pequeños con 3 cucharadas de agua. Tapa 3 minutos.','Destapa, añade el pimiento en tiras y el ajo y el jengibre rallados, y saltea 1 minuto.','Vuelve a meter la carne con la salsa de soja y el aceite de sésamo. Remueve 1 minuto y termina con sésamo.'],
@@ -244,7 +250,7 @@ var RECETAS = [
  tip:'Si queda apenas rosado en el centro, está en su punto y jugoso.',
  fam:'Para los demás, con puré de papas.'},
 
-{id:'rollito-bol', n:'Rollito de primavera en bol', t:'fuerte', p:'cerdo', o:'vi', min:20, s:2, pr:49, ch:17, gr:59, kc:790,
+{id:'rollito-bol', n:'Rollito de primavera en bol', t:'fuerte', p:'cerdo', o:'vi', o2:'as', min:20, s:2, pr:49, ch:17, gr:59, kc:790,
  d:'El relleno del rollito de primavera, sin la masa: cerdo, col, jengibre y soja en una sartén.',
  cr:'Clásico keto viral (egg roll in a bowl, también llamado crack slaw).',
  i:[[500,'g','Carne picada de cerdo','p','o de pollo'],[0.5,'','Col o repollo','v','en tiras finas'],[1,'','Zanahoria','v','rallada'],[3,'diente','Ajo','v'],[1,'trozo','Jengibre fresco','v','de 2 cm'],[2,'','Cebolleta','v'],[3,'cda','Salsa de soja','e'],[1,'cdta','Aceite de sésamo','e'],[1,'cdta','Vinagre de arroz','e','o de vino blanco'],[1,'cdta','Sésamo','e'],[1,'cda','Mayonesa','e','con unas gotas de sriracha, opcional']],
@@ -317,7 +323,7 @@ var RECETAS = [
  tip:'Con el pulpo ya cocido del súper está listo en 10 minutos. Cuenta como marisco: una vez por semana.'},
 
 /* ---------------- PLATOS FUERTES: VIRALES Y MUY VALORADOS ---------------- */
-{id:'pollo-mantequilla', n:'Pollo a la mantequilla (butter chicken)', t:'fuerte', p:'pollo', o:'vi', min:40, s:2, pr:61, ch:17, gr:37, kc:650, prep:true,
+{id:'pollo-mantequilla', n:'Pollo a la mantequilla (butter chicken)', t:'fuerte', p:'pollo', o:'vi', o2:'as', min:40, s:2, pr:61, ch:17, gr:37, kc:650, prep:true,
  d:'El curry indio más querido: pollo marinado en yogur, en salsa de tomate con mantequilla y nata.',
  cr:'Clásico indio (murgh makhani) y una de las recetas de pollo más buscadas del mundo. Aquí sin azúcar y con arroz de coliflor.',
  i:[[500,'g','Contramuslo de pollo deshuesado','p','en trozos'],[100,'g','Skyr o yogur alto en proteína','h','para marinar'],[30,'g','Mantequilla','h'],[0.5,'','Cebolla','v'],[3,'diente','Ajo','v'],[1,'trozo','Jengibre fresco','v','de 2 cm'],[200,'g','Tomate triturado natural','d'],[100,'ml','Nata para cocinar','h'],[0.5,'','Coliflor','v','para arroz de coliflor','arroz-coliflor'],[0.5,'manojo','Cilantro','v'],[2,'cdta','Garam masala','e','o 1 cda de curry'],[1,'cdta','Cúrcuma','e'],[1,'cdta','Pimentón dulce','e'],[null,'','Sal','e']],
@@ -355,7 +361,7 @@ var RECETAS = [
  st:['Enciende el horno a 200 °C.','Salpimienta los filetes. Pásalos por el huevo batido y luego por la mezcla de parmesano y almendra, apretando bien.','Dóralos en una sartén con el aceite, 2 o 3 minutos por cada lado, y pásalos a una fuente de horno.','Cocina el tomate con el ajo picado, el orégano y sal 5 minutos, y échalo por encima del pollo.','Cubre con la mozzarella y hornea 12 minutos, hasta que gratine.','Termina con albahaca y sirve con rúcula.'],
  fam:'Los demás, con espaguetis.'},
 
-{id:'adobo-filipino', n:'Adobo de pollo filipino', t:'fuerte', p:'pollo', o:'vi', min:40, s:2, pr:65, ch:14, gr:25, kc:540, prep:true,
+{id:'adobo-filipino', n:'Adobo de pollo filipino', t:'fuerte', p:'pollo', o:'vi', o2:'as', min:40, s:2, pr:65, ch:14, gr:25, kc:540, prep:true,
  d:'Contramuslos guisados en soja, vinagre, ajo y laurel. Pocos ingredientes y mucho sabor.',
  cr:'El plato nacional de Filipinas, entre las recetas low-carb mejor valoradas de Taste of Home. Sin el azúcar que a veces lleva.', cu:'https://www.tasteofhome.com/collection/the-best-low-carb-recipes-of-the-year/',
  i:[[600,'g','Contramuslo de pollo deshuesado','p'],[8,'diente','Ajo','v','chafados'],[2,'','Cebolleta','v'],[300,'g','Judías verdes','v','para acompañar'],[60,'ml','Salsa de soja','e'],[60,'ml','Vinagre de vino blanco','e','o de arroz'],[3,'hoja','Laurel','e'],[1,'cdta','Pimienta negra en grano','e'],[1,'cda','Aceite de oliva','e']],
@@ -493,6 +499,98 @@ var RECETAS = [
  fam:'Los demás, con pan para mojar.',
  keep:'El pisto solo, sin huevos, aguanta 4 días en la nevera.'},
 
+/* ---------------- PLATOS FUERTES: COCINA ASIÁTICA ---------------- */
+{id:'larb-pollo', n:'Larb de pollo en hojas de lechuga', t:'fuerte', p:'pollo', o:'as', min:15, s:2, pr:53, ch:16, gr:23, kc:480,
+ d:'Pollo picado con lima, guindilla y mucha menta, envuelto en lechuga. Fresco, picante y muy rápido.',
+ cr:'El plato nacional de Laos, muy popular también en Tailandia (larb gai).',
+ i:[[500,'g','Carne picada de pollo','p','o de cerdo'],[2,'','Lima','v'],[0.5,'','Cebolla morada','v','en tiras muy finas'],[3,'','Cebolleta','v'],[1,'manojo','Menta o hierbabuena','v'],[0.5,'manojo','Cilantro','v'],[1,'','Lechuga','v','cogollos u hojas grandes, para envolver'],[1,'','Pepino','v'],[2,'cda','Salsa de pescado','e'],[1,'cdta','Guindilla en copos','e','o más, al gusto'],[1,'cdta','Aceite de oliva','e']],
+ st:['Calienta el aceite en una sartén a fuego medio-alto y cocina la carne 6 minutos, rompiéndola con la cuchara, hasta que esté hecha y no quede agua.','Apaga el fuego y deja templar 2 minutos. Añade el zumo de las limas, la salsa de pescado y la guindilla, y mezcla.','Añade la cebolla morada, la cebolleta en rodajas, y la menta y el cilantro picados gruesos. Prueba: tiene que estar ácido, salado y picante.','Sirve en hojas de lechuga, con el pepino en bastones al lado.'],
+ tip:'El original lleva arroz tostado molido. Sin él queda igual de rico y sin carbohidratos.',
+ fam:'Los demás, con arroz blanco.'},
+
+{id:'pad-kra-pao', n:'Pollo salteado con albahaca y huevo frito (pad kra pao)', t:'fuerte', p:'pollo', o:'as', min:20, s:2, pr:62, ch:13, gr:40, kc:660,
+ d:'El plato de diario en Tailandia: pollo picado con ajo, guindilla y albahaca, y un huevo frito encima.',
+ cr:'Comida callejera tailandesa (pad kra pao gai). Sin el azúcar ni el arroz.',
+ i:[[500,'g','Carne picada de pollo','p','o de cerdo'],[2,'','Huevos','h'],[150,'g','Judías verdes','v','en trocitos de 1 cm'],[5,'diente','Ajo','v'],[3,'','Guindilla roja','v','más o menos, al gusto'],[1,'manojo','Albahaca fresca','v','solo las hojas'],[0.5,'','Coliflor','v','para arroz de coliflor','arroz-coliflor'],[2,'cda','Salsa de soja','e'],[1,'cda','Salsa de pescado','e'],[2,'cda','Aceite de oliva','e']],
+ st:['Pica muy fino el ajo con las guindillas, o machácalos en el mortero.','Fríe los huevos en 1 cucharada de aceite bien caliente, hasta que los bordes queden crujientes y la yema blanda. Resérvalos.','En la misma sartén, a fuego máximo, pon el resto del aceite y saltea el ajo y la guindilla 20 segundos. Cuidado: el humo pica.','Añade la carne y saltéala 4 minutos, rompiéndola, hasta que se dore. Añade las judías verdes y saltea 2 minutos más.','Echa la salsa de soja y la salsa de pescado, remueve 1 minuto, apaga el fuego y mezcla las hojas de albahaca hasta que se ablanden.','Sirve sobre arroz de coliflor, con el huevo frito encima.'],
+ tip:'En Tailandia se hace con albahaca sagrada. La albahaca normal del súper funciona muy bien.',
+ fam:'Los demás, con arroz jazmín.'},
+
+{id:'curry-verde', n:'Curry verde tailandés de pollo', t:'fuerte', p:'pollo', o:'as', min:30, s:2, pr:58, ch:18, gr:37, kc:640,
+ d:'Pollo y verduras en leche de coco con pasta de curry verde. Aromático y picante.',
+ cr:'Clásico tailandés (gaeng keow wan gai). Sin el azúcar de palma.',
+ i:[[500,'g','Contramuslo de pollo deshuesado','p','en trozos'],[200,'ml','Leche de coco','d','de lata, sin azúcar'],[150,'ml','Caldo de pollo','d','o agua'],[1,'','Calabacín','v'],[150,'g','Judías verdes','v'],[0.5,'','Pimiento rojo','v'],[1,'manojo','Albahaca fresca','v'],[1,'','Lima','v'],[0.5,'','Coliflor','v','para arroz de coliflor','arroz-coliflor'],[2,'cda','Pasta de curry verde','e','mira que no lleve azúcar'],[1,'cda','Salsa de pescado','e'],[1,'cdta','Aceite de oliva','e']],
+ st:['En una sartén honda, calienta el aceite y fríe la pasta de curry 1 minuto a fuego medio, removiendo, hasta que huela.','Añade la mitad de la leche de coco y deja que hierva 2 minutos.','Añade el pollo y remueve 3 minutos para que se impregne.','Echa el resto de la leche de coco, el caldo, las judías verdes en trozos y el pimiento en tiras. Cocina 8 minutos a fuego medio-bajo.','Añade el calabacín en medias lunas y cocina 4 minutos más.','Apaga el fuego y añade la salsa de pescado, el zumo de la lima y las hojas de albahaca. Sirve con arroz de coliflor.'],
+ tip:'La pasta de curry es la que pica: con 1 cucharada queda suave y con 3, fuerte. La pasta roja sirve igual.',
+ fam:'Los demás, con arroz jazmín.',
+ keep:'3 días en la nevera.'},
+
+{id:'satay-pollo', n:'Brochetas de pollo satay con salsa de cacahuete', t:'fuerte', p:'pollo', o:'as', min:20, x:'marinado de 30 minutos', xm:30, s:2, pr:67, ch:15, gr:37, kc:660,
+ d:'Pollo marinado en curry y coco, a la plancha, con salsa de cacahuete sin azúcar.',
+ cr:'Comida callejera de Indonesia, Malasia y Tailandia.',
+ i:[[600,'g','Contramuslo de pollo deshuesado','p','en tiras largas'],[100,'ml','Leche de coco','d','de lata, sin azúcar'],[30,'g','Mantequilla de cacahuete','d','2 cucharadas, sin azúcar'],[1,'','Lima','v'],[2,'diente','Ajo','v'],[1,'','Pepino','v'],[0.5,'','Cebolla morada','v'],[2,'cda','Salsa de soja','e'],[1,'cda','Curry en polvo','e'],[1,'cdta','Cúrcuma','e'],[1,'cdta','Salsa sriracha','e','o más, al gusto'],[1,'cdta','Aceite de oliva','e']],
+ st:['Mezcla el pollo con la mitad de la leche de coco, el curry, la cúrcuma, el ajo rallado y 1 cucharada de salsa de soja. Déjalo 30 minutos en la nevera.','Salsa: mezcla la mantequilla de cacahuete con el resto de la leche de coco, 1 cucharada de salsa de soja, el zumo de media lima y la sriracha. Si queda espesa, añade un chorrito de agua caliente.','Ensarta el pollo en brochetas, o déjalo en tiras. Hazlo en una plancha muy caliente con el aceite, 3 minutos por cada lado.','Sirve con la salsa, el pepino y la cebolla morada en rodajas, y la otra media lima.'],
+ tip:'Compra mantequilla de cacahuete que sea 100 % cacahuete: muchas llevan azúcar y aceite de palma.',
+ fam:'Los demás, con arroz blanco.'},
+
+{id:'pollo-kung-pao', n:'Pollo kung pao', t:'fuerte', p:'pollo', o:'as', min:25, s:2, pr:60, ch:14, gr:35, kc:610,
+ d:'Pollo salteado con guindillas secas, cacahuetes y pimiento. Picante, ácido y crujiente.',
+ cr:'Clásico de Sichuan (gong bao ji ding). Sin el azúcar ni la maicena de los restaurantes.',
+ i:[[500,'g','Contramuslo de pollo deshuesado','p','en dados de 2 cm; o pechuga'],[40,'g','Cacahuetes','d','tostados, sin sal'],[1,'','Pimiento rojo','v'],[1,'','Calabacín','v'],[4,'','Cebolleta','v'],[3,'diente','Ajo','v'],[1,'trozo','Jengibre fresco','v','de 2 cm'],[8,'','Guindilla seca','e','enteras; menos si no quieres mucho picante'],[3,'cda','Salsa de soja','e'],[1,'cda','Vinagre de arroz','e','o de vino blanco'],[1,'cdta','Aceite de sésamo','e'],[1,'cdta','Pimienta de Sichuan','e','opcional'],[1,'cda','Aceite de oliva','e']],
+ st:['Mezcla el pollo con 1 cucharada de salsa de soja y déjalo mientras cortas lo demás.','Calienta el aceite de oliva en un wok o sartén grande a fuego máximo. Dora el pollo 5 minutos, sin moverlo mucho, y sácalo.','En la misma sartén, saltea las guindillas secas y la pimienta de Sichuan 30 segundos, hasta que oscurezcan un poco sin quemarse.','Añade el pimiento y el calabacín en dados y saltea 3 minutos. Añade el ajo y el jengibre picados y remueve 30 segundos.','Vuelve a meter el pollo con el resto de la salsa de soja, el vinagre y la cebolleta en trozos. Saltea 1 minuto.','Apaga, añade los cacahuetes y el aceite de sésamo, y mezcla.'],
+ tip:'Las guindillas enteras dan aroma y un picante medio. Si las partes, pica mucho más. No hace falta comérselas.',
+ fam:'Los demás, con arroz blanco.'},
+
+{id:'mapo-tofu', n:'Mapo tofu', t:'fuerte', p:'carne', o:'as', min:25, s:2, pr:64, ch:14, gr:44, kc:710,
+ d:'Tofu y carne picada en una salsa roja y picante. De lo más querido de la cocina de Sichuan.',
+ cr:'Clásico de Sichuan (mapo doufu).',
+ i:[[400,'g','Tofu firme','h','en dados de 2 cm'],[300,'g','Carne picada de ternera','p','o de cerdo'],[3,'diente','Ajo','v'],[1,'trozo','Jengibre fresco','v','de 2 cm'],[3,'','Cebolleta','v'],[200,'ml','Caldo de pollo','d','o agua'],[0.5,'','Coliflor','v','para arroz de coliflor','arroz-coliflor'],[2,'cda','Pasta de guindilla china','e','doubanjiang; o sambal oelek'],[1,'cda','Salsa de soja','e'],[1,'cdta','Pimienta de Sichuan','e','molida; opcional'],[1,'cdta','Aceite de sésamo','e'],[1,'cdta','Aceite de oliva','e']],
+ st:['Calienta el aceite de oliva a fuego fuerte y dora la carne 5 minutos, rompiéndola, hasta que quede suelta y tostada.','Baja a fuego medio. Añade el ajo y el jengibre picados y la pasta de guindilla, y remueve 1 minuto, hasta que la grasa se ponga roja.','Echa el caldo y la salsa de soja. Cuando hierva, añade el tofu con cuidado y cocina 6 minutos a fuego suave. Mueve la sartén en vez de remover, para no romperlo.','Termina con la cebolleta en rodajas, el aceite de sésamo y la pimienta de Sichuan. Sirve con arroz de coliflor.'],
+ tip:'La pimienta de Sichuan no pica: adormece un poco la lengua. Es lo que hace especial este plato.',
+ fam:'Los demás, con arroz blanco.',
+ keep:'2 días en la nevera.'},
+
+{id:'judias-sichuan', n:'Judías verdes al estilo Sichuan con cerdo', t:'fuerte', p:'cerdo', o:'as', min:25, s:2, pr:48, ch:15, gr:17, kc:400,
+ d:'Judías verdes tostadas en la sartén hasta arrugarse, con cerdo, ajo y guindilla.',
+ cr:'Clásico de Sichuan (gan bian si ji dou).',
+ i:[[400,'g','Solomillo de cerdo','p','en daditos muy pequeños; o carne picada'],[400,'g','Judías verdes','v','enteras, sin las puntas'],[4,'diente','Ajo','v'],[1,'trozo','Jengibre fresco','v','de 2 cm'],[3,'','Cebolleta','v'],[6,'','Guindilla seca','e','enteras'],[2,'cda','Salsa de soja','e'],[1,'cdta','Aceite de sésamo','e'],[1,'cdta','Pimienta de Sichuan','e','opcional'],[1,'cda','Aceite de oliva','e']],
+ st:['Seca muy bien las judías. Calienta el aceite de oliva en una sartén grande a fuego fuerte y saltéalas 8 minutos, moviéndolas poco, hasta que se arruguen y les salgan manchas tostadas. Sácalas.','En la misma sartén, dora el cerdo 4 minutos.','Añade las guindillas secas, la pimienta de Sichuan, y el ajo y el jengibre picados. Saltea 1 minuto.','Vuelve a meter las judías con la salsa de soja y la cebolleta picada. Saltea 1 minuto y termina con el aceite de sésamo.'],
+ tip:'El secreto son las judías arrugadas y tostadas: no las tapes ni les pongas agua.',
+ fam:'Los demás, con arroz blanco.'},
+
+{id:'pescado-jengibre', n:'Pescado al vapor con jengibre y cebolleta', t:'fuerte', p:'pescado', o:'as', min:20, s:2, pr:62, ch:12, gr:20, kc:470,
+ d:'Pescado blanco al vapor, con aceite caliente sobre el jengibre y la cebolleta. Suave y muy ligero.',
+ cr:'Clásico cantonés.',
+ i:[[600,'g','Filete de pescado blanco','p','merluza, corvina o lubina, en lomos gruesos'],[2,'trozo','Jengibre fresco','v','de 2 cm, en tiras muy finas'],[4,'','Cebolleta','v','en tiras finas'],[0.5,'manojo','Cilantro','v'],[300,'g','Brócoli','v'],[1,'','Guindilla roja','v','opcional'],[3,'cda','Salsa de soja','e'],[1,'cdta','Aceite de sésamo','e'],[2,'cda','Aceite de oliva','e','suave']],
+ st:['Pon el pescado en un plato hondo que quepa dentro de una olla ancha, con la mitad del jengibre por encima.','Pon 3 dedos de agua en la olla y un cuenco boca abajo dentro. Cuando hierva, coloca el plato encima, tapa y cuece 8 minutos: el pescado tiene que separarse en láminas.','Mientras, cuece el brócoli en agua con sal 4 minutos y escúrrelo.','Tira el líquido que haya soltado el pescado. Ponle encima el resto del jengibre, la cebolleta, el cilantro y la guindilla en rodajas.','Calienta el aceite de oliva en un cazo pequeño hasta que esté muy caliente y viértelo sobre la cebolleta: tiene que chisporrotear. Riega con la salsa de soja mezclada con el aceite de sésamo y sirve con el brócoli.'],
+ tip:'También sale bien en el microondas: el plato tapado, 4 minutos a máxima potencia.',
+ fam:'Los demás, con arroz blanco.'},
+
+{id:'bulgogi', n:'Bulgogi de ternera en hojas de lechuga', t:'fuerte', p:'carne', o:'as', min:20, x:'marinado de 30 minutos', xm:30, s:2, pr:60, ch:17, gr:24, kc:530,
+ d:'Ternera en lonchas finas marinada en soja, ajo y sésamo, salteada a fuego vivo y envuelta en lechuga.',
+ cr:'La barbacoa coreana más conocida. El original lleva azúcar y pera.',
+ i:[[500,'g','Filete de ternera','p','en lonchas muy finas; o entrecot'],[0.5,'','Cebolla','v','rallada'],[3,'','Cebolleta','v'],[3,'diente','Ajo','v'],[1,'trozo','Jengibre fresco','v','de 2 cm'],[1,'','Lechuga','v','hojas enteras, para envolver'],[1,'','Pepino','v'],[100,'g','Kimchi','d','opcional'],[3,'cda','Salsa de soja','e'],[1,'cda','Aceite de sésamo','e'],[2,'cdta','Sésamo','e'],[1,'cdta','Guindilla en copos','e'],[1,'cdta','Aceite de oliva','e'],[null,'','Salsa sriracha','e','para las hojas']],
+ st:['Mezcla la carne con la salsa de soja, el aceite de sésamo, la cebolla rallada, el ajo y el jengibre rallados y la guindilla. Déjala 30 minutos en la nevera.','Calienta una sartén grande a fuego máximo con el aceite de oliva. Saltea la carne en dos tandas, 2 minutos cada una, para que se dore y no se cueza.','Junta toda la carne, añade la cebolleta en trozos y el sésamo, y remueve 30 segundos.','Sirve con las hojas de lechuga, el pepino en bastones y el kimchi. Cada bocado se envuelve en una hoja, con un poco de sriracha.'],
+ tip:'La cebolla rallada da el punto dulce del bulgogi sin azúcar, y además ablanda la carne.',
+ fam:'Los demás, con arroz blanco.'},
+
+{id:'cerdo-vietnamita', n:'Cerdo a la plancha al estilo vietnamita', t:'fuerte', p:'cerdo', o:'as', min:20, x:'marinado de 20 minutos', xm:20, s:2, pr:56, ch:17, gr:28, kc:540,
+ d:'Cerdo marinado y tostado en la plancha, sobre lechuga, pepino y hierbas, con salsa de lima y guindilla.',
+ cr:'Inspirado en el bun cha de Hanói, sin los fideos ni el azúcar.',
+ i:[[500,'g','Lomo o cabezada de cerdo','p','en lonchas finas'],[3,'diente','Ajo','v'],[2,'','Cebolleta','v'],[2,'','Lima','v'],[1,'','Guindilla roja','v'],[1,'','Lechuga','v'],[1,'','Pepino','v'],[1,'','Zanahoria','v','rallada'],[1,'manojo','Menta o hierbabuena','v'],[0.5,'manojo','Cilantro','v'],[3,'cda','Salsa de pescado','e'],[1,'cda','Aceite de oliva','e'],[null,'','Pimienta negra','e']],
+ st:['Mezcla el cerdo con 1 cucharada de salsa de pescado, 2 dientes de ajo rallados, la cebolleta picada, el aceite y pimienta. Déjalo 20 minutos.','Salsa: mezcla el zumo de las limas con 2 cucharadas de salsa de pescado, 4 cucharadas de agua, y el otro ajo y la guindilla picados muy finos.','Haz el cerdo en una plancha o sartén muy caliente, 2 minutos por cada lado, hasta que tenga los bordes tostados.','Sirve en un bol con la lechuga troceada, el pepino en bastones, la zanahoria, la menta y el cilantro. Riega con la salsa.'],
+ tip:'La salsa tiene que quedar ácida, salada y picante a la vez. Pruébala antes de servir.',
+ fam:'Los demás, con fideos de arroz.'},
+
+{id:'pollo-tandoori', n:'Pollo tandoori con raita de pepino', t:'fuerte', p:'pollo', o:'as', min:30, x:'marinado de 2 horas', xm:120, s:2, pr:75, ch:18, gr:26, kc:600, prep:true,
+ d:'Pollo marinado en yogur y especias, al horno muy fuerte, con salsa fresca de yogur y pepino.',
+ cr:'Clásico del norte de la India.',
+ i:[[600,'g','Contramuslo de pollo deshuesado','p'],[250,'g','Skyr o yogur alto en proteína','h','100 g para marinar y 150 g para la salsa'],[1,'','Limón','v'],[3,'diente','Ajo','v'],[1,'trozo','Jengibre fresco','v','de 3 cm'],[1,'','Pepino','v'],[0.5,'','Cebolla morada','v'],[0.5,'manojo','Menta o hierbabuena','v'],[2,'cdta','Pimentón dulce','e'],[1,'cda','Curry en polvo','e','o garam masala'],[1,'cdta','Comino molido','e'],[1,'cdta','Cúrcuma','e'],[1,'cdta','Cayena o chile en polvo','e','o más, al gusto'],[1,'cda','Aceite de oliva','e'],[null,'','Sal','e']],
+ st:['Haz 2 o 3 cortes en cada contramuslo. Mézclalos con 100 g de skyr, el zumo de medio limón, el ajo y el jengibre rallados, todas las especias, el aceite y sal. Déjalo 2 horas en la nevera, o toda la noche.','Enciende el horno a 230 °C con el grill. Pon el pollo sobre una rejilla con una bandeja debajo y hornea 20 minutos, dándole la vuelta a la mitad, hasta que tenga las puntas tostadas.','Raita: mezcla el resto del skyr con medio pepino rallado y escurrido, la menta picada y sal.','Sirve con la raita, el resto del pepino y la cebolla morada en rodajas, y el otro medio limón.'],
+ tip:'El rojo intenso de los restaurantes es colorante: no hace falta. El pimentón ya le da color.',
+ fam:'Los demás, con arroz basmati o pan naan.',
+ keep:'3 días en la nevera. Frío, en ensalada, está muy bueno.'},
+
 /* ---------------- SOPAS ---------------- */
 {id:'hervido', n:'Hervido de pollo', t:'sopa', p:'pollo', o:'ve', min:70, s:4, pr:64, ch:19, gr:28, kc:580, prep:true,
  d:'La sopa de los domingos, sin yuca, papa ni mazorca en el plato de Diego.',
@@ -514,6 +612,40 @@ var RECETAS = [
  i:[[4,'','Calabacín','v'],[0.5,'','Puerro','v'],[1,'diente','Ajo','v'],[500,'ml','Caldo de pollo','d'],[200,'g','Queso fresco batido 0 %','h'],[300,'g','Pollo cocinado','p','desmenuzado'],[2,'cda','Aceite de oliva','e'],[null,'','Nuez moscada','e'],[null,'','Sal y pimienta','e']],
  st:['Sofríe el puerro y el ajo picados en el aceite 5 minutos.','Añade el calabacín en trozos, con piel, y rehoga 3 minutos.','Cubre con el caldo, sal y pimienta, y cocina 15 minutos.','Tritura con el queso fresco batido y nuez moscada hasta que quede muy fina.','Sirve con el pollo desmenuzado caliente por encima.'],
  keep:'3 días en la nevera. La crema sola se congela bien.'},
+
+{id:'tom-yum', n:'Sopa tom yum de langostinos', t:'sopa', p:'marisco', o:'as', min:20, s:2, pr:56, ch:13, gr:5, kc:320,
+ d:'Sopa tailandesa ácida y picante, con langostinos, champiñones y lima.',
+ cr:'La sopa más famosa de Tailandia (tom yum goong).',
+ i:[[500,'g','Langostinos o gambas peladas','p'],[1000,'ml','Caldo de pollo','d'],[200,'g','Champiñones','v','en cuartos'],[2,'','Tomate','v','en gajos'],[0.5,'','Cebolla','v'],[1,'trozo','Jengibre fresco','v','de 3 cm, en rodajas'],[2,'','Guindilla roja','v'],[2,'','Lima','v'],[0.5,'manojo','Cilantro','v'],[2,'cda','Salsa de pescado','e'],[null,'','Hierba limón','e','opcional: 2 tallos machacados']],
+ st:['Pon el caldo a hervir con el jengibre, las guindillas partidas por la mitad, la cebolla en gajos y la hierba limón, si tienes. Deja 5 minutos a fuego medio.','Añade los champiñones y el tomate, y cocina 4 minutos.','Añade los langostinos y cocina 2 minutos, solo hasta que se pongan rosados.','Apaga el fuego y añade la salsa de pescado y el zumo de las limas. Prueba y ajusta: tiene que quedar ácida, salada y picante.','Sirve con el cilantro picado. El jengibre y la hierba limón se apartan, no se comen.'],
+ tip:'La lima va siempre con el fuego apagado: si hierve, amarga. Con pechuga de pollo en tiras en vez de langostinos también queda muy bien (6 minutos de cocción).',
+ fam:'Los demás, con fideos de arroz en el bol.'},
+
+{id:'tom-kha', n:'Sopa tailandesa de pollo y coco (tom kha gai)', t:'sopa', p:'pollo', o:'as', min:20, s:2, pr:65, ch:10, gr:23, kc:510,
+ d:'Pollo en caldo de coco con jengibre, lima y guindilla. Cremosa, ácida y suave de picante.',
+ cr:'Clásico tailandés (tom kha gai). Con la mitad de leche de coco que la original.',
+ i:[[500,'g','Pechuga de pollo','p','en tiras finas'],[200,'ml','Leche de coco','d','de lata, sin azúcar'],[600,'ml','Caldo de pollo','d'],[200,'g','Champiñones','v','laminados'],[1,'trozo','Jengibre fresco','v','de 4 cm, en rodajas'],[2,'','Guindilla roja','v'],[2,'','Lima','v'],[0.5,'manojo','Cilantro','v'],[2,'cda','Salsa de pescado','e']],
+ st:['Pon a hervir el caldo con el jengibre y las guindillas partidas por la mitad. Deja 5 minutos a fuego medio.','Añade la leche de coco y los champiñones. Cuando vuelva a hervir suave, añade el pollo y cocina 6 minutos a fuego bajo.','Apaga el fuego y añade la salsa de pescado y el zumo de las limas. Prueba y ajusta.','Sirve con el cilantro picado. El jengibre se aparta, no se come.'],
+ tip:'En Tailandia se hace con galanga y hierba limón. Si los encuentras, úsalos en lugar del jengibre.',
+ fam:'Los demás, con arroz jazmín.',
+ keep:'2 días en la nevera.'},
+
+{id:'sopa-agripicante', n:'Sopa agripicante china', t:'sopa', p:'pollo', o:'as', min:20, s:2, pr:64, ch:8, gr:20, kc:470,
+ d:'Caldo con pollo, tofu, champiñones y hebras de huevo, con vinagre y pimienta blanca.',
+ cr:'Clásico chino (suan la tang). Sin la maicena que la espesa en los restaurantes.',
+ i:[[300,'g','Pechuga de pollo','p','en tiras muy finas'],[200,'g','Tofu firme','h','en tiras'],[2,'','Huevos','h'],[150,'g','Champiñones','v','laminados; o setas shiitake'],[1000,'ml','Caldo de pollo','d'],[1,'trozo','Jengibre fresco','v','de 2 cm'],[3,'','Cebolleta','v'],[3,'cda','Salsa de soja','e'],[3,'cda','Vinagre de arroz','e','o de vino blanco'],[1,'cdta','Pimienta blanca molida','e','es la que da el picante'],[1,'cdta','Aceite de sésamo','e'],[null,'','Aceite de guindilla','e','opcional, al servir']],
+ st:['Pon a hervir el caldo con el jengibre rallado y la salsa de soja.','Añade el pollo y los champiñones, y cocina 5 minutos a fuego medio.','Añade el tofu y deja 2 minutos más.','Bate los huevos. Con la sopa hirviendo suave, viértelos en hilo fino mientras remueves despacio en círculos, para que formen hebras.','Apaga el fuego y añade el vinagre, la pimienta blanca y el aceite de sésamo. Prueba: tiene que estar claramente ácida y picante. Sirve con la cebolleta picada.'],
+ tip:'El vinagre y la pimienta van al final, con el fuego apagado: si hierven, pierden fuerza.',
+ keep:'2 días en la nevera.'},
+
+{id:'kimchi-jjigae', n:'Guiso coreano de kimchi con cerdo y tofu', t:'sopa', p:'cerdo', o:'as', min:35, s:2, pr:68, ch:12, gr:32, kc:610,
+ d:'Guiso picante y ácido de kimchi, cerdo y tofu. Reconfortante, de cuchara.',
+ cr:'El guiso de diario en Corea (kimchi jjigae).',
+ i:[[400,'g','Lomo o cabezada de cerdo','p','en lonchas finas'],[300,'g','Kimchi','d','con su jugo'],[300,'g','Tofu firme','h','en lonchas gruesas'],[0.5,'','Cebolla','v'],[2,'diente','Ajo','v'],[2,'','Cebolleta','v'],[500,'ml','Caldo de pollo','d','o agua'],[1,'cda','Guindilla en copos','e','gochugaru coreano si tienes; al gusto'],[1,'cda','Salsa de soja','e'],[1,'cdta','Aceite de sésamo','e']],
+ st:['En una olla, saltea el cerdo con el aceite de sésamo a fuego medio-alto, 3 minutos.','Añade el kimchi troceado (guarda el jugo), la cebolla en tiras y el ajo picado. Saltea 5 minutos, hasta que el kimchi se ablande.','Echa el caldo, el jugo del kimchi, la guindilla y la salsa de soja. Cocina 15 minutos a fuego medio.','Coloca el tofu encima y deja 5 minutos más. Termina con la cebolleta picada.'],
+ tip:'Cuanto más viejo y ácido el kimchi, mejor sale el guiso. Mira la etiqueta: algunos llevan azúcar añadido.',
+ fam:'Los demás, con arroz blanco.',
+ keep:'3 días en la nevera. Al día siguiente está mejor.'},
 
 /* ---------------- FRÍAS ---------------- */
 {id:'reina-pepiada', n:'Reina pepiada en hojas de lechuga', t:'fria', p:'pollo', o:'ve', min:10, s:1, pr:67, ch:12, gr:30, kc:580,
@@ -549,6 +681,22 @@ var RECETAS = [
  i:[[250,'g','Corvina o lubina','p','en filetes, congelada antes'],[3,'','Lima','v'],[0.5,'','Cebolla morada','v'],[0.5,'manojo','Cilantro','v'],[0.5,'','Aguacate','v'],[0.5,'','Pepino','v'],[0.5,'','Guindilla','e','o ají picante'],[null,'','Sal','e']],
  st:['Corta el pescado en dados de 1,5 cm y ponlo en un bol de cristal con sal.','Corta la cebolla en pluma muy fina y lávala en agua fría para quitarle fuerza.','Exprime las limas sobre el pescado hasta cubrirlo. Añade la guindilla picada y deja 10 minutos en la nevera.','Añade la cebolla, el cilantro picado y el pepino y el aguacate en dados. Prueba de sal y sirve frío.'],
  tip:'En España, el pescado para comer crudo tiene que haber estado congelado por el anisakis: 5 días a -20 °C en el congelador de casa, o cómpralo ya congelado. El jugo de lima que sobra en el bol, mejor no bebérselo.'},
+
+{id:'ensalada-thai-ternera', n:'Ensalada tailandesa de ternera', t:'fria', p:'carne', o:'as', min:20, s:2, pr:58, ch:17, gr:16, kc:440,
+ d:'Ternera a la plancha en lonchas finas, con pepino, menta y un aliño de lima y guindilla.',
+ cr:'Clásico tailandés (yam nua).',
+ i:[[500,'g','Filete de ternera','p','grueso; o solomillo'],[1,'','Pepino','v'],[10,'','Tomates cherry','v'],[0.5,'','Cebolla morada','v'],[1,'','Lechuga','v'],[1,'manojo','Menta o hierbabuena','v'],[0.5,'manojo','Cilantro','v'],[2,'','Lima','v'],[1,'diente','Ajo','v'],[1,'','Guindilla roja','v','o más, al gusto'],[2,'cda','Salsa de pescado','e'],[1,'cdta','Aceite de oliva','e'],[null,'','Sal','e']],
+ st:['Saca la carne de la nevera 20 minutos antes. Sécala y sálala.','Aliño: pica muy fino el ajo y la guindilla, y mézclalos con el zumo de las limas y la salsa de pescado.','Calienta una sartén o plancha a fuego máximo con el aceite. Marca la carne 2 minutos por cada lado: dorada por fuera y rosada por dentro. Déjala reposar 5 minutos.','Corta el pepino en medias lunas, los tomates por la mitad y la cebolla en tiras muy finas. Trocea la lechuga.','Corta la carne en lonchas finas, en contra de la fibra. Mézclala con las verduras, las hierbas y el aliño, y sirve enseguida.'],
+ tip:'El reposo es lo que evita que la carne suelte todo el jugo al cortarla.',
+ fam:'Los demás, con arroz blanco.'},
+
+{id:'tataki-atun', n:'Tataki de atún con sésamo', t:'fria', p:'pescado', o:'as', min:15, s:2, pr:64, ch:11, gr:26, kc:540,
+ d:'Atún marcado por fuera y crudo por dentro, con aguacate, pepino y salsa de soja y lima.',
+ cr:'Técnica japonesa (tataki).',
+ i:[[500,'g','Atún fresco','p','lomo en un solo bloque'],[1,'','Aguacate','v'],[1,'','Pepino','v'],[2,'','Cebolleta','v'],[1,'trozo','Jengibre fresco','v','de 2 cm'],[1,'','Lima','v'],[3,'cda','Salsa de soja','e'],[4,'cdta','Sésamo','e'],[1,'cdta','Aceite de sésamo','e'],[1,'cdta','Aceite de oliva','e'],[null,'','Wasabi','e','opcional']],
+ st:['Seca bien el atún y cúbrelo con el sésamo por todos los lados, apretando.','Calienta una sartén a fuego máximo con el aceite de oliva. Marca el atún 30 segundos por cada cara: tostado por fuera y crudo por dentro.','Déjalo reposar 2 minutos y córtalo en lonchas de 1 cm con un cuchillo bien afilado.','Salsa: mezcla la salsa de soja, el zumo de la lima, el jengibre rallado y el aceite de sésamo.','Sirve con el aguacate y el pepino en láminas, la cebolleta picada y la salsa por encima.'],
+ tip:'Como queda crudo por dentro, congela el atún 5 días antes, o cómpralo ultracongelado, para evitar el anisakis.',
+ fam:'Los demás, con arroz blanco.'},
 
 /* ---------------- SNACKS ---------------- */
 {id:'huevos-rellenos', n:'Huevos rellenos de atún', t:'snack', p:'huevos', o:'es', min:20, s:2, pr:28, ch:1, gr:29, kc:380, prep:true,
@@ -699,7 +847,7 @@ var RECETAS = [
 ];
 
 /* Recetas que suelen caer bien en los días de náuseas (primeras semanas o cuando sube la dosis) */
-var LIGERAS = ['bowl-skyr','huevos-salmon','omelette-sascha','huevos-turcos','pudin-chia','salmon-horno','salmon-papillote','pescado-mojo','merluza-verde','atun-plancha','pollo-esparragos-sascha','hervido','sopa-pollo-huevo','crema-calabacin-pollo','batido-cafe','cottage-atun','helado-sascha','rollitos-jamon'];
+var LIGERAS = ['bowl-skyr','huevos-salmon','omelette-sascha','huevos-turcos','pudin-chia','salmon-horno','salmon-papillote','pescado-mojo','merluza-verde','atun-plancha','pollo-esparragos-sascha','hervido','sopa-pollo-huevo','crema-calabacin-pollo','pescado-jengibre','batido-cafe','cottage-atun','helado-sascha','rollitos-jamon'];
 
 /* Notas de amor de la app anterior (su parte favorita: no tocar) */
 var LOVE = [

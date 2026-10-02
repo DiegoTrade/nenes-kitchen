@@ -32,6 +32,8 @@ FAT = {
  'Salsa de skyr y ajo': 0.5, 'Tzatziki': 4, 'Ají verde': 33, 'Mojo verde': 45, 'Mojo rojo': 45, 'Guasacaca': 25,
  'Salsa de soja': 0, 'Salsa inglesa': 0, 'Cacao puro en polvo': 14, 'Linaza molida': 42, 'Curry en polvo': 14,
  'Salsa sriracha': 1, 'Mayonesa': 75, 'Mostaza': 4, 'Mostaza de Dijon': 4, 'Sésamo': 50, 'Pimienta palmera o ñora': 10,
+ 'Albahaca fresca': 0.6, 'Menta o hierbabuena': 0.7, 'Guindilla roja': 0.4, 'Cacahuetes': 49, 'Tofu firme': 8, 'Kimchi': 0.5,
+ 'Salsa de pescado': 0, 'Pasta de curry verde': 3, 'Pasta de guindilla china': 3,
  'Aceite de oliva': 100, 'Aceite de sésamo': 100,
 }
 OIL_UNITS = {'cda': 13.5, 'cdta': 4.5, 'ml': 0.92}

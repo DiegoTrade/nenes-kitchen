@@ -6,7 +6,7 @@ Una app de recetas hecha para Nene: platos altos en proteína y bajos en carbohi
 
 | Función | Descripción |
 |---|---|
-| 📖 **100 recetas** | Ingredientes con cantidades, pasos, consejos y qué servir al resto de la familia |
+| 📖 **118 recetas** | Ingredientes con cantidades, pasos, consejos y qué servir al resto de la familia |
 | 🎲 **¿Qué cocino hoy?** | Propone una receta al azar |
 | 📅 **Menú** | Registro de cada día con su fecha: suma proteína, carbos y calorías, dice cuánto falta para la meta, y separa lo que ya pasó del plan. Cada lunes llega un menú nuevo y las semanas anteriores se guardan con su media |
 | 🥚 **Armar un plato** | En «A mano» se eligen los ingredientes (unos 125 alimentos comunes, con medidas caseras) y la app suma proteína, carbos y calorías. El plato se guarda en Recientes y se puede editar |
@@ -16,7 +16,7 @@ Una app de recetas hecha para Nene: platos altos en proteína y bajos en carbohi
 | 💾 **Copia de seguridad** | Guarda y restaura todo lo apuntado, por si se cambia de móvil |
 | 📶 **Sin conexión** | La app abre aunque no haya cobertura, y avisa cuando hay una versión nueva |
 | 🍃 **Ligeras** | Recetas suaves para los días de poco apetito |
-| 🔎 **Filtros** | Tipo de comida, proteína, tiempo y estilo (venezolana, canaria, española, internacional, virales) |
+| 🔎 **Filtros** | Tipo de comida, proteína, tiempo y estilo (venezolana, canaria, española, asiática, internacional, virales) |
 | ❤️ **Guardadas** | Las recetas favoritas, a un toque |
 | 💌 **Notas de amor** | Siguen igual que antes: su parte favorita |
 
@@ -57,6 +57,7 @@ Después de cambiar algo en `app/src/`, hay que construir y subir también `inde
 | Versión | Cambios |
 |---|---|
 | V1 a V5 | Nene's Kitchen: generador de comidas, recetas, favoritos, lista de la compra |
+| **V9.1** | Cocina asiática: 18 recetas nuevas (tailandesa, china, coreana, japonesa, vietnamita e india) sin arroz, fideos ni azúcar, con filtro «Asiáticas» (118 recetas) |
 | **V9** | Diseño nuevo alrededor de la mascota: portada, colores de yema y coral, títulos redondos, tarjetas de receta con pegatina, ficha compacta, celebración al cumplir la meta y texto con mejor contraste |
 | **V8.1** | El menú de la semana, o un solo día, se puede enviar por WhatsApp |
 | **V8** | Modo cocina, copia de seguridad, uso sin conexión con aviso de versión nueva, lista de la compra con cosas propias y platos a mano. El código fuente y las pruebas pasan a estar en el repositorio |

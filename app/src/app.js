@@ -216,7 +216,7 @@ function filtered(){
     if (S.tipo !== 'todas' && r.t !== S.tipo) return false;
     if (S.prot && r.p !== S.prot) return false;
     if (S.tiempo && tiempoCat(r) !== S.tiempo) return false;
-    if (S.orig && r.o !== S.orig) return false;
+    if (S.orig && r.o !== S.orig && r.o2 !== S.orig) return false;
     if (S.prep && !r.prep) return false;
     if (S.li && !r.li) return false;
     if (S.fav && !S.favs.has(r.id)) return false;
@@ -237,6 +237,7 @@ function renderControls(list){
     TIPOS_CHIPS.map(function(t){ return chip('tipo', t[0], t[1], S.tipo === t[0]); }).join('') + '</div>';
   h += '<div class="chips quick" role="group" aria-label="Accesos rápidos">' +
     chip('orig', 'vi', 'Virales y favoritas', S.orig === 'vi') +
+    chip('orig', 'as', 'Asiáticas', S.orig === 'as') +
     chip('li', '1', 'Ligeras (días de náuseas)', S.li) +
     chip('orig', 've', 'Venezolanas', S.orig === 've') +
     chip('orig', 'ca', 'Canarias', S.orig === 'ca') +
