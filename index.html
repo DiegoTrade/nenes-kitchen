@@ -714,6 +714,16 @@ b,strong{font-weight:800}
 /* Versión sin JavaScript */
 .book h1{font-family:var(--display)}
 
+/* Acciones del día: botones de verdad, no enlaces de texto */
+.day-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}
+.daybtn{display:flex;align-items:center;gap:10px;min-width:0;padding:9px 12px 9px 9px;border:1.5px solid var(--line-2);border-radius:18px;background:var(--surface);color:var(--ink);font-family:var(--display);font-weight:500;font-size:15px;line-height:1.2;text-align:left;text-decoration:none;cursor:pointer;box-shadow:var(--shadow);transition:transform .08s ease}
+.daybtn:active{transform:scale(.97)}
+.daybtn:last-child:nth-child(odd){grid-column:1 / -1}
+.db-ic{flex:none;width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:var(--yolk-soft);color:var(--ink)}
+.daybtn-del{color:var(--coral-ink)}
+.daybtn-del .db-ic{background:var(--coral-soft);color:var(--coral-ink)}
+.wsum-acts .btn{width:100%}
+
 </style>
 </head>
 <body>
@@ -796,7 +806,7 @@ b,strong{font-weight:800}
   </div>
 
 <script>
-var APP_V = '5999013e59';
+var APP_V = 'f2c05986c0';
 /* Recetas de La Cocina de Nene.
    Ingrediente: [cantidad, unidad, nombre, categoría, nota, receta enlazada]
    Categorías: p carne/pescado · h huevos/lácteos · v frutas/verduras · d despensa · e básicos (sin cantidad en la compra) · r receta casera
@@ -2446,7 +2456,7 @@ function summaryHTML(){
   var any = wk().days.some(function(d){ return d.items.length; }), acts = '';
   if (k >= CUR) acts += '<button type="button" class="btn primary" data-menushop>' + ICON.cart + (k === CUR ? 'Añadir de hoy al domingo a la compra' : 'Añadir la semana a la compra') + '</button>';
   if (any) acts += waLink(menuText(k), 'btn wa-menu', 'Enviar el menú por WhatsApp');
-  if (k >= CUR) acts += '<button type="button" class="linkbtn" data-newmenu>' + ICON.dice + (k === CUR ? 'Proponer otro menú de hoy al domingo' : 'Proponer otro menú para esa semana') + '</button>';
+  if (k >= CUR) acts += '<button type="button" class="btn" data-newmenu>' + ICON.dice + (k === CUR ? 'Proponer otro menú de hoy al domingo' : 'Proponer otro menú para esa semana') + '</button>';
   if (acts) h += '<div class="wsum-acts">' + acts + '</div>';
   return h + '</section>';
 }
@@ -2471,11 +2481,12 @@ function renderMenu(o){
       (rows ? '<ul class="items">' + rows + '</ul>' : '<p class="grp-empty">Nada apuntado</p>') + '</div>';
   });
   var p = prevDay(), yest = p && Math.round((dateOf(k, S.day) - NOW) / 864e5) === 0;
+  var ic = function(i){ return '<span class="db-ic" aria-hidden="true">' + i + '</span>'; };
   h += '<div class="day-tools">' +
-    (p && p.d.items.length ? '<button type="button" class="linkbtn" data-sameprev>' + ICON.copy + (yest ? 'Igual que ayer' : 'Igual que el ' + DIAS[p.i].toLowerCase()) + '</button>' : '') +
-    (st >= 0 ? '<button type="button" class="linkbtn" data-dayrandom>' + ICON.dice + 'Proponer otro día</button>' : '') +
-    (d.items.length ? waLink(dayText(k, S.day), 'linkbtn wa-day', 'Enviar este día') : '') +
-    (d.items.length ? '<button type="button" class="linkbtn" data-dayclear>' + ICON.trash + 'Vaciar el día</button>' : '') + '</div></section>';
+    (p && p.d.items.length ? '<button type="button" class="daybtn" data-sameprev>' + ic(ICON.copy) + '<span>' + (yest ? 'Igual que ayer' : 'Igual que el ' + DIAS[p.i].toLowerCase()) + '</span></button>' : '') +
+    (st >= 0 ? '<button type="button" class="daybtn" data-dayrandom>' + ic(ICON.dice) + '<span>Otro día al azar</span></button>' : '') +
+    (d.items.length ? '<a class="daybtn wa-day" href="https://wa.me/?text=' + encodeURIComponent(dayText(k, S.day)) + '" target="_blank" rel="noopener">' + ic(ICON.send) + '<span>Enviar este día</span></a>' : '') +
+    (d.items.length ? '<button type="button" class="daybtn daybtn-del" data-dayclear>' + ic(ICON.trash) + '<span>Vaciar el día</span></button>' : '') + '</div></section>';
   h += summaryHTML();
   $('#v-menu').innerHTML = h;
   if (party) toast('¡Meta de proteína cumplida!');

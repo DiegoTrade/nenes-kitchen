@@ -595,7 +595,7 @@ function summaryHTML(){
   var any = wk().days.some(function(d){ return d.items.length; }), acts = '';
   if (k >= CUR) acts += '<button type="button" class="btn primary" data-menushop>' + ICON.cart + (k === CUR ? 'Añadir de hoy al domingo a la compra' : 'Añadir la semana a la compra') + '</button>';
   if (any) acts += waLink(menuText(k), 'btn wa-menu', 'Enviar el menú por WhatsApp');
-  if (k >= CUR) acts += '<button type="button" class="linkbtn" data-newmenu>' + ICON.dice + (k === CUR ? 'Proponer otro menú de hoy al domingo' : 'Proponer otro menú para esa semana') + '</button>';
+  if (k >= CUR) acts += '<button type="button" class="btn" data-newmenu>' + ICON.dice + (k === CUR ? 'Proponer otro menú de hoy al domingo' : 'Proponer otro menú para esa semana') + '</button>';
   if (acts) h += '<div class="wsum-acts">' + acts + '</div>';
   return h + '</section>';
 }
@@ -620,11 +620,12 @@ function renderMenu(o){
       (rows ? '<ul class="items">' + rows + '</ul>' : '<p class="grp-empty">Nada apuntado</p>') + '</div>';
   });
   var p = prevDay(), yest = p && Math.round((dateOf(k, S.day) - NOW) / 864e5) === 0;
+  var ic = function(i){ return '<span class="db-ic" aria-hidden="true">' + i + '</span>'; };
   h += '<div class="day-tools">' +
-    (p && p.d.items.length ? '<button type="button" class="linkbtn" data-sameprev>' + ICON.copy + (yest ? 'Igual que ayer' : 'Igual que el ' + DIAS[p.i].toLowerCase()) + '</button>' : '') +
-    (st >= 0 ? '<button type="button" class="linkbtn" data-dayrandom>' + ICON.dice + 'Proponer otro día</button>' : '') +
-    (d.items.length ? waLink(dayText(k, S.day), 'linkbtn wa-day', 'Enviar este día') : '') +
-    (d.items.length ? '<button type="button" class="linkbtn" data-dayclear>' + ICON.trash + 'Vaciar el día</button>' : '') + '</div></section>';
+    (p && p.d.items.length ? '<button type="button" class="daybtn" data-sameprev>' + ic(ICON.copy) + '<span>' + (yest ? 'Igual que ayer' : 'Igual que el ' + DIAS[p.i].toLowerCase()) + '</span></button>' : '') +
+    (st >= 0 ? '<button type="button" class="daybtn" data-dayrandom>' + ic(ICON.dice) + '<span>Otro día al azar</span></button>' : '') +
+    (d.items.length ? '<a class="daybtn wa-day" href="https://wa.me/?text=' + encodeURIComponent(dayText(k, S.day)) + '" target="_blank" rel="noopener">' + ic(ICON.send) + '<span>Enviar este día</span></a>' : '') +
+    (d.items.length ? '<button type="button" class="daybtn daybtn-del" data-dayclear>' + ic(ICON.trash) + '<span>Vaciar el día</span></button>' : '') + '</div></section>';
   h += summaryHTML();
   $('#v-menu').innerHTML = h;
   if (party) toast('¡Meta de proteína cumplida!');
