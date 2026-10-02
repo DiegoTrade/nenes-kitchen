@@ -133,6 +133,12 @@ async def t_migration_and_flows(p, url):
     n1 = await pg.locator('.it').count()
     await pg.click('.toast-act'); await pg.wait_for_timeout(120)
     check('quitar y deshacer', n1 == n0 - 1 and await pg.locator('.it').count() == n0)
+    from urllib.parse import unquote
+    wa = unquote(await pg.get_attribute('.wa-menu', 'href'))
+    check('el menú de la semana se puede enviar por WhatsApp', wa.startswith('https://wa.me/?text=*Menú de la semana · 28 sep – 4 oct*') and '*Lunes 28* · ' in wa
+          and '• Comida principal: Pollo al ajillo' in wa and '*Domingo 4*' in wa, wa[:160])
+    wd = unquote(await pg.get_attribute('.wa-day', 'href'))
+    check('y también un solo día', '*Jueves 1 oct*' in wd and 'g de proteína' in wd and 'kcal' in wd, wd[:160])
     st = await state(pg)
     check('se guarda con fechas', list(st['menu']['weeks'].keys()) == ['2026-09-28'], list(st['menu']['weeks'].keys()))
     check('sin errores de JavaScript', not pg.errs, pg.errs)

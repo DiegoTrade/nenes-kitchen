@@ -68,7 +68,7 @@ h1,h2,h3,h4{text-wrap:balance}
 .quick .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
 .filter-bar{display:flex;align-items:center;gap:14px;margin-top:10px;flex-wrap:wrap}
 .filter-bar .count{color:var(--ink-3);font-size:14px;font-variant-numeric:tabular-nums}
-.linkbtn{background:none;border:0;padding:6px 0;display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:14px;cursor:pointer;color:var(--ink-2)}
+.linkbtn{background:none;border:0;padding:6px 0;display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:14px;cursor:pointer;color:var(--ink-2);text-decoration:none}
 .linkbtn[aria-expanded="true"]{color:var(--coral-ink)}
 .filter-bar .linkbtn:last-child:not(:first-child){margin-left:auto;color:var(--coral-ink)}
 .filters{margin-top:8px;padding:14px;background:var(--surface);border-radius:var(--r);display:grid;gap:14px;box-shadow:var(--shadow)}

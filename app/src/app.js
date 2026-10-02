@@ -552,16 +552,44 @@ function trendHTML(){
       '<span class="tr-d">' + fmtDate(a) + '</span></button>';
   }).join('') + '</div>';
 }
+/* texto del menú para enviar por WhatsApp */
+function dayLines(d){
+  var lines = [];
+  SLOT_KEYS.forEach(function(sk){
+    var its = d.items.filter(function(it){ return it.s === sk; });
+    if (its.length) lines.push('• ' + SLOT_LABEL[sk] + ': ' + its.map(function(it){ return itemName(it) + (it.f !== 1 ? ' (×' + fmtNum(it.f) + ')' : ''); }).join(' + '));
+  });
+  return lines;
+}
+function menuText(k){
+  var w = ensureWeek(k), out = ['*Menú de la semana · ' + weekLabel(k).rng + '*', ''];
+  w.days.forEach(function(d, i){
+    if (!d.items.length) return;
+    out.push('*' + DIAS[i] + ' ' + dateOf(k, i).getDate() + '* · ' + dayTot(d).pr + ' g de proteína');
+    out = out.concat(dayLines(d));
+    out.push('');
+  });
+  out.push('La Cocina de Nene');
+  return out.join('\n');
+}
+function dayText(k, i){
+  var d = ensureWeek(k).days[i], t = dayTot(d);
+  return ['*' + DIAS[i] + ' ' + fmtDate(dateOf(k, i)) + '*'].concat(dayLines(d), ['', t.pr + ' g de proteína · ' + t.ch + ' g de carbos · ' + fmtKc(t.kc) + ' kcal']).join('\n');
+}
+function waLink(text, cls, label){
+  return '<a class="' + cls + '" href="https://wa.me/?text=' + encodeURIComponent(text) + '" target="_blank" rel="noopener">' + ICON.send + label + '</a>';
+}
 function summaryHTML(){
   var k = S.wk, s = weekStats(k), h = '<section class="wsum" aria-labelledby="wsum-t"><h3 id="wsum-t">' + (k === CUR ? 'Esta semana' : weekLabel(k).name) + '</h3>';
   if (s && s.done) h += '<p>Media de <b>' + s.done.avg + ' g</b> de proteína al día en ' + (s.done.n === 1 ? '1 día' : s.done.n + ' días') + ' · <b>' + s.done.ok + ' de ' + s.done.n + '</b> en la meta.</p>';
   if (s && s.plan) h += '<p class="wsum-plan">' + (s.done ? 'Lo que queda del plan' : 'El plan') + ' da una media de ' + s.plan.avg + ' g al día.</p>';
   if (!s || (!s.done && !s.plan)) h += '<p class="wsum-plan">No hay nada apuntado esta semana.</p>';
   h += trendHTML();
-  if (k >= CUR) {
-    h += '<div class="wsum-acts"><button type="button" class="btn primary" data-menushop>' + ICON.cart + (k === CUR ? 'Añadir de hoy al domingo a la compra' : 'Añadir la semana a la compra') + '</button>' +
-      '<button type="button" class="linkbtn" data-newmenu>' + ICON.dice + (k === CUR ? 'Proponer otro menú de hoy al domingo' : 'Proponer otro menú para esa semana') + '</button></div>';
-  }
+  var any = wk().days.some(function(d){ return d.items.length; }), acts = '';
+  if (k >= CUR) acts += '<button type="button" class="btn primary" data-menushop>' + ICON.cart + (k === CUR ? 'Añadir de hoy al domingo a la compra' : 'Añadir la semana a la compra') + '</button>';
+  if (any) acts += waLink(menuText(k), 'btn wa-menu', 'Enviar el menú por WhatsApp');
+  if (k >= CUR) acts += '<button type="button" class="linkbtn" data-newmenu>' + ICON.dice + (k === CUR ? 'Proponer otro menú de hoy al domingo' : 'Proponer otro menú para esa semana') + '</button>';
+  if (acts) h += '<div class="wsum-acts">' + acts + '</div>';
   return h + '</section>';
 }
 function renderMenu(o){
@@ -586,6 +614,7 @@ function renderMenu(o){
   h += '<div class="day-tools">' +
     (p && p.d.items.length ? '<button type="button" class="linkbtn" data-sameprev>' + ICON.copy + (yest ? 'Igual que ayer' : 'Igual que el ' + DIAS[p.i].toLowerCase()) + '</button>' : '') +
     (st >= 0 ? '<button type="button" class="linkbtn" data-dayrandom>' + ICON.dice + 'Proponer otro día</button>' : '') +
+    (d.items.length ? waLink(dayText(k, S.day), 'linkbtn wa-day', 'Enviar este día') : '') +
     (d.items.length ? '<button type="button" class="linkbtn" data-dayclear>' + ICON.trash + 'Vaciar el día</button>' : '') + '</div></section>';
   h += summaryHTML();
   $('#v-menu').innerHTML = h;
