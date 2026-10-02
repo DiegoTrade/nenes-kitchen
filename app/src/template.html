@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>La Cocina de Nene</title>
 <meta name="description" content="Recetas altas en proteína y bajas en carbohidratos para Diego, con menú semanal y lista de la compra.">
-<meta name="theme-color" content="#FAF7F2" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#181411" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FFF3E8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#24160E" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Cocina de Nene">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -16,7 +16,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
 <style>
 {{STYLE}}
 </style>
@@ -26,10 +26,12 @@
 <div class="app" id="app">
   <main class="wrap">
     <section id="v-recetas" class="view">
-      <header class="app-head">
-        <p class="eyebrow">Recetas para Diego</p>
-        <h1>La Cocina de Nene</h1>
-        <p class="sub">{{N}} recetas con mucha proteína y pocos carbohidratos, para cocinar sin pensar demasiado. Incluye las recetas de pollo, carne y pescado más valoradas de internet, adaptadas a su dieta.</p>
+      <header class="app-head hero">
+        <div class="hero-txt">
+          <h1>La Cocina<br>de Nene</h1>
+          <p class="sub">{{N}} recetas ricas en proteína para Diego</p>
+        </div>
+        <img class="hero-egg" src="mascota.png" alt="" width="420" height="372">
       </header>
       <button class="cta" id="random" type="button">
         <span class="cta-ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="9" cy="9" r="1.1" fill="currentColor"/><circle cx="15" cy="15" r="1.1" fill="currentColor"/><circle cx="15" cy="9" r="1.1" fill="currentColor"/><circle cx="9" cy="15" r="1.1" fill="currentColor"/><circle cx="12" cy="12" r="1.1" fill="currentColor"/></svg></span>
@@ -82,10 +84,10 @@
     <div class="love-bg" data-love-close></div>
     <div class="love-hearts" aria-hidden="true"></div>
     <div class="love-card" role="dialog" aria-modal="true" aria-labelledby="love-msg">
-      <span class="love-pill">💌 From Diego</span>
-      <div class="love-heart" aria-hidden="true">💕</div>
+      <span class="love-pill" id="love-pill">💌 From Diego</span>
+      <img class="love-egg" src="mascota.png" alt="" width="420" height="372">
       <p class="love-msg" id="love-msg"></p>
-      <button type="button" class="love-btn" data-love-close>Ay Diego 😅</button>
+      <button type="button" class="love-btn" id="love-btn" data-love-close>Ay Diego 😅</button>
     </div>
   </div>
 </div>

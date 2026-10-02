@@ -1,7 +1,7 @@
 /* La Cocina de Nene: funciona sin conexión.
    La página se pide siempre a la red; si no hay red (o tarda más de 4 s), se sirve la última copia guardada. */
-const CACHE = 'cocina-v1';
-const SHELL = ['./', 'apple-touch-icon.png', 'icon-192.png', 'manifest.webmanifest'];
+const CACHE = 'cocina-v2';
+const SHELL = ['./', 'mascota.png', 'apple-touch-icon.png', 'icon-192.png', 'manifest.webmanifest'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).catch(() => {}).then(() => self.skipWaiting()));

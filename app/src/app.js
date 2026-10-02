@@ -255,17 +255,21 @@ function renderControls(list){
   $('.tipos').scrollLeft = sl;
   $('.quick').scrollLeft = slq;
 }
+var TILE = {pollo: '🍗', carne: '🥩', cerdo: '🥓', pescado: '🐟', marisco: '🦐', huevos: '🍳', lacteos: '🧀', otros: '🍖'};
+function tileHTML(r, big){
+  var t = r.t === 'sopa' ? ['🍲', 'sopa'] : r.t === 'base' ? ['🥣', 'base'] : [TILE[r.p] || '🍽️', TILE[r.p] ? r.p : 'otros'];
+  return '<span class="tile tile-' + t[1] + (big ? ' tile-big' : '') + '" aria-hidden="true">' + t[0] + '</span>';
+}
 function cardHTML(r){
-  var fav = S.favs.has(r.id);
-  return '<article class="card" data-open="' + r.id + '" tabindex="0" aria-label="' + esc(r.n) + '">' +
-    '<div class="card-top"><span class="kicker">' + TIPO[r.t] + ' · ' + ORIG[r.o] + '</span>' +
-    '<button type="button" class="fav-btn' + (fav ? ' on' : '') + '" data-fav="' + r.id + '" aria-pressed="' + fav + '" aria-label="Guardar ' + esc(r.n) + '">' + ICON.heart + '</button></div>' +
-    '<h3 class="card-title">' + esc(r.n) + '</h3>' +
+  var fav = S.favs.has(r.id), base = r.t === 'base';
+  return '<article class="card" data-open="' + r.id + '" tabindex="0" aria-label="' + esc(r.n) + '">' + tileHTML(r) +
+    '<div class="card-main"><h3 class="card-title">' + esc(r.n) + '</h3>' +
     '<p class="card-desc">' + esc(r.d) + '</p>' +
-    '<div class="card-foot"><span class="meta">' + ICON.clock + esc(timeText(r)) + (r.t !== 'base' ? ' · ' + fmtKc(r.kc) + ' kcal' : '') + '</span>' +
-    (r.t === 'base' ? '<span class="meta">' + ICON.users + porciones(r.s) + ' ' + esc(r.sn || '') + '</span>'
-      : '<span class="badges"><span class="badge pro">' + r.pr + ' g proteína</span><span class="badge carb">' + r.ch + ' g carbos</span></span>') +
-    '</div></article>';
+    '<div class="card-foot">' +
+    (base ? '<span class="meta">' + ICON.users + porciones(r.s) + ' ' + esc(r.sn || '') + '</span>'
+      : '<span class="badge pro">' + r.pr + ' g proteína</span><span class="badge carb">' + r.ch + ' g carbos</span>') +
+    '<span class="meta">' + esc(timeText(r)) + '</span></div></div>' +
+    '<button type="button" class="fav-btn' + (fav ? ' on' : '') + '" data-fav="' + r.id + '" aria-pressed="' + fav + '" aria-label="Guardar ' + esc(r.n) + '">' + ICON.heart + '</button></article>';
 }
 function renderList(){
   var list = filtered();
@@ -360,20 +364,20 @@ function renderSheet(){
     (SH.stack.length > 1 ? '<button type="button" class="icon-btn" data-back aria-label="Volver a ' + esc(byId[SH.stack[SH.stack.length - 2]].n) + '">' + ICON.back + '</button>' : '<span></span>') +
     '<span class="grabber" aria-hidden="true"></span>' +
     '<button type="button" class="icon-btn" data-close aria-label="Cerrar">' + ICON.close + '</button></div>';
-  h += '<p class="kicker">' + TIPO[r.t] + ' · ' + ORIG[r.o] + (r.prep ? ' · Se prepara antes' : '') + '</p>' +
+  h += '<div class="rs-head">' + tileHTML(r, true) + '<div class="tags"><span class="tag-s">' + TIPO[r.t] + '</span><span class="tag-s">' + ORIG[r.o] + '</span>' +
+    (r.prep ? '<span class="tag-s">Se prepara antes</span>' : '') + '</div></div>' +
     '<h2 id="sheet-title" class="sheet-title">' + esc(r.n) + '</h2><p class="lead">' + esc(r.d) + '</p>';
-  h += '<div class="facts">' +
-    fact('', 'Tiempo', mainTime, r.x ? '+ ' + esc(r.x) : '') +
-    '<div class="fact"><span class="label">Porciones</span><div class="stepper">' +
+  h += '<div class="stats" aria-label="Por porción">' +
+    '<div class="stat stat-pro"><b>' + r.pr + ' g</b><span>proteína</span></div>' +
+    '<div class="stat stat-carb"><b>' + r.ch + ' g</b><span>carbos</span></div>' +
+    '<div class="stat"><b>' + r.gr + ' g</b><span>grasa</span></div>' +
+    '<div class="stat"><b>' + fmtKc(r.kc) + '</b><span>calorías</span></div></div>' +
+    '<p class="rs-cap">Por porción' + (r.sn ? ' · ' + esc(r.sn) : '') + '</p>' +
+    '<div class="rs-row"><span class="rs-time">' + ICON.clock + mainTime + (r.x ? '<small>+ ' + esc(r.x) + '</small>' : '') + '</span>' +
+    '<div class="rs-serv"><span class="label">Porciones</span><div class="stepper">' +
       '<button type="button" data-serv="-1" aria-label="Menos porciones">−</button>' +
       '<output id="serv-out" aria-live="polite">' + SH.serv + '</output>' +
-      '<button type="button" data-serv="1" aria-label="Más porciones">+</button></div>' +
-      (r.sn ? '<span class="fact-s">' + esc(r.sn) + '</span>' : '') + '</div>' +
-    fact('fact-pro', 'Proteína', r.pr + ' g', 'por porción') +
-    fact('fact-carb', 'Carbos', r.ch + ' g', 'por porción') +
-    fact('', 'Grasa', r.gr + ' g', 'por porción') +
-    fact('', 'Calorías', fmtKc(r.kc), 'kcal por porción') +
-    '</div>';
+      '<button type="button" data-serv="1" aria-label="Más porciones">+</button></div></div></div>';
   h += '<div class="sec-h"><h3>Ingredientes</h3><span>Toca para tachar</span></div><ul class="ings" id="ings">' + ingsHTML(r) + '</ul>';
   h += '<div class="sec-h"><h3>Preparación</h3><button type="button" class="btn small cook-go" data-cook>' + ICON.play + 'Modo cocina</button></div><ol class="steps">' + r.st.map(function(s, k){
     return '<li><button type="button" class="step" aria-pressed="false"><span class="step-n" aria-hidden="true">' + (k + 1) + '</span><span class="step-t">' + esc(s) + '</span></button></li>';
@@ -510,13 +514,16 @@ function weekHTML(){
   h += '<p class="wk-legend"><span><i class="lg lg-band"></i>meta 150–180 g</span>' + (anyPlan ? '<span><i class="lg lg-plan"></i>plan, aún no ha pasado</span>' : '') + '</p></div>';
   return h;
 }
-function statusHTML(d, st){
+var seenPr = {};
+function statusHTML(d, st, party){
   var t = dayTot(d), has = d.items.length > 0, gap = GOAL - t.pr, plan = st > 0, msg, cls = '';
   if (!has) msg = plan ? 'Todavía no hay nada planeado' : st < 0 ? 'No se apuntó nada este día' : 'Todavía no hay nada apuntado';
   else if (t.pr >= GOAL) { cls = ' ok'; msg = ICON.check + (plan ? 'El plan llega a la meta' : st < 0 ? 'Llegó a la meta' : 'Meta cumplida'); }
   else { cls = ' low'; msg = plan ? 'Al plan le faltan ' + gap + ' g' : st < 0 ? 'Se quedó a ' + gap + ' g de la meta' : 'Faltan ' + gap + ' g para la meta'; }
   var fill = Math.min(100, t.pr / SCALE * 100), x1 = GOAL / SCALE * 100, x2 = GOAL_HI / SCALE * 100;
-  var h = '<div class="status">' +
+  var h = '<div class="status' + (has && t.pr >= GOAL ? ' met' : '') + (party ? ' party' : '') + '">' +
+    (has && t.pr >= GOAL ? '<img class="st-egg" src="mascota.png" alt="" width="420" height="372">' : '') +
+    (party ? '<span class="sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>' : '') +
     '<div class="st-top"><span class="label">' + (plan ? 'Proteína del plan' : 'Proteína del día') + '</span><span class="st-goal">meta 150–180 g</span></div>' +
     '<div class="st-mid"><p class="st-big"><b>' + t.pr + '</b> g</p><p class="st-msg' + cls + '">' + msg + '</p></div>' +
     '<div class="pbar" aria-hidden="true"><span class="pbar-band" style="left:' + x1.toFixed(1) + '%;width:' + (x2 - x1).toFixed(1) + '%"></span>' +
@@ -601,7 +608,9 @@ function renderMenu(o){
   h += '<div class="day-top"><h3 id="day-title">' + DIAS[S.day] + ' <span>' + fmtDate(dateOf(k, S.day)) + '</span></h3>' +
     (rel ? '<span class="tag' + (st > 0 ? ' tag-plan' : st === 0 ? ' tag-hoy' : '') + '">' + rel + '</span>' : '') + '</div>';
   if (!S.menu.seen) h += '<p class="day-hint">Toca un plato para cambiarlo, ajustar la porción o quitarlo. Desliza a los lados para cambiar de día.</p>';
-  h += statusHTML(d, st);
+  var pk = k + '|' + S.day, nowPr = dayTot(d).pr, party = st === 0 && seenPr[pk] != null && seenPr[pk] < GOAL && nowPr >= GOAL;
+  seenPr[pk] = nowPr;
+  h += statusHTML(d, st, party);
   SLOT_KEYS.forEach(function(sk){
     var rows = '';
     d.items.forEach(function(it, i){ if (it.s === sk) rows += itemRow(it, i); });
@@ -618,6 +627,7 @@ function renderMenu(o){
     (d.items.length ? '<button type="button" class="linkbtn" data-dayclear>' + ICON.trash + 'Vaciar el día</button>' : '') + '</div></section>';
   h += summaryHTML();
   $('#v-menu').innerHTML = h;
+  if (party) toast('¡Meta de proteína cumplida!');
 }
 function randomFor(it, d){
   var pool = poolFor(it.s === 's1' || it.s === 's2' ? 's' : it.s);
@@ -1225,7 +1235,7 @@ function renderShop(){
   var h = '<header class="view-head"><h2>Lista de la compra</h2>';
   if (!S.shop.entries.length && !S.shop.dishes.length && !own.length) {
     v.innerHTML = h + '<p>Añade una receta desde su ficha, el menú de la semana o cualquier otra cosa que haga falta.</p></header>' + ownFormHTML() +
-      '<div class="empty"><p>La lista está vacía.</p><button type="button" class="btn primary" data-menushop>' + ICON.cart + 'Añadir el menú de hoy al domingo</button></div>';
+      '<div class="empty"><img class="empty-egg" src="mascota.png" alt="" width="420" height="372"><p>La lista está vacía.</p><button type="button" class="btn primary" data-menushop>' + ICON.cart + 'Añadir el menú de hoy al domingo</button></div>';
     return;
   }
   var total = d.items.length + own.length, pend = pendingCount();
@@ -1416,7 +1426,7 @@ function closeCook(){
 function cookGo(d){
   var n = byId[CK.id].st.length, k = CK.step + d;
   if (k < 0) return;
-  if (k > n) { closeCook(); toast('¡Buen provecho!'); return; }
+  if (k > n) { closeCook(); showLove({msg: '¡Buen provecho!', pill: '👩‍🍳 Receta terminada', btn: '¡A comer!'}); return; }
   CK.step = k; renderCook();
   $('#ck-body').scrollTop = 0;
   var b = cookEl.querySelector('[data-ck-go="' + d + '"]'); if (b && !b.disabled) b.focus({preventScroll: true});
@@ -1531,10 +1541,15 @@ function scheduleLove(){
   clearTimeout(loveTimer);
   loveTimer = setTimeout(showLove, 1500);
 }
-function showLove(){
-  var k; do { k = Math.floor(Math.random() * LOVE.length); } while (LOVE.length > 1 && k === lastLove);
-  lastLove = k;
-  $('#love-msg').textContent = LOVE[k];
+function showLove(o){
+  var msg = o && o.msg;
+  if (!msg) {
+    var k; do { k = Math.floor(Math.random() * LOVE.length); } while (LOVE.length > 1 && k === lastLove);
+    lastLove = k; msg = LOVE[k];
+  }
+  $('#love-msg').textContent = msg;
+  $('#love-pill').textContent = o && o.pill || '💌 From Diego';
+  $('#love-btn').textContent = o && o.btn || 'Ay Diego 😅';
   var hearts = ['💕','💖','❤️','💗','💝','✨'], h = '';
   for (var i = 0; i < 12; i++) {
     h += '<span style="left:' + Math.round(Math.random() * 95) + '%;animation-delay:' + (Math.random() * 2.5).toFixed(2) + 's;animation-duration:' + (3 + Math.random() * 2).toFixed(2) + 's">' + hearts[Math.floor(Math.random() * hearts.length)] + '</span>';

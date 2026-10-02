@@ -57,6 +57,7 @@ Después de cambiar algo en `app/src/`, hay que construir y subir también `inde
 | Versión | Cambios |
 |---|---|
 | V1 a V5 | Nene's Kitchen: generador de comidas, recetas, favoritos, lista de la compra |
+| **V9** | Diseño nuevo alrededor de la mascota: portada, colores de yema y coral, títulos redondos, tarjetas de receta con pegatina, ficha compacta, celebración al cumplir la meta y texto con mejor contraste |
 | **V8.1** | El menú de la semana, o un solo día, se puede enviar por WhatsApp |
 | **V8** | Modo cocina, copia de seguridad, uso sin conexión con aviso de versión nueva, lista de la compra con cosas propias y platos a mano. El código fuente y las pruebas pasan a estar en el repositorio |
 | **V7.3** | Guía: ranking de lo que más daño le hace, de peor a menos malo |

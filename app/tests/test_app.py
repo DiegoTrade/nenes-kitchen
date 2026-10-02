@@ -10,7 +10,7 @@ import asyncio, datetime, functools, http.server, json, os, shutil, sys, tempfil
 from playwright.async_api import async_playwright
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-FILES = ['index.html', 'sw.js', 'manifest.webmanifest', 'version.json', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png']
+FILES = ['index.html', 'sw.js', 'manifest.webmanifest', 'version.json', 'mascota.png', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png']
 KEY = 'cocina-nene-v1'
 WED = datetime.datetime(2026, 9, 30, 13, 0)          # miércoles
 SLOT_TYPES = {'p': {'primera'}, 's1': {'snack'}, 's2': {'snack'}, 'm': {'fuerte', 'fria', 'sopa'}}
