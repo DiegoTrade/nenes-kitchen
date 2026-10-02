@@ -184,6 +184,8 @@ async def t_builder_and_shop(p, url):
     for _ in range(4):
         await pg.click('[data-bdstep="0"][data-d="1"]')
     await pg.fill('#bd-q', 'puerro'); await pg.press('#bd-q', 'Enter'); await pg.wait_for_timeout(100)
+    await pg.fill('#bd-q', 'kiwi'); await pg.wait_for_timeout(100)
+    check('el kiwi está en la lista de alimentos', await pg.locator('#bd-results [data-bdadd="kiwi"]').count() == 1)
     await pg.fill('#bd-q', 'queso fresco'); await pg.wait_for_timeout(100)
     await pg.click('#bd-results [data-bdadd="queso-fresco"]'); await pg.wait_for_timeout(150)
     tot = (await pg.inner_text('#bd-tot')).replace('\n', ' ')

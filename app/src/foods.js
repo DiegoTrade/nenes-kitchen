@@ -89,6 +89,8 @@ var ALIMENTOS = [
   {id:'zanahoria', n:'Zanahoria', p:0.9, c:7, f:0.2, u:[['unidad',80,'unidades']], d:[1,'unidad']},
   {id:'calabaza', n:'Calabaza', p:1, c:6.5, f:0.1, d:[150,'g'], a:'auyama'},
   {id:'col', n:'Col o repollo', p:1.3, c:3.3, f:0.1, d:[150,'g']},
+  {id:'palmitos', n:'Palmitos en conserva (escurridos)', p:2.5, c:2.2, f:0.6, d:[100,'g'], a:'palmito corazones de palma'},
+  {id:'esparragos-blancos', n:'Espárragos blancos en conserva', p:1.8, c:2, f:0.2, u:[['unidad',30,'unidades']], d:[6,'unidad'], a:'esparrago blanco'},
   {id:'aguacate', n:'Aguacate', p:2, c:1.8, f:15, u:[['unidad',150,'unidades']], d:[0.5,'unidad'], a:'palta'},
   {id:'aceitunas', n:'Aceitunas', p:0.8, c:0.5, f:15, u:[['unidad',4,'unidades']], d:[8,'unidad']},
   /* Grasas, frutos secos y salsas */
@@ -121,6 +123,7 @@ var ALIMENTOS = [
   {id:'garbanzos', n:'Garbanzos cocidos', p:8.9, c:19, f:2.6, d:[150,'g']},
   {id:'alubias', n:'Alubias o caraotas cocidas', p:8.7, c:16.4, f:0.5, d:[150,'g'], a:'frijoles judias caraotas negras'},
   {id:'platano', n:'Plátano o banana', p:1.1, c:20, f:0.3, u:[['unidad',120,'unidades']], d:[1,'unidad'], a:'cambur'},
+  {id:'kiwi', n:'Kiwi', p:1.1, c:11.7, f:0.5, u:[['unidad',70,'unidades']], d:[1,'unidad']},
   {id:'manzana', n:'Manzana', p:0.3, c:12, f:0.2, u:[['unidad',180,'unidades']], d:[1,'unidad']},
   {id:'naranja', n:'Naranja', p:0.9, c:9.4, f:0.1, u:[['unidad',150,'unidades']], d:[1,'unidad']},
   {id:'fresas', n:'Fresas', p:0.7, c:5.7, f:0.3, d:[100,'g']},
