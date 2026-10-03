@@ -827,7 +827,7 @@ b,strong{font-weight:800}
   </div>
 
 <script>
-var APP_V = '8d1b5ed0c4';
+var APP_V = '5811315d18';
 /* Recetas de La Cocina de Nene.
    Ingrediente: [cantidad, unidad, nombre, categoría, nota, receta enlazada]
    Categorías: p carne/pescado · h huevos/lácteos · v frutas/verduras · d despensa · e básicos (sin cantidad en la compra) · r receta casera
@@ -1825,6 +1825,23 @@ var ALIMENTOS = [
   {id:'platano', n:'Plátano o banana', p:1.1, c:20, f:0.3, u:[['unidad',120,'unidades']], d:[1,'unidad'], a:'cambur'},
   {id:'kiwi', n:'Kiwi', p:1.1, c:11.7, f:0.5, u:[['unidad',70,'unidades']], d:[1,'unidad']},
   {id:'ciruela', n:'Ciruela', p:0.7, c:10, f:0.3, u:[['unidad',65,'unidades']], d:[1,'unidad'], a:'ciruelas'},
+  {id:'melocoton', n:'Melocotón o nectarina', p:0.9, c:8, f:0.3, u:[['unidad',150,'unidades']], d:[1,'unidad'], a:'durazno paraguayo'},
+  {id:'albaricoque', n:'Albaricoque', p:1.4, c:9, f:0.4, u:[['unidad',40,'unidades']], d:[2,'unidad'], a:'damasco'},
+  {id:'pera', n:'Pera', p:0.4, c:12, f:0.1, u:[['unidad',170,'unidades']], d:[1,'unidad']},
+  {id:'mandarina', n:'Mandarina', p:0.8, c:11.5, f:0.3, u:[['unidad',75,'unidades']], d:[1,'unidad'], a:'clementina'},
+  {id:'pomelo', n:'Pomelo', p:0.8, c:9, f:0.1, u:[['mitad',120,'mitades']], d:[1,'mitad'], a:'toronja'},
+  {id:'sandia', n:'Sandía', p:0.6, c:7.2, f:0.2, u:[['tajada',200,'tajadas']], d:[1,'tajada'], a:'patilla'},
+  {id:'melon', n:'Melón', p:0.8, c:7.3, f:0.2, u:[['tajada',150,'tajadas']], d:[1,'tajada']},
+  {id:'tuno', n:'Tuno o higo pico', p:0.7, c:6, f:0.5, u:[['unidad',100,'unidades']], d:[1,'unidad'], a:'higo chumbo picon tunera'},
+  {id:'guayaba', n:'Guayaba', p:2.6, c:9, f:1, u:[['unidad',90,'unidades']], d:[1,'unidad']},
+  {id:'nispero', n:'Níspero', p:0.4, c:10.4, f:0.2, u:[['unidad',20,'unidades']], d:[3,'unidad']},
+  {id:'parchita', n:'Maracuyá o parchita', p:2.2, c:13, f:0.7, u:[['unidad',20,'unidades']], d:[1,'unidad'], a:'fruta de la pasion'},
+  {id:'granada', n:'Granada (granos)', p:1.7, c:14.7, f:1.2, u:[['puñado',40,'puñados']], d:[1,'puñado']},
+  {id:'cerezas', n:'Cerezas', p:1.1, c:14, f:0.2, u:[['puñado',80,'puñados']], d:[1,'puñado']},
+  {id:'uvas', n:'Uvas', p:0.7, c:17, f:0.2, u:[['puñado',80,'puñados']], d:[1,'puñado']},
+  {id:'higo', n:'Higo fresco', p:0.8, c:16, f:0.3, u:[['unidad',50,'unidades']], d:[1,'unidad'], a:'brevas'},
+  {id:'caqui', n:'Caqui', p:0.6, c:15, f:0.2, u:[['unidad',170,'unidades']], d:[1,'unidad'], a:'persimon kaki'},
+  {id:'higo-pasado', n:'Higo pasado (seco)', p:3.3, c:55, f:0.9, u:[['unidad',20,'unidades']], d:[1,'unidad'], a:'higos secos'},
   {id:'manzana', n:'Manzana', p:0.3, c:12, f:0.2, u:[['unidad',180,'unidades']], d:[1,'unidad']},
   {id:'naranja', n:'Naranja', p:0.9, c:9.4, f:0.1, u:[['unidad',150,'unidades']], d:[1,'unidad']},
   {id:'fresas', n:'Fresas', p:0.7, c:5.7, f:0.3, d:[100,'g']},
@@ -3296,7 +3313,7 @@ function addToShop(id, f, fromMenu){
 var FCAT = {};
 [['p', 'pechuga pollo-cocinado contramuslo pavo pavo-fiambre jamon-york jamon-serrano cecina chorizo bacon ternera-picada ternera-filete entrecot cerdo-lomo cerdo-solomillo cerdo-picada cabra conejo cordero salmon salmon-ahumado atun-fresco merluza pescado-blanco bacalao caballa langostinos pulpo calamar mejillones'],
  ['h', 'huevo clara queso-fresco queso-batido skyr yogur yogur-griego cottage queso-semi queso-cabra queso-curado queso-lonchas mozzarella queso-rallado parmesano queso-crema leche-entera leche-semi leche-desnatada kefir nata-cocinar nata-montar mantequilla'],
- ['v', 'puerro cebolla ajo tomate tomate-cherry pimiento-rojo pimiento-verde calabacin berenjena espinacas champinones brocoli coliflor judias esparragos lechuga pepino zanahoria calabaza col aguacate papa batata platano kiwi ciruela manzana naranja fresas frutos-rojos papaya pina mango'],
+ ['v', 'puerro cebolla ajo tomate tomate-cherry pimiento-rojo pimiento-verde calabacin berenjena espinacas champinones brocoli coliflor judias esparragos lechuga pepino zanahoria calabaza col aguacate papa batata platano kiwi ciruela melocoton albaricoque pera mandarina pomelo sandia melon tuno guayaba nispero parchita granada cerezas uvas higo caqui higo-pasado manzana naranja fresas frutos-rojos papaya pina mango'],
  ['e', 'aceite mayonesa mojo guasacaca salsa-soja ketchup azucar miel']
 ].forEach(function(g){ g[1].split(' ').forEach(function(id){ FCAT[id] = g[0]; }); });
 var SHOP_NAME = {huevo: 'Huevos', clara: 'Claras de huevo', pechuga: 'Pechuga de pollo', 'pollo-cocinado': 'Pollo cocinado', contramuslo: 'Contramuslo de pollo deshuesado',
