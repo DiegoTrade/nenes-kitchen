@@ -124,6 +124,7 @@ var ALIMENTOS = [
   {id:'alubias', n:'Alubias o caraotas cocidas', p:8.7, c:16.4, f:0.5, d:[150,'g'], a:'frijoles judias caraotas negras'},
   {id:'platano', n:'Plátano o banana', p:1.1, c:20, f:0.3, u:[['unidad',120,'unidades']], d:[1,'unidad'], a:'cambur'},
   {id:'kiwi', n:'Kiwi', p:1.1, c:11.7, f:0.5, u:[['unidad',70,'unidades']], d:[1,'unidad']},
+  {id:'ciruela', n:'Ciruela', p:0.7, c:10, f:0.3, u:[['unidad',65,'unidades']], d:[1,'unidad'], a:'ciruelas'},
   {id:'manzana', n:'Manzana', p:0.3, c:12, f:0.2, u:[['unidad',180,'unidades']], d:[1,'unidad']},
   {id:'naranja', n:'Naranja', p:0.9, c:9.4, f:0.1, u:[['unidad',150,'unidades']], d:[1,'unidad']},
   {id:'fresas', n:'Fresas', p:0.7, c:5.7, f:0.3, d:[100,'g']},
