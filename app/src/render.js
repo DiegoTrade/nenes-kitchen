@@ -139,7 +139,7 @@ function guideHTML(){
   '</ul></div>' +
   '<div class="list no"><h4>No</h4><ul>' +
     '<li>Azúcar, miel, papelón y panela</li>' +
-    '<li>Pan, casabe, arepas, cachapas, pasta, arroz y cereales</li>' +
+    '<li>Pan, casabe, arepas, cachapas, pasta, arroz, quinoa, maíz y cereales</li>' +
     '<li>Papa, yuca, plátano, batata y gofio</li>' +
     '<li>Zumos, refrescos y batidos de fruta</li>' +
     '<li>Cerveza y alcohol</li>' +
