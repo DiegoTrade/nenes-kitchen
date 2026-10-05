@@ -123,12 +123,14 @@ function guideHTML(){
     '<li>Verduras de hoja, calabacín, berenjena, pimiento, brócoli, coliflor, champiñones, judías verdes y tomate</li>' +
     '<li>Aguacate, aceitunas, aceite de oliva, mantequilla y nata</li>' +
     '<li>Skyr, queso fresco y queso fresco batido</li>' +
+    '<li>Tofu, edamame y chochos (altramuces)</li>' +
     '<li>Especias, hierbas, ajo, limón, vinagre y mostaza</li>' +
     '<li>Café y té sin azúcar, agua con gas</li>' +
   '</ul></div>' +
   '<div class="list some"><h4>Con moderación</h4><ul>' +
     '<li>Queso curado: unos 50 g por comida</li>' +
     '<li>Frutos secos y frutos rojos: un puñado</li>' +
+    '<li>Fruta entera (kiwi, ciruela, melocotón, mandarina, tuno): una pieza, después de comer</li>' +
     '<li>Caraotas, lentejas o garbanzos: 3 cucharadas</li>' +
     '<li>Zanahoria, calabaza y cebolla: como acompañante, no de base</li>' +
     '<li>Papas arrugadas: una o dos, de vez en cuando</li>' +

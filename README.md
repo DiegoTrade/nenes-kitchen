@@ -9,7 +9,7 @@ Una app de recetas hecha para Nene: platos altos en proteína y bajos en carbohi
 | 📖 **118 recetas** | Ingredientes con cantidades, pasos, consejos y qué servir al resto de la familia |
 | 🎲 **¿Qué cocino hoy?** | Propone una receta al azar |
 | 📅 **Menú** | Registro de cada día con su fecha: cada plato se marca cuando se ha comido, y la app suma la proteína, los carbos y las calorías de lo comido, dice cuánto falta para la meta y a dónde llega lo que queda del plan. Cada lunes llega un menú nuevo y las semanas anteriores se guardan con su media |
-| 🥚 **Armar un plato** | En «A mano» se eligen los ingredientes (unos 145 alimentos comunes, con medidas caseras) y la app suma proteína, carbos y calorías. El plato se guarda en Recientes y se puede editar |
+| 🥚 **Armar un plato** | En «A mano» se eligen los ingredientes (más de 200 alimentos comunes, con medidas caseras) y la app suma proteína, carbos y calorías. El plato se guarda en Recientes y se puede editar |
 | ⚡ **Apuntar rápido** | Recientes, «Igual que ayer», copiar a otro día, mover de comida, deslizar entre días y deshacer |
 | 🛒 **Lista de la compra** | Se arma sola con el menú, las recetas y los platos armados a mano. Se le puede añadir cualquier otra cosa y se envía por WhatsApp |
 | 👩‍🍳 **Modo cocina** | Los pasos en grande, uno a uno, con la pantalla encendida y avisos de tiempo |
