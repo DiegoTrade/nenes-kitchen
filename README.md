@@ -9,6 +9,7 @@ Una app de recetas hecha para Nene: platos altos en proteína y bajos en carbohi
 | 📖 **118 recetas** | Ingredientes con cantidades, pasos, consejos y qué servir al resto de la familia |
 | 🎲 **¿Qué cocino hoy?** | Propone una receta al azar |
 | 📅 **Menú** | Registro de cada día con su fecha: cada plato se marca cuando se ha comido, y la app suma la proteína, los carbos y las calorías de lo comido, dice cuánto falta para la meta y a dónde llega lo que queda del plan. Cada lunes llega un menú nuevo y las semanas anteriores se guardan con su media |
+| ✏️ **Ajustar una receta** | En el Menú, cada plato de receta se puede ajustar a lo que se comió: más o menos de un ingrediente, o quitar alguno, y la app recalcula proteína, carbos, grasa y calorías |
 | 🥚 **Armar un plato** | En «A mano» se eligen los ingredientes (más de 200 alimentos comunes, con medidas caseras) y la app suma proteína, carbos y calorías. El plato se guarda en Recientes y se puede editar |
 | ⚡ **Apuntar rápido** | Recientes, «Igual que ayer», copiar a otro día, mover de comida, deslizar entre días y deshacer |
 | 🛒 **Lista de la compra** | Se arma sola con el menú, las recetas y los platos armados a mano. Se le puede añadir cualquier otra cosa y se envía por WhatsApp |
@@ -57,6 +58,7 @@ Después de cambiar algo en `app/src/`, hay que construir y subir también `inde
 | Versión | Cambios |
 |---|---|
 | V1 a V5 | Nene's Kitchen: generador de comidas, recetas, favoritos, lista de la compra |
+| **V9.3** | Ajustar un plato del menú: se cambia la cantidad de un ingrediente o se quita lo que no llevaba, y el día cuenta lo que de verdad se comió. La tarjeta del día suma también la grasa. Lista de alimentos ampliada a más de 200 |
 | **V9.2** | Plan y comido: cada plato se marca con un toque cuando se ha comido y solo cuenta lo marcado. La tarjeta del día y la semana distinguen lo comido (sólido) del plan (rayado), la app pregunta por lo que quedó sin marcar, y las notas de amor salen al marcar una comida, ya no al azar |
 | **V9.1** | Cocina asiática: 18 recetas nuevas (tailandesa, china, coreana, japonesa, vietnamita e india) sin arroz, fideos ni azúcar, con filtro «Asiáticas» (118 recetas) |
 | **V9** | Diseño nuevo alrededor de la mascota: portada, colores de yema y coral, títulos redondos, tarjetas de receta con pegatina, ficha compacta, celebración al cumplir la meta y texto con mejor contraste |

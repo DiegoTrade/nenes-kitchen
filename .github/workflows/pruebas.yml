@@ -15,7 +15,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Construir
-        run: node app/build.js
+        run: |
+          python app/tools/gen_ing.py
+          node app/build.js
       - name: El index.html subido coincide con el código fuente
         run: git diff --exit-code -- index.html version.json
       - name: Instalar Playwright

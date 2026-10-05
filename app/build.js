@@ -7,7 +7,7 @@ const crypto = require('crypto');
 const src = f => fs.readFileSync(path.join(__dirname, 'src', f), 'utf8');
 const root = path.join(__dirname, '..');
 
-const data = src('data.js'), foods = src('foods.js'), render = src('render.js'), app = src('app.js');
+const data = src('data.js'), foods = src('foods.js'), ings = src('ingredientes.js'), render = src('render.js'), app = src('app.js');
 const ctx = {};
 vm.createContext(ctx);
 vm.runInContext(data + '\n' + render + '\n;this.RECETAS = RECETAS;', ctx);
@@ -23,7 +23,7 @@ let html = src('template.html')
   .replace('{{N}}', String(R.length))
   .replace('{{GUIDE}}', () => ctx.guideHTML())
   .replace('{{BOOK}}', () => book)
-  .replace('{{SCRIPT}}', () => data + '\n' + foods + '\n' + render + '\n' + app);
+  .replace('{{SCRIPT}}', () => data + '\n' + foods + '\n' + ings + '\n' + render + '\n' + app);
 
 const version = crypto.createHash('sha1').update(html).digest('hex').slice(0, 10);
 html = html.replace('{{VERSION}}', version);

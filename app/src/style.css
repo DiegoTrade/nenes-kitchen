@@ -724,3 +724,9 @@ b,strong{font-weight:800}
 .rv-t{margin:0;font-family:var(--display);font-weight:600;font-size:17px;color:var(--ink)}
 .rv-l{margin:2px 0 0;font-size:14px;font-weight:600;color:var(--ink-2)}
 .rv-acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+
+/* Ajustar un plato de receta: ingrediente quitado */
+.bd-row.aj-off{background:transparent;box-shadow:none;border:1.5px dashed var(--line-2)}
+.bd-row.aj-off .bd-n{color:var(--ink-3);text-decoration:line-through}
+.bd-row.aj-off .bd-ctl{margin-top:4px}
+.st-sub{flex-wrap:wrap;gap:2px 16px}

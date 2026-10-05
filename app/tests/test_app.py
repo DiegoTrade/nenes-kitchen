@@ -315,6 +315,44 @@ async def t_tracking(p, url):
     await b.close()
 
 
+async def t_adjust(p, url):
+    print('Menú: ajustar los ingredientes de una receta')
+    bistec = {"items": [{"s": "m", "id": "bistec-encebollado", "f": 1, "e": 1}]}
+    seed = {"tab": "menu", "favs": [], "menu": {"v": 4, "seen": True, "tk": True, "recent": [], "weeks": {"2026-09-28": {"days":
+            [{"items": []}, bistec, {"items": []}, {"items": []}, {"items": []}, {"items": []}, {"items": []}]}}}, "shop": {"entries": [], "checked": {}}}
+    b, ctx, pg = await new_page(p, url, seed)
+    await pg.click('[data-day="1"]'); await pg.wait_for_timeout(150)
+    check('la tarjeta del día también dice la grasa', '31 g grasa' in (await pg.inner_text('.st-sub')).replace('\n', ' ') and await pg.inner_text('.st-big b') == '45')
+    await pg.click('[data-item="0"]'); await pg.click('[data-pk="ajustar"]'); await pg.wait_for_timeout(150)
+    rows = pg.locator('#aj-rows .bd-row')
+    check('salen los ingredientes que cuentan, con su cantidad', await rows.count() >= 6 and await pg.input_value('[data-ajq="0"]') == '200'
+          and 'Comino' not in await pg.inner_text('#aj-rows'))
+    await pg.fill('[data-ajq="0"]', '400'); await pg.wait_for_timeout(120)
+    check('al poner 400 g de filete sube la proteína', '87 g proteína' in (await pg.inner_text('#aj-tot')).replace('\n', ' '), await pg.inner_text('#aj-tot'))
+    gi = await pg.evaluate("RECETAS.find(r => r.id === 'bistec-encebollado').i.findIndex(x => x[2] === 'Guasacaca')")
+    await pg.click('[data-ajrm="%d"]' % gi); await pg.wait_for_timeout(120)
+    tot = (await pg.inner_text('#aj-tot')).replace('\n', ' ')
+    check('y al quitar la guasacaca bajan la grasa y las calorías', tot == '87 g proteína 15 g carbos 34 g grasa 720 kcal', tot)
+    check('lo quitado se puede volver a poner', await pg.locator('.aj-off [data-ajback]').count() == 1)
+    await pg.click('#aj-form [type=submit]'); await pg.wait_for_timeout(200)
+    st = await state(pg)
+    it = st['menu']['weeks']['2026-09-28']['days'][1]['items'][0]
+    check('el día cuenta lo que de verdad se comió', await pg.inner_text('.st-big b') == '87' and it.get('adj') == {'0': 400, str(gi): 0} and it.get('e') == 1
+          and 'ajustado' in await pg.inner_text('.it-m'), it)
+    await pg.click('[data-item="0"]'); await pg.wait_for_timeout(150)
+    check('la ficha del plato resume el ajuste', 'filete de ternera 400 g' in await pg.inner_text('#picker') and 'sin guasacaca' in await pg.inner_text('#picker'))
+    await pg.click('[data-pk="ajustar"]'); await pg.wait_for_timeout(120)
+    await pg.click('[data-ajstep="0"][data-d="-1"]'); await pg.wait_for_timeout(100)
+    check('los botones de más y menos cambian la cantidad', await pg.input_value('[data-ajq="0"]') == '375')
+    await pg.click('[data-ajreset]'); await pg.wait_for_timeout(120)
+    await pg.click('#aj-form [type=submit]'); await pg.wait_for_timeout(200)
+    st = await state(pg)
+    check('«Volver a la receta original» quita el ajuste', 'adj' not in st['menu']['weeks']['2026-09-28']['days'][1]['items'][0] and await pg.inner_text('.st-big b') == '45')
+    check('sin desbordes a 390 px', await pg.evaluate("document.documentElement.scrollWidth") == 390)
+    check('sin errores de JavaScript', not pg.errs, pg.errs)
+    await b.close()
+
+
 async def t_cook_mode(p, url):
     print('Modo cocina')
     seed = {"tab": "recetas", "favs": [], "menu": {"v": 2, "days": [old_day() for _ in range(7)]}, "shop": {"entries": [], "checked": {}}}
@@ -417,6 +455,7 @@ async def main():
             await t_picker_filters(p, url)
             await t_builder_and_shop(p, url)
             await t_tracking(p, url)
+            await t_adjust(p, url)
             await t_cook_mode(p, url)
             await t_backup(p, url)
             await t_small_and_dark(p, url)
