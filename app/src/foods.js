@@ -86,6 +86,7 @@ var ALIMENTOS = [
   {id:'esparragos', n:'Espárragos trigueros', p:2.2, c:1.8, f:0.1, d:[100,'g']},
   {id:'lechuga', n:'Lechuga o mezcla de hojas', p:1.2, c:1.5, f:0.2, u:[['puñado',30,'puñados']], d:[80,'g'], a:'ensalada rucula canonigos'},
   {id:'pepino', n:'Pepino', p:0.7, c:3, f:0.1, u:[['unidad',300,'unidades']], d:[0.5,'unidad']},
+  {id:'rabano', n:'Rábano', p:0.7, c:1.8, f:0.1, u:[['unidad',12,'unidades']], d:[5,'unidad'], a:'rabanos rabanitos'},
   {id:'zanahoria', n:'Zanahoria', p:0.9, c:7, f:0.2, u:[['unidad',80,'unidades']], d:[1,'unidad']},
   {id:'calabaza', n:'Calabaza', p:1, c:6.5, f:0.1, d:[150,'g'], a:'auyama'},
   {id:'col', n:'Col o repollo', p:1.3, c:3.3, f:0.1, d:[150,'g']},
