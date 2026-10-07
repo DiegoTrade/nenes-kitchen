@@ -8,7 +8,7 @@ var ALIMENTOS = [
   {id:'huevo', n:'Huevo', p:12.6, c:0.7, f:9.9, u:[['huevo',55,'huevos']], d:[1,'huevo'], a:'huevos tortilla revuelto frito cocido'},
   {id:'clara', n:'Clara de huevo', p:10.9, c:0.7, f:0.2, u:[['clara',33,'claras']], d:[2,'clara'], a:'claras'},
   {id:'pechuga', n:'Pechuga de pollo (cruda)', p:23, c:0, f:1.5, d:[150,'g'], a:'pollo filete'},
-  {id:'pollo-cocinado', n:'Pollo cocinado sin piel', p:31, c:0, f:4, d:[100,'g'], a:'pollo asado desmechado desmenuzado a la plancha'},
+  {id:'pollo-cocinado', n:'Pollo hervido o ya cocinado (sin piel)', p:31, c:0, f:4, d:[100,'g'], a:'pollo cocido sancochado asado desmechado mechado desmenuzado a la plancha pechuga hervida cocida'},
   {id:'contramuslo', n:'Contramuslo de pollo sin hueso (crudo)', p:19.5, c:0, f:6, d:[150,'g'], a:'pollo muslo'},
   {id:'pavo', n:'Pechuga de pavo (cruda)', p:22, c:0, f:1.5, d:[150,'g'], a:'pavo filete'},
   {id:'pavo-fiambre', n:'Pavo en lonchas o taquitos', p:19, c:1.5, f:2, u:[['loncha',15,'lonchas']], d:[50,'g'], a:'fiambre pavo'},

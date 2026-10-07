@@ -203,6 +203,8 @@ async def t_builder_and_shop(p, url):
     check('el kiwi está en la lista de alimentos', await pg.locator('#bd-results [data-bdadd="kiwi"]').count() == 1)
     await pg.fill('#bd-q', 'ciruela'); await pg.wait_for_timeout(100)
     check('y la ciruela también', await pg.locator('#bd-results [data-bdadd="ciruela"]').count() == 1)
+    await pg.fill('#bd-q', 'pollo hervido'); await pg.wait_for_timeout(100)
+    check('el pollo hervido sale el primero al buscarlo', await pg.locator('#bd-results [data-bdadd]').first.get_attribute('data-bdadd') == 'pollo-cocinado')
     await pg.fill('#bd-q', 'chochos'); await pg.wait_for_timeout(100)
     check('los chochos (altramuces) están en la lista', await pg.locator('#bd-results [data-bdadd="altramuces"]').count() == 1)
     await pg.fill('#bd-q', 'patilla'); await pg.wait_for_timeout(100)
