@@ -135,6 +135,7 @@ var ALIMENTOS = [
   /* Grasas, frutos secos y salsas */
   {id:'aceite', n:'Aceite de oliva', p:0, c:0, f:100, u:[['cda',13.5,'cdas'], ['cdta',4.5,'cdtas']], d:[1,'cda']},
   {id:'almendras', n:'Almendras', p:21, c:9, f:50, u:[['puñado',30,'puñados']], d:[1,'puñado'], a:'frutos secos'},
+  {id:'harina-almendra', n:'Harina de almendra', p:21, c:9, f:50, u:[['cda',8,'cdas']], d:[2,'cda'], a:'almendra molida'},
   {id:'nueces', n:'Nueces', p:15, c:7, f:65, u:[['puñado',30,'puñados']], d:[1,'puñado'], a:'frutos secos'},
   {id:'cacahuetes', n:'Cacahuetes', p:26, c:7.6, f:49, u:[['puñado',30,'puñados']], d:[1,'puñado'], a:'mani frutos secos'},
   {id:'crema-cacahuete', n:'Crema de cacahuete', p:25, c:12, f:50, u:[['cda',16,'cdas']], d:[1,'cda'], a:'mantequilla de mani'},
