@@ -361,6 +361,14 @@ var RECETAS = [
  st:['Enciende el horno a 200 °C.','Salpimienta los filetes. Pásalos por el huevo batido y luego por la mezcla de parmesano y almendra, apretando bien.','Dóralos en una sartén con el aceite, 2 o 3 minutos por cada lado, y pásalos a una fuente de horno.','Cocina el tomate con el ajo picado, el orégano y sal 5 minutos, y échalo por encima del pollo.','Cubre con la mozzarella y hornea 12 minutos, hasta que gratine.','Termina con albahaca y sirve con rúcula.'],
  fam:'Los demás, con espaguetis.'},
 
+{id:'ternera-parmesana', n:'Ternera a la parmesana al horno', t:'fuerte', p:'carne', o:'vi', min:35, s:3, pr:69, ch:9, gr:47, kc:740,
+ d:'Bistecs finos empanados con parmesano y almendra, cubiertos de tomate y mozzarella y gratinados al horno.',
+ cr:'La parmigiana de siempre, con ternera y sin pan rallado.',
+ i:[[600,'g','Filete de ternera','p','bistecs finos, unos 6'],[2,'','Huevos','h'],[60,'g','Parmesano','h','rallado'],[60,'g','Almendra molida','d','o harina de almendra'],[400,'g','Tomate triturado natural','d'],[2,'diente','Ajo','v'],[125,'g','Mozzarella rallada','h','o 1 bola de mozzarella fresca'],[null,'','Albahaca fresca','v'],[3,'puñado','Rúcula','v','para acompañar'],[1,'cdta','Orégano','e'],[2,'cda','Aceite de oliva','e'],[null,'','Sal y pimienta','e']],
+ st:['Salsa: sofríe el ajo picado en 1 cucharada de aceite 1 minuto. Añade el tomate, el orégano y sal, y cocina 10 minutos, hasta que espese.','Enciende el horno a 220 °C con el grill.','Aplana los bistecs con un mazo o con el fondo de un cazo y salpimiéntalos.','Pásalos por el huevo batido y luego por la mezcla de parmesano y almendra, apretando bien.','Dóralos en una sartén muy caliente con el resto del aceite, 1 minuto por cada lado, en tandas. Pásalos a una fuente de horno.','Cubre con la salsa y la mozzarella y gratina de 6 a 8 minutos, hasta que el queso se funda y se dore.','Termina con albahaca y sirve con rúcula.'],
+ tip:'La ternera fina se seca enseguida: dórala solo 1 minuto por cada lado, porque termina de hacerse en el horno.',
+ fam:'Los demás, con espaguetis.'},
+
 {id:'adobo-filipino', n:'Adobo de pollo filipino', t:'fuerte', p:'pollo', o:'vi', o2:'as', min:40, s:2, pr:65, ch:14, gr:25, kc:540, prep:true,
  d:'Contramuslos guisados en soja, vinagre, ajo y laurel. Pocos ingredientes y mucho sabor.',
  cr:'El plato nacional de Filipinas, entre las recetas low-carb mejor valoradas de Taste of Home. Sin el azúcar que a veces lleva.', cu:'https://www.tasteofhome.com/collection/the-best-low-carb-recipes-of-the-year/',
