@@ -184,6 +184,7 @@ var ALIMENTOS = [
   {id:'tortitas', n:'Tortitas de arroz o de maíz', p:7.5, c:80, f:2.5, u:[['unidad',8,'unidades']], d:[2,'unidad']},
   {id:'platano', n:'Plátano o banana', p:1.1, c:20, f:0.3, u:[['unidad',120,'unidades']], d:[1,'unidad'], a:'cambur'},
   {id:'kiwi', n:'Kiwi', p:1.1, c:11.7, f:0.5, u:[['unidad',70,'unidades']], d:[1,'unidad']},
+  {id:'pitaya', n:'Pitaya (fruta del dragón)', p:1.2, c:10, f:0.4, u:[['mitad',120,'mitades']], d:[1,'mitad'], a:'pitahaya fruta del dragon'},
   {id:'ciruela', n:'Ciruela', p:0.7, c:10, f:0.3, u:[['unidad',65,'unidades']], d:[1,'unidad'], a:'ciruelas'},
   {id:'melocoton', n:'Melocotón o nectarina', p:0.9, c:8, f:0.3, u:[['unidad',150,'unidades']], d:[1,'unidad'], a:'durazno paraguayo'},
   {id:'albaricoque', n:'Albaricoque', p:1.4, c:9, f:0.4, u:[['unidad',40,'unidades']], d:[2,'unidad'], a:'damasco'},
