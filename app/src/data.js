@@ -647,6 +647,24 @@ var RECETAS = [
  fam:'Los demás, con arroz blanco.',
  keep:'3 días en la nevera. Al día siguiente está mejor.'},
 
+{id:'avgolemono', n:'Sopa griega de pollo con huevo y limón (avgolemono)', t:'sopa', p:'pollo', o:'in', min:35, s:3, pr:50, ch:8, gr:10, kc:320,
+ d:'Sopa de pollo sedosa, ácida y reconfortante: el huevo y el limón la espesan, sin arroz.',
+ cr:'Clásico griego (avgolémono). El original lleva arroz; aquí, coliflor rallada.',
+ i:[[1200,'ml','Caldo de pollo','d'],[500,'g','Pechuga de pollo','p','o contramuslos deshuesados'],[3,'','Huevos','h'],[2,'','Limón','v'],[0.5,'','Coliflor','v','rallada, en lugar del arroz'],[0.5,'','Cebolla','v'],[1,'rama','Apio','v'],[0.5,'manojo','Perejil','v','o eneldo'],[1,'hoja','Laurel','e'],[null,'','Sal y pimienta','e']],
+ st:['Pon a hervir el caldo con la cebolla, el apio y el laurel, 10 minutos.','Añade el pollo y cocina a fuego suave 15 minutos, hasta que esté hecho. Sácalo y desmenúzalo. Retira la cebolla, el apio y el laurel.','Añade la coliflor rallada al caldo y cocina 5 minutos.','En un bol, bate los huevos hasta que hagan espuma y añade el zumo de los limones sin dejar de batir.','Añade al bol dos cazos de caldo caliente muy despacio, batiendo todo el rato, para que el huevo no se cuaje.','Pon el fuego al mínimo y echa la mezcla en la olla removiendo. Calienta 1 o 2 minutos, hasta que espese un poco y quede sedosa. Que no hierva: se cortaría.','Vuelve a meter el pollo, salpimienta y termina con el perejil o el eneldo picado.'],
+ tip:'El secreto es que no hierva después de añadir el huevo. Para recalentarla, a fuego suave.',
+ fam:'Los demás, con arroz en la sopa, como en Grecia.',
+ keep:'2 días en la nevera.'},
+
+{id:'sopa-lima', n:'Sopa de lima con pollo', t:'sopa', p:'pollo', o:'in', min:35, s:3, pr:47, ch:11, gr:28, kc:490,
+ d:'Caldo de pollo con tomate, pimiento y mucha lima, con aguacate y cilantro por encima. Fresca y un poco picante.',
+ cr:'Clásico de Yucatán (México). Sin las tiras de tortilla frita.',
+ i:[[1200,'ml','Caldo de pollo','d'],[600,'g','Contramuslo de pollo deshuesado','p','o pechuga'],[2,'','Tomate','v'],[1,'','Pimiento verde','v'],[0.5,'','Cebolla','v'],[3,'diente','Ajo','v'],[3,'','Lima','v'],[1,'','Aguacate','v','para servir'],[60,'g','Queso fresco','h','desmenuzado, opcional'],[0.5,'manojo','Cilantro','v'],[1,'','Guindilla verde o jalapeño','v','o habanero, al gusto'],[1,'cdta','Orégano','e'],[1,'cda','Aceite de oliva','e'],[null,'','Sal','e']],
+ st:['Sofríe la cebolla, el pimiento y el ajo picados en el aceite, 5 minutos. Añade el tomate picado y cocina 3 minutos más.','Añade el caldo, el orégano, la guindilla y el pollo. Cocina a fuego suave 20 minutos.','Saca el pollo, desmenúzalo y vuelve a meterlo en la olla.','Apaga el fuego y añade el zumo de 2 limas. Prueba y ajusta de sal y de lima.','Sirve con rodajas de la otra lima, aguacate en dados, cilantro y el queso fresco desmenuzado.'],
+ tip:'La guindilla entera da aroma; partida, pica mucho más. En Yucatán se usa chile habanero.',
+ fam:'Los demás, con tiras de tortilla de maíz tostada por encima, como en Yucatán.',
+ keep:'3 días en la nevera, sin el aguacate.'},
+
 /* ---------------- FRÍAS ---------------- */
 {id:'reina-pepiada', n:'Reina pepiada en hojas de lechuga', t:'fria', p:'pollo', o:'ve', min:10, s:1, pr:67, ch:12, gr:30, kc:580,
  d:'El relleno de la arepa de siempre, servido en hojas de lechuga.',
@@ -847,7 +865,7 @@ var RECETAS = [
 ];
 
 /* Recetas que suelen caer bien en los días de náuseas (primeras semanas o cuando sube la dosis) */
-var LIGERAS = ['bowl-skyr','huevos-salmon','omelette-sascha','huevos-turcos','pudin-chia','salmon-horno','salmon-papillote','pescado-mojo','merluza-verde','atun-plancha','pollo-esparragos-sascha','hervido','sopa-pollo-huevo','crema-calabacin-pollo','pescado-jengibre','batido-cafe','cottage-atun','helado-sascha','rollitos-jamon'];
+var LIGERAS = ['bowl-skyr','huevos-salmon','omelette-sascha','huevos-turcos','pudin-chia','salmon-horno','salmon-papillote','pescado-mojo','merluza-verde','atun-plancha','pollo-esparragos-sascha','hervido','sopa-pollo-huevo','crema-calabacin-pollo','pescado-jengibre','avgolemono','batido-cafe','cottage-atun','helado-sascha','rollitos-jamon'];
 
 /* Notas de amor de la app anterior (su parte favorita: no tocar) */
 var LOVE = [
