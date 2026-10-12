@@ -833,7 +833,7 @@ b,strong{font-weight:800}
   </div>
 
 <script>
-var APP_V = '4c50163632';
+var APP_V = '870ea103d5';
 /* Recetas de La Cocina de Nene.
    Ingrediente: [cantidad, unidad, nombre, categoría, nota, receta enlazada]
    Categorías: p carne/pescado · h huevos/lácteos · v frutas/verduras · d despensa · e básicos (sin cantidad en la compra) · r receta casera
@@ -1939,6 +1939,7 @@ var ALIMENTOS = [
   {id:'naranja', n:'Naranja', p:0.9, c:9.4, f:0.1, u:[['unidad',150,'unidades']], d:[1,'unidad']},
   {id:'fresas', n:'Fresas', p:0.7, c:5.7, f:0.3, d:[100,'g']},
   {id:'frutos-rojos', n:'Frambuesas o arándanos', p:1, c:8, f:0.6, d:[60,'g']},
+  {id:'acai', n:'Açaí puro sin azúcar (congelado)', p:1, c:2, f:5, u:[['paquete',100,'paquetes']], d:[1,'paquete'], a:'asai pulpa'},
   {id:'papaya', n:'Papaya', p:0.5, c:9, f:0.3, d:[150,'g'], a:'lechosa'},
   {id:'pina', n:'Piña', p:0.5, c:11.7, f:0.1, d:[150,'g']},
   {id:'mango', n:'Mango', p:0.8, c:13.4, f:0.4, d:[150,'g']},
@@ -3684,7 +3685,7 @@ function addToShop(id, f, fromMenu){
 var FCAT = {};
 [['p', 'pechuga pollo-cocinado contramuslo pavo pavo-fiambre jamon-york jamon-serrano cecina chorizo bacon ternera-picada ternera-filete entrecot cerdo-lomo cerdo-solomillo cerdo-picada cabra conejo cordero pollo-picado muslo-piel costilla-cerdo lomo-embuchado bonito sardina-fresca anchoas berberechos surimi salmon salmon-ahumado atun-fresco merluza pescado-blanco bacalao caballa langostinos pulpo calamar mejillones'],
  ['h', 'huevo clara queso-fresco queso-batido skyr yogur yogur-griego cottage queso-semi queso-cabra queso-curado queso-lonchas mozzarella queso-rallado parmesano queso-crema leche-entera leche-semi leche-desnatada kefir nata-cocinar nata-montar mantequilla requeson queso-cabra-fresco queso-blanco feta halloumi postre-proteico batido-listo gelatina tofu edamame'],
- ['v', 'puerro cebolla ajo tomate tomate-cherry pimiento-rojo pimiento-verde calabacin berenjena espinacas champinones brocoli coliflor judias esparragos lechuga pepino rabano apio acelgas berros endivia pak-choi brotes-soja coles-bruselas alcachofa chayota padron remolacha yuca zanahoria calabaza col aguacate papa batata platano kiwi pitaya ciruela melocoton albaricoque pera mandarina pomelo sandia melon tuno guayaba nispero parchita granada cerezas uvas higo caqui higo-pasado manzana naranja fresas frutos-rojos papaya pina mango'],
+ ['v', 'puerro cebolla ajo tomate tomate-cherry pimiento-rojo pimiento-verde calabacin berenjena espinacas champinones brocoli coliflor judias esparragos lechuga pepino rabano apio acelgas berros endivia pak-choi brotes-soja coles-bruselas alcachofa chayota padron remolacha yuca zanahoria calabaza col aguacate papa batata platano kiwi pitaya ciruela melocoton albaricoque pera mandarina pomelo sandia melon tuno guayaba nispero parchita granada cerezas uvas higo caqui higo-pasado manzana naranja fresas frutos-rojos acai papaya pina mango'],
  ['e', 'aceite aceite-otros mayonesa mojo guasacaca salsa-soja ketchup mostaza sriracha azucar miel']
 ].forEach(function(g){ g[1].split(' ').forEach(function(id){ FCAT[id] = g[0]; }); });
 var SHOP_NAME = {huevo: 'Huevos', clara: 'Claras de huevo', pechuga: 'Pechuga de pollo', 'pollo-cocinado': 'Pollo cocinado', contramuslo: 'Contramuslo de pollo deshuesado',

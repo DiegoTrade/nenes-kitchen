@@ -207,6 +207,7 @@ var ALIMENTOS = [
   {id:'naranja', n:'Naranja', p:0.9, c:9.4, f:0.1, u:[['unidad',150,'unidades']], d:[1,'unidad']},
   {id:'fresas', n:'Fresas', p:0.7, c:5.7, f:0.3, d:[100,'g']},
   {id:'frutos-rojos', n:'Frambuesas o arándanos', p:1, c:8, f:0.6, d:[60,'g']},
+  {id:'acai', n:'Açaí puro sin azúcar (congelado)', p:1, c:2, f:5, u:[['paquete',100,'paquetes']], d:[1,'paquete'], a:'asai pulpa'},
   {id:'papaya', n:'Papaya', p:0.5, c:9, f:0.3, d:[150,'g'], a:'lechosa'},
   {id:'pina', n:'Piña', p:0.5, c:11.7, f:0.1, d:[150,'g']},
   {id:'mango', n:'Mango', p:0.8, c:13.4, f:0.4, d:[150,'g']},
