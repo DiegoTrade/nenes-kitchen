@@ -108,6 +108,9 @@ T = {
  'Bacalao desalado': (18, 0, {}),
  'Queso fresco batido 0 %': (8, 3.5, {}),
  'Semillas de chía': (17, 8, {}),
+ 'Linaza': (18, 1.6, {}),                        # entera; casi todo el carbohidrato es fibra
+ 'Pipas de calabaza': (30, 4.7, {}),
+ 'Pipas de girasol peladas': (21, 11, {}),
  'Guindilla verde o jalapeño': (1, 5, {'': 15}),
  'Vino tinto': (0, 2.6, {}),
  'Salsa de skyr y ajo': (10, 4, {'cda': 15}),

@@ -788,6 +788,14 @@ var RECETAS = [
  tip:'Dos trozos son una porción. Sácalos 5 minutos antes para que no estén tan duros.',
  keep:'1 mes en el congelador, en una bolsa.'},
 
+{id:'galletas-semillas', n:'Galletas de semillas', t:'snack', p:null, ic:'🌻', o:'vi', min:20, x:'1 h de horno', s:10, sn:'de 2 galletas', pr:8, ch:2, gr:18, kc:200, prep:true,
+ d:'Solo semillas, agua y sal: sin harina ni huevo. Crujientes, para picar o en lugar de pan. Salen unas 20.',
+ cr:'Idea de @celinagarzar en Instagram.',
+ i:[[170,'g','Linaza','d','entera, dorada o marrón'],[240,'ml','Agua caliente','e'],[80,'g','Pipas de calabaza','d','peladas, sin sal'],[80,'g','Pipas de girasol peladas','d','sin sal'],[50,'g','Sésamo','d'],[1,'cdta','Aceite de oliva','e','para el papel'],[null,'','Sal en escamas','e'],[null,'','Romero, ajo en polvo o pimentón','e','opcional']],
+ st:['Mezcla la linaza con el agua caliente y déjala reposar 15 minutos, hasta que espese como un gel.','Enciende el horno a 150 °C.','Añade las pipas de calabaza, las de girasol, el sésamo, una pizca de sal y las especias si quieres. Mezcla bien.','Unta un papel de horno con unas gotas de aceite y extiende la masa en una capa fina, de 3 o 4 mm. Ayuda poner otro papel encima y pasar un rodillo o un vaso.','Quita el papel de arriba, marca las galletas con un cuchillo y espolvorea sal en escamas.','Hornea 30 minutos. Dale la vuelta a la plancha entera y hornea 20 o 30 minutos más, hasta que esté seca y dorada.','Apaga el horno y déjalas dentro hasta que se enfríen: así quedan crujientes. Pártelas por las marcas.'],
+ tip:'Tienen muchas calorías: dos galletas son una porción. Ponles proteína encima, como salmón ahumado, atún o queso fresco, y son una merienda completa.',
+ keep:'2 semanas en un bote hermético, fuera de la nevera. Si se ablandan, 5 minutos al horno.'},
+
 /* ---------------- SALSAS Y BASES ---------------- */
 {id:'mojo-verde', n:'Mojo verde', t:'base', p:null, o:'ca', min:10, s:8, sn:'de 2 cucharadas', pr:0, ch:1, gr:12, kc:110,
  d:'Para pescado, carne y verduras. Dura una semana en la nevera.',

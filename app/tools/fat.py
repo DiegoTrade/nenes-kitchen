@@ -28,7 +28,7 @@ FAT = {
  'Tomate triturado natural': 0.2, 'Tomates cherry': 0.2, 'Tomates secos en aceite': 14, 'Vino blanco': 0, 'Vino tinto': 0,
  'Zanahoria': 0.2, 'Carne de cabra': 2, 'Paleta de cerdo deshuesada': 18, 'Chuletas de cerdo': 12, 'Pollo entero': 10,
  'Kéfir natural': 0, 'Queso de cabra fresco': 20, 'Alubias rojas cocidas': 0.5, 'Chicharros o caballas': 6,
- 'Bacalao desalado': 0.7, 'Queso fresco batido 0 %': 0.2, 'Semillas de chía': 31, 'Guindilla verde o jalapeño': 0.4,
+ 'Bacalao desalado': 0.7, 'Queso fresco batido 0 %': 0.2, 'Semillas de chía': 31, 'Linaza': 42, 'Pipas de calabaza': 49, 'Pipas de girasol peladas': 51, 'Guindilla verde o jalapeño': 0.4,
  'Salsa de skyr y ajo': 0.5, 'Tzatziki': 4, 'Ají verde': 33, 'Mojo verde': 45, 'Mojo rojo': 45, 'Guasacaca': 25,
  'Salsa de soja': 0, 'Salsa inglesa': 0, 'Cacao puro en polvo': 14, 'Linaza molida': 42, 'Curry en polvo': 14,
  'Salsa sriracha': 1, 'Mayonesa': 75, 'Mostaza': 4, 'Mostaza de Dijon': 4, 'Sésamo': 50, 'Pimienta palmera o ñora': 10,

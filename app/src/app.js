@@ -300,7 +300,7 @@ function renderControls(list){
 }
 var TILE = {pollo: '🍗', carne: '🥩', cerdo: '🥓', pescado: '🐟', marisco: '🦐', huevos: '🍳', lacteos: '🧀', otros: '🍖'};
 function tileHTML(r, big){
-  var t = r.t === 'sopa' ? ['🍲', 'sopa'] : r.t === 'base' ? ['🥣', 'base'] : [TILE[r.p] || '🍽️', TILE[r.p] ? r.p : 'otros'];
+  var t = r.ic ? [r.ic, 'otros'] : r.t === 'sopa' ? ['🍲', 'sopa'] : r.t === 'base' ? ['🥣', 'base'] : [TILE[r.p] || '🍽️', TILE[r.p] ? r.p : 'otros'];
   return '<span class="tile tile-' + t[1] + (big ? ' tile-big' : '') + '" aria-hidden="true">' + t[0] + '</span>';
 }
 function cardHTML(r){
