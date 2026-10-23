@@ -30,7 +30,7 @@ FAT = {
  'Kéfir natural': 0, 'Queso de cabra fresco': 20, 'Alubias rojas cocidas': 0.5, 'Chicharros o caballas': 6,
  'Bacalao desalado': 0.7, 'Queso fresco batido 0 %': 0.2, 'Semillas de chía': 31, 'Linaza': 42, 'Pipas de calabaza': 49, 'Pipas de girasol peladas': 51, 'Guindilla verde o jalapeño': 0.4,
  'Salsa de skyr y ajo': 0.5, 'Tzatziki': 4, 'Ají verde': 33, 'Mojo verde': 45, 'Mojo rojo': 45, 'Guasacaca': 25,
- 'Salsa de soja': 0, 'Salsa inglesa': 0, 'Cacao puro en polvo': 14, 'Linaza molida': 42, 'Curry en polvo': 14,
+ 'Salsa de soja': 0, 'Salsa inglesa': 0, 'Cacao puro en polvo': 14, 'Linaza molida': 42, 'Psyllium': 0.6, 'Curry en polvo': 14,
  'Salsa sriracha': 1, 'Mayonesa': 75, 'Mostaza': 4, 'Mostaza de Dijon': 4, 'Sésamo': 50, 'Pimienta palmera o ñora': 10,
  'Albahaca fresca': 0.6, 'Menta o hierbabuena': 0.7, 'Guindilla roja': 0.4, 'Cacahuetes': 49, 'Tofu firme': 8, 'Kimchi': 0.5,
  'Salsa de pescado': 0, 'Pasta de curry verde': 3, 'Pasta de guindilla china': 3,

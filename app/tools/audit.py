@@ -130,6 +130,7 @@ T = {
  'Salsa inglesa': (0, 19, {'cda': 17}),
  'Cacao puro en polvo': (20, 12, {'cda': 7}),
  'Linaza molida': (18, 2, {'cda': 7}),
+ 'Psyllium': (2, 4, {'cda': 7}),                 # cáscara en polvo; casi todo es fibra
  'Curry en polvo': (14, 25, {'cda': 6}),
  'Salsa sriracha': (2, 19, {'cdta': 5}),
  'Mayonesa': (1, 1, {'cda': 14}),

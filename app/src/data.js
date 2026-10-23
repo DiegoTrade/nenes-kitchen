@@ -797,6 +797,15 @@ var RECETAS = [
  keep:'2 semanas en un bote hermético, fuera de la nevera. Si se ablandan, 5 minutos al horno.'},
 
 /* ---------------- SALSAS Y BASES ---------------- */
+{id:'pan-semillas', n:'Pan de semillas con skyr', t:'base', p:null, ic:'🍞', o:'vi', min:15, x:'1 h 15 min de horno', s:12, sn:'de 1 rebanada', pr:12, ch:2, gr:13, kc:180, prep:true,
+ d:'Un pan de molde de verdad hecho con pipas, linaza, huevo y skyr. Sin harina: 2 g de carbos por rebanada.',
+ cr:'Idea de @caretteketo en Instagram. Aquí con skyr en vez de yogur natural para que tenga más proteína, y pipas por encima.',
+ i:[[360,'g','Skyr o yogur alto en proteína','h'],[6,'','Huevos','h'],[160,'g','Pipas de calabaza','d','sin sal: 150 g molidas y 10 g enteras para encima'],[100,'g','Linaza molida','d'],[2,'cda','Psyllium','d','cáscara de psyllium en polvo (plantago ovata), de herbolario o farmacia'],[10,'g','Sésamo','d','para encima'],[1,'cdta','Levadura química','e'],[1,'cdta','Sal','e']],
+ st:['Enciende el horno a 175 °C y forra un molde de pan alargado con papel de horno.','Muele 150 g de pipas de calabaza en la picadora hasta que parezcan harina gruesa. No las muelas demasiado o se hacen pasta.','En un bol, mezcla las pipas molidas, la linaza, el psyllium, la levadura y la sal.','En otro bol, bate los huevos con el skyr. Échalo sobre los secos y mezcla bien con una espátula.','Deja reposar la masa 10 minutos: la linaza y el psyllium absorben el líquido y la masa espesa.','Pásala al molde, alisa la superficie con la espátula mojada y reparte por encima los 10 g de pipas enteras y el sésamo, apretándolos un poco.','Hornea 1 hora y 15 minutos. Está hecho cuando suena hueco al golpear la base y un palillo sale limpio. Si se dora demasiado, tápalo con papel de aluminio a mitad.','Déjalo enfriar del todo sobre una rejilla antes de cortarlo, mínimo 1 hora. Caliente está gomoso; frío queda como pan.'],
+ tip:'Una o dos rebanadas por comida, con proteína encima: pata asada, huevos o salmón ahumado. Tostado está mucho mejor. Bebe agua: lleva mucha fibra.',
+ fam:'Es el mismo pan para todos.',
+ keep:'5 días en la nevera, envuelto en un paño. O córtalo en rebanadas y congélalo: se tuesta directamente congelado.'},
+
 {id:'mojo-verde', n:'Mojo verde', t:'base', p:null, o:'ca', min:10, s:8, sn:'de 2 cucharadas', pr:0, ch:1, gr:12, kc:110,
  d:'Para pescado, carne y verduras. Dura una semana en la nevera.',
  i:[[1,'manojo','Cilantro','v','o mitad cilantro, mitad perejil'],[1,'','Pimiento verde','v'],[4,'diente','Ajo','v'],[1,'cdta','Comino molido','e'],[1,'cdta','Sal gorda','e'],[100,'ml','Aceite de oliva','e'],[2,'cda','Vinagre de vino blanco','e']],

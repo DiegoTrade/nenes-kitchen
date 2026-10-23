@@ -105,6 +105,7 @@ var INGREDIENTES = {
  "Pollo cocinado": [31,0,4,{}],
  "Pollo entero": [12.4,0,10,{"":1600}],
  "Proteína whey": [80,7,6,{"cazo":30}],
+ "Psyllium": [2,4,0.6,{"cda":7}],
  "Puerro": [1.5,12,0.3,{"":150}],
  "Pulpo cocido": [18,1,1.5,{}],
  "Queso cheddar": [25,1,33,{"loncha":20}],
