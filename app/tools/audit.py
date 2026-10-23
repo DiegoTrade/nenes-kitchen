@@ -26,6 +26,7 @@ T = {
  'Calabaza': (1, 6.5, {}),
  'Caldo de pescado': (0.5, 0, {}), 'Caldo de pollo': (0.5, 0, {}),
  'Carne picada de ternera': (18.5, 0, {}),
+ 'Carne picada de ternera magra': (20, 0, {}),     # 10 % de grasa o menos
  'Carne picada de cerdo': (17, 0, {}),
  'Carne picada de pollo': (19, 0, {}),
  'Cebolla': (1.1, 8, {'': 150}), 'Cebolla morada': (1.1, 8, {'': 150}),

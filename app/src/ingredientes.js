@@ -30,6 +30,7 @@ var INGREDIENTES = {
  "Carne picada de cordero": [17,0,20,{}],
  "Carne picada de pollo": [19,0,8,{}],
  "Carne picada de ternera": [18.5,0,15,{}],
+ "Carne picada de ternera magra": [20,0,8,{}],
  "Cebolla": [1.1,8,0.1,{"":150}],
  "Cebolla morada": [1.1,8,0.1,{"":150}],
  "Cebolleta": [1.8,4.7,0.2,{"":30}],

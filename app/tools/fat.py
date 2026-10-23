@@ -10,7 +10,7 @@ FAT = {
  'Aceitunas': 15, 'Aguacate': 15, 'Ajo': 0.5, 'Ají dulce': 0.3, 'Almendra molida': 50, 'Anchoa': 10, 'Apio': 0.2,
  'Atún en aceite de oliva': 8, 'Atún fresco': 3, 'Bebida de almendras sin azúcar': 1.1, 'Berenjena': 0.2, 'Brócoli': 0.4,
  'Calabacín': 0.3, 'Calabaza': 0.1, 'Caldo de pescado': 0.3, 'Caldo de pollo': 0.3,
- 'Carne picada de ternera': 15, 'Carne picada de cerdo': 20, 'Carne picada de pollo': 8, 'Carne picada de cordero': 20,
+ 'Carne picada de ternera': 15, 'Carne picada de ternera magra': 8, 'Carne picada de cerdo': 20, 'Carne picada de pollo': 8, 'Carne picada de cordero': 20,
  'Cebolla': 0.1, 'Cebolla morada': 0.1, 'Cebolleta': 0.2, 'Champiñones': 0.3, 'Chocolate negro 85 %': 46,
  'Chuletillas de cordero': 15, 'Cilantro': 0.5, 'Claras de huevo': 0.2, 'Col o repollo': 0.1, 'Coliflor': 0.3,
  'Conejo': 3.5, 'Contramuslo de pollo deshuesado': 6, 'Corvina o lubina': 2.5, 'Dorada o lubina': 3, 'Entrecot': 15,

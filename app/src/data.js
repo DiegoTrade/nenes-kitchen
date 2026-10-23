@@ -507,6 +507,15 @@ var RECETAS = [
  fam:'Los demás, con pan para mojar.',
  keep:'El pisto solo, sin huevos, aguanta 4 días en la nevera.'},
 
+{id:'repollo-bolonesa', n:'Repollo a la boloñesa', t:'fuerte', p:'carne', o:'vi', min:30, s:2, pr:44, ch:19, gr:28, kc:500,
+ d:'Tiras de repollo salteadas en vez de pasta, con boloñesa de carne magra y mozzarella fundida. Una sartén y listo.',
+ cr:'Idea de @anagomezossa en Instagram. Aquí con carne magra, tomate natural en vez de puré y champiñones para más volumen.',
+ i:[[0.5,'','Col o repollo','v','mediano'],[300,'g','Carne picada de ternera magra','p','10 % de grasa o menos'],[150,'g','Champiñones','v','laminados'],[0.5,'','Cebolla','v'],[2,'diente','Ajo','v'],[250,'g','Tomate triturado natural','d','no tomate frito'],[60,'g','Mozzarella rallada','h'],[4,'cdta','Aceite de oliva','e','1 para el repollo y 3 para el sofrito'],[0.5,'cdta','Pimentón dulce','e'],[0.5,'cdta','Ajo en polvo','e'],[0.5,'cdta','Cebolla en polvo','e','opcional'],[1,'cdta','Orégano','e'],[null,'','Sal y pimienta','e'],[null,'','Cilantro o perejil','v','al servir']],
+ st:['Quita el tronco duro del repollo y córtalo en tiras anchas, de unos 2 cm, como tallarines.','Calienta 1 cucharadita de aceite en la sartén más grande a fuego alto y saltea el repollo 5 o 6 minutos, hasta que esté tierno, con algo de mordida y un poco dorado. Sácalo a un plato.','En la misma sartén, con el resto del aceite, sofríe la cebolla y el ajo picados 4 minutos a fuego medio.','Sube el fuego, añade la carne y los champiñones y cocina 6 o 7 minutos, rompiendo la carne, hasta que se dore y se evapore el líquido. Añade el pimentón, el ajo y la cebolla en polvo, el orégano, sal y pimienta.','Echa el tomate y deja 10 minutos a fuego medio-bajo, hasta que la salsa espese.','Vuelve a meter el repollo, mezcla y reparte la mozzarella por encima. Tapa 2 minutos para que se funda, o gratina 3 minutos en el horno.','Termina con cilantro o perejil picado.'],
+ tip:'El secreto es saltear el repollo aparte y a fuego fuerte: si se cuece en la salsa suelta agua y queda aguado. Usa tomate triturado natural, no tomate frito, que lleva azúcar.',
+ fam:'Para los demás, la misma boloñesa con pasta.',
+ keep:'3 días en la nevera. Se recalienta bien en la sartén.'},
+
 /* ---------------- PLATOS FUERTES: COCINA ASIÁTICA ---------------- */
 {id:'larb-pollo', n:'Larb de pollo en hojas de lechuga', t:'fuerte', p:'pollo', o:'as', min:15, s:2, pr:53, ch:16, gr:23, kc:480,
  d:'Pollo picado con lima, guindilla y mucha menta, envuelto en lechuga. Fresco, picante y muy rápido.',
