@@ -806,6 +806,15 @@ var RECETAS = [
  keep:'2 semanas en un bote hermético, fuera de la nevera. Si se ablandan, 5 minutos al horno.'},
 
 /* ---------------- SALSAS Y BASES ---------------- */
+{id:'pan-cottage', n:'Pan plano de cottage', t:'base', p:null, ic:'🫓', o:'vi', min:5, x:'35 min de horno', s:2, sn:'de media pieza', pr:21, ch:4, gr:12, kc:200,
+ d:'Cottage y huevo triturados y al horno: sale una lámina fina que sirve de wrap, de base de pizza o de pan de sándwich.',
+ cr:'Receta viral de TikTok e Instagram (cottage cheese flatbread), vista en @countdown_til_dinner. Aquí con un poco de psyllium para que no se rompa.',
+ i:[[220,'g','Queso cottage','h','1 taza, bien escurrido'],[2,'','Huevos','h'],[1,'cdta','Psyllium','d','o 1 cucharada de linaza molida'],[10,'g','Parmesano','h','rallado, opcional, para los bordes'],[0.5,'cdta','Ajo en polvo','e'],[1,'cdta','Orégano','e','o hierbas italianas'],[null,'','Sal','e'],[null,'','Aceite de oliva','e','unas gotas para el papel']],
+ st:['Enciende el horno a 180 °C y deja el cottage escurriendo en un colador 10 minutos.','Tritura el cottage con los huevos, el psyllium, el ajo en polvo, el orégano y una pizca de sal hasta que no quede ningún grumo.','Forra una bandeja con papel de horno untado con unas gotas de aceite y extiende la mezcla en un rectángulo fino, de medio centímetro, de unos 25 × 30 cm.','Si quieres los bordes crujientes, espolvorea el parmesano por encima.','Hornea 30 a 40 minutos, hasta que esté dorado y seco por encima.','Déjalo enfriar 5 minutos antes de despegarlo del papel. Úsalo entero como pizza, doblado como wrap o cortado en cuatro como pan de sándwich.'],
+ tip:'Ideas: wrap de pata asada con lechuga y mojo verde, o base de pizza con tomate triturado y mozzarella, 5 minutos más al horno. Sin escurrir el cottage queda blando y se rompe.',
+ fam:'Es la misma para todos.',
+ keep:'3 días en la nevera, con papel de horno entre piezas. Se calienta en la sartén sin aceite.'},
+
 {id:'pan-semillas', n:'Pan de semillas con skyr', t:'base', p:null, ic:'🍞', o:'vi', min:15, x:'1 h 15 min de horno', s:12, sn:'de 1 rebanada', pr:12, ch:2, gr:13, kc:180, prep:true,
  d:'Un pan de molde de verdad hecho con pipas, linaza, huevo y skyr. Sin harina: 2 g de carbos por rebanada.',
  cr:'Idea de @caretteketo en Instagram. Aquí con skyr en vez de yogur natural para que tenga más proteína, y pipas por encima.',
