@@ -169,6 +169,15 @@ var RECETAS = [
  st:['Enciende el horno a 200 °C y forra una bandeja con papel de horno.','Mezcla el pollo con el huevo, el parmesano, el orégano, ajo en polvo y sal.','Extiéndelo con las manos mojadas en un círculo fino, de 1 cm de grosor.','Hornea la base 15 a 18 minutos, hasta que esté dorada. Si suelta líquido, sécalo con papel de cocina.','Cubre con el tomate, la mozzarella, el jamón, los champiñones y el pimiento en tiras.','Hornea 10 minutos más y termina con la rúcula.'],
  fam:'Pizza para todos: los demás pueden tener la suya de masa normal.'},
 
+{id:'pollo-limon', n:'Pollo al limón, ajo y orégano', t:'fuerte', p:'pollo', o:'in', min:15, x:'30 min de horno', s:4, pr:40, ch:7, gr:22, kc:390, prep:true,
+ d:'Contramuslos al horno en una salsa de limón, ajo templado, vino blanco y orégano. Jugosos, con los bordes dorados.',
+ cr:'Lo mejor de las dos recetas más queridas: el pollo al limón de Ina Garten (ajo templado en aceite y vino blanco) y el pollo griego al limón con orégano.', cu:'https://barefootcontessa.com/recipes/lemon-chicken-breasts',
+ i:[[800,'g','Contramuslo de pollo deshuesado','p','sin piel, o con piel si lo quieres más crujiente'],[3,'','Limón','v','2 para ralladura y zumo, 1 en gajos'],[6,'diente','Ajo','v','picados finos'],[1,'','Cebolla','v','en gajos'],[80,'ml','Vino blanco','d','seco, o caldo de pollo'],[3,'cda','Aceite de oliva','e'],[1.5,'cdta','Orégano','e'],[1,'cdta','Tomillo','e'],[1,'cdta','Sal','e'],[null,'','Pimienta negra','e'],[null,'','Perejil','v','al servir']],
+ st:['Enciende el horno a 220 °C.','Calienta el aceite con el ajo a fuego bajo 1 minuto, sin que llegue a dorarse.','Fuera del fuego, añade el vino, la ralladura de 2 limones, el zumo de 1, el orégano, el tomillo y la sal. Vierte la mezcla en una fuente de horno.','Seca bien el pollo con papel de cocina, salpimiéntalo y dale la vuelta en la salsa. Reparte alrededor los gajos de limón y de cebolla. Si tienes tiempo, déjalo marinar 2 a 4 horas en la nevera.','Hornea 25 a 30 minutos, hasta que los bordes estén dorados. Para más color, 2 o 3 minutos con el grill al final.','Tapa la fuente con papel de aluminio y deja reposar 10 minutos. Sirve con el jugo por encima, perejil picado y un poco más de ralladura de limón.'],
+ tip:'La ralladura es lo que más sabor da: rállala antes de exprimir el limón. Acompáñalo con coliflor asada, judías verdes o una ensalada, y no tires el jugo de la fuente.',
+ fam:'Para los demás, con papas asadas o arroz para mojar en el jugo.',
+ keep:'3 días en la nevera, con su jugo. Se recalienta tapado en el horno o en la sartén.'},
+
 /* ---------------- PLATOS FUERTES: TERNERA ---------------- */
 {id:'carne-mechada', n:'Carne mechada a caballo', t:'fuerte', p:'carne', o:'ve', min:150, s:4, pr:61, ch:13, gr:38, kc:640, prep:true,
  d:'Pabellón sin arroz ni tajadas: carne mechada con huevo frito encima y arroz de coliflor.',

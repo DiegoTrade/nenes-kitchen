@@ -6,7 +6,7 @@ Una app de recetas hecha para Nene: platos altos en proteína y bajos en carbohi
 
 | Función | Descripción |
 |---|---|
-| 📖 **125 recetas** | Ingredientes con cantidades, pasos, consejos y qué servir al resto de la familia |
+| 📖 **126 recetas** | Ingredientes con cantidades, pasos, consejos y qué servir al resto de la familia |
 | 🎲 **¿Qué cocino hoy?** | Propone una receta al azar |
 | 📅 **Menú** | Registro de cada día con su fecha: cada plato se marca cuando se ha comido, y la app suma la proteína, los carbos y las calorías de lo comido, dice cuánto falta para la meta y a dónde llega lo que queda del plan. Cada lunes llega un menú nuevo y las semanas anteriores se guardan con su media |
 | ✏️ **Ajustar una receta** | En el Menú, cada plato de receta se puede ajustar a lo que se comió: más o menos de un ingrediente, o quitar alguno, y la app recalcula proteína, carbos, grasa y calorías |
@@ -63,6 +63,7 @@ Después de cambiar algo en `app/src/`, hay que construir y subir también `inde
 | **V9.7** | Pan de semillas con skyr, 2 g de carbos por rebanada (123 recetas) |
 | **V9.8** | Repollo a la boloñesa (124 recetas) |
 | **V9.9** | Pan plano de cottage: wrap, pizza o pan de sándwich (125 recetas) |
+| **V9.10** | Pollo al limón, ajo y orégano (126 recetas) |
 | **V9.4** | Dos sopas de pollo nuevas: avgolemono griega (con huevo y limón) y sopa de lima de Yucatán (120 recetas) |
 | **V9.3** | Ajustar un plato del menú: se cambia la cantidad de un ingrediente o se quita lo que no llevaba, y el día cuenta lo que de verdad se comió. La tarjeta del día suma también la grasa. Lista de alimentos ampliada a más de 200 |
 | **V9.2** | Plan y comido: cada plato se marca con un toque cuando se ha comido y solo cuenta lo marcado. La tarjeta del día y la semana distinguen lo comido (sólido) del plan (rayado), la app pregunta por lo que quedó sin marcar, y las notas de amor salen al marcar una comida, ya no al azar |
